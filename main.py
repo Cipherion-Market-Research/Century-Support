@@ -1,6 +1,7 @@
 import asyncio
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from config.config import Config
+from core.data_syncer import DataSyncer
 from core.message_handler import BotMessageHandler
 from utils.logger import setup_logger
 from utils.db_manager import DatabaseManager
@@ -9,10 +10,17 @@ from utils.cache_manager import CacheManager
 logger = setup_logger()
 
 async def post_init(application: Application):
-    # Run async initialization tasks here
-    # This code is guaranteed to be called within PTB's event loop
     await application.bot_data["cache_manager"].init()
     logger.info("Cache initialization completed in post_init.")
+    
+    # Initialize DataSyncer
+    db_manager = application.bot_data["db_manager"]
+    cache_manager = application.bot_data["cache_manager"]
+    data_syncer = DataSyncer(db_manager, cache_manager)
+
+    # Run sync_all once at startup (Wait for it to complete)
+    await data_syncer.sync_all()
+    logger.info("Initial data sync completed.")
 
 if __name__ == "__main__":
     # Initialize managers (without async methods)
