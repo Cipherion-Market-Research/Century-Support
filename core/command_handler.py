@@ -36,13 +36,13 @@ class BotCommandHandler:
 
         except Exception as e:
             logger.error(f"Error handling command: {e}")
-            await update.message.reply_text(BOT_RESPONSES["error"])
+            await update.message.reply_text(BOT_RESPONSES["error"], parse_mode="Markdown")
 
     async def _handle_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(BOT_RESPONSES["welcome"])
+        await update.message.reply_text(BOT_RESPONSES["welcome"], parse_mode="Markdown")
 
     async def _handle_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(BOT_RESPONSES["help"])
+        await update.message.reply_text(BOT_RESPONSES["help"], parse_mode="Markdown")
 
     async def _handle_contract(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(BOT_RESPONSES["contract_info"], parse_mode="Markdown")

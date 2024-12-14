@@ -14,6 +14,31 @@ class WebsiteScraper(BaseScraper):
         self.base_url = "https://ciphex.io"
         self.urls = Config.WEBSITE_URLS
 
+    async def _fetch_ciphex_stats(self, html: str) -> dict:
+        """
+        Parse the ciphex.io main page HTML to extract presale/community stats.
+        This is an example. You must identify actual HTML elements and classes/ids from ciphex.io.
+        """
+        soup = BeautifulSoup(html, "html.parser")
+        
+        contributions_elem = soup.find(id="total_contributions")
+        if contributions_elem:
+            total_contributions = contributions_elem.get_text(strip=True)
+        else:
+            total_contributions = "Unknown"
+
+        # Repeat for other stats like total wallets, tokens allocated, etc.
+        # Example:
+        tokens_elem = soup.find(id="total_allocated")
+        tokens_allocated = tokens_elem.get_text(strip=True) if tokens_elem else "Unknown"
+
+        # Return as a dictionary
+        return {
+            "total_contributions": total_contributions,
+            "tokens_allocated": tokens_allocated
+            # Add more stats as needed
+        }
+
     async def fetch(self) -> Dict[str, Any]:
         """Fetch website content"""
         results = {}
@@ -23,6 +48,8 @@ class WebsiteScraper(BaseScraper):
                 async with session.get(self.base_url) as response:
                     if response.status == 200:
                         html = await response.text()
+                        ciphex_stats = await self._fetch_ciphex_stats(html)
+                        results["ciphex_stats"] = ciphex_stats
                         # Parse sections from the main page
                         for section in self.urls.keys():
                             results[section] = self._parse_section(html, section)
@@ -55,4 +82,5 @@ class WebsiteScraper(BaseScraper):
 
     async def validate(self, data: Dict[str, Any]) -> bool:
         """Validate website data"""
-        return all(isinstance(v, str) and len(v.strip()) > 0 for v in data.values())
+        # Now we expect 'ciphex_stats' as a key:
+        return "ciphex_stats" in data and isinstance(data["ciphex_stats"], dict)

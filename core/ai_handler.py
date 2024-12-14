@@ -26,13 +26,18 @@ class AIHandler:
 
             # Prepare messages for AI
             messages = [
-                {
-                    "role": "system",
-                    "content": "You are Century Assistant, an AI assistant for the Ciphex crypto token project's Telegram official channel. "
-                    "Provide accurate, helpful responses based on project documentation, and the latest training data you have access to."
-                    "Respond with helpful, concise answers. Use emojis where appropriate and format responses into short paragraphs or bullet lists for readability.",
-                }
-            ]
+								{
+										"role": "system",
+										"content": (
+												"You are Century Assistant, an AI assistant for the Ciphex crypto project. "
+												"You have access to the following data:\n"
+												f"{context}\n"  # This includes price, stats, etc.
+												"Base your answers on the above data and the project's documentation. "
+												"Use links provided and the whitepaper sections when relevant. "
+												"Format answers with bullet points, emojis, and short paragraphs."
+										)
+								}
+						]
 
             if context:
                 messages.append({"role": "system", "content": f"Context: {context}"})

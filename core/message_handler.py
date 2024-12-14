@@ -5,6 +5,7 @@ from utils.logger import setup_logger
 from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
 from utils.cache_manager import CacheManager
+import json
 
 logger = setup_logger()
 
@@ -18,12 +19,12 @@ class BotMessageHandler:
 
     async def handle_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle the /start command."""
-        await update.message.reply_text(BOT_RESPONSES["welcome"])
+        await update.message.reply_text(BOT_RESPONSES["welcome"], parse_mode="Markdown")
         self.logger.info(f"Handled /start command from user {update.effective_user.id}")
 
     async def handle_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle the /help command."""
-        await update.message.reply_text(BOT_RESPONSES["help"])
+        await update.message.reply_text(BOT_RESPONSES["help"], parse_mode="Markdown")
         self.logger.info(f"Handled /help command from user {update.effective_user.id}")
 
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -36,10 +37,25 @@ class BotMessageHandler:
             if not self._should_process_message(update, context):
                 return
 
-            await update.message.reply_text(BOT_RESPONSES["thinking"])
+            await update.message.reply_text(BOT_RESPONSES["thinking"], parse_mode="Markdown")
 
             # Get context from recent messages
             chat_context = await self._get_chat_context(user_id)
+
+            # Add near response generation:
+            whitepaper_sections = await self.cache_manager.redis.get("whitepaper_sections")
+            if whitepaper_sections:
+                whitepaper_sections = json.loads(whitepaper_sections)
+            else:
+                whitepaper_sections = {}
+
+            # Also fetch FAQ if stored (similarly)
+            faq_data = await self.cache_manager.redis.get("faq_data")
+            faq_data = json.loads(faq_data) if faq_data else {}
+
+            # Add to context
+            context_data = f"Whitepaper Sections: {whitepaper_sections}\nFAQ: {faq_data}"
+            response = await self.ai_handler.generate_response(message, context_data)
 
             # Generate AI response
             response = await self.ai_handler.generate_response(message, chat_context)
@@ -51,7 +67,7 @@ class BotMessageHandler:
 
         except Exception as e:
             logger.error(f"Error handling message: {e}")
-            await update.message.reply_text(BOT_RESPONSES["error"])
+            await update.message.reply_text(BOT_RESPONSES["error"], parse_mode="Markdown")
 
     def _should_process_message(
         self, update: Update, context: ContextTypes.DEFAULT_TYPE
