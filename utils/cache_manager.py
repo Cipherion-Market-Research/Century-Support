@@ -39,3 +39,11 @@ class CacheManager:
             await self.redis.set(key, value, ex=Config.CACHE_EXPIRY)
         except Exception as e:
             logger.error(f"Error caching response: {e}")
+
+    async def update_data(self, data: dict):
+        # Store each key-value pair. For complex data (dict), store as JSON string
+        import json
+        for k, v in data.items():
+            # Encode as JSON
+            value_str = json.dumps(v)
+            await self.redis.set(k, value_str)

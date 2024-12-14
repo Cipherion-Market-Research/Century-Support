@@ -25,6 +25,25 @@ class DataSyncer:
                 logger.error(f"Error in periodic sync: {e}")
                 await asyncio.sleep(Config.RETRY_DELAY_SECONDS)
 
+    async def sync_website(self):
+        from scrapers.website_scraper import WebsiteScraper
+        scraper = WebsiteScraper()
+        data = await scraper.process()
+        return data  # data should contain "ciphex_stats"
+
+    async def sync_certik(self):
+        from scrapers.certik_scraper import CertikScraper
+        scraper = CertikScraper()
+        data = await scraper.process()
+        return data  # should contain audit_status, security_score, last_updated
+
+    async def sync_pdf(self):
+        # If you want to parse the PDF whitepaper each time:
+        from scrapers.pdf_parser import PDFParser
+        parser = PDFParser(pdf_path="data/training/whitepaper.pdf")
+        data = await parser.process()
+        return data
+
     async def sync_all(self):
         """Synchronize all data sources"""
         if self.is_syncing:

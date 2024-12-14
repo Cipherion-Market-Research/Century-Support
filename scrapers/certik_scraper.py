@@ -43,3 +43,16 @@ class CertikScraper(BaseScraper):
         """Validate Certik data"""
         required_fields = ["audit_status", "security_score", "last_updated"]
         return all(field in data for field in required_fields)
+
+    def _extract_audit_status(self, soup: BeautifulSoup) -> str:
+        # Example: Find an element with class "audit-status"
+        status_elem = soup.find(class_="audit-status")
+        return status_elem.get_text(strip=True) if status_elem else "Unknown"
+
+    def _extract_security_score(self, soup: BeautifulSoup) -> str:
+        score_elem = soup.find(class_="security-score")
+        return score_elem.get_text(strip=True) if score_elem else "Unknown"
+
+    def _extract_last_updated(self, soup: BeautifulSoup) -> str:
+        updated_elem = soup.find(class_="last-updated")
+        return updated_elem.get_text(strip=True) if updated_elem else "Unknown"

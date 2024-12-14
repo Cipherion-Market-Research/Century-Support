@@ -36,3 +36,8 @@ class DatabaseManager:
         except Exception as e:
             logger.error(f"Error fetching conversations: {e}")
             return []
+
+    async def update_data(self, data: dict):
+        # Store each key-value pair
+        for k, v in data.items():
+            await self.redis.set(k, v)
