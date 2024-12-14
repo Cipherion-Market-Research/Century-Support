@@ -8,7 +8,7 @@ pymongo==4.4.1
 redis==4.6.0
 
 # Web scraping
-aiohttp==3.8.5
+aiohttp==3.8.1
 beautifulsoup4==4.12.2
 PyPDF2==3.0.1
 
@@ -31,3 +31,4 @@ pytest-cov==4.1.0
 # Development
 black==23.7.0
 flake8==6.1.0
+telegram
