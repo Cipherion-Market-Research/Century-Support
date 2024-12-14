@@ -44,26 +44,20 @@ class BotCommandHandler:
     async def _handle_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(BOT_RESPONSES["help"])
 
+    async def _handle_contract(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(BOT_RESPONSES["contract_info"], parse_mode="Markdown")
+
     async def _handle_price(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        # Implement price fetching logic
-        pass
+        await update.message.reply_text(BOT_RESPONSES["price_info"], parse_mode="Markdown")
 
-    async def _handle_whitepaper(
-        self, update: Update, context: ContextTypes.DEFAULT_TYPE
-    ):
-        # Implement whitepaper section handling
-        pass
-
-    async def _handle_contract(
-        self, update: Update, context: ContextTypes.DEFAULT_TYPE
-    ):
-        # Return contract address
-        pass
+    async def _handle_whitepaper(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        # If you have logic to fetch a specific section from the whitepaper:
+        # user may input a section name after the command.
+        # For now, just provide the link:
+        await update.message.reply_text(BOT_RESPONSES["whitepaper_info"], parse_mode="Markdown")
 
     async def _handle_stats(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        # Implement statistics fetching
-        pass
+        await update.message.reply_text(BOT_RESPONSES["stats_info"], parse_mode="Markdown")
 
     async def _handle_certik(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        # Implement Certik status fetching
-        pass
+        await update.message.reply_text(BOT_RESPONSES["certik_info"], parse_mode="Markdown")

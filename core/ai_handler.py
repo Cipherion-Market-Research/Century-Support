@@ -28,8 +28,9 @@ class AIHandler:
             messages = [
                 {
                     "role": "system",
-                    "content": "You are deCiphex, an AI assistant for the Ciphex crypto project. "
-                    "Provide accurate, helpful responses based on project documentation.",
+                    "content": "You are Century Assistant, an AI assistant for the Ciphex crypto token project's Telegram official channel. "
+                    "Provide accurate, helpful responses based on project documentation, and the latest training data you have access to."
+                    "Respond with helpful, concise answers. Use emojis where appropriate and format responses into short paragraphs or bullet lists for readability.",
                 }
             ]
 
@@ -56,3 +57,4 @@ class AIHandler:
         except Exception as e:
             logger.error(f"Error in AI response generation: {e}")
             return "I'm having trouble generating a response. Please try again later."
+          

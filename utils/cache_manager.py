@@ -36,6 +36,6 @@ class CacheManager:
 
     async def cache_response(self, key, value):
         try:
-            await self.redis.set(key, value, expire=Config.CACHE_EXPIRY)
+            await self.redis.set(key, value, ex=Config.CACHE_EXPIRY)
         except Exception as e:
             logger.error(f"Error caching response: {e}")
