@@ -1,4 +1,4 @@
-# Century Support Bot 🤖
+# 🤖 Century Support 🤖
 
 Century Support Bot is an AI-powered Telegram bot designed to provide real-time support and information about CipheX to our community. The bot leverages OpenAI's GPT model to deliver accurate, context-aware responses while maintaining up-to-date information through automated web scraping.
 
@@ -22,7 +22,6 @@ Century Support Bot is an AI-powered Telegram bot designed to provide real-time 
 - `/whitepaper` - Access whitepaper information
 - `/contract` - Display contract address
 - `/stats` - View trading statistics
-- `/certik` - Check Certik audit status
 
 ## Technical Architecture 🏗️
 
