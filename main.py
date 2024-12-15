@@ -17,13 +17,14 @@ async def post_init(application: Application):
 
     # Load FAQ data from faq.json
     with open("data/training/faq.json", "r") as f:
-        faq_list = json.load(f)
+        faq_data = json.load(f)
 
     # Convert to dict keyed by lowercase question
     faq_dict = {}
-    for item in faq_list:
-        q = item["question"].strip().lower()
-        faq_dict[q] = item["answer"]
+    for category, faqs in faq_data.items():
+        for item in faqs:
+            q = item["question"].strip().lower()
+            faq_dict[q] = item["answer"]
 
     # Store in Redis
     await application.bot_data["cache_manager"].redis.set("faq_data", json.dumps(faq_dict))
