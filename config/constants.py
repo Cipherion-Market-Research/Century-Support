@@ -68,6 +68,19 @@ WHITEPAPER_MAP = {
     "hypatia": "6.6 Abacus and Market Centurions",
 }
 
+WHITEPAPER_SECTIONS = {
+    "introduction": "1.0 Introduction",
+    "what is cpx": "1.1 What is Cipherion CipheX",
+    "tokenomics": "3.0 Tokenomics",
+    "vesting": "3.11 Vesting Schedules",
+    "lockup": "3.10 Lockup Restrictions",
+    "roadmap": "2.7 CipheX Road Map Overview",
+    "technology": "6.0 Technology Overview",
+    "asset and risk management": "5.4 Asset and Risk Management",
+    "community": "2.0 CipheX Community",
+    "max supply": "3.1 CipheX Maximum Supply",
+    "hypatia": "6.6 Abacus and Market Centurions",
+}
 
 ERROR_MESSAGES = {
     "scraping_error": "Error fetching latest data",
