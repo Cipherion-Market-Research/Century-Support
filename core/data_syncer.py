@@ -72,14 +72,16 @@ class DataSyncer:
             self.is_syncing = False
 
     async def _update_data_stores(self, *data_sets):
-        """Update cache and database with new data"""
         try:
             for data in data_sets:
                 if data and self._is_data_valid(data):
                     await self.cache_manager.update_data(data)
-                    await self.db_manager.store_data(data)
+                # Remove call to db_manager.store_data(data) if not needed:
+                # If you want to store historical data in MongoDB, implement db_manager.store_data(data)
+                # Otherwise, just skip it.
         except Exception as e:
             logger.error(f"Error updating data stores: {e}")
+
 
     def _is_data_valid(self, data: Dict[str, Any]) -> bool:
         """Validate data before storing"""

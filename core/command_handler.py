@@ -57,7 +57,16 @@ class BotCommandHandler:
         await update.message.reply_text(BOT_RESPONSES["whitepaper_info"], parse_mode="Markdown")
 
     async def _handle_stats(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(BOT_RESPONSES["stats_info"], parse_mode="Markdown")
+        # Example: fetch dynamic stats from Redis if available
+        stats_data_str = await self.cache_manager.redis.get("ciphex_stats")
+        if stats_data_str:
+            import json
+            stats_data = json.loads(stats_data_str)
+            # Format stats_data into a nice message:
+            formatted_stats = f"**Community & Presale Stats**:\n- Total Contributions: {stats_data.get('total_contributions', 'Unknown')}\n- Tokens Allocated: {stats_data.get('tokens_allocated', 'Unknown')}\n"
+            await update.message.reply_text(formatted_stats, parse_mode="Markdown")
+        else:
+            await update.message.reply_text(BOT_RESPONSES["stats_info"], parse_mode="Markdown")
 
     async def _handle_certik(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(BOT_RESPONSES["certik_info"], parse_mode="Markdown")
