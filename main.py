@@ -1,4 +1,5 @@
 import asyncio
+import json
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from config.config import Config
 from core.data_syncer import DataSyncer
@@ -13,13 +14,25 @@ logger = setup_logger()
 async def post_init(application: Application):
     await application.bot_data["cache_manager"].init()
     logger.info("Cache initialization completed in post_init.")
-    
-    # Initialize DataSyncer
+
+    # Load FAQ data from faq.json
+    with open("data/training/faq.json", "r") as f:
+        faq_list = json.load(f)
+
+    # Convert to dict keyed by lowercase question
+    faq_dict = {}
+    for item in faq_list:
+        q = item["question"].strip().lower()
+        faq_dict[q] = item["answer"]
+
+    # Store in Redis
+    await application.bot_data["cache_manager"].redis.set("faq_data", json.dumps(faq_dict))
+    logger.info("FAQ data loaded into Redis.")
+
+    # Run data sync for whitepaper and other data
     db_manager = application.bot_data["db_manager"]
     cache_manager = application.bot_data["cache_manager"]
     data_syncer = DataSyncer(db_manager, cache_manager)
-
-    # Run sync_all once at startup
     await data_syncer.sync_all()
     logger.info("Initial data sync completed.")
 
