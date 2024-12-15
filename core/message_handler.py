@@ -7,8 +7,7 @@ from utils.db_manager import DatabaseManager
 from utils.cache_manager import CacheManager
 import json
 
-logger = setup_logger()
-
+logger = setup_logger(__name__)
 
 class BotMessageHandler:
     def __init__(self, db_manager: DatabaseManager, cache_manager: CacheManager):
@@ -17,18 +16,8 @@ class BotMessageHandler:
         self.ai_handler = AIHandler(cache_manager)
         self.logger = setup_logger(__name__)
 
-    async def handle_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Handle the /start command."""
-        await update.message.reply_text(BOT_RESPONSES["welcome"], parse_mode="Markdown")
-        self.logger.info(f"Handled /start command from user {update.effective_user.id}")
-
-    async def handle_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Handle the /help command."""
-        await update.message.reply_text(BOT_RESPONSES["help"], parse_mode="Markdown")
-        self.logger.info(f"Handled /help command from user {update.effective_user.id}")
-
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Handle non-command messages"""
+        """Handle non-command messages (fallback/AI)"""
         try:
             message = update.message.text
             user_id = update.effective_user.id
@@ -42,23 +31,24 @@ class BotMessageHandler:
             # Get context from recent messages
             chat_context = await self._get_chat_context(user_id)
 
-            # Add near response generation:
+            # Fetch cached data for whitepaper and FAQ
             whitepaper_sections = await self.cache_manager.redis.get("whitepaper_sections")
             if whitepaper_sections:
                 whitepaper_sections = json.loads(whitepaper_sections)
             else:
                 whitepaper_sections = {}
 
-            # Also fetch FAQ if stored (similarly)
             faq_data = await self.cache_manager.redis.get("faq_data")
             faq_data = json.loads(faq_data) if faq_data else {}
 
-            # Add to context
-            context_data = f"Whitepaper Sections: {whitepaper_sections}\nFAQ: {faq_data}"
-            response = await self.ai_handler.generate_response(message, context_data)
+            # Check if the message matches a known FAQ or whitepaper section before AI
+            # TODO: Implement a simple keyword match if needed
+            # For now, we rely on AI fallback since we have no match logic
 
-            # Generate AI response
-            response = await self.ai_handler.generate_response(message, chat_context)
+            # Add whitepaper and FAQ data to context
+            context_data = f"Whitepaper Sections: {whitepaper_sections}\nFAQ: {faq_data}\n{chat_context}"
+
+            response = await self.ai_handler.generate_response(message, context_data)
 
             # Store conversation
             await self.db_manager.store_conversation(user_id, message, response)
@@ -69,18 +59,12 @@ class BotMessageHandler:
             logger.error(f"Error handling message: {e}")
             await update.message.reply_text(BOT_RESPONSES["error"], parse_mode="Markdown")
 
-    def _should_process_message(
-        self, update: Update, context: ContextTypes.DEFAULT_TYPE
-    ) -> bool:
-        """Determine if message should be processed"""
-        # Process if in private chat
+    def _should_process_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
+        # Process if in private chat or if bot is mentioned
         if update.effective_chat.type == "private":
             return True
-
-        # Process if bot is mentioned
         if context.bot.username.lower() in update.message.text.lower():
             return True
-
         return False
 
     async def _get_chat_context(self, user_id: int) -> str:
