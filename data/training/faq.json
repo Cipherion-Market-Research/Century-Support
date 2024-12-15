@@ -1,0 +1,190 @@
+{
+  "General": [
+    {
+      "question": "What is CipheX?",
+      "answer": "CipheX (CPX) is the world's first community-governed capital fund. It's powered by one of the most advanced autonomous trading bots to be launched globally. Our trading protocol, called Market Centurions, serves as champions of the people, directed by the CipheX community. Their primary function is to scan vast crypto markets, assess risks, and automatically execute profitable opportunities 24/7, regardless of market conditions."
+    },
+    {
+      "question": "Is CipheX a security token?",
+      "answer": "No, CipheX is currently classified as a utility token."
+    },
+    {
+      "question": "What is a Public PreSale?",
+      "answer": "The CipheX Public PreSale offers everyone the opportunity to acquire CPX tokens at an initial price lower than our public listing price. This PreSale is structured to run for approximately 180 days, during which the price of CPX will incrementally increase every 24 hours. The PreSale will continue until the total allocation of 142,738,450 CPX tokens is fully subscribed or the 180-day period concludes, whichever occurs first. Accepted Funding: USDT, USDC, and ETH. Minimum Investment: 2000 CPX. Governance: All transactions are managed by smart contracts, ensuring transparency and immutability of the PreSale terms once initiated. This strategic pricing mechanism is designed to provide early investors with advantageous entry points while maintaining a controlled and stable token distribution process."
+    },
+    {
+      "question": "Where can I buy the token?",
+      "answer": "CPX tokens are only available for purchase on this CipheX website during the Public PreSale."
+    },
+    {
+      "question": "Can I use my Centralized Exchange Account (like Kraken or Binance) to buy CipheX PreSale tokens?",
+      "answer": "No, do not use a centralized exchange wallet to purchase CipheX PreSale Tokens. You must use a self-custodial wallet that you control, such as MetaMask, Trust Wallet or WalletConnect."
+    },
+    {
+      "question": "I bought the token, but I can't see it in my wallet. What should I do?",
+      "answer": "All PreSale CPX tokens are subject to our Lockup and Vesting schedule. Once the Public PreSale is closed, CipheX PreSale buyers will be able to claim their CPX tokens using the same wallet they contributed with. Token claiming will occur through our Community Portal and will be live shortly after the Public PreSale begins."
+    },
+    {
+      "question": "What is the token symbol and contract address?",
+      "answer": "Symbol: CPX. Contract Address: [0x18b33687d1c804Dd4ea6c82106e54923c23a652E](https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)."
+    },
+    {
+      "question": "What is the token supply?",
+      "answer": "The maximum supply of CPX Tokens is 1,500,000,000, and it is structured with a deflationary model to gradually reduce the total supply over ten years. The CPX Token supply is fixed and will never increase."
+    },
+    {
+      "question": "How do I contact support?",
+      "answer": "Please join our [Telegram channel](https://t.me/Ciphexgroup) for prompt assistance and the latest updates and announcements. Our CipheX moderators are always available to help you."
+    }
+  ],
+  "Lockups & Vesting": [
+    {
+      "question": "What is a Lockup?",
+      "answer": "A lockup is a period during which a contributor's CPX Tokens are not available for trading. The lockup is a crucial aspect of the CipheX PreSale, as it ensures that the token price remains stable and prevents market manipulation. The lockup period is designed to protect all Contributors interests and maintain the integrity of the tokenomics. All CPX PreSale tokens are subject to the same lockup and vesting schedule, to be fair to all participants."
+    },
+    {
+      "question": "What is the Lockup Period?",
+      "answer": "All CPX Tokens will be subject to a six-month lockup period and a one-year vesting schedule after the six-month lockup is complete. The lockup period starts immediately after your CPX PreSale purchase and is managed by smart contracts. Lockup Earnings: You will earn a fixed rate of return on the value of your locked CPX Tokens. The lockup rate of return is equivalent to the yield rate of the 10-year US Treasury, determined at the start of the PreSale. Interest will be paid in unrestricted CPX Tokens, which are claimable at the end of the lockup period."
+    },
+    {
+      "question": "What is a Vesting Schedule?",
+      "answer": "A vesting schedule outlines the distribution of a contributor's CPX Tokens over a specific period. It ensures a gradual release of tokens to PreSale buyers, preventing a sudden influx that could destabilize the token price. Vesting Highlights: Duration: One-year vesting schedule. Distribution Pattern: First Month: 3% of your tokens will become claimable. Subsequent Months: Vesting rates increase incrementally each month. Completion: All CPX tokens are fully vested within 12-months. Example: If you have 100,000 CPX tokens released from lockup: First Month: 3,000 tokens vest. Following Months: Vesting amounts increase each month until all 100,000 tokens are vested by the end of the one-year period."
+    },
+    {
+      "question": "Do I earn interest on my locked CPX tokens?",
+      "answer": "Yes, you will earn a fixed rate of return on the value of your locked CPX Tokens. The lockup rate of return is equivalent to the yield rate of the 10-year US Treasury, determined on the date CipheX Public PreSale begins."
+    },
+    {
+      "question": "Do Creator Tokens have a Lockup and Vesting Schedule?",
+      "answer": "Yes and no. 80% of Creator CPX Tokens: Are locked for up to two years, with releases tied directly to Market Centurion-generated profits for the CipheX Community. 20% of Creator CPX Tokens: Are subject to the same six-month lockup and one-year vesting schedule as the general public."
+    }
+  ],
+  "Community": [
+    {
+      "question": "What is a CipheX Community Member?",
+      "answer": "A CipheX Community Member is any token holder of CPX Tokens."
+    },
+    {
+      "question": "What is a Community-Governed Capital Fund?",
+      "answer": "A community-governed fund is a decentralized fund with no central executive management making all the important decisions. Smart contract features and other voting protocols are available to all CipheX Community Members to cast their votes or recommend protocols for adoption into the community. Examples of Protocols: Voting on when to distribute profits. Deciding where to invest profits based on future use cases of CipheX."
+    },
+    {
+      "question": "What is the purpose of the CipheX Community?",
+      "answer": "The CipheX Community is a group of contributors with a vested interest in the success of the CipheX project. They are the driving force behind the development and growth of the project and play a crucial role in shaping the future of the CipheX ecosystem."
+    },
+    {
+      "question": "How does the CipheX Community make decisions?",
+      "answer": "The CipheX Community will make decisions through a combination of voting and general Discord. CipheX utilizes various tools to facilitate communication and collaboration among community members, including a dedicated Telegram channel and Discord server. Additionally, we employ AI governance protocols to assist in narrowing down community and other key decision recommendations."
+    },
+    {
+      "question": "Who executes the outcomes from all community votes?",
+      "answer": "We will have assigned administrators and developers with expertise in ensuring new protocols or outcomes are administered efficiently within the CipheX Community."
+    },
+    {
+      "question": "Who determines what community recommendations are put to a vote?",
+      "answer": "Our CipheX Governance Protocols will assist in narrowing down community and other key decision recommendations. We will continue to expand and announce these governance protocols when we officially launch our CipheX Community."
+    },
+    {
+      "question": "Can anyone contribute to the CipheX Community?",
+      "answer": "Only CipheX Community members who have held CPX Tokens for over a year can apply to be Contributing Experts. We aim to provide an admin-managed platform for CipheX Community Members to share ideas and participate in discussions to strengthen our community. When we officially launch our CipheX Community, we will continue to expand and make announcements on our community protocols."
+    },
+    {
+      "question": "Are CipheX Community Members rewarded for their contributions?",
+      "answer": "Yes, CipheX Community Members will be rewarded for their contributions. We have allocated a healthy amount of CPX Tokens for selected Expert Contributors. The value of each contribution will be determined by our CipheX Governance Protocols and made available transparently for all members to review or vote on if necessary."
+    },
+    {
+      "question": "How do I become an Expert Contributor?",
+      "answer": "We will have a dedicated application process for contributing experts. We will continue to expand and make announcements on our community protocols when we officially launch our CipheX Community."
+    },
+    {
+      "question": "How can I join the CipheX Community?",
+      "answer": "To join the CipheX Community, you need to acquire CPX Tokens during the Public PreSale. Once you have obtained your tokens, you can participate in community discussions, vote on proposals, and contribute to the growth of the fund."
+    },
+    {
+      "question": "What benefits do I get as a CipheX Community member?",
+      "answer": "As a CipheX Community Member, you gain the ability to: Vote on key decisions and proposals. Influence the direction of investments and community programs. Earn rewards and incentives based on your contributions. Participate in exclusive community events and discussions."
+    }
+  ],
+  "Creators & Contributors": [
+    {
+      "question": "Who are the majority owners of CipheX?",
+      "answer": "CipheX is fully decentralized, ensuring that no single person or entity holds majority control over the management of the community or its fund. Each of our creators retains full ownership of the intellectual properties they contribute to CipheX. In return, they receive CipheX founder (Creator) tokens. Intellectual Properties contributed by CipheX Creators are exclusively dedicated to the growth and development of the CipheX Community. These properties include: Algorithms, Development architectures, Source code, Strategic methods."
+    },
+    {
+      "question": "Will you have active Fund Managers?",
+      "answer": "No. Some of our Creators have extensive fund management experience, but their roles have been to refine the market strategies and learning models built into our Market Centurions. We do not intend to have fund managers who will direct the market activities of our Market Centurions or influence how social investments are made."
+    },
+    {
+      "question": "Will you have a board of directors?",
+      "answer": "No. Other than typical back office administration and traditional financial oversight that we intend to put in place (i.e., auditors, financial oversight committees), governance of CipheX on significant decisions, distribution of profits, management of assets, and the appointment of key contributors will all be put to vote using our automated governance and smart contract applications."
+    },
+    {
+      "question": "Where will back offices and staffing be located?",
+      "answer": "Globally, the contributors who help build CipheX into an exceptional community for everyone are rewarded for their efforts. Our backend administration, marketing, and development teams are spread worldwide, ensuring that no single source is relied upon for any role. While we plan to work with independent financial auditors and oversight committees, all remote contributors must be CipheX Community Members to participate (individuals owning CPX Tokens for not less than one year), ensuring that our community-driven approach remains unified."
+    },
+    {
+      "question": "How do Creators and Contributors get rewarded?",
+      "answer": "Expert Contributors are compensated as independent contractors and receive additional CPX Tokens based on the value of their contributions. Creators are similarly rewarded for enhancing their intellectual properties, benefiting and strengthening the CipheX community. Token Pricing: The CPX Token price for contributions is set when experts are selected, with no discounts. Allocated tokens follow the same restrictions and vesting schedules as other holders."
+    },
+    {
+      "question": "Is this Fund an 80/20/2 structure for management?",
+      "answer": "No, there is no centralized fund management team or chief investment officer. 100% of the profits generated from Centurion market activities can be distributed to CipheX Community Members (Members) if the majority of voters choose to vote for it. However, doing so would conflict with the purpose of CipheX as an open community fund, which is designed to allocate portions of its profits towards operations, and future Social Investments and Community Programs. Governance Features: Once the Market Centurions are deployed, we plan to launch our Community Governance feature, enabling CipheX Community Members to vote on proposed profit distributions. These votes will cover key areas such as: Funding for operations, Development, Security, Other essential expenses required to maintain the community's efficiency. Additionally, regular voting on Social Investments and Community Programs will occur, with many of the topics within these categories coming directly from recommendations made by CipheX Community Members."
+    },
+    {
+      "question": "Where does wealth creation come from?",
+      "answer": "The wealth appreciation for CipheX Community Members will come from: Profits generated by Market Centurions. Potential value growth of venture investments made by the CipheX community through its social investments program. Furthermore, when our community's efforts are well-aligned, the value of CPX Tokens should increase, driven by higher market demand, reflecting the overall success and expansion of the CipheX Community."
+    }
+  ],
+  "Market Centurions": [
+    {
+      "question": "What is a Market Centurion?",
+      "answer": "Market Centurions leverage a proprietary trading model to identify and capitalize on a diverse array of market opportunities. The platform, designed for fully autonomous execution, conducts trades within these parameters and implements automated adjustments based on insights from our proprietary Market Analysis system."
+    },
+    {
+      "question": "Will you employ live traders?",
+      "answer": "No. We will not be using live traders for market activities. However, during the initial phase of deploying Centurions, experienced traders will play a crucial role as contributors by monitoring the bots' performance during real market conditions. This hands-on oversight will help optimize functionality and collect valuable data that will assist in improving the decision-making processes of our Centurions. Future Outlook: This is a temporary measure. Over time, we expect the Market Centurions to be fully autonomous as they continue to learn and adapt."
+    },
+    {
+      "question": "When will Centurions be deployed?",
+      "answer": "We're testing Market Centurions now, and portions of contributions from our Public PreSale will go towards completing the neural network of Market Centurions and preparing their deployment. We are targeting to launch Centurions sometime in the early part of 2025."
+    },
+    {
+      "question": "How do Market Centurions make money?",
+      "answer": "The compilation of simple to complex market algorithms used to identify profitable opportunities is proprietary to CipheX. However, it can be revealed that CipheX integrates advanced mathematical theories and machine learning into the neural network of its Market Centurions. Key Features: Second Derivative Theory: For heightened sensitivity to market fluctuations. Navier-Stokes Equation Elements: To model complex, fluid-like market behaviors. This enables CipheX's Market Centurions to dynamically adapt to market volatility, facilitating precise, data-driven decision-making. Consequently, the Market Centurions continuously identify and capitalize on trading opportunities while effectively managing risk. The result is a highly adaptive and resilient system, designed for consistent performance across diverse market conditions."
+    },
+    {
+      "question": "How can I trust the accuracy of the Market Centurions?",
+      "answer": "The Market Centurions are designed to be transparent and accountable. They will be deployed on the blockchain, allowing anyone to analyze their trading data independently. Centurions are constantly training and learning, using millions of data points collected and analyzed to produce actionable intelligence that executes profitable market opportunities by automatically adjusting risk to current market conditions."
+    },
+    {
+      "question": "What is the Market Centurions' risk management strategy?",
+      "answer": "The Market Centurions' risk management strategy is designed to minimize potential losses while maximizing profits. While AI and other machine learning technologies offer powerful tools for analyzing markets and can autonomously make informed decisions, it's important to remember that there are no guarantees Centurions will generate constant positive trading results. The cryptocurrency markets are 24/7 and inherently unpredictable. Key Points: Adaptive Strategies: Market Centurions are designed to autonomously adapt and optimize market strategies. Risk Limitation: They cannot completely eliminate risks that may produce negative market results. Investor Responsibility: As with any trading, there is always the potential for both gains and losses. Potential CipheX contributors should approach AI-assisted trading strategies with a clear understanding of their risks and perform their own research to make an informed decision."
+    },
+    {
+      "question": "When will I be able to see the Trading Results from the Market Centurions?",
+      "answer": "We will provide a live dashboard for all CipheX Community Members to view the trading results of the Market Centurions. This dashboard will offer real-time data on the Market Centurions' performance, including their trading history, profits, and other relevant metrics. It will be accessible to all CipheX Community Members, allowing them to stay informed about the Market Centurions' activities and the overall health of the CipheX ecosystem."
+    },
+    {
+      "question": "What makes Market Centurions unique?",
+      "answer": "In the cryptocurrency market, most centralized exchanges offer users bot-driven trading capabilities. Centurions stand out by incorporating strategies developed by seasoned professionals with decades of experience across multiple financial markets, including equities, debt, commodities, futures, and derivatives. This real-world expertise forms the foundation of Centurions' unique approach. Additional Features: Centurion Learning Network: Gathers and analyzes tens of thousands of data points every 24 hours. Predictive Algorithms: Combine insights with predictive analytics to transform raw data into actionable market opportunities. As a result, Market Centurions continuously improve their execution and adaptability, identifying opportunities in any market condition, day after day."
+    }
+  ],
+  "Exchange Listing": [
+    {
+      "question": "Will CipheX be listed on Centralized Exchanges?",
+      "answer": "Not immediately. Our focus is on building a robust, decentralized community and ecosystem. We believe that by remaining independent, we can maintain greater control over our tokenomics, operations, and long-term vision."
+    },
+    {
+      "question": "Where will CipheX be listed?",
+      "answer": "CipheX CPX Token will launch on a decentralized exchange (DEX) shortly after completing its Public PreSale in early 2025, with Uniswap as the preferred platform. Following our initial listing, we will focus on establishing market value and demonstrating the functionality of our Market Centurions. As demand for our tokens increases, we will pursue centralized exchanges (CEX) listings to further enhance accessibility, market value, and liquidity for CipheX’s Community Members. Once we have finalized our listing strategy, we will make an announcement on our official channels."
+    },
+    {
+      "question": "What is the official listing price of CipheX CPX token?",
+      "answer": "As we approach the closing phase of our public presale in early 2025, CipheX will determine the opening price of its tokens through a combination of factors. These include: Analyzing market demand during the PreSale. Evaluating liquidity requirements and other staking strategies. Assessing broader market conditions at the time. This comprehensive approach ensures that the listing price reflects both market dynamics and the strategic goals of CipheX."
+    },
+    {
+      "question": "What is your regulatory compliance strategy?",
+      "answer": "CipheX actively monitors regulatory developments in cryptocurrency and intends to comply with evolving standards. However, cryptocurrency markets exist within a dynamic regulatory landscape, where changes in laws, regulations, or policies across regions could impact market access, trading practices, and the legality of certain crypto assets. Additionally, regulatory crackdowns or bans could pose risks to the value and liquidity of digital assets, potentially affecting investors."
+    }
+  ]
+}

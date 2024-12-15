@@ -28,22 +28,12 @@ class PDFParser(BaseScraper):
             return {}
 
     def _organize_sections(self, raw_sections: Dict[str, str]) -> Dict[str, Any]:
-        # Example approach:
-        # 1. Concatenate all pages.
-        # 2. Search for headings corresponding to known sections and split text accordingly.
         combined_text = "\n".join(raw_sections.values())
         
-        # Simple heuristic: search for section names in combined_text and split.
         organized = {}
         for section_name in WHITEPAPER_SECTIONS:
-            # find section_name in combined_text
-            # Extract text following that heading until next heading
-            # This requires a custom parsing approach based on whitepaper formatting.
-            # For now, assume you do a naive split or use regex.
-            # Pseudocode:
             start_idx = combined_text.lower().find(section_name)
             if start_idx != -1:
-                # find next section
                 next_section_idx = len(combined_text)
                 for other_section in WHITEPAPER_SECTIONS:
                     if other_section == section_name:

@@ -63,7 +63,7 @@ class BotCommandHandler:
             import json
             stats_data = json.loads(stats_data_str)
             # Format stats_data into a nice message:
-            formatted_stats = f"**Community & Presale Stats**:\n- Total Contributions: {stats_data.get('total_contributions', 'Unknown')}\n- Tokens Allocated: {stats_data.get('tokens_allocated', 'Unknown')}\n"
+            formatted_stats = f"**Community & Presale Stats**:\n- Total Contributions: {stats_data.get('total_contributions', '0')}\n- Tokens Allocated: {stats_data.get('tokens_allocated', '142M')}\n"
             await update.message.reply_text(formatted_stats, parse_mode="Markdown")
         else:
             await update.message.reply_text(BOT_RESPONSES["stats_info"], parse_mode="Markdown")
