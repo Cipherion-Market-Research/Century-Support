@@ -37,13 +37,7 @@ class DatabaseManager:
             logger.error(f"Error fetching conversations: {e}")
             return []
 
-    async def update_data(self, data: dict):
-        # Store each key-value pair
-        for k, v in data.items():
-            await self.redis.set(k, v)
-
     async def store_data(self, data: dict):
-        # Example: Store in a 'data_sync' collection with a timestamp
         try:
             data["timestamp"] = datetime.utcnow()
             await self.db.data_sync.insert_one(data)

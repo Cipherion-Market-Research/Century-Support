@@ -1,6 +1,8 @@
 import asyncio
-from datetime import datetime
 import hashlib
+import aiohttp
+import json
+from datetime import datetime
 from typing import Dict, Any
 from config.config import Config
 from utils.logger import setup_logger
@@ -44,6 +46,23 @@ class DataSyncer:
         data = await parser.process()
         return data
 
+    async def sync_presale_stats(self):
+        url = "https://ciphex.io/api/presale"
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        # Validate data if needed
+                        await self.cache_manager.update_data({"ciphex_stats": data})
+                        return data
+                    else:
+                        logger.error(f"Failed to fetch presale stats: {response.status}")
+                        return {}
+        except Exception as e:
+            logger.error(f"Error fetching presale stats: {e}")
+            return {}
+
     async def sync_all(self):
         """Synchronize all data sources"""
         if self.is_syncing:
@@ -51,17 +70,22 @@ class DataSyncer:
 
         self.is_syncing = True
         try:
-            # Sync website data
-            website_data = await self.sync_website()
-
-            # Sync Certik data
-            certik_data = await self.sync_certik()
-
             # Sync PDF data
             pdf_data = await self.sync_pdf()
+            if pdf_data and self._is_data_valid(pdf_data):
+                # Serialize the entire pdf_data dictionary
+                serialized_data = json.dumps(pdf_data)
+                # Store under the single key "whitepaper_sections"
+                await self.cache_manager.redis.set("whitepaper_sections", serialized_data)
+                logger.info("Whitepaper sections successfully stored in Redis under 'whitepaper_sections'.")
+            else:
+                logger.error("Failed to parse or validate whitepaper data.")
+
+            # Sync presale stats
+            presale_data = await self.sync_presale_stats()
 
             # Update cache and database
-            await self._update_data_stores(website_data, certik_data, pdf_data)
+            await self._update_data_stores(pdf_data, presale_data)
 
             self.last_sync = datetime.now()
             logger.info("Data sync completed successfully")

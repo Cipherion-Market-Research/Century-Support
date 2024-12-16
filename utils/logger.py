@@ -1,8 +1,9 @@
+# utils/logger.py
+
 import logging
 from logging.handlers import RotatingFileHandler
 import os
 from datetime import datetime
-
 
 def setup_logger(name: str = __name__) -> logging.Logger:
     """Set up logger with rotating file handler"""
@@ -11,7 +12,7 @@ def setup_logger(name: str = __name__) -> logging.Logger:
     if logger.handlers:
         return logger
 
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)  # Ensure DEBUG level
 
     # Create logs directory if it doesn't exist
     if not os.path.exists("logs"):

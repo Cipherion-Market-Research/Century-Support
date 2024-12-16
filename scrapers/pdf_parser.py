@@ -42,9 +42,9 @@ class PDFParser(BaseScraper):
                     if idx != -1 and idx < next_section_idx:
                         next_section_idx = idx
                 section_text = combined_text[start_idx:next_section_idx]
-                organized[section_name] = section_text.strip()
+                organized[section_name.lower()] = section_text.strip()
             else:
-                organized[section_name] = "Not found in whitepaper"
+                organized[section_name.lower()] = "Not found in whitepaper"
         
         return organized
 

@@ -8,6 +8,9 @@ class Config:
     TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
+    # Telegram Group Configuration
+    TELEGRAM_GROUP_ID = os.getenv("TELEGRAM_GROUP_ID")
+
     # Database Configuration
     MONGODB_URI = os.getenv("MONGODB_URI")
     REDIS_URL = os.getenv("REDIS_URL")
