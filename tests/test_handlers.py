@@ -10,7 +10,7 @@ from config.constants import BOT_RESPONSES
 @pytest.fixture
 def mock_bot():
     bot = MagicMock(spec=Bot)
-    bot.username = "CenturySupport"
+    bot.username = "CiphexHelpBot"
     return bot
 
 @pytest.fixture

@@ -27,16 +27,12 @@ class WebsiteScraper(BaseScraper):
         else:
             total_contributions = "Unknown"
 
-        # Repeat for other stats like total wallets, tokens allocated, etc.
-        # Example:
         tokens_elem = soup.find(id="total_allocated")
         tokens_allocated = tokens_elem.get_text(strip=True) if tokens_elem else "Unknown"
 
-        # Return as a dictionary
         return {
             "total_contributions": total_contributions,
-            "tokens_allocated": tokens_allocated
-            # Add more stats as needed
+            "tokens_allocated": tokens_allocated,
         }
 
     async def fetch(self) -> Dict[str, Any]:
