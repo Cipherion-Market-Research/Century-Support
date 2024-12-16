@@ -25,7 +25,7 @@ class BotCommandHandler:
                 "whitepaper": self._handle_whitepaper,
                 "ca": self._handle_contract,
                 "stats": self._handle_stats,
-                "certik": self._handle_certik,
+                "audit": self._handle_certik,
                 "presale": self._handle_presale,
                 "website": self._handle_website,
             }

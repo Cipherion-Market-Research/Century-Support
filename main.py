@@ -1,4 +1,15 @@
 # main.py
+import os
+import sys
+
+# Ensure the console uses UTF-8 encoding
+if os.name == 'nt':
+    os.system('chcp 65001 >nul')  # Windows-specific command to set code page to UTF-8
+
+# Reconfigure stdout and stderr to use UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
+
 import asyncio
 import json
 from telegram import Update
@@ -68,7 +79,7 @@ async def post_init(application: Application):
 			# Schedule periodic messages
     try:
         # For production, set interval_seconds to 24*3600 (24 hours) and offset_seconds as needed
-        schedule_periodic_messages(application, interval_seconds=24*3600, offset_seconds=3*3600)
+        schedule_periodic_messages(application, interval_seconds=24*3600, offset_seconds=12*3600)
         logger.info("Scheduled periodic messages successfully.")
     except Exception as e:
         logger.error(f"Failed to schedule periodic messages: {e}")
@@ -98,7 +109,7 @@ if __name__ == "__main__":
     application.add_handler(CommandHandler("whitepaper", command_handler.handle_command))
     application.add_handler(CommandHandler("ca", command_handler.handle_command))
     application.add_handler(CommandHandler("stats", command_handler.handle_command))
-    application.add_handler(CommandHandler("certik", command_handler.handle_command))
+    application.add_handler(CommandHandler("audit", command_handler.handle_command))
     application.add_handler(CommandHandler("presale", command_handler.handle_command))
     application.add_handler(CommandHandler("website", command_handler.handle_command))
 

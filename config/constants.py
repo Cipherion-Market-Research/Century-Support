@@ -12,9 +12,8 @@ Tag me (@CiphexHelpBot) in any message to ask questions or use /help to see what
 /whitepaper - Access our official whitepaper 📄  
 /website - Access our official website 🌐  
 /ca - Show contract address & Etherscan link 📝  
-/stats - View community & presale statistics 📊
 /presale - Check presale status 💵
-/certik - View Certik audit & Skynet scores 📖
+/audit - View Certik audit & Skynet scores 📖
 
 **Other Resources:**
 - [FAQ](https://ciphex.io/#faq) 
@@ -121,12 +120,7 @@ ERROR_MESSAGES = {
 }
 
 SCHEDULED_MESSAGES = {
-    "privacy_reminder": """Adjust your Telegram Privacy Settings & Avoid Spam Calls:
-
-* Change Calls to Contacts only
-* Set New Chats from Unknown Users to Archive and Mute
-* Set Who Can Add You to Groups to Nobody 💂
-""",
+    "privacy_reminder": "Adjust your Telegram Privacy Settings & Avoid Spam Calls:\n\n• Change Calls to Contacts only\n• Set New Chats from Unknown Users to Archive and Mute\n• Set Who Can Add You to Groups to Nobody 👮",
     "admin_warning": """Friendly reminder: CipheX Admins will NEVER DM you. Please do not respond to anyone claiming they are from our team. It is a scam!
 
 If you wish to contact us, please email us at help@ciphex.io"""
