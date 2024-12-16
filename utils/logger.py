@@ -1,9 +1,9 @@
 # utils/logger.py
-
 import logging
 from logging.handlers import RotatingFileHandler
 import os
 from datetime import datetime
+import sys
 
 def setup_logger(name: str = __name__) -> logging.Logger:
     """Set up logger with rotating file handler"""
@@ -19,11 +19,12 @@ def setup_logger(name: str = __name__) -> logging.Logger:
         os.makedirs("logs")
 
     # Create handlers
-    console_handler = logging.StreamHandler()
+    console_handler = logging.StreamHandler(sys.stdout)  # Direct to stdout
     file_handler = RotatingFileHandler(
         f'logs/bot_{datetime.now().strftime("%Y%m%d")}.log',
         maxBytes=10485760,  # 10MB
         backupCount=5,
+        encoding='utf-8'  # Ensure file is UTF-8 encoded
     )
 
     # Create formatters

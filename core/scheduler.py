@@ -26,7 +26,7 @@ async def send_message_1(context):
 async def send_message_2(context):
     await send_message(context, "admin_warning")
 
-def schedule_periodic_messages(application: Application, interval_seconds: int = 24*3600, offset_seconds: int = 3*3600):
+def schedule_periodic_messages(application: Application, interval_seconds: int = 24*3600, offset_seconds: int = 12*3600):
     """
     Schedule two periodic messages.
     
