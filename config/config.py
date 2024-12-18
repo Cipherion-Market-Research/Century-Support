@@ -5,7 +5,7 @@ load_dotenv()
 
 class Config:
     # Bot Configuration
-    TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN_DEV")
+    TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
     # Telegram Group Configuration
