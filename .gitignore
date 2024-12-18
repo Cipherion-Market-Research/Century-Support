@@ -46,6 +46,12 @@ data/training/dynamic/*
 .coverage
 htmlcov/
 
+# Static files
+static/temp/*
+!static/temp/.gitkeep
+static/uploads/*
+!static/uploads/.gitkeep
+
 # Secrets and configurations
 .env
 *.pem

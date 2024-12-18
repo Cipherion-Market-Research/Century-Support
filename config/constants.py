@@ -8,16 +8,13 @@ Tag me (@CiphexHelpBot) in any message to ask questions or use /help to see what
 • CipheX will never DM you first
 • Never share your wallet seed phrases
 • Always verify links through official channels""",
+
     "help": """**Available Commands:**
 /whitepaper - Access our official whitepaper 📄  
 /website - Access our official website 🌐  
 /ca - Show contract address & Etherscan link 📝  
 /presale - Check presale status 💵
 /audit - View Certik audit & Skynet scores 📖
-
-**Other Resources:**
-- [FAQ](https://ciphex.io/#faq) 
-- [Twitter](https://x.com/ciphexio)
 
 You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
 

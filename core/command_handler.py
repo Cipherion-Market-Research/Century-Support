@@ -1,7 +1,8 @@
 import json
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from config.constants import BOT_RESPONSES
+from config.asset_paths import WELCOME_GIF
 from utils.logger import setup_logger
 
 logger = setup_logger()
@@ -43,10 +44,43 @@ class BotCommandHandler:
 
 
     async def _handle_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(BOT_RESPONSES["welcome"], parse_mode="Markdown")
+        try:
+            # Create inline keyboard
+            keyboard = [
+                [
+                    InlineKeyboardButton("Website", url="https://ciphex.io"),
+                    InlineKeyboardButton("Whitepaper", url="https://ciphex.io/whitepaper.pdf")
+                ]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+
+            # Send welcome GIF with caption
+            with open(WELCOME_GIF, 'rb') as gif:
+                await context.bot.send_animation(
+                    chat_id=update.effective_chat.id,
+                    animation=gif,
+                    caption=BOT_RESPONSES["welcome"],
+                    parse_mode="Markdown",
+                    reply_markup=reply_markup
+                )
+        except Exception as e:
+            logger.error(f"Error in _handle_start: {e}", exc_info=True)
+            await update.message.reply_text(BOT_RESPONSES["error"])
 
     async def _handle_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(BOT_RESPONSES["help"], parse_mode="Markdown")
+        keyboard = [
+            [InlineKeyboardButton("FAQ", url="https://ciphex.io/#faq")],
+            [InlineKeyboardButton("Twitter", url="https://x.com/ciphexio")]
+            # Add more buttons as needed
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+
+        await update.message.reply_text(
+            text=BOT_RESPONSES["help"],
+            parse_mode="Markdown",
+            reply_markup=reply_markup
+        )
+
 
     async def _handle_contract(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(BOT_RESPONSES["contract_info"], parse_mode="Markdown")
