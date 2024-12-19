@@ -51,7 +51,7 @@ class BotMessageHandler:
 
             # 1) Attempt fuzzy match for FAQ
             matched_faq, faq_score = self._fuzzy_match_faq(message.lower(), faq_data)
-            similarity_threshold = 75
+            similarity_threshold = 80
 
             if matched_faq and faq_score >= similarity_threshold:
                 original_faq_answer = faq_data[matched_faq]
@@ -164,18 +164,34 @@ class BotMessageHandler:
         except Exception as e:
             self.logger.error(f"Error getting chat context for user {user_id}: {e}", exc_info=True)
             return ""
-
+    
     def _fuzzy_match_faq(self, user_message: str, faq_dict: dict):
-        """
-        Use thefuzz to match the user's text against stored FAQ keys.
-        Returns (best_match_key, score).
-        """
-        if not faq_dict:
-            return None, 0
-
-        faq_questions = list(faq_dict.keys())
-        best_match, best_score = process.extractOne(user_message, faq_questions, scorer=fuzz.token_sort_ratio)
-        return best_match, best_score
+      """
+      Enhanced fuzzy matching with exact keyword prioritization
+      Returns (best_match_key, score)
+      """
+      if not faq_dict:
+        return None, 0
+      # Priority keywords that should trigger specific FAQ entries
+      priority_matches = {
+						"price": "What is the starting price in USD?",
+						"starting price": "What is the starting price in USD?",
+						"token price": "What is the starting price in USD",
+						"how much": "What is the starting price in USD?"
+				}
+      # Check for priority keyword matches first
+      user_msg_lower = user_message.lower()
+      for keyword, faq_question in priority_matches.items():
+        if keyword in user_msg_lower and faq_question in faq_dict:
+          return faq_question, 100  # Perfect match score
+      # If no priority match, proceed with regular fuzzy matching
+      faq_questions = list(faq_dict.keys())
+      best_match, best_score = process.extractOne(
+          user_message, 
+          faq_questions, 
+          scorer=fuzz.token_sort_ratio
+      )
+      return best_match, best_score
 
     async def _summarize_text(self, original_text: str, user_query: str, source_label: str) -> str:
         """
