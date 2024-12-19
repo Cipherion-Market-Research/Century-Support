@@ -19,86 +19,104 @@ class BotMessageHandler:
         self.logger = setup_logger(__name__)  # Removed module-level logger duplication
     
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """
+        Main message handler. Checks for FAQ or Whitepaper matches—
+        if found, provides a summarized (more conversational) answer.
+        Falls back to the general GPT AI if no matches are found.
+        """
         self.logger.info("handle_message triggered")
         try:
-            message = update.message.text
+            # Basic info about user and message
+            message = (update.message.text or "").strip()
             user_id = update.effective_user.id
 
-            self.logger.debug(f"Received message from user {user_id}: {message}")
-
-            # Check if bot is mentioned or in private chat
+            # Quick user mention or private chat check
             if not self._should_process_message(update, context):
-                self.logger.info(f"Should process returned False for user {user_id}, message: {message}")
+                self.logger.info("Skipping message as bot not mentioned or not in private chat.")
                 return
 
-            self.logger.info(f"Processing message from user {user_id}: {message}")
-
+            self.logger.info(f"Processing user {user_id} message: {message}")
             await update.message.reply_text(BOT_RESPONSES["thinking"], parse_mode="Markdown")
 
-            # Get context from recent messages
+            # Build chat context from recent DB logs (for GPT fallback, if needed)
             chat_context = await self._get_chat_context(user_id)
-            self.logger.debug(f"Chat context for user {user_id}: {chat_context}")
 
-            # Fetch cached data for whitepaper and FAQ
+            # Pull FAQ data from Redis
             faq_data_str = await self.cache_manager.redis.get("faq_data")
             faq_data = json.loads(faq_data_str) if faq_data_str else {}
-            if faq_data:
-                self.logger.debug(f"Fetched faq_data from cache: {len(faq_data)} entries")
-            else:
-                self.logger.warning("faq_data not found in cache or empty")
 
+            # Pull Whitepaper data from Redis
             whitepaper_str = await self.cache_manager.redis.get("whitepaper_sections")
             whitepaper_data = json.loads(whitepaper_str) if whitepaper_str else {}
-            self.logger.debug(f"Whitepaper data keys: {list(whitepaper_data.keys()) if whitepaper_data else 'No data'}")
 
+            # 1) Attempt fuzzy match for FAQ
+            matched_faq, faq_score = self._fuzzy_match_faq(message.lower(), faq_data)
+            similarity_threshold = 75
+
+            if matched_faq and faq_score >= similarity_threshold:
+                original_faq_answer = faq_data[matched_faq]
+                # Summarize the matched FAQ text
+                summarized_answer = await self._summarize_text(
+                    original_faq_answer,
+                    user_query=message,
+                    source_label="FAQ"
+                )
+                # Store & respond
+                await self.db_manager.store_conversation(user_id, message, summarized_answer)
+                await update.message.reply_text(summarized_answer, parse_mode="Markdown")
+                return
+
+            # 2) Attempt a whitepaper match (partial or direct map)
+            matched_section = None
             user_msg_lower = message.lower()
 
-            # Fuzzy Matching for FAQ
-            if faq_data:
-                faq_questions = list(faq_data.keys())
-                match, score = process.extractOne(user_msg_lower, faq_questions, scorer=fuzz.token_sort_ratio)
-                similarity_threshold = 80  # Adjust based on desired sensitivity
-
-                self.logger.debug(f"Fuzzy match result: '{match}' with score {score}")
-
-                if score >= similarity_threshold:
-                    response = faq_data[match]
-                    self.logger.info(f"FAQ matched: '{match}' with score {score}")
-                    await self.db_manager.store_conversation(user_id, message, response)
-                    await update.message.reply_text(response)
-                    return
-                else:
-                    self.logger.info(f"No significant FAQ match found (score: {score}). Proceeding to whitepaper or AI.")
-
-            # Check Whitepaper sections
-            matched_section = None
-            for keyword, section_name in WHITEPAPER_MAP.items():
+            # The existing approach: check if any keyword in WHITEPAPER_MAP is in the user message
+            for keyword, wp_section_name in WHITEPAPER_MAP.items():
                 if keyword in user_msg_lower:
-                    matched_section = section_name.lower()
+                    matched_section = wp_section_name.lower()
                     break
 
             if matched_section and matched_section in whitepaper_data:
-                section_text = whitepaper_data.get(matched_section, "No info found.")
-                response_text = f"{section_text}\n\nCheck out [Ciphex Whitepaper](https://ciphex.io/whitepaper.pdf) for more details!"
-                self.logger.debug(f"Response text for whitepaper section '{matched_section}': {response_text[:100]}...")
+                original_wp_text = whitepaper_data[matched_section]
+                # Summarize the matched Whitepaper text
+                summarized_wp = await self._summarize_text(
+                    original_wp_text,
+                    user_query=message,
+                    source_label="whitepaper"
+                )
+                # Optionally append a “read more” snippet
+                response_text = (
+                    f"{summarized_wp}\n\n"
+                    "Check out https://ciphex.io/whitepaper for more details!"
+                )
+
+                # Store & respond
                 await self.db_manager.store_conversation(user_id, message, response_text)
                 await update.message.reply_text(response_text[:4000], parse_mode="Markdown")
                 return
 
-            # Fallback to AI
-            context_data = f"Whitepaper Sections: {whitepaper_data}\nFAQ: {faq_data}\n{chat_context}"
+            # 3) Fallback to AI if no direct FAQ or Whitepaper match
+            context_data = (
+                f"Whitepaper Sections: {whitepaper_data}\n\n"
+                f"FAQ: {faq_data}\n\n"
+                f"{chat_context}"
+            )
             self.logger.debug(f"Context data for AI: {context_data[:200]}...")
-            response = await self.ai_handler.generate_response(message, context_data)
-            self.logger.debug(f"AI response: {response[:100]}...")
-            await self.db_manager.store_conversation(user_id, message, response)
-            await update.message.reply_text(response)
+            ai_response = await self.ai_handler.generate_response(message, context_data)
+
+            # Store & respond
+            await self.db_manager.store_conversation(user_id, message, ai_response)
+            await update.message.reply_text(ai_response, parse_mode="Markdown")
 
         except Exception as e:
             logger.error(f"Error handling message: {e}", exc_info=True)
             await update.message.reply_text(BOT_RESPONSES["error"], parse_mode="Markdown")
 
-
     def _should_process_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
+        """
+        Determine if the bot should process this message. We respond
+        if it's a private chat or if we are explicitly mentioned in a group.
+        """
         self.logger.debug(f"Chat: {update.effective_chat.type}, Text: {update.message.text}, Bot Username: {context.bot.username}")
 
         if update.effective_chat.type == "private":
@@ -128,7 +146,9 @@ class BotMessageHandler:
             return False
 
     async def _get_chat_context(self, user_id: int) -> str:
-        """Get recent chat context for user"""
+        """
+        Retrieve up to the last few interactions for GPT fallback context.
+        """
         try:
             whitepaper_str = await self.cache_manager.redis.get("whitepaper_sections")
             whitepaper_data = json.loads(whitepaper_str) if whitepaper_str else {}
@@ -144,3 +164,42 @@ class BotMessageHandler:
         except Exception as e:
             self.logger.error(f"Error getting chat context for user {user_id}: {e}", exc_info=True)
             return ""
+
+    def _fuzzy_match_faq(self, user_message: str, faq_dict: dict):
+        """
+        Use thefuzz to match the user's text against stored FAQ keys.
+        Returns (best_match_key, score).
+        """
+        if not faq_dict:
+            return None, 0
+
+        faq_questions = list(faq_dict.keys())
+        best_match, best_score = process.extractOne(user_message, faq_questions, scorer=fuzz.token_sort_ratio)
+        return best_match, best_score
+
+    async def _summarize_text(self, original_text: str, user_query: str, source_label: str) -> str:
+        """
+        Summarize or rephrase text in a more conversational style
+        using your AIHandler. 
+        source_label can be 'FAQ', 'whitepaper', or any future data source.
+        """
+        # You could tailor your prompt for each source_label if needed.
+        prompt = (
+            "You are CipheX Help Bot. Please rephrase or summarize the text below in a concise, "
+            "friendly tone. Retain all essential information, but deliver it in a natural, "
+            "user-friendly format.\n\n"
+            f"Source: {source_label}\n"
+            f"Original Text:\n{original_text}\n\n"
+            f"User Query:\n{user_query}\n"
+        )
+
+        # Provide some minimal context so GPT knows the situation
+        context_data = (
+            f"We have an answer from {source_label}. "
+            "Convert it into an engaging user-facing response with Markdown formatting. "
+            "Feel free to use bullet points or emojis if relevant."
+        )
+
+        # Call AI handler to get summarized text
+        summarized_answer = await self.ai_handler.generate_response(prompt, context_data)
+        return summarized_answer.strip()
