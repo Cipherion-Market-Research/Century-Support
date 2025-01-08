@@ -447,24 +447,23 @@ class BotMessageHandler:
             return {}
 
     async def _get_technical_response(self, message: str) -> Optional[str]:
-        """Handle technical queries about Abacus and Market Centurions"""
-        technical_keywords = {
-            "abacus": ["abacus", "neural center", "analytics"],
-            "market_centurions": ["market centurions", "centurions", "trading bots"],
-            "autonomous": ["autonomous", "automated trading", "ai trading"]
-        }
-
-        matched_sections = []
-        for topic, keywords in technical_keywords.items():
-            if any(keyword in message.lower() for keyword in keywords):
-                sections = TECHNICAL_SECTIONS.get(topic, [])
-                content = await self._get_sections_content(sections)
-                if content:
-                    matched_sections.append(content)
-
-        if matched_sections:
-            return await self._format_technical_response(matched_sections)
-        return None
+        """Enhanced technical topic handling"""
+        try:
+            # Log section matching attempts
+            logger.debug(f"Attempting technical match for: {message}")
+            
+            matched_sections = []
+            for topic, keywords in TECHNICAL_SECTIONS.items():
+                if any(keyword in message.lower() for keyword in keywords):
+                    logger.debug(f"Matched technical topic: {topic}")
+                    content = await self._get_sections_content(topic)
+                    if content:
+                        matched_sections.append(content)
+                        
+            return self._format_technical_response(matched_sections)
+        except Exception as e:
+            logger.error(f"Technical response error: {e}")
+            return None
 
     async def _format_technical_response(self, sections: List[str]) -> str:
         """Format technical responses with proper context"""
@@ -505,3 +504,15 @@ class BotMessageHandler:
         except Exception as e:
             logger.error(f"Error getting sections content: {e}")
             return ""
+
+    async def _build_context(self, message: str, user_id: int) -> str:
+        """Build enhanced context for responses"""
+        recent_context = await self._get_chat_context(user_id)
+        whitepaper_context = await self._get_relevant_sections(message)
+        technical_context = await self._get_technical_response(message)
+        
+        return {
+            "recent_chat": recent_context,
+            "whitepaper": whitepaper_context,
+            "technical": technical_context
+        }
