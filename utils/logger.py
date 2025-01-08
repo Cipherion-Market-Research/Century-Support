@@ -29,7 +29,9 @@ def setup_logger(name: str = __name__) -> logging.Logger:
 
     # Create formatters
     formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s\n"
+        "Context: %(context)s\n"
+        "Section Match: %(section)s"
     )
 
     # Add formatters to handlers
