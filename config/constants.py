@@ -264,5 +264,17 @@ TECHNICAL_DETAILS = {
             "Position rebalancing",
             "System parameter adjustment"
         ]
+    },
+    "black_swan": {
+        "coordination": [
+            "Cross-system emergency protocols",
+            "Integrated risk management response",
+            "Multi-layer system coordination"
+        ],
+        "responses": [
+            "Automated circuit breakers",
+            "System-wide risk adjustments",
+            "Emergency liquidity management"
+        ]
     }
 }
