@@ -6,6 +6,7 @@ from datetime import datetime
 from typing import Dict, Any
 from config.config import Config
 from utils.logger import setup_logger
+from scrapers.whitepaper_parser import WhitepaperParser
 
 logger = setup_logger()
 
@@ -16,6 +17,7 @@ class DataSyncer:
         self.cache_manager = cache_manager
         self.is_syncing = False
         self.last_sync = None
+        self.whitepaper_parser = WhitepaperParser()
 
     async def start_periodic_sync(self):
         """Start periodic data synchronization"""
@@ -64,36 +66,35 @@ class DataSyncer:
             return {}
 
     async def sync_all(self):
-        """Synchronize all data sources"""
-        if self.is_syncing:
-            return
-
-        self.is_syncing = True
+        """Sync all data sources"""
         try:
-            # Sync PDF data
-            pdf_data = await self.sync_pdf()
-            if pdf_data and self._is_data_valid(pdf_data):
-                # Serialize the entire pdf_data dictionary
-                serialized_data = json.dumps(pdf_data)
-                # Store under the single key "whitepaper_sections"
-                await self.cache_manager.redis.set("whitepaper_sections", serialized_data)
-                logger.info("Whitepaper sections successfully stored in Redis under 'whitepaper_sections'.")
-            else:
-                logger.error("Failed to parse or validate whitepaper data.")
+            if self.is_syncing:
+                logger.warning("Sync already in progress")
+                return
 
-            # Sync presale stats
+            self.is_syncing = True
+            
+            # Parse whitepaper
+            whitepaper_data = await self.whitepaper_parser.process()
+            if whitepaper_data:
+                await self.cache_manager.redis.set(
+                    "whitepaper_sections",
+                    json.dumps(whitepaper_data)
+                )
+
+            # Continue with other syncs...
+            website_data = await self.sync_website()
+            certik_data = await self.sync_certik()
             presale_data = await self.sync_presale_stats()
 
-            # Update cache and database
-            await self._update_data_stores(pdf_data, presale_data)
-
             self.last_sync = datetime.now()
-            logger.info("Data sync completed successfully")
-
-        except Exception as e:
-            logger.error(f"Error in sync_all: {e}")
-        finally:
             self.is_syncing = False
+            
+            logger.info("Data sync completed successfully")
+            
+        except Exception as e:
+            self.is_syncing = False
+            logger.error(f"Error in sync_all: {e}")
 
     async def _update_data_stores(self, *data_sets):
         try:
