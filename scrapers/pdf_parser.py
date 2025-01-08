@@ -93,26 +93,63 @@ class PDFParser(BaseScraper):
     async def _extract_section_content(self, text: str, section_num: str) -> str:
         """Extract content for a specific section number"""
         try:
-            if isinstance(text, dict):
-                # If we got a dict, it means we already have parsed sections
-                return text.get(section_num, "")
+            # Build the section pattern
+            next_section_pattern = self._get_next_section_pattern()
+            section_pattern = f"{section_num}\\s+.*?(?={next_section_pattern})"
             
-            # Find section start
-            section_pattern = f"{section_num}\\s+.*?\\n"
-            start_match = re.search(section_pattern, text)
-            if not start_match:
-                return ""
+            # Search for content with DOTALL flag to match across lines
+            content = re.search(section_pattern, text, re.DOTALL)
+            if content:
+                raw_content = content.group(0)
+                return self._clean_section_content(raw_content)
             
-            start_idx = start_match.start()
+            logger.warning(f"No content found for section {section_num}")
+            return ""
             
-            # Find next section start
-            next_section_pattern = r"\d+\.\d+\s+.*?\n"
-            next_match = re.search(next_section_pattern, text[start_idx + 1:])
-            
-            end_idx = next_match.start() + start_idx + 1 if next_match else len(text)
-            
-            section_content = text[start_idx:end_idx].strip()
-            return section_content
         except Exception as e:
             logger.error(f"Error extracting section {section_num}: {e}")
             return ""
+
+    def _get_next_section_pattern(self) -> str:
+        """
+        Generate regex pattern to find the next section boundary
+        Returns a pattern that matches any section number format (e.g., 1.0, 1.1, 2.0, etc.)
+        """
+        return r"\d+\.\d+\s+[A-Za-z]|\Z"  # Matches next section number or end of text
+
+    def _clean_section_content(self, content: str) -> str:
+        """
+        Clean and format the extracted section content
+        - Removes extra whitespace
+        - Fixes line breaks
+        - Removes page numbers and headers
+        - Preserves important formatting
+        """
+        try:
+            # Remove page numbers and headers
+            lines = content.split('\n')
+            cleaned_lines = []
+            for line in lines:
+                # Skip page numbers and headers
+                if re.match(r'^\d+\s*Page\s*\|', line):
+                    continue
+                # Skip empty lines
+                if not line.strip():
+                    continue
+                # Clean up whitespace
+                cleaned_line = ' '.join(line.split())
+                cleaned_lines.append(cleaned_line)
+
+            # Join lines with proper spacing
+            cleaned_content = ' '.join(cleaned_lines)
+            
+            # Remove section number from start
+            cleaned_content = re.sub(r'^\d+\.\d+\s+', '', cleaned_content)
+            
+            # Fix any double spaces
+            cleaned_content = re.sub(r'\s+', ' ', cleaned_content)
+            
+            return cleaned_content.strip()
+        except Exception as e:
+            logger.error(f"Error cleaning section content: {e}")
+            return content  # Return original content if cleaning fails
