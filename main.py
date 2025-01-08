@@ -104,6 +104,29 @@ async def post_init(application: Application):
     except Exception as e:
         logger.error(f"Failed to schedule periodic messages: {e}")
 
+async def verify_files():
+    """Verify required files exist"""
+    required_files = [
+        ("data/training/whitepaper.txt", "Whitepaper"),
+        ("data/training/faq.json", "FAQ Data")
+    ]
+    
+    missing_files = []
+    for file_path, file_desc in required_files:
+        if not os.path.exists(file_path):
+            missing_files.append(f"{file_desc} ({file_path})")
+    
+    if missing_files:
+        logger.error(f"Missing required files:\n- {'\n- '.join(missing_files)}")
+        return False
+    return True
+
+async def main():
+    # Verify files before starting
+    if not await verify_files():
+        logger.error("Critical files missing. Please check the logs.")
+        return
+
 if __name__ == "__main__":
     db_manager = DatabaseManager()
     cache_manager = CacheManager()
