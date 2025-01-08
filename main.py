@@ -117,7 +117,7 @@ async def verify_files():
             missing_files.append(f"{file_desc} ({file_path})")
     
     if missing_files:
-        logger.error(f"Missing required files:\n- {'\n- '.join(missing_files)}")
+        logger.error("Missing required files:\n- " + "\n- ".join(missing_files))
         return False
     return True
 
