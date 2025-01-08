@@ -106,7 +106,25 @@ class DataSyncer:
         except Exception as e:
             logger.error(f"Error updating data stores: {e}")
 
-
     def _is_data_valid(self, data: Dict[str, Any]) -> bool:
         """Validate data before storing"""
         return bool(data and isinstance(data, dict))
+
+    async def sync_faq_data(self):
+        """
+        Sync FAQ data from file to Redis cache
+        """
+        try:
+            # Read FAQ data from file
+            with open('data/training/faq.json', 'r') as f:
+                faq_data = json.load(f)
+            
+            # Store in Redis with expiration
+            await self.cache_manager.redis.set(
+                'faq_data',
+                json.dumps(faq_data),
+                ex=3600  # 1 hour expiration
+            )
+            logger.info("FAQ data synced successfully")
+        except Exception as e:
+            logger.error(f"Error syncing FAQ data: {e}")
