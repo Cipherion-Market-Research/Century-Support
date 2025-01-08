@@ -27,7 +27,7 @@ class BotMessageHandler:
         self.logger.info("handle_message triggered")
         try:
             # Basic info about user and message
-            message = (update.message.text or "").strip()
+            message = (update.message.text or "").strip().lower()
             user_id = update.effective_user.id
 
             # Quick user mention or private chat check
@@ -49,8 +49,17 @@ class BotMessageHandler:
             whitepaper_str = await self.cache_manager.redis.get("whitepaper_sections")
             whitepaper_data = json.loads(whitepaper_str) if whitepaper_str else {}
 
+            # Check for presale-related keywords first
+            presale_keywords = ["presale", "pre-sale", "pre sale", "when start", "when launch"]
+            if any(keyword in message for keyword in presale_keywords):
+                await update.message.reply_text(
+                    BOT_RESPONSES["presale_info"],
+                    parse_mode="Markdown"
+                )
+                return
+
             # 1) Attempt fuzzy match for FAQ
-            matched_faq, faq_score = self._fuzzy_match_faq(message.lower(), faq_data)
+            matched_faq, faq_score = self._fuzzy_match_faq(message, faq_data)
             similarity_threshold = 80
 
             if matched_faq and faq_score >= similarity_threshold:
@@ -68,11 +77,10 @@ class BotMessageHandler:
 
             # 2) Attempt a whitepaper match (partial or direct map)
             matched_section = None
-            user_msg_lower = message.lower()
 
             # The existing approach: check if any keyword in WHITEPAPER_MAP is in the user message
             for keyword, wp_section_name in WHITEPAPER_MAP.items():
-                if keyword in user_msg_lower:
+                if keyword in message:
                     matched_section = wp_section_name.lower()
                     break
 
@@ -166,32 +174,36 @@ class BotMessageHandler:
             return ""
     
     def _fuzzy_match_faq(self, user_message: str, faq_dict: dict):
-      """
-      Enhanced fuzzy matching with exact keyword prioritization
-      Returns (best_match_key, score)
-      """
-      if not faq_dict:
-        return None, 0
-      # Priority keywords that should trigger specific FAQ entries
-      priority_matches = {
-						"price": "What is the starting price in USD?",
-						"starting price": "What is the starting price in USD?",
-						"token price": "What is the starting price in USD",
-						"how much": "What is the starting price in USD?"
-				}
-      # Check for priority keyword matches first
-      user_msg_lower = user_message.lower()
-      for keyword, faq_question in priority_matches.items():
-        if keyword in user_msg_lower and faq_question in faq_dict:
-          return faq_question, 100  # Perfect match score
-      # If no priority match, proceed with regular fuzzy matching
-      faq_questions = list(faq_dict.keys())
-      best_match, best_score = process.extractOne(
-          user_message, 
-          faq_questions, 
-          scorer=fuzz.token_sort_ratio
-      )
-      return best_match, best_score
+        """
+        Enhanced fuzzy matching with exact keyword prioritization
+        Returns (best_match_key, score)
+        """
+        if not faq_dict:
+            return None, 0
+        # Priority keywords that should trigger specific FAQ entries
+        priority_matches = {
+            "price": "What is the starting price in USD?",
+            "starting price": "What is the starting price in USD?",
+            "token price": "What is the starting price in USD",
+            "how much": "What is the starting price in USD?",
+            # Add presale related priority matches
+            "presale": "When does the presale start?",
+            "when presale": "When does the presale start?",
+            "when does presale": "When does the presale start?"
+        }
+        # Check for priority keyword matches first
+        user_msg_lower = user_message.lower()
+        for keyword, faq_question in priority_matches.items():
+            if keyword in user_msg_lower and faq_question in faq_dict:
+                return faq_question, 100  # Perfect match score
+        # If no priority match, proceed with regular fuzzy matching
+        faq_questions = list(faq_dict.keys())
+        best_match, best_score = process.extractOne(
+            user_message, 
+            faq_questions, 
+            scorer=fuzz.token_sort_ratio
+        )
+        return best_match, best_score
 
     async def _summarize_text(self, original_text: str, user_query: str, source_label: str) -> str:
         """
