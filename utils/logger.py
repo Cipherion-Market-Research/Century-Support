@@ -18,6 +18,14 @@ def setup_logger(name: str = __name__) -> logging.Logger:
     if not os.path.exists("logs"):
         os.makedirs("logs")
 
+    # Create formatters with optional fields
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        "%(context)s"  # Optional context
+        "%(section)s",  # Optional section match
+        defaults={'context': '', 'section': ''}  # Default values if not provided
+    )
+
     # Create handlers
     console_handler = logging.StreamHandler(sys.stdout)  # Direct to stdout
     file_handler = RotatingFileHandler(
@@ -25,13 +33,6 @@ def setup_logger(name: str = __name__) -> logging.Logger:
         maxBytes=10485760,  # 10MB
         backupCount=5,
         encoding='utf-8'  # Ensure file is UTF-8 encoded
-    )
-
-    # Create formatters
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s\n"
-        "Context: %(context)s\n"
-        "Section Match: %(section)s"
     )
 
     # Add formatters to handlers
