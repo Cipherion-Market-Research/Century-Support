@@ -160,22 +160,38 @@ I'm here to help you with all things CipheX. Use commands like:
 Need help? Just ask or use /help for all commands!"""
 }
 
-# Technical section mappings for Abacus and Market Centurions
+# Technical topic mappings with relationships
 TECHNICAL_SECTIONS = {
-    "abacus": [
-        "1.1",  # The CipheX Ecosystem
-        "1.2",  # The Origin of CipheX
-        "1.3"   # Autonomous Market Trading
-    ],
-    "market_centurions": [
-        "1.2",  # The Origin of CipheX
-        "1.3",  # Autonomous Market Trading
-        "5.2"   # Autonomous Trading (Risk section)
-    ],
-    "autonomous": [
-        "1.3",  # Autonomous Market Trading
-        "5.2",  # Autonomous Trading (Risk section)
-        "5.3",  # Cybersecurity Threats
-        "5.4"   # Liquidity/Price Volatility
-    ]
+    "abacus": {
+        "sections": ["1.1", "1.2", "1.3"],  # Core Abacus sections
+        "related_topics": ["market_centurions", "autonomous_trading", "risk_management"],
+        "keywords": [
+            "abacus", "neural center", "analytics", "predictive", 
+            "ai system", "machine learning", "quantitative"
+        ]
+    },
+    "market_centurions": {
+        "sections": ["1.2", "1.3", "5.2"],  # Centurions sections
+        "related_topics": ["abacus", "autonomous_trading", "risk_management"],
+        "keywords": [
+            "centurion", "trading bot", "automated trading", 
+            "market bot", "trading system"
+        ]
+    },
+    "autonomous_trading": {
+        "sections": ["1.3", "5.2", "5.3"],  # Trading sections
+        "related_topics": ["abacus", "market_centurions", "risk_management"],
+        "keywords": [
+            "autonomous", "automated", "self-operating", 
+            "ai trading", "algorithmic"
+        ]
+    },
+    "risk_management": {
+        "sections": ["5.1", "5.2", "5.3", "5.4"],  # Risk sections
+        "related_topics": ["market_centurions", "autonomous_trading"],
+        "keywords": [
+            "risk", "volatility", "security", "protection", 
+            "safeguard", "failsafe"
+        ]
+    }
 }
