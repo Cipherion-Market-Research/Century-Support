@@ -14,12 +14,17 @@ class AIHandler:
         self.cache_manager = cache_manager
 
     async def generate_response(
-        self, message: str, context: Optional[str] = None
+        self, prompt: str, context: str = "", style: str = "informative"
     ) -> str:
         """Generate AI response with optional context"""
         try:
+            # Add whitepaper context for better responses
+            whitepaper_data = await self.cache_manager.redis.get("whitepaper_sections")
+            if whitepaper_data:
+                context = f"{whitepaper_data}\n\n{context}"
+
             # Check cache first
-            cache_key = f"{message}:{context}"
+            cache_key = f"{prompt}:{context}"
             cached_response = await self.cache_manager.get_cached_response(cache_key)
             if cached_response:
                 return cached_response
@@ -53,7 +58,7 @@ class AIHandler:
             if context:
                 messages.append({"role": "system", "content": f"Context: {context}"})
 
-            messages.append({"role": "user", "content": message})
+            messages.append({"role": "user", "content": prompt})
 
             # Generate response
             response = await openai.ChatCompletion.acreate(
