@@ -426,3 +426,22 @@ class BotMessageHandler:
             self.logger.debug(f"Extended topic response matched for: {message}")
         
         return "\n\n---\n\n".join(matched_responses) if matched_responses else None
+
+    async def _get_whitepaper_data(self) -> dict:
+        """
+        Get whitepaper data from cache
+        Returns dict of section name -> content
+        """
+        try:
+            # Get from cache
+            whitepaper_str = await self.cache_manager.redis.get("whitepaper_sections")
+            if whitepaper_str:
+                return json.loads(whitepaper_str)
+            
+            # If not in cache, return empty dict
+            logger.warning("No whitepaper data found in cache")
+            return {}
+            
+        except Exception as e:
+            logger.error(f"Error getting whitepaper data: {e}")
+            return {}
