@@ -73,7 +73,21 @@ Visit [CipheX](https://ciphex.io) to participate when live.
 View our project page on Skynet for detailed audit reports and security scores.""",
 
     "website_info": """**[https://ciphex.io](https://ciphex.io)**:
-Visit our official website for the latest updates, news, and information."""
+Visit our official website for the latest updates, news, and information.""",
+
+    "contact_info": """**Contact CipheX Support:**
+
+• Email: help@ciphex.io
+• Website Support: https://ciphex.io/
+• Telegram: @CipheXChannel (announcements only)
+
+⚠️ **Important Security Reminders:**
+• CipheX team will NEVER DM you first
+• Only use official email and website
+• Never share wallet seed phrases
+• Verify all links through official channels
+
+For technical support or general inquiries, please email help@ciphex.io"""
 }
 
 WHITEPAPER_SECTIONS = {
@@ -133,7 +147,8 @@ TOPIC_SECTIONS = {
     "staking": ["2.10", "2.11"],
     "governance": ["3.0", "3.1", "3.9"],
     "treasury": ["2.3", "3.2"],
-    "risks": ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5"]
+    "risks": ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5"],
+    "contact": ["3.0", "3.1"]  # Community Management sections
 }
 
 ERROR_MESSAGES = {

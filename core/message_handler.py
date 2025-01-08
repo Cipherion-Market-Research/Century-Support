@@ -39,6 +39,19 @@ class BotMessageHandler:
             self.logger.info(f"Processing user {user_id} message: {message}")
             await update.message.reply_text(BOT_RESPONSES["thinking"], parse_mode="Markdown")
 
+            # Check for contact-related keywords
+            contact_keywords = [
+                "contact", "support", "help desk", "email", 
+                "reach out", "get in touch", "contact team"
+            ]
+            
+            if any(keyword in message for keyword in contact_keywords):
+                await update.message.reply_text(
+                    BOT_RESPONSES["contact_info"],
+                    parse_mode="Markdown"
+                )
+                return
+
             # 1. First check exact matches (highest priority)
             if any(keyword in message for keyword in ["presale", "minimum", "price"]):
                 response = BOT_RESPONSES["presale_info"]
