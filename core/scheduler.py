@@ -26,26 +26,36 @@ async def send_message_1(context):
 async def send_message_2(context):
     await send_message(context, "admin_warning")
 
-def schedule_periodic_messages(application: Application, interval_seconds: int = 24*3600, offset_seconds: int = 12*3600):
+async def send_message_3(context):
+    await send_message(context, "start_message")
+
+def schedule_periodic_messages(application: Application, interval_seconds: int = 48*3600, offset_seconds: int = 24*3600):
     """
-    Schedule two periodic messages.
+    Schedule periodic messages.
     
     :param application: The Telegram Application instance.
-    :param interval_seconds: Interval between messages in seconds.
-    :param offset_seconds: Offset for the second message in seconds.
+    :param interval_seconds: Interval between messages in seconds (default 48 hours).
+    :param offset_seconds: Offset for the second message in seconds (default 24 hours).
     """
-    # Schedule Message 1 every `interval_seconds`, starting immediately
+    # Schedule Message 1 every 48 hours (privacy reminder)
     application.job_queue.run_repeating(
         send_message_1, 
-        interval=interval_seconds, 
+        interval=interval_seconds,
         first=0
     )
 
-    # Schedule Message 2 every `interval_seconds`, starting after `offset_seconds`
+    # Schedule Message 2 every 48 hours, offset by 24 hours (admin warning)
     application.job_queue.run_repeating(
         send_message_2, 
-        interval=interval_seconds, 
+        interval=interval_seconds,
         first=offset_seconds
+    )
+
+    # Schedule start message every 96 hours
+    application.job_queue.run_repeating(
+        send_message_3,
+        interval=96*3600,  # 96 hours
+        first=12*3600  # First message after 12 hours
     )
 
     logger.info("Scheduled periodic messages successfully")
