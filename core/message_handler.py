@@ -447,20 +447,38 @@ class BotMessageHandler:
             return {}
 
     async def _get_technical_response(self, message: str) -> Optional[str]:
-        """Enhanced technical topic handling"""
+        """Enhanced technical topic handling with better section matching"""
         try:
-            # Log section matching attempts
-            logger.debug(f"Attempting technical match for: {message}")
+            logger.debug(f"Technical query: {message}", extra={
+                'context': 'technical_matching',
+                'section': 'technical_response'
+            })
             
-            matched_sections = []
-            for topic, keywords in TECHNICAL_SECTIONS.items():
+            # Technical topic matching with section correlation
+            technical_matches = []
+            
+            # Check primary technical topics
+            for topic, sections in TECHNICAL_SECTIONS.items():
+                keywords = {
+                    "abacus": ["abacus", "neural", "analytics", "predictive", "ai system"],
+                    "market_centurions": ["centurion", "trading bot", "automated trading", "market bot"],
+                    "autonomous": ["autonomous", "automated", "self-operating", "ai trading"]
+                }.get(topic, [])
+                
                 if any(keyword in message.lower() for keyword in keywords):
-                    logger.debug(f"Matched technical topic: {topic}")
-                    content = await self._get_sections_content(topic)
+                    content = await self._get_sections_content(sections)
                     if content:
-                        matched_sections.append(content)
-                        
-            return self._format_technical_response(matched_sections)
+                        technical_matches.append({
+                            'topic': topic,
+                            'content': content,
+                            'relevance': 'primary'
+                        })
+            
+            if technical_matches:
+                return await self._format_technical_response([m['content'] for m in technical_matches])
+            
+            return None
+            
         except Exception as e:
             logger.error(f"Technical response error: {e}")
             return None
