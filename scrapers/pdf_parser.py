@@ -93,6 +93,10 @@ class PDFParser(BaseScraper):
     async def _extract_section_content(self, text: str, section_num: str) -> str:
         """Extract content for a specific section number"""
         try:
+            if isinstance(text, dict):
+                # If we got a dict, it means we already have parsed sections
+                return text.get(section_num, "")
+            
             # Find section start
             section_pattern = f"{section_num}\\s+.*?\\n"
             start_match = re.search(section_pattern, text)

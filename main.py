@@ -1,6 +1,7 @@
 # main.py
 import os
 import sys
+from asyncio import Lock
 
 # Ensure the console uses UTF-8 encoding
 if os.name == 'nt':
@@ -24,6 +25,25 @@ from utils.db_manager import DatabaseManager
 from utils.cache_manager import CacheManager
 
 logger = setup_logger()
+
+class Bot:
+    def __init__(self):
+        self.update_lock = Lock()
+        
+    async def start(self):
+        async with self.update_lock:
+            try:
+                # Initialize bot
+                application = Application.builder().token(Config.BOT_TOKEN).build()
+                
+                # Add handlers
+                application.add_handler(...)
+                
+                # Start bot
+                await application.run_polling()
+                
+            except Exception as e:
+                logger.error(f"Error starting bot: {e}")
 
 async def post_init(application: Application):
     await application.bot_data["cache_manager"].init()
