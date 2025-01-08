@@ -2,13 +2,13 @@
 import json
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from config.constants import BOT_RESPONSES, WHITEPAPER_SECTIONS, TOPIC_SECTIONS
+from config.constants import BOT_RESPONSES, WHITEPAPER_SECTIONS, TOPIC_SECTIONS, TECHNICAL_SECTIONS
 from utils.logger import setup_logger
 from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
 from utils.cache_manager import CacheManager
 from thefuzz import fuzz, process  # Added for fuzzy matching
-from typing import Optional
+from typing import Optional, List
 
 logger = setup_logger(__name__)
 
@@ -445,3 +445,45 @@ class BotMessageHandler:
         except Exception as e:
             logger.error(f"Error getting whitepaper data: {e}")
             return {}
+
+    async def _get_technical_response(self, message: str) -> Optional[str]:
+        """Handle technical queries about Abacus and Market Centurions"""
+        technical_keywords = {
+            "abacus": ["abacus", "neural center", "analytics"],
+            "market_centurions": ["market centurions", "centurions", "trading bots"],
+            "autonomous": ["autonomous", "automated trading", "ai trading"]
+        }
+
+        matched_sections = []
+        for topic, keywords in technical_keywords.items():
+            if any(keyword in message.lower() for keyword in keywords):
+                sections = TECHNICAL_SECTIONS.get(topic, [])
+                content = await self._get_sections_content(sections)
+                if content:
+                    matched_sections.append(content)
+
+        if matched_sections:
+            return await self._format_technical_response(matched_sections)
+        return None
+
+    async def _format_technical_response(self, sections: List[str]) -> str:
+        """Format technical responses with proper context"""
+        try:
+            # Combine relevant sections
+            combined_content = "\n\n".join(sections)
+            
+            # Use AI to generate a coherent response
+            prompt = (
+                "Based on this technical information, create a clear, "
+                "user-friendly explanation:\n\n{combined_content}"
+            )
+            
+            response = await self.ai_handler.generate_response(
+                prompt=prompt,
+                style="technical_explanation"
+            )
+            
+            return response
+        except Exception as e:
+            logger.error(f"Error formatting technical response: {e}")
+            return "I apologize, but I'm having trouble explaining that technical concept."
