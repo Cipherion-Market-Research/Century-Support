@@ -159,3 +159,23 @@ I'm here to help you with all things CipheX. Use commands like:
 
 Need help? Just ask or use /help for all commands!"""
 }
+
+# Technical section mappings for Abacus and Market Centurions
+TECHNICAL_SECTIONS = {
+    "abacus": [
+        "1.1",  # The CipheX Ecosystem
+        "1.2",  # The Origin of CipheX
+        "1.3"   # Autonomous Market Trading
+    ],
+    "market_centurions": [
+        "1.2",  # The Origin of CipheX
+        "1.3",  # Autonomous Market Trading
+        "5.2"   # Autonomous Trading (Risk section)
+    ],
+    "autonomous": [
+        "1.3",  # Autonomous Market Trading
+        "5.2",  # Autonomous Trading (Risk section)
+        "5.3",  # Cybersecurity Threats
+        "5.4"   # Liquidity/Price Volatility
+    ]
+}

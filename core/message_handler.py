@@ -487,3 +487,21 @@ class BotMessageHandler:
         except Exception as e:
             logger.error(f"Error formatting technical response: {e}")
             return "I apologize, but I'm having trouble explaining that technical concept."
+
+    async def _get_sections_content(self, section_nums: List[str]) -> str:
+        """Get content from multiple whitepaper sections"""
+        try:
+            whitepaper_data = await self._get_whitepaper_data()
+            if not whitepaper_data:
+                return ""
+            
+            content = []
+            for section_num in section_nums:
+                section_name = WHITEPAPER_SECTIONS.get(section_num)
+                if section_name and section_name in whitepaper_data:
+                    content.append(whitepaper_data[section_name])
+                
+            return "\n\n".join(content)
+        except Exception as e:
+            logger.error(f"Error getting sections content: {e}")
+            return ""
