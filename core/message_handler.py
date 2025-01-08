@@ -38,6 +38,68 @@ class BotMessageHandler:
             self.logger.info(f"Processing user {user_id} message: {message}")
             await update.message.reply_text(BOT_RESPONSES["thinking"], parse_mode="Markdown")
 
+            # Get all data sources
+            faq_data_str = await self.cache_manager.redis.get("faq_data")
+            faq_data = json.loads(faq_data_str) if faq_data_str else {}
+            
+            # Split compound questions and gather all relevant information
+            response_parts = []
+            
+            # Define common topic keywords
+            topics = {
+                "presale": ["presale", "pre-sale", "pre sale", "when start", "launch"],
+                "supply": ["supply", "total supply", "max supply", "token supply"],
+                "staking": ["staking", "stake", "rewards"],
+                "join": ["join", "how to join", "participate", "how do i"],
+                "minimum": ["minimum", "min purchase", "smallest amount"]
+            }
+
+            # Check each topic in the message
+            for topic, keywords in topics.items():
+                if any(keyword in message for keyword in keywords):
+                    if topic == "presale":
+                        response_parts.append(BOT_RESPONSES["presale_info"])
+                    elif topic == "supply":
+                        response_parts.append(
+                            "**Token Supply Information:**\n"
+                            "• Maximum Supply: 1.5 billion CPX Tokens\n"
+                            "• Deflationary Model: Supply aims to reduce by ~95% over 10 years\n"
+                            "• PreSale Allocation: 142,738,450 CPX tokens"
+                        )
+                    elif topic == "staking":
+                        response_parts.append(
+                            "**Staking Program:**\n"
+                            "• Options: 6, 12, or 24-month terms\n"
+                            "• Returns: Based on 10-year US Treasury yield plus premium\n"
+                            "• Launch: Program starts after presale completion\n"
+                            "• Rewards: Paid in unrestricted CPX tokens"
+                        )
+                    elif topic == "join":
+                        response_parts.append(
+                            "**How to Join CipheX:**\n"
+                            "1. Prepare a self-custodial wallet (MetaMask, Trust Wallet, or WalletConnect)\n"
+                            "2. Have USDT, USDC, or ETH ready for purchase\n"
+                            "3. Visit [ciphex.io](https://ciphex.io) when presale launches (Jan 24, 2025)\n"
+                            "4. Connect your wallet and complete your purchase\n"
+                            "5. Minimum purchase: 2,000 CPX tokens\n\n"
+                            "After purchase, you'll become a CipheX Community Member with voting rights after the presale is complete!"
+                        )
+
+            if response_parts:
+                # Combine all relevant information
+                final_response = "\n\n".join(response_parts)
+                
+                # Add a separator between different topics if multiple
+                if len(response_parts) > 1:
+                    final_response = final_response.replace("\n\n", "\n\n---\n\n")
+                
+                await update.message.reply_text(
+                    final_response[:4000],  # Telegram message limit
+                    parse_mode="Markdown"
+                )
+                return
+
+            # If no specific topics matched, fall back to fuzzy matching and AI
             # Build chat context from recent DB logs (for GPT fallback, if needed)
             chat_context = await self._get_chat_context(user_id)
 
