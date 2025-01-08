@@ -2,7 +2,7 @@
 import json
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from config.constants import BOT_RESPONSES, WHITEPAPER_MAP, WHITEPAPER_SECTIONS, TOPIC_SECTIONS
+from config.constants import BOT_RESPONSES, WHITEPAPER_SECTIONS, TOPIC_SECTIONS
 from utils.logger import setup_logger
 from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
@@ -171,9 +171,10 @@ class BotMessageHandler:
             matched_section = None
 
             # The existing approach: check if any keyword in WHITEPAPER_MAP is in the user message
-            for keyword, wp_section_name in WHITEPAPER_MAP.items():
-                if keyword in message:
-                    matched_section = wp_section_name.lower()
+            for section_num, section_name in WHITEPAPER_SECTIONS.items():
+                section_name_lower = section_name.lower()
+                if section_name_lower in message:
+                    matched_section = section_name_lower
                     break
 
             if matched_section and matched_section in whitepaper_data:
