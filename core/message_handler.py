@@ -8,7 +8,7 @@ from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
 from utils.cache_manager import CacheManager
 from thefuzz import fuzz, process  # Added for fuzzy matching
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 logger = setup_logger(__name__)
 
@@ -447,52 +447,83 @@ class BotMessageHandler:
             return {}
 
     async def _get_technical_response(self, message: str) -> Optional[str]:
-        """Enhanced technical topic handling with better section matching"""
+        """Enhanced technical topic handling with relationship mapping"""
         try:
             logger.debug(f"Technical query: {message}", extra={
                 'context': 'technical_matching',
                 'section': 'technical_response'
             })
             
-            # Technical topic matching with section correlation
-            technical_matches = []
+            # Track matched topics and their relationships
+            matched_topics = {}
             
-            # Check primary technical topics
-            for topic, sections in TECHNICAL_SECTIONS.items():
-                keywords = {
-                    "abacus": ["abacus", "neural", "analytics", "predictive", "ai system"],
-                    "market_centurions": ["centurion", "trading bot", "automated trading", "market bot"],
-                    "autonomous": ["autonomous", "automated", "self-operating", "ai trading"]
-                }.get(topic, [])
-                
-                if any(keyword in message.lower() for keyword in keywords):
-                    content = await self._get_sections_content(sections)
+            # First pass: direct topic matching
+            for topic, config in TECHNICAL_SECTIONS.items():
+                if any(keyword in message.lower() for keyword in config["keywords"]):
+                    content = await self._get_sections_content(config["sections"])
                     if content:
-                        technical_matches.append({
-                            'topic': topic,
+                        matched_topics[topic] = {
                             'content': content,
-                            'relevance': 'primary'
-                        })
+                            'relevance': 'primary',
+                            'related': config["related_topics"]
+                        }
             
-            if technical_matches:
-                return await self._format_technical_response([m['content'] for m in technical_matches])
+            # Second pass: relationship mapping
+            for topic in list(matched_topics.keys()):
+                for related_topic in matched_topics[topic]['related']:
+                    if related_topic not in matched_topics:
+                        related_config = TECHNICAL_SECTIONS[related_topic]
+                        content = await self._get_sections_content(related_config["sections"])
+                        if content:
+                            matched_topics[related_topic] = {
+                                'content': content,
+                                'relevance': 'related',
+                                'related': []
+                            }
             
+            if matched_topics:
+                return await self._format_technical_response(matched_topics)
             return None
             
         except Exception as e:
             logger.error(f"Technical response error: {e}")
             return None
 
-    async def _format_technical_response(self, sections: List[str]) -> str:
-        """Format technical responses with proper context"""
+    async def _format_technical_response(self, matched_topics: Dict[str, Dict]) -> str:
+        """Format technical response with relationship context"""
         try:
-            # Combine relevant sections
-            combined_content = "\n\n".join(sections)
+            # Add response templating system
+            templates = {
+                "abacus": {
+                    "intro": "The Abacus Network is a core component that {}",
+                    "features": "Key features include:\n• {}\n• {}\n• {}",
+                    "integration": "It integrates with {} through {}"
+                },
+                "market_centurions": {
+                    "intro": "Market Centurions are autonomous trading entities that {}",
+                    "operation": "They operate by {}",
+                    "risk": "Risk management includes:\n• {}\n• {}\n• {}"
+                }
+            }
             
-            # Use AI to generate a coherent response
+            sections = []
+            
+            # Format primary topics first
+            primary_topics = {k: v for k, v in matched_topics.items() if v['relevance'] == 'primary'}
+            for topic, data in primary_topics.items():
+                sections.append(f"**{topic.replace('_', ' ').title()}**:\n{data['content']}")
+            
+            # Add related topics
+            related_topics = {k: v for k, v in matched_topics.items() if v['relevance'] == 'related'}
+            if related_topics:
+                sections.append("\n**Related Information:**")
+                for topic, data in related_topics.items():
+                    sections.append(f"**{topic.replace('_', ' ').title()}**:\n{data['content']}")
+            
+            # Use AI to generate coherent response
             prompt = (
-                "Based on this technical information, create a clear, "
-                "user-friendly explanation:\n\n{combined_content}"
+                "Create a clear, comprehensive explanation combining these related topics:\n\n"
+                f"{chr(10).join(sections)}"
             )
             
             response = await self.ai_handler.generate_response(
@@ -501,6 +532,7 @@ class BotMessageHandler:
             )
             
             return response
+            
         except Exception as e:
             logger.error(f"Error formatting technical response: {e}")
             return "I apologize, but I'm having trouble explaining that technical concept."
@@ -523,14 +555,83 @@ class BotMessageHandler:
             logger.error(f"Error getting sections content: {e}")
             return ""
 
-    async def _build_context(self, message: str, user_id: int) -> str:
-        """Build enhanced context for responses"""
-        recent_context = await self._get_chat_context(user_id)
-        whitepaper_context = await self._get_relevant_sections(message)
-        technical_context = await self._get_technical_response(message)
-        
-        return {
-            "recent_chat": recent_context,
-            "whitepaper": whitepaper_context,
-            "technical": technical_context
-        }
+    async def _build_enhanced_context(self, message: str, user_id: int) -> Dict:
+        """Enhanced context building with multi-query support"""
+        try:
+            # Get base contexts
+            recent_context = await self._get_chat_context(user_id)
+            technical_context = await self._get_technical_response(message)
+            
+            # Extract topics from recent conversations
+            recent_topics = self._extract_topics_from_context(recent_context)
+            
+            # Build relationship graph
+            topic_relationships = self._build_topic_relationships(recent_topics)
+            
+            # Combine contexts with relationships
+            return {
+                "recent_chat": recent_context,
+                "technical": technical_context,
+                "topic_relationships": topic_relationships,
+                "conversation_flow": self._analyze_conversation_flow(recent_context)
+            }
+        except Exception as e:
+            logger.error(f"Error building enhanced context: {e}")
+            return {}
+
+    def _validate_technical_response(self, response: str, query: str) -> bool:
+        """Validate technical response quality"""
+        try:
+            # Check response length
+            if len(response) < 100:
+                logger.warning(f"Response too short for technical query: {query}")
+                return False
+            
+            # Ensure response contains key technical terms
+            technical_terms = set()
+            for config in TECHNICAL_SECTIONS.values():
+                technical_terms.update(config["keywords"])
+            
+            found_terms = sum(1 for term in technical_terms if term in response.lower())
+            if found_terms < 2:
+                logger.warning(f"Response lacks technical depth for query: {query}")
+                return False
+            
+            # Check for contradictions
+            contradictions = [
+                ("don't have information", "provides information"),
+                ("not familiar with", "works by"),
+                ("no specific details", "specifically")
+            ]
+            
+            for deny, confirm in contradictions:
+                if deny in response.lower() and confirm in response.lower():
+                    logger.warning(f"Contradictory response for query: {query}")
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error validating technical response: {e}")
+            return False
+
+    async def _handle_compound_query(self, message: str) -> Optional[str]:
+        """Handle multiple questions in a single query"""
+        try:
+            # Split compound questions
+            questions = self._split_compound_question(message)
+            
+            responses = []
+            for question in questions:
+                # Get response for each sub-question
+                response = await self._get_technical_response(question)
+                if response:
+                    responses.append(response)
+            
+            if responses:
+                # Combine responses intelligently
+                return await self._merge_responses(responses)
+            return None
+        except Exception as e:
+            logger.error(f"Error handling compound query: {e}")
+            return None
