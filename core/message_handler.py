@@ -39,6 +39,26 @@ class BotMessageHandler:
             self.logger.info(f"Processing user {user_id} message: {message}")
             await update.message.reply_text(BOT_RESPONSES["thinking"], parse_mode="Markdown")
 
+            # 1. First check exact matches (highest priority)
+            if any(keyword in message for keyword in ["presale", "minimum", "price"]):
+                response = BOT_RESPONSES["presale_info"]
+                await update.message.reply_text(response, parse_mode="Markdown")
+                return
+
+            # 2. Check whitepaper sections
+            whitepaper_content = await self._get_whitepaper_data()
+            if whitepaper_content:
+                for topic, sections in TOPIC_SECTIONS.items():
+                    if any(keyword in message for keyword in topic.split('_')):
+                        content = []
+                        for section in sections:
+                            if section in whitepaper_content:
+                                content.append(whitepaper_content[section])
+                        if content:
+                            response = await self._format_whitepaper_response(content, message)
+                            await update.message.reply_text(response, parse_mode="Markdown")
+                            return
+
             # Get all data sources
             faq_data_str = await self.cache_manager.redis.get("faq_data")
             faq_data = json.loads(faq_data_str) if faq_data_str else {}
