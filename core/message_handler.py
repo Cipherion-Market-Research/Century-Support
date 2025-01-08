@@ -2,7 +2,7 @@
 import json
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from config.constants import BOT_RESPONSES, WHITEPAPER_SECTIONS, TOPIC_SECTIONS, TECHNICAL_SECTIONS
+from config.constants import BOT_RESPONSES, WHITEPAPER_SECTIONS, TOPIC_SECTIONS, TECHNICAL_SECTIONS, TECHNICAL_DETAILS
 from utils.logger import setup_logger
 from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
@@ -616,3 +616,15 @@ class BotMessageHandler:
         except Exception as e:
             logger.error(f"Error handling compound query: {e}")
             return None
+
+    async def _handle_complex_scenario(self, message: str) -> str:
+        """Handle complex multi-system scenarios"""
+        scenarios = {
+            "black_swan": self._handle_black_swan_event,
+            "system_integration": self._handle_system_integration,
+            "technical_security": self._handle_technical_security
+        }
+        
+        for scenario_type, handler in scenarios.items():
+            if any(keyword in message.lower() for keyword in TECHNICAL_DETAILS[scenario_type]["keywords"]):
+                return await handler(message)
