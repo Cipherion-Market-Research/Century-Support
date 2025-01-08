@@ -58,7 +58,20 @@ class BotMessageHandler:
             for topic, keywords in topics.items():
                 if any(keyword in message for keyword in keywords):
                     if topic == "presale":
-                        response_parts.append(BOT_RESPONSES["presale_info"])
+                        response_parts.append(
+                            "**CipheX Public Presale Launch: January 24, 2025! 🚀**\n\n"
+                            "**Key Details:**\n"
+                            "• Starting Price: $0.10 per CPX\n"
+                            "• Minimum Purchase: 2,000 CPX\n"
+                            "• Duration: 180 days\n"
+                            "• Target Funding: $20M\n"
+                            "• Accepted Payments: USDT, USDC, ETH\n\n"
+                            "The price increases automatically every 24 hours during the presale period, with potential gains up to 159.93%.\n\n"
+                            "⚠️ **Important Reminders:**\n"
+                            "• Only use official links\n"
+                            "• Never share wallet seed phrases\n"
+                            "• CipheX team will never DM you first"
+                        )
                     elif topic == "supply":
                         response_parts.append(
                             "**Token Supply Information:**\n"
@@ -69,32 +82,41 @@ class BotMessageHandler:
                     elif topic == "staking":
                         response_parts.append(
                             "**Staking Program:**\n"
-                            "• Options: 6, 12, or 24-month terms\n"
-                            "• Returns: Based on 10-year US Treasury yield plus premium\n"
-                            "• Launch: Program starts after presale completion\n"
+                            "• Terms: 6, 12, or 24-month options\n"
+                            "• Returns: 10-year US Treasury yield plus premium\n"
+                            "• Launch: Starts after presale completion\n"
                             "• Rewards: Paid in unrestricted CPX tokens"
                         )
                     elif topic == "join":
                         response_parts.append(
                             "**How to Join CipheX:**\n"
                             "1. Prepare a self-custodial wallet (MetaMask, Trust Wallet, or WalletConnect)\n"
-                            "2. Have USDT, USDC, or ETH ready for purchase\n"
+                            "2. Have USDT, USDC, or ETH ready\n"
                             "3. Visit [ciphex.io](https://ciphex.io) when presale launches (Jan 24, 2025)\n"
-                            "4. Connect your wallet and complete your purchase\n"
-                            "5. Minimum purchase: 2,000 CPX tokens\n\n"
-                            "After purchase, you'll become a CipheX Community Member with voting rights after the presale is complete!"
+                            "4. Connect wallet and complete purchase (min. 2,000 CPX)\n\n"
+                            "After purchase, you'll become a CipheX Community Member with voting rights once the presale completes!"
                         )
 
             if response_parts:
                 # Combine all relevant information
-                final_response = "\n\n".join(response_parts)
-                
-                # Add a separator between different topics if multiple
                 if len(response_parts) > 1:
-                    final_response = final_response.replace("\n\n", "\n\n---\n\n")
+                    # Create sections with clear headers
+                    final_response = ""
+                    for i, part in enumerate(response_parts):
+                        if i > 0:
+                            final_response += "\n\n---\n\n"  # Single separator between sections
+                        # Remove redundant headers if they exist
+                        if "CipheX Public Presale:" in part and i > 0:
+                            part = part.replace("CipheX Public Presale:\nLaunching January 24, 2025! 🚀\n\n", "")
+                        final_response += part
+                else:
+                    final_response = response_parts[0]
+                
+                # Clean up any duplicate separators
+                final_response = final_response.replace("---\n\n---", "---")
                 
                 await update.message.reply_text(
-                    final_response[:4000],  # Telegram message limit
+                    final_response[:4000],
                     parse_mode="Markdown"
                 )
                 return
