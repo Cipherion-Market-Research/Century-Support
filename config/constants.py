@@ -45,8 +45,23 @@ To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/white
 - Total CPX Purchased (Staked)""",
 
 		"presale_info": """**CipheX Public Presale**:
-Currently not live. Once active, you can visit [CipheX](https://ciphex.io/) to purchase CPX tokens.
-Stay tuned for announcements! We will post updates here and on our [Twitter](https://x.com/ciphexio).""",
+Launching January 24, 2025! 🚀
+
+Key Details:
+• Starting Price: $0.10 per CPX
+• Minimum Purchase: 2,000 CPX
+• Duration: 180 days
+• Target Funding: $20M
+• Accepted Payments: USDT, USDC, ETH
+
+The price will increase automatically every 24 hours during the presale period, with potential gains up to 159.93% by the end.
+
+Visit [CipheX](https://ciphex.io) to participate when live.
+
+⚠️ Important Reminders:
+• Only use official links
+• Never share wallet seed phrases
+• CipheX team will never DM you first""",
 
 		"data_info": """Data updates regularly. Check:
 [Community Stats](https://ciphex.io/#community)
@@ -63,51 +78,43 @@ Visit our official website for the latest updates, news, and information."""
 
 WHITEPAPER_MAP = {
     "introduction": "1.0 Introduction",
-    "what is cpx": "1.1 What is Cipherion CipheX",
-    "tokenomics": "3.0 Tokenomics",
-    "vesting": "3.11 Vesting Schedules",
-    "lockup": "3.10 Lockup Restrictions",
-    "roadmap": "2.7 CipheX Road Map Overview",
-    "technology": "6.0 Technology Overview",
-    "asset and risk management": "5.4 Asset and Risk Management",
-    "community": "2.0 CipheX Community",
-    "max supply": "3.1 CipheX Maximum Supply",
-    "hypatia": "6.6 Abacus and Market Centurions",
-    "adoption of cryptocurrency": "1.2 Adoption of Cryptocurrency",
-    "competitive landscape": "1.3 Competitive Landscape",
-    "the rise of generative ai": "1.4 The Rise of Generative AI",
-    "the community": "2.1 The Community",
-    "future use cases and long-term utility": "2.2 Future Use Cases and Long-Term Utility",
-    "creators & founding contributors": "2.3 Creators & Founding Contributors",
-    "consensus and governance": "2.4 Consensus and Governance",
-    "regulatory and financial oversight": "2.5 Regulatory and Financial Oversight",
-    "privacy of members and contributors": "2.6 Privacy of Members and Contributors",
-    # Removed duplicates and added missing sections
+    "ciphex ecosystem": "1.1 The CipheX Ecosystem",
+    "origin": "1.2 The Origin of CipheX",
+    "autonomous trading": "1.3 Autonomous Market Trading",
+    "future": "1.4 The Future of CipheX",
+    "roadmap": "1.5 Road Map Overview",
+    "tokenomics": "2.0 Tokenomics",
+    "max supply": "2.1 CipheX Maximum Supply",
+    "creator tokens": "2.2 Creator & Founder Tokens",
+    "treasury": "2.3 Treasury Management",
+    "presale": "2.4 PreSale of CPX Tokens",
+    "pricing": "2.5 Automated Daily Pricing",
+    "presale costs": "2.6 Costs of PreSale Activities",
+    "use of proceeds": "2.7 Planned Use of Proceeds",
+    "lockup": "2.8 CPX Lockup Restrictions",
+    "vesting": "2.9 CPX Vesting Schedule",
+    "staking": "2.10 Fixed Term Staking and Rewards",
+    "staking redemptions": "2.11 Fixed Term Staking Redemptions",
+    "community management": "3.0 Community Management",
+    "hybrid model": "3.1 Hybrid Organizational Model",
+    "capital reserves": "3.2 Operating Capital Reserves",
+    "investment": "3.3 Investment Participation",
+    "returns": "3.4 Distribution of Returns",
+    "creators": "3.5 Creators & Founding Contributors",
+    "contributors": "3.6 General and Expert Contributors",
+    "rewards": "3.7 Market Performance Rewards",
+    "removals": "3.8 Removals and Termination",
+    "voting": "3.9 Eligibility for Community Voting",
+    "buyback": "3.10 CPX Token Buyback Program",
+    "burn program": "3.11 Total Supply Burn Program",
+    "performance": "4.0 Performance Benchmarks",
+    "revenue streams": "4.1 CipheX Revenue Streams",
+    "growth": "4.2 Market Returns and Revenue Growth",
+    "scalability": "4.3 Scalable Growth and Efficiency",
+    "risks": "5.0 Market Risk Factors"
 }
 
-WHITEPAPER_SECTIONS = {
-    "introduction": "1.0 Introduction",
-    "what is cpx": "1.1 What is Cipherion CipheX",
-    "tokenomics": "3.0 Tokenomics",
-    "vesting": "3.11 Vesting Schedules",
-    "lockup": "3.10 Lockup Restrictions",
-    "roadmap": "2.7 CipheX Road Map Overview",
-    "technology": "6.0 Technology Overview",
-    "asset and risk management": "5.4 Asset and Risk Management",
-    "community": "2.0 CipheX Community",
-    "max supply": "3.1 CipheX Maximum Supply",
-    "hypatia": "6.6 Abacus and Market Centurions",
-    "adoption of cryptocurrency": "1.2 Adoption of Cryptocurrency",
-    "competitive landscape": "1.3 Competitive Landscape",
-    "the rise of generative ai": "1.4 The Rise of Generative AI",
-    "the community": "2.1 The Community",
-    "future use cases and long-term utility": "2.2 Future Use Cases and Long-Term Utility",
-    "creators & founding contributors": "2.3 Creators & Founding Contributors",
-    "consensus and governance": "2.4 Consensus and Governance",
-    "regulatory and financial oversight": "2.5 Regulatory and Financial Oversight",
-    "privacy of members and contributors": "2.6 Privacy of Members and Contributors",
-    # Removed duplicates
-}
+WHITEPAPER_SECTIONS = WHITEPAPER_MAP.copy()  # Since they're identical now
 
 ERROR_MESSAGES = {
     "scraping_error": "Error fetching latest data",
@@ -118,7 +125,17 @@ ERROR_MESSAGES = {
 
 SCHEDULED_MESSAGES = {
     "privacy_reminder": "Adjust your Telegram Privacy Settings & Avoid Spam Calls:\n\n• Change Calls to Contacts only\n• Set New Chats from Unknown Users to Archive and Mute\n• Set Who Can Add You to Groups to Nobody 👮",
+    
     "admin_warning": """Friendly reminder: CipheX Admins will NEVER DM you. Please do not respond to anyone claiming they are from our team. It is a scam!
 
-If you wish to contact us, please email us at help@ciphex.io"""
+If you wish to contact us, please email us at help@ciphex.io""",
+
+    "start_message": """👋 Welcome to Century Support Bot!
+
+I'm here to help you with all things CipheX. Use commands like:
+📊 /price - Check current token price
+📄 /whitepaper - Access whitepaper
+🔍 /stats - View trading statistics
+
+Need help? Just ask or use /help for all commands!"""
 }
