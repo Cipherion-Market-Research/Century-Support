@@ -2,12 +2,13 @@
 import json
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from config.constants import BOT_RESPONSES, WHITEPAPER_MAP
+from config.constants import BOT_RESPONSES, WHITEPAPER_MAP, WHITEPAPER_SECTIONS, TOPIC_SECTIONS
 from utils.logger import setup_logger
 from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
 from utils.cache_manager import CacheManager
 from thefuzz import fuzz, process  # Added for fuzzy matching
+from typing import Optional
 
 logger = setup_logger(__name__)
 
@@ -119,6 +120,13 @@ class BotMessageHandler:
                     final_response[:4000],
                     parse_mode="Markdown"
                 )
+                return
+
+            # After checking standard topics but before fuzzy matching
+            extended_response = await self._get_extended_topic_response(message)
+            if extended_response:
+                await self.db_manager.store_conversation(user_id, message, extended_response)
+                await update.message.reply_text(extended_response, parse_mode="Markdown")
                 return
 
             # If no specific topics matched, fall back to fuzzy matching and AI
@@ -315,3 +323,85 @@ class BotMessageHandler:
         # Call AI handler to get summarized text
         summarized_answer = await self.ai_handler.generate_response(prompt, context_data)
         return summarized_answer.strip()
+
+    async def _get_relevant_sections(self, message: str) -> str:
+        """Get relevant whitepaper sections based on topic"""
+        whitepaper_data = await self._get_whitepaper_data()
+        
+        relevant_content = []
+        for topic, section_nums in TOPIC_SECTIONS.items():
+            if any(keyword in message.lower() for keyword in topic.split('_')):
+                for section_num in section_nums:
+                    section_name = WHITEPAPER_SECTIONS.get(section_num)
+                    if section_name and section_name in whitepaper_data:
+                        relevant_content.append(whitepaper_data[section_name])
+        
+        return "\n\n".join(relevant_content) if relevant_content else ""
+
+    async def _get_extended_topic_response(self, message: str) -> Optional[str]:
+        """
+        Additional topic responses for complex whitepaper queries.
+        This supplements, not replaces, our existing topic handling.
+        """
+        extended_topics = {
+            "lockup": ["lockup", "lock up", "locked", "vesting"],
+            "governance": ["governance", "voting", "community voting", "decisions"],
+            "treasury": ["treasury", "management", "funds"],
+            "buyback": ["buyback", "burn", "token burn", "supply burn"],
+            "revenue": ["revenue", "earnings", "returns", "profits"]
+        }
+
+        matched_responses = []
+        for topic, keywords in extended_topics.items():
+            if any(keyword in message.lower() for keyword in keywords):
+                if topic == "lockup":
+                    matched_responses.append(
+                        "**CPX Lockup & Vesting Details:**\n"
+                        "• Initial Lockup: 6 months from purchase\n"
+                        "• Earning During Lockup: Fixed rate based on 10-year US Treasury yield\n"
+                        "• Vesting Schedule: Starts after lockup period\n"
+                        "• Monthly Release: Begins with 3% and increases over 12 months\n"
+                        "• Creator Tokens: Special terms with 80% locked for 2 years"
+                    )
+                elif topic == "governance":
+                    matched_responses.append(
+                        "**Community Governance:**\n"
+                        "• Voting Eligibility: Hold minimum 2,000 CPX tokens\n"
+                        "• Voting Power: 1 token = 1 vote\n"
+                        "• Decisions: Community votes on proposals and initiatives\n"
+                        "• Expert Contributors: Elected by community for 2-year terms\n"
+                        "• Transparency: All decisions recorded on blockchain"
+                    )
+                elif topic == "treasury":
+                    matched_responses.append(
+                        "**Treasury Management:**\n"
+                        "• Multi-sig Authentication: Required for all transfers\n"
+                        "• Independent Oversight: By Expert Contributors\n"
+                        "• Enhanced Security: Multiple approval layers\n"
+                        "• Transparency: Full visibility of treasury operations\n"
+                        "• Community Control: Major decisions require community approval"
+                    )
+                elif topic == "buyback":
+                    matched_responses.append(
+                        "**Buyback & Burn Program:**\n"
+                        "• Supply Reduction: ~95% over 10 years\n"
+                        "• Automatic Burns: Execute within 30 days of announcement\n"
+                        "• No Voting Required: Programmed into smart contracts\n"
+                        "• Optional Participation: Token holders can choose to participate\n"
+                        "• Funded by: Surplus capital, no impact on operations"
+                    )
+                elif topic == "revenue":
+                    matched_responses.append(
+                        "**Revenue Streams & Distribution:**\n"
+                        "• Primary Sources: Crypto trading, ICO investments, P2P lending\n"
+                        "• Collection: All profits enter transparent revenue vault\n"
+                        "• Distribution: Direct to member wallets annually\n"
+                        "• Tracking: Real-time via community dashboard\n"
+                        "• Non-custodial: CipheX never holds member funds"
+                    )
+
+        # Add debug logging
+        if matched_responses:
+            self.logger.debug(f"Extended topic response matched for: {message}")
+        
+        return "\n\n---\n\n".join(matched_responses) if matched_responses else None

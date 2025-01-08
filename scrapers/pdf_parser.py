@@ -3,6 +3,7 @@ import PyPDF2
 from .base_scraper import BaseScraper
 from utils.logger import setup_logger
 from config.constants import WHITEPAPER_SECTIONS
+import re
 
 logger = setup_logger()
 
@@ -11,14 +12,19 @@ class PDFParser(BaseScraper):
         self.pdf_path = pdf_path
 
     async def process(self) -> Dict[str, Any]:
-        """
-        Main processing method that fetches and organizes whitepaper content
-        """
+        """Process the whitepaper and extract structured content"""
         try:
-            raw_data = await self.fetch()
-            if await self.validate(raw_data):
-                return raw_data
-            return {}
+            raw_text = await self.fetch()
+            if not raw_text:
+                return {}
+            
+            sections = {}
+            for section_num in WHITEPAPER_SECTIONS.keys():
+                content = await self._extract_section_content(raw_text, section_num)
+                if content:
+                    sections[WHITEPAPER_SECTIONS[section_num]] = content
+                
+            return sections
         except Exception as e:
             logger.error(f"Error processing whitepaper: {e}")
             return {}
@@ -83,3 +89,26 @@ class PDFParser(BaseScraper):
             any(section in key for key in data.keys())
             for section in required_sections
         )
+
+    async def _extract_section_content(self, text: str, section_num: str) -> str:
+        """Extract content for a specific section number"""
+        try:
+            # Find section start
+            section_pattern = f"{section_num}\\s+.*?\\n"
+            start_match = re.search(section_pattern, text)
+            if not start_match:
+                return ""
+            
+            start_idx = start_match.start()
+            
+            # Find next section start
+            next_section_pattern = r"\d+\.\d+\s+.*?\n"
+            next_match = re.search(next_section_pattern, text[start_idx + 1:])
+            
+            end_idx = next_match.start() + start_idx + 1 if next_match else len(text)
+            
+            section_content = text[start_idx:end_idx].strip()
+            return section_content
+        except Exception as e:
+            logger.error(f"Error extracting section {section_num}: {e}")
+            return ""

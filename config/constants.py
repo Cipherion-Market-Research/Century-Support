@@ -76,45 +76,65 @@ View our project page on Skynet for detailed audit reports and security scores."
 Visit our official website for the latest updates, news, and information."""
 }
 
-WHITEPAPER_MAP = {
-    "introduction": "1.0 Introduction",
-    "ciphex ecosystem": "1.1 The CipheX Ecosystem",
-    "origin": "1.2 The Origin of CipheX",
-    "autonomous trading": "1.3 Autonomous Market Trading",
-    "future": "1.4 The Future of CipheX",
-    "roadmap": "1.5 Road Map Overview",
-    "tokenomics": "2.0 Tokenomics",
-    "max supply": "2.1 CipheX Maximum Supply",
-    "creator tokens": "2.2 Creator & Founder Tokens",
-    "treasury": "2.3 Treasury Management",
-    "presale": "2.4 PreSale of CPX Tokens",
-    "pricing": "2.5 Automated Daily Pricing",
-    "presale costs": "2.6 Costs of PreSale Activities",
-    "use of proceeds": "2.7 Planned Use of Proceeds",
-    "lockup": "2.8 CPX Lockup Restrictions",
-    "vesting": "2.9 CPX Vesting Schedule",
-    "staking": "2.10 Fixed Term Staking and Rewards",
-    "staking redemptions": "2.11 Fixed Term Staking Redemptions",
-    "community management": "3.0 Community Management",
-    "hybrid model": "3.1 Hybrid Organizational Model",
-    "capital reserves": "3.2 Operating Capital Reserves",
-    "investment": "3.3 Investment Participation",
-    "returns": "3.4 Distribution of Returns",
-    "creators": "3.5 Creators & Founding Contributors",
-    "contributors": "3.6 General and Expert Contributors",
-    "rewards": "3.7 Market Performance Rewards",
-    "removals": "3.8 Removals and Termination",
-    "voting": "3.9 Eligibility for Community Voting",
-    "buyback": "3.10 CPX Token Buyback Program",
-    "burn program": "3.11 Total Supply Burn Program",
-    "performance": "4.0 Performance Benchmarks",
-    "revenue streams": "4.1 CipheX Revenue Streams",
-    "growth": "4.2 Market Returns and Revenue Growth",
-    "scalability": "4.3 Scalable Growth and Efficiency",
-    "risks": "5.0 Market Risk Factors"
+WHITEPAPER_SECTIONS = {
+    # Introduction & Core Concepts
+    "1.0": "Introduction",
+    "1.1": "The CipheX Ecosystem",
+    "1.2": "The Origin of CipheX",
+    "1.3": "Autonomous Market Trading",
+    "1.4": "The Future of CipheX",
+    "1.5": "Road Map Overview",
+    
+    # Tokenomics
+    "2.0": "Tokenomics",
+    "2.1": "CipheX Maximum Supply",
+    "2.2": "Creator & Founder Tokens",
+    "2.3": "Treasury Management",
+    "2.4": "PreSale of CPX Tokens",
+    "2.5": "Automated Daily Pricing",
+    "2.6": "Costs of PreSale Activities",
+    "2.7": "Planned Use of Proceeds",
+    "2.8": "CPX Lockup Restrictions",
+    "2.9": "CPX Vesting Schedule",
+    "2.10": "Fixed Term Staking and Rewards",
+    "2.11": "Fixed Term Staking Redemptions",
+    
+    # Community & Management
+    "3.0": "Community Management",
+    "3.1": "Hybrid Organizational Model",
+    "3.2": "Operating Capital Reserves",
+    "3.3": "Investment Participation",
+    "3.4": "Distribution of Returns",
+    "3.5": "Creators & Founding Contributors",
+    "3.6": "General and Expert Contributors",
+    "3.7": "Market Performance Rewards",
+    "3.8": "Removals and Termination",
+    "3.9": "Eligibility for Community Voting",
+    "3.10": "CPX Token Buyback Program",
+    "3.11": "Total Supply Burn Program",
+    
+    # Performance & Risk
+    "4.0": "Performance Benchmarks",
+    "4.1": "CipheX Revenue Streams",
+    "4.2": "Market Returns and Revenue Growth",
+    "4.3": "Scalable Growth and Efficiency",
+    "5.0": "Market Risk Factors",
+    "5.1": "Market/Economic Volatility",
+    "5.2": "Autonomous Trading",
+    "5.3": "Cybersecurity Threats"
 }
 
-WHITEPAPER_SECTIONS = WHITEPAPER_MAP.copy()  # Since they're identical now
+# Topic to Section Mapping
+TOPIC_SECTIONS = {
+    "market_centurions": ["1.2", "1.3", "5.2"],  # Sections about Market Centurions
+    "abacus": ["1.1", "1.2", "1.3"],  # Sections about Abacus Network
+    "tokenomics": ["2.0", "2.1", "2.2", "2.3", "2.4"],
+    "presale": ["2.4", "2.5", "2.6"],
+    "staking": ["2.10", "2.11"],
+    "governance": ["3.0", "3.1", "3.9"],
+    "treasury": ["2.3", "3.2"],
+    "risks": ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5"]
+}
 
 ERROR_MESSAGES = {
     "scraping_error": "Error fetching latest data",
