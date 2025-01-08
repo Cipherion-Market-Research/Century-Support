@@ -74,13 +74,18 @@ class DataSyncer:
 
             self.is_syncing = True
             
-            # Parse whitepaper
+            # Parse whitepaper with detailed logging
+            logger.info("Starting whitepaper sync")
             whitepaper_data = await self.whitepaper_parser.process()
+            
             if whitepaper_data:
+                logger.info(f"Parsed whitepaper sections: {list(whitepaper_data.keys())}")
                 await self.cache_manager.redis.set(
                     "whitepaper_sections",
                     json.dumps(whitepaper_data)
                 )
+            else:
+                logger.error("Failed to parse whitepaper data")
 
             # Continue with other syncs...
             website_data = await self.sync_website()

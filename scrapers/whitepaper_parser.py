@@ -3,20 +3,48 @@ from .base_scraper import BaseScraper
 from utils.logger import setup_logger
 from config.constants import WHITEPAPER_SECTIONS
 import re
+import os
 
 logger = setup_logger()
 
 class WhitepaperParser(BaseScraper):
-    def __init__(self, file_path: str = "data/training/whitepaper.txt"):
-        self.file_path = file_path
+    def __init__(self, file_path: str = None):
+        # Try multiple possible file paths
+        self.possible_paths = [
+            "data/training/whitepaper.txt",
+            "data/training/WHITEPAPER.txt",
+            "./data/training/whitepaper.txt",
+            "./data/training/WHITEPAPER.txt"
+        ]
+        self.file_path = file_path or self._find_whitepaper()
+        
+    def _find_whitepaper(self) -> str:
+        """Try to find the whitepaper file in possible locations"""
+        for path in self.possible_paths:
+            if os.path.exists(path):
+                logger.info(f"Found whitepaper at: {path}")
+                return path
+        
+        # If no file found, use default path for error reporting
+        logger.error("Whitepaper not found in any expected location")
+        return "data/training/whitepaper.txt"
 
     async def fetch(self) -> str:
         """Read whitepaper from plaintext file"""
         try:
+            # Log attempt
+            logger.debug(f"Attempting to read whitepaper from: {self.file_path}")
+            
             with open(self.file_path, "r", encoding="utf-8") as file:
-                return file.read()
+                content = file.read()
+                logger.info(f"Successfully read whitepaper ({len(content)} chars)")
+                return content
+                
         except FileNotFoundError:
-            logger.error(f"Whitepaper not found at {self.file_path}")
+            paths_checked = "\n- ".join(self.possible_paths)
+            logger.error(
+                f"Whitepaper not found. Checked locations:\n- {paths_checked}"
+            )
             return ""
         except Exception as e:
             logger.error(f"Error reading whitepaper: {e}")
