@@ -44,19 +44,18 @@ To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/white
 - Allocated for Presale: 142M tokens
 - Total CPX Purchased (Staked)""",
 
-		"presale_info": """**CipheX Public Presale**:
-Launching January 24, 2025! 🚀
+		"presale_info": """**CipheX Public Presale - NOW LIVE! 🚀**
 
 Key Details:
-• Starting Price: $0.10 per CPX
+• Current Starting Price: $0.10 per CPX
 • Minimum Purchase: 2,000 CPX
 • Duration: 180 days
 • Target Funding: $20M
 • Accepted Payments: USDT, USDC, ETH
 
-The price will increase automatically every 24 hours during the presale period, with potential gains up to 159.93% by the end.
+The price increases automatically every 24 hours during the presale period, with potential gains up to 159.93% by the end.
 
-Visit [CipheX](https://ciphex.io) to participate when live.
+Visit [CipheX](https://ciphex.io) to participate now!
 
 ⚠️ Important Reminders:
 • Only use official links

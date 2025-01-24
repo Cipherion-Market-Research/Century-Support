@@ -95,11 +95,11 @@ efficient financing, breaking down the prohibitive barriers of traditional finan
 4 Page |
 
 1.5 Road Map Overview
-Phase I. Key development activities for launching the CipheX Community include preparing targeted 
-marketing strategies for its public presale campaign ("PreSale"). During Phase 2 and 3, CipheX targets
-its launch on the Uniswap decentralized exchange by mid-2025, alongside additional commercial 
-testing of the Abacus Network. CipheX anticipates a full rollout later in 2025. For Phase 4., CipheX 
-anticipates listing on a centralized exchange in 2026, enhancing market accessibility for the CipheX 
+Phase I. The CipheX Community has successfully launched with its active public presale campaign
+("PreSale"). During Phase 2 and 3, CipheX targets its launch on the Uniswap decentralized exchange
+by mid-2025, alongside additional commercial testing of the Abacus Network. CipheX anticipates a
+full rollout later in 2025. For Phase 4., CipheX anticipates listing on a centralized exchange in 2026,
+enhancing market accessibility for the CipheX
 Community. Additionally, CipheX plans to launch its investment services and P2P lending programs to 
 support emerging markets and undervalued industry sectors. In addition, CipheX plans to focus on 
 expanding commercial opportunities for the Abacus Network during Phase 5. CipheX expects to 
@@ -133,11 +133,11 @@ Community from single points of failure, potential misconduct, or theft.
 
 6 Page |
 2.4 PreSale of CPX Tokens
-The PreSale anticipates driving awareness through extensive online media campaigns and partnering 
-with established marketing firms and key opinion leaders. In addition, CipheX will introduce its 
-marketing affiliate and referral program designed to incentivize PreSale contributors to earn rewards 
-by referring friends and networks. 
-The CipheX PreSale is expected to open under the following terms:
+The PreSale is actively driving awareness through extensive online media campaigns and partnerships
+with established marketing firms and key opinion leaders. CipheX has introduced its marketing
+affiliate and referral program designed to incentivize PreSale contributors to earn rewards by
+referring friends and networks.
+The CipheX PreSale is now open under the following terms:
 Start Price Per CPX: $0.10 (Ten Cents)
 Minimum CPX Tokens: 2000 CPX (n1)
 Maximum CPX Tokens: 200,000 (n1)
