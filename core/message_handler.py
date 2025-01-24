@@ -92,15 +92,20 @@ class BotMessageHandler:
             for topic, keywords in topics.items():
                 if any(keyword in message for keyword in keywords):
                     if topic == "presale":
+                        # Get current price from API
+                        stats_data = json.loads(await self.cache_manager.redis.get("ciphex_stats") or "{}")
+                        current_price = stats_data.get('price', {}).get('ui', '$0.10')
+                        
                         response_parts.append(
-                            "**CipheX Public Presale Launch: January 24, 2025! 🚀**\n\n"
+                            "**CipheX Public Presale - NOW LIVE! 🚀**\n\n"
                             "**Key Details:**\n"
                             "• Starting Price: $0.10 per CPX\n"
+                            f"• Current Price: {current_price} per CPX\n"
                             "• Minimum Purchase: 2,000 CPX\n"
                             "• Duration: 180 days\n"
                             "• Target Funding: $20M\n"
                             "• Accepted Payments: USDT, USDC, ETH\n\n"
-                            "The price increases automatically every 24 hours during the presale period, with potential gains up to 159.93%.\n\n"
+                            "The price increases automatically every 24 hours during the presale period.\n\n"
                             "⚠️ **Important Reminders:**\n"
                             "• Only use official links\n"
                             "• Never share wallet seed phrases\n"
@@ -183,11 +188,24 @@ class BotMessageHandler:
                 )
                 return
 
-            # 1) Attempt fuzzy match for FAQ
+            # Check for price queries first
+            if any(kw in message.lower() for kw in ["price", "token price", "how much"]):
+                stats_data = json.loads(await self.cache_manager.redis.get("ciphex_stats") or "{}")
+                current_price = stats_data.get('price', {}).get('ui', '$0.10')
+                price_response = (
+                    f"**CPX Token Price Information:**\n"
+                    f"• Current Price: {current_price} per CPX\n"
+                    "• Starting Price: $0.10 per CPX\n\n"
+                    "The price increases automatically every 24 hours during the presale period."
+                )
+                await update.message.reply_text(price_response, parse_mode="Markdown")
+                return
+
+            # Then attempt fuzzy match for FAQ
             matched_faq, faq_score = self._fuzzy_match_faq(message, faq_data)
             similarity_threshold = 80
 
-            if matched_faq and faq_score >= similarity_threshold:
+            if matched_faq and faq_score >= similarity_threshold and matched_faq != "What is the current price?":
                 original_faq_answer = faq_data[matched_faq]
                 # Summarize the matched FAQ text
                 summarized_answer = await self._summarize_text(
@@ -308,14 +326,11 @@ class BotMessageHandler:
             return None, 0
         # Priority keywords that should trigger specific FAQ entries
         priority_matches = {
-            "price": "What is the starting price in USD?",
             "starting price": "What is the starting price in USD?",
-            "token price": "What is the starting price in USD",
-            "how much": "What is the starting price in USD?",
             # Add presale related priority matches
-            "presale": "When does the presale start?",
-            "when presale": "When does the presale start?",
-            "when does presale": "When does the presale start?"
+            "presale": "Is the presale active?",
+            "when presale": "Is the presale active?",
+            "when does presale": "Is the presale active?"
         }
         # Check for priority keyword matches first
         user_msg_lower = user_message.lower()
