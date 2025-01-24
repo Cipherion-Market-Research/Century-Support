@@ -27,8 +27,11 @@ You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
 
 View on [Etherscan](https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)""",
 
-		"price_info": """**Token Price**:
-The current CPX token price updates regularly. Visit [Ciphex](https://ciphex.io/) to see the latest price.""",
+		"price_info": """**CPX Token Price Information:**
+• Starting Price: $0.10 per CPX
+• Visit [ciphex.io](https://ciphex.io) for real-time pricing
+
+The price increases automatically every 24 hours during the presale period.""",
 
 		"whitepaper_info": """TLDR? Don't worry! I've studied the whitepaper from cover to cover and I'm here to help! 
   
@@ -47,15 +50,15 @@ To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/white
 		"presale_info": """**CipheX Public Presale - NOW LIVE! 🚀**
 
 Key Details:
-• Current Starting Price: $0.10 per CPX
+• Starting Price: $0.10 per CPX
 • Minimum Purchase: 2,000 CPX
 • Duration: 180 days
 • Target Funding: $20M
 • Accepted Payments: USDT, USDC, ETH
 
-The price increases automatically every 24 hours during the presale period, with potential gains up to 159.93% by the end.
+The price increases automatically every 24 hours during the presale period.
 
-Visit [CipheX](https://ciphex.io) to participate now!
+Visit [ciphex.io](https://ciphex.io) to participate now and see the current price!
 
 ⚠️ Important Reminders:
 • Only use official links

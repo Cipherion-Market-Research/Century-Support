@@ -89,10 +89,11 @@ class BotCommandHandler:
         stats_data_str = await self.cache_manager.redis.get("ciphex_stats")
         if stats_data_str:
             stats_data = json.loads(stats_data_str)
-            token_price = stats_data.get('tokenPrice', {}).get('ui', 'Unknown')
+            token_price = stats_data.get('price', {}).get('ui', 'Unknown')
             
             formatted_price = (
-                f"**Current CPX Token Price**: {token_price}\n\n"
+                f"**Current CPX Token Price**: {token_price}\n"
+                f"Starting Price: $0.10\n\n"
                 f"Visit [ciphex.io](https://ciphex.io) for real-time pricing and to participate in the presale."
             )
             await update.message.reply_text(formatted_price, parse_mode="Markdown")
