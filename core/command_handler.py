@@ -86,7 +86,18 @@ class BotCommandHandler:
         await update.message.reply_text(BOT_RESPONSES["contract_info"], parse_mode="Markdown")
 
     async def _handle_price(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(BOT_RESPONSES["price_info"], parse_mode="Markdown")
+        stats_data_str = await self.cache_manager.redis.get("ciphex_stats")
+        if stats_data_str:
+            stats_data = json.loads(stats_data_str)
+            token_price = stats_data.get('tokenPrice', {}).get('ui', 'Unknown')
+            
+            formatted_price = (
+                f"**Current CPX Token Price**: {token_price}\n\n"
+                f"Visit [ciphex.io](https://ciphex.io) for real-time pricing and to participate in the presale."
+            )
+            await update.message.reply_text(formatted_price, parse_mode="Markdown")
+        else:
+            await update.message.reply_text(BOT_RESPONSES["price_info"], parse_mode="Markdown")
 
     async def _handle_whitepaper(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(BOT_RESPONSES["whitepaper_info"], parse_mode="Markdown")
@@ -95,19 +106,19 @@ class BotCommandHandler:
         stats_data_str = await self.cache_manager.redis.get("ciphex_stats")
         if stats_data_str:
             stats_data = json.loads(stats_data_str)
-            # Directly access the keys, which are strings
+            # Use the UI values from the API response
             cipherions = stats_data.get('cipherions', 'Unknown')
-            total_contributions = stats_data.get('totalContributions', 'Unknown')
-            total_cpx_presold = stats_data.get('totalCPXPresold', 'Unknown')
-            total_staked = stats_data.get('totalStaked', 'Unknown')
-            percent_staked = stats_data.get('percentStaked', 'Unknown')
+            total_contributions = stats_data.get('totalContributions', {}).get('ui', 'Unknown')
+            total_cpx_presold = stats_data.get('totalCPXPresold', {}).get('ui', 'Unknown')
+            total_staked = stats_data.get('totalStaked', {}).get('ui', 'Unknown')
+            percent_staked = stats_data.get('percentStaked', {}).get('ui', 'Unknown')
 
             formatted_stats = (
                 f"**Community & Presale Stats**:\n"
                 f"- Total Community Members: {cipherions}\n"
                 f"- Total Funds Raised: {total_contributions}\n"
-                f"- Total CPX Purchased: {total_cpx_presold} tokens\n"
-                f"- Total Staked: {total_staked} tokens\n"
+                f"- Total CPX Purchased: {total_cpx_presold}\n"
+                f"- Total Staked: {total_staked}\n"
                 f"- Percent Staked: {percent_staked}%\n"
             )
             await update.message.reply_text(formatted_stats, parse_mode="Markdown")
