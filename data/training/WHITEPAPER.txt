@@ -1,408 +1,128 @@
-THIS WHITEPAPER IS FOR INFORMATION PURPOSES ONLY AND IS NOT AN OFFER, SOLICITATION OF AN OFFER, OR
-ADVICE TO BUY OR SELL CRYPTOCURRENCIES. THE CRYPTOCURRENCY MARKET ISHIGHLY VOLATILE, SPECULATIVE
-AND INVOLVES A HIGH DEGREE OF RISK. TARGET OPERATING AND OTHER RESULTS AS MIGHT BE DESCRIBED IN
-THIS WHITEPAPER, ARE NOT INDICATIVE OF FUTURE OR ACTUAL RESULTS, AND RESULTS MAY VARY OR NOT BE
-REALIZED. ALL READERS ARE URGED TO DO THEIR OWN RESEARCH.
 TABLE OF CONTENTS
-1.0 Introduction
-1.1 The CipheX Ecosystem
-1.2 The Origin of CipheX
-1.3 Autonomous Market Trading
-1.4 The Future of CipheX
-1.5 Road Map Overview
+
+1.0 CipheX Ecosystem
+1.1 The Problem
+1.2 The CipheX Mission
+1.3 Crypto Markets Simplified
+1.4 Centurion Market Advantage
+1.5 The CipheX Roadmap
 2.0 Tokenomics
 2.1 CipheX Maximum Supply
 2.2 Creator & Founder Tokens
 2.3 Treasury Management
 2.4 PreSale of CPX Tokens
-2.5 Automated Daily Pricing
-2.6 Costs of PreSale Activities
-2.7 Planned Use of Proceeds
-2.8 CPX Lockup Restrictions
-2.9 CPX Vesting Schedule
-2.10 Fixed Term Staking and Rewards
-2.11 Fixed Term Staking Redemptions
-3.0 Community Management
-3.1 Hybrid Organizational Model
-3.2 Operating Capital Reserves
-3.3 Investment Participation
-3.4 Distribution of Returns
-3.5 Creators & Founding Contributors
-3.6 General and Expert Contributors
-3.7 Market Performance Rewards
-3.8 Removals and Termination
-3.9 Eligibility for Community Voting
-3.10 CPX Token Buyback Program
-3.11 Total Supply Burn Program
-4.0 Performance Benchmarks
-4.1 CipheX Revenue Streams
-4.2 Market Returns and Revenue Growth
-4.3 Scalable Growth and Efficiency
-5.0 Market Risk Factors
-5.1 Market/Economic Volatility
-5.2 Autonomous Trading
-5.3 Cybersecurity Threats
-5.4 Liquidity/Price Volatility
-5.5 Operational Risks
-5.6 Fraud and Scam Risks
-5.7 Contract Vulnerabilities
-5.8 Privacy and Data Risks
-5.9 Market Manipulation
-5.10 Risk of Natural Disasters
+2.5 Costs of PreSale Activities
+2.6 Lockup & Vesting Restrictions
+2.7 Use of Presale Contributions
+2.8 Fixed Term Staking and Rewards
+3.0 The CipheX Community
+3.1 Operating Capital Reserves
+3.2 Eligibility for Community Voting
+3.3 Creators & Community Contributors
+3.4 Removals and Termination
+3.5 Pre-Launch Centurion Trading
+3.6 Pre-Launch Loss Coverage
+3.7 Centurion Commercial Launch
+3.8 Liquidity Pool & Trading Fees
+3.9 Distribution of Market Returns
+3.10 Buyback & Burn Program
+3.11 CipheX Revenue Streams
+4.0 Market Risk Factors
+4.1 Market and Technical Volatility
+4.2 Market Liquidity
+4.3 Market and Price Manipulation
+4.4 Privacy and Data Vulnerabilities
+4.5 Operational Risks
 
-1.0 Introduction
-1.1 The CipheX Ecosystem 
-CipheX is a dynamic community platform where token holders can access advanced institutional-grade 
-trading and risk management strategies powered by the Abacus Network. This system delivers 
-automated, 24/7 market returns while enabling token holders to participate in additional long-term 
-growth opportunities shaped by the CipheX community.
-
-1.2 The Origin of CipheX 
-Originally called the Hypatia Analytics (Hypatia), the system was originally designed by Cipherion 
-Market Research to analyze fractal volatility characteristics and certain nonlinear market behaviors in 
-traditional capital markets to produce identifiable trading opportunities. Recognizing the unique 
-opportunities within the cryptocurrency sector driven by high volatility and rapid growth Hypatia
-was reengineered to prioritize autonomous market execution opportunities across all cryptocurrency 
-asset classes. Hypatia was divided into two specialized systems for development and operational 
-efficiency: Abacus Analytics (Abacus) and Market Centurions (Centurions). Abacus functions as 
-the neural center, integrating high-speed connectivity, quantitative machine learning, and generative 
-AI to produce advanced graphical adaptive predictability models that identify optimal trading 
-strategies within the cryptocurrency markets. These strategies are then executed by Centurions,
-automated trading bots operating as a coordinated system (collectively referred to as the Abacus 
-Network).
-
-1.3 Autonomous Market Trading
-Market Centurions can outperform traditional automated trading bots by symbiotically integrating
-their neural network with the Abacus neural center. This collaboration allows Centurions to 
-dynamically adapt to sudden market shifts to generate a consistent range of favorable probabilities 
-across diverse risk scenarios, even when diverging from Abacus-generated strategies. These real-time 
-adjustments are relayed back to Abacus, enabling the creation of advanced predictive models termed 
-derivative strategies that further refine and enhance the performance of existing trading approaches.
-
-1.4 The Future of CipheX 
-CipheX transforms traditional financial management by providing individuals unparalleled access to 
-institutional-grade, AI-driven trading strategies through the Abacus Network. Utilizing advanced 
-analytics and automation, CipheX bridges the gap between sophisticated market opportunities and 
-everyday investors, ensuring financial growth and accessibility for anyone, regardless of experience or 
-background. Beyond trading, CipheX is dedicated to creating a global ripple effect of innovation and 
-economic progress. With a focus on unlocking potential in emerging markets and undervalued 
-industries, CipheX empowers its Community to invest in transformative sectors such as alternative 
-healthcare, sustainable agriculture, and entrepreneurial ventures that stimulate local economies and 
-generate long-term societal benefits. By reimagining decentralized finance with simplicity and 
-transparency, CipheX is set to introduce peer-to-peer lending solutions designed for both commercial 
-and individual needs. These future lending solutions are designed to deliver cost-effective, secure, and 
-efficient financing, breaking down the prohibitive barriers of traditional financial systems.
-4 Page |
-
-1.5 Road Map Overview
-Phase I. The CipheX Community has successfully launched with its active public presale campaign
-("PreSale"). During Phase 2 and 3, CipheX targets its launch on the Uniswap decentralized exchange
-by mid-2025, alongside additional commercial testing of the Abacus Network. CipheX anticipates a
-full rollout later in 2025. For Phase 4., CipheX anticipates listing on a centralized exchange in 2026,
-enhancing market accessibility for the CipheX
-Community. Additionally, CipheX plans to launch its investment services and P2P lending programs to 
-support emerging markets and undervalued industry sectors. In addition, CipheX plans to focus on 
-expanding commercial opportunities for the Abacus Network during Phase 5. CipheX expects to 
-pursue additional market opportunities for its investment and P2P lending services. It targets
-additional listings on multiple centralized exchanges throughout 2027, enhancing market value and 
-investor accessibility for the CipheX Community.
-
+1.0 CipheX Ecosystem
+1.1 The Problem
+Traditional crypto trading exposes everyday investors to significant risk, often driven by emotion, speculation, and unpredictable market swings. Retail traders and everyday investors frequently make impulsive decisions, buying into the hype, panic-selling during downturns, or misjudging market trends. For example, in 2021, Bitcoin surged to $69,000, only to crash below $20,000 in 2022, wiping out billions in investments. Studies show that over 80% of day traders lose money consistently. In crypto, extreme price volatility, amplified by millions of users relying more on automated trading bots, can trigger rapid market swings and liquidations within seconds. 
+While institutional traders leverage advanced algorithms, larger capital pools, and teams with years of experience to manage these movements, everyday investors are often left vulnerable, relying on limited tools, incomplete data, and emotional decisions. The rise of automated trading has created an uneven playing field, where retail investors are at a growing disadvantage. Without access to professional-grade risk management and automation, they are left vulnerable in financial markets that are becoming more dominated by high-frequency trading supported by AI-driven strategies.
+1.2 The CipheX Mission
+Managing a crypto portfolio shouldn't be complicated. CipheX believes financial independence should be accessible to everyone without costly advisors or institutional fees. CipheX is a sophisticated ecosystem that provides AI-driven trading automation and actionable insights to simplify complex markets, helping everyday investors understand market behavior and confidently manage their crypto portfolios based on strategy, not speculation, making crypto investing an easy, safer, and more rewarding experience.
+1.3 Crypto Markets Simplified
+Investing is a discipline, not a gamble. Successful long-term investors use data-driven decisions to manage risk and probability with strategy and discipline, focusing on consistent results rather than hype or speculation. CipheX empowers everyday investors with institutional-grade risk management and precision trading strategies, once reserved for hedge funds and professional traders, without the complexity or need for extensive financial market or trading experience.
+CipheX delivers this through its Centurion Network, an advanced AI-powered system built on over 30 years of hands-on financial expertise. Centurions proactively analyzes market trends in real-time to manage portfolios 24/7, embedding decades of real-world expertise into every strategy, unlike other platforms that leave risk entirely on the user. With CipheX, everyday investors can define financial goals, automate or refine recommended strategies based on real-time market events, and authorize their Centurions to execute trade opportunities with precision and optimized performance. 
+Imagine Centurions as your AI-powered team of expert financial managers and traders, working around the clock to monitor markets, manage risk, and strategically grow your crypto portfolio, free from emotion or guesswork. With CipheX Centurions, retail traders, and everyday investors no longer struggle against the dominance of automated market forces. Instead, they gain access to the same cutting-edge trading capabilities as professionals, ensuring precise execution, managed risk, and confident portfolio management, even in the most volatile conditions.
+1.4 Centurion Market Advantage
+Traditional trading platforms overwhelm new users with complexity, requiring technical expertise and financial knowledge to operate, let alone efficiently navigate volatile markets. Even with tutorials, explainer videos, and well-crafted guides, the learning curve often remains too steep for everyday individuals who lack the time or inclination to master intricate trading mechanics, resulting in costly mistakes or becoming discouraged and avoiding trading altogether. 
+Meanwhile, conventional trading bots often require technical expertise to set up and operate, relying on rigid algorithms with fixed parameters. This rigidity causes them to miss profitable opportunities and struggle to adapt to sudden market shifts, leaving everyday investors disadvantaged and exposed to unnecessary risks, inefficiencies, and unpredictable losses.
+The Centurion Network transforms crypto trading using multi-layered AI architecture, integrating machine learning, quantitative analysis, and behavioral market modeling arrangements to dynamically identify opportunities across all crypto markets, optimize portfolios, and execute trades efficiently. Unlike static trading bots, Centurions also uses variations of fractal volatility models to analyze price patterns across different timeframes, detecting micro indicators of market shifts before they become obvious to the broader market. 
+In addition, with integrated dynamic risk management, Centurions continuously adjusts trade strategies in real-time, responding to economic signals, liquidity shifts, and volatility. By aggregating multi-market liquidity, arbitrage, and automated hedging strategies, Centurions effectively mitigates risk while capitalizing on market inefficiencies, ensuring optimized portfolio performance.
+With 360-degree market intelligence, Centurions analyzes both on-chain and off-chain data to produce adaptive probability arrangements related to liquidity shifts and algorithmic market signals. It can provide users with real-time risk alerts and trade recommendations and automate portfolio adjustments based on market conditions while maintaining their financial goals. These actionable insights eliminate errors caused by poor human execution, incomplete information, or emotional decision-making. With CipheX Centurions, retail traders, and everyday investors can navigate volatile markets with confidence, precision, and strategic advantage.
+1.5 The CipheX Roadmap
+Phase I. Y2025. 
+Phase I of the Presale soft launch runs for 30 to 60 days, with limited contributions to refine CipheX's ecosystem, Presale platform, and marketing strategy in a live environment before opening the Presale to all contributors. Based on community feedback, CipheX intends to launch a "View Only" version of the Centurion Network within weeks of relaunching its Presale, demonstrating its analytics and autonomous trading capabilities as real-world proof of concept.
+Phase II. EY2025. 
+Phase II expands the AI infrastructure of its Centurion Network and expects to offer exclusive limited pre-commercial access to Presale contributors. As the Presale concludes, CipheX will prepare for its Uniswap DEX listing, ensuring a streamlined market entry and establishing initial liquidity.
+Phase III. EY2026.  
+Phase III marks the commercial launch of the Centurion Network, with a focus on scalability and efficiency. CipheX expects to introduce its first Real World Asset (RWA) services, integrating autonomous digital asset management with real-world financial services to expand opportunities and market adoption. Additionally, CipheX will transition from Uniswap DEX to its first centralized exchange (CEX), enhancing market access and liquidity.
+Phase IV. EY2027 and EY2028.  
+Phase IV focuses on revenue growth and market expansion for the Centurion Network and RWA services while driving competitive innovations and strategic partnerships to enhance efficiency and profitability. As CipheX scales, it plans to expand to multiple CEXs, further increasing market accessibility and liquidity for its community.
 2.0 Tokenomics
 2.1 CipheX Maximum Supply
-CipheX has set a maximum supply of 1.5 billion CPX Tokens, structured with a deflationary model to 
-gradually reduce the total supply over ten years. This deflationary approach, market stabilization 
-efforts, and expected growth is expected to reduce price volatility, and support sustained long-term 
-value.
-(Table 2.1A CPX Distributed Allocation)
-
-5 Page |
 2.2 Creator & Founder Tokens 
-Creator and Founding Contributor tokens ("Creator Tokens") are secured in two smart contracts. The 
-first contract locks 80% of CPX Tokens for two years, with releases based only on achieving 
-distributable profits for the CipheX Community. The second contract secures the remaining 20% of 
-Creator Tokens under the same lockup and vesting terms as other CPX Token holders.
-(Table 2.1A Creators & Founding Contributor Locked CPX Tokens)
-
-2.3 Treasury Management
-CipheX uses multi-sig authentication protocols to manage CPX Tokens or digital currency transfers
-from treasury or capital wallets of the CipheX Community (Treasury Management). The independent 
-oversight of Expert Contributors further governs this multi-layered approval system. These Treasury 
-Management protocols increase transparency and accountability, further safeguarding the CipheX 
-Community from single points of failure, potential misconduct, or theft.
-(Table 2.2A Treasury Management Protocol of CPX Tokens)
-
-6 Page |
+Creator and Founding Contributor Tokens ("Creator Tokens") are secured in two smart contracts, with 80% locked for two years, releasing only when CipheX generates community profits. The remaining 20% follow the same lockup and vesting terms as other CPX Token holders, ensuring fairness and transparency.
+2.3 Treasury Management 
+CipheX utilizes multi-signature (multi-sig) authentication protocols to securely manage CPX Tokens and authorize transfers from treasury and capital wallets. CPX Tokens are digital assets under CipheX's administration, and any transfer, whether for business operations, strategic allocations, or other authorized purposes, requires multi-sig approval, ensuring security and oversight by multiple stakeholders. 
 2.4 PreSale of CPX Tokens
-The PreSale is actively driving awareness through extensive online media campaigns and partnerships
-with established marketing firms and key opinion leaders. CipheX has introduced its marketing
-affiliate and referral program designed to incentivize PreSale contributors to earn rewards by
-referring friends and networks.
-The CipheX PreSale is now open under the following terms:
+The Presale intends to drive awareness through extensive online media campaigns and strategic partnerships with established marketing firms. CipheX offers referral incentives, community engagement rewards, and exclusive benefits for Presale contributors to drive community growth during the Presale. During this phase, CPX Token prices increase daily over 180 days, structured for an approximate 159.93% unrealized gain from the opening price.
 Start Price Per CPX: $0.10 (Ten Cents)
 Minimum CPX Tokens: 2000 CPX (n1)
-Maximum CPX Tokens: 200,000 (n1)
-Target Funding: $20,000,000 (n2)
-Minimum Funding: $2,000,000 (n3)
-Planned Duration: 180 Days
-Notes: (n1) CipheX accepts USDT, USDC, and ETH for CPX Token contributions. There are minimum and maximum 
-limits on the number of CPX Tokens that can be acquired per contribution. (n2) 142,738,450 CPX Tokens are 
-allocated for the PreSale phase. (n3) The PreSale has a Minimum Funding requirement. Suppose CipheX does not 
-meet this threshold within the first 90 days of the PreSale. In that case, all contributions will be returned to 
-contributors (minus any network transfer fees), and the PreSale will be closed.
+Maximum CPX Tokens: 200,000 CPX (n1)
+Target Total Contributions: $20,000,000 (n2)
+Minimum Total Contributions: $2,000,000 (n3)
+Planned Duration: 180 Days (extendable)
 
-2.5 Automated Daily Pricing 
-During the PreSale, the price of CPX Tokens is set to increase every 24 hours. The PreSale is anticipated 
-to remain open 180 days from its start date, with automated daily price increases designed to generate 
-unrealized gains for contributors. The estimated final price at the close of the PreSale is projected to 
-reach $0.2593, representing an unrealized gain of approximately 159.93% from the opening price.
-(Table 2.5A Estimated Unrealized Gains of CPX Tokens during PreSale)
 
-7 Page |
-2.6 Costs of PreSale Activities
-If the CipheX Community successfully achieves the target funding during its planned PreSale, total 
-expenditures are projected at approximately $3,079,477. Affiliates include Key Opinion Leaders 
-(KOLs) and marketing partners incentivized through a tiered payout structure to reward higher 
-contributions. Affiliate payouts will follow a 50/50 split: 50% in USDT and 50% in CPX Tokens, valued 
-at the time of each referred contribution. These payouts will commence after the minimum funding 
-threshold is met. Should the minimum threshold not be achieved, no payouts will be distributed to 
-Affiliates.
-(Table 2.6A Estimated Costs to Development and Marketing of PreSale)
+Notes: (n1) CipheX accepts USDT, USDC, and ETH for CPX Token contributions. (n2) 142,738,450 CPX Tokens are allocated for the PreSale. (n3) The PreSale has a Minimum Contribution requirement. Suppose CipheX does not meet this threshold within the first 90 days of the PreSale. In that case, the duration of the Presale may be extended or closed. All Presale contributions, less network transfer fees, will be returned to contributors if closed. 
 
-2.7 Planned Use of Proceeds
-CipheX has outlined a structured allocation of Target Funding from its PreSale to ensure healthy 
-liquidity and essential operating capital to complete the development of decentralized governance 
-features for its Community and commercialize the Abacus Network. 
-(Table 2.7A Estimated Use of Proceeds from its PreSale)
+2.5 Costs of PreSale Activities
+When the CipheX Presale reaches its Target Funding, total expenditures related to the Presale are estimated at $3,079,477. Of this, 8.95% ($1,805,546) is expected to be allocated toward Affiliate and KOL marketing, and approximately 6.31% ($1,273,932) is designated for business development and other marketing initiatives. Any affiliate earnings are paid in 50% USDT and 50% unrestricted CPX Tokens. Payments are made biweekly in USDT when the minimum Presale Contribution is met. Unrestricted CPX Tokens can be claimed at the end of the Presale. 
+2.6 Lockup & Vesting Restrictions
+All CPX Tokens from the Presale are subject to a six-month lockup, followed by a 12-month vesting period. Lockup begins upon contribution, during which tokens accrue fixed returns based on the 10-year US Treasury yield. These returns, paid in unrestricted CPX Tokens, can be claimed after the Presale. After the six-month lockup, CPX Tokens enter a one-year vesting schedule, except for certain performance-locked Creator Tokens. In the first month, 3% of CPX Tokens vest, with increasing monthly releases until all tokens are fully vested within 12 calendar months.
+2.7 Use of Presale Contributions
+CipheX has allocated Presale contributions over the next 12 to 18 months to expand its decentralized ecosystem and accelerate the commercialization of its Centurion Network. 
+2.8 Fixed Term Staking and Rewards
+The CipheX Fixed Term Staking program (CPX Staking) enables CPX Token holders to lock tokens for 6 to 12 months and earn unrestricted CPX Token rewards. Launching shortly after the Presale, it offers fixed returns based on the 10-year US Treasury yield at the time of staking plus a premium, with rates varying by term and deposit size. For 12 months post-Presale, participants can restake CPX Tokens before the program shifts to liquidity staking incentives.
 
-8 Page |
-(Table 2.7B Capital Management Protocol Use of Proceeds)
+3.0 The CipheX Community
+3.1 Operating Capital Reserves
+CipheX expects Presale contributions to fund Centurion Network commercialization and generate sufficient revenue to support operations and innovation. Revenue from Centurion Network, LP trading fees, and RWA services will further sustain growth. Retained funds will be proposed annually for community approval, with mid-year reallocation votes available to address evolving priorities, ensuring financial sustainability and strategic expansion.
+3.2 Eligibility for Community Voting
+Token holders with a minimum of 10,000 CPX Tokens are eligible to participate in community voting activities, with each token representing one vote. Consumers holding fewer than 10,000 CPX Tokens are not eligible to vote. They will not be able to access the CipheX community governance features.
+3.3 Creators & Community Contributors
+The CipheX core team comprises Creators, Founding Contributors, and elected Expert Contributors with 20+ years of innovation development and 30+ years in asset management, capital markets, and executive leadership. Creators and Founding Contributors drive Centurion Network development and community engagement within the CipheX ecosystem.
+3.4 Removals and Termination
+Expert Contributors are nominated and elected by CipheX community members for up to two-year terms, with the option for re-election. Only community members can submit nominations for these roles. Expert and general contributors can be removed for non-performance or may exit early, with their CPX Tokens revoked and returned to the treasury. 
+3.5 Pre-Launch Centurion Trading
+The Centurion Capital Pool is exclusive to Presale contributors, providing them early access to Pre-Launch Centurion trading during Phase II of the Centurion Network. As detailed in the Use of Presale Contributions, approximately 17% of each Presale contribution is allocated to fund the contributor's initial trading portfolio, effectively lowering the net cost of CPX Tokens acquired during the Presale. This early access allows Presale contributors to participate in the Centurion Network's pre-launch trading and testing activities in a live market environment, helping refine its AI-driven strategies, user experience, and overall performance. 
+During this phase, trading activities will reflect real market conditions, with actual potential gains or losses occurring. Contributors can redeem trading profits under specific test guidelines that will be available once this phase begins. At the same time, contributors will be responsible for anticipated network transactions and gas fees. Once the Centurion Network is commercially launched, Centurion trading fees will apply only to profitable trades. These fees will be simulated during the testing period using live market conditions. However, no actual fees will be deducted from users' trading profits. At the end of the pre-launch testing phase, the Centurion Capital Pool will close, and each trading portfolio will be returned to its respective Presale contributor, allowing them to manage their trading portfolio independently moving forward.
+3.6 Pre-Launch Loss Coverage
+This loss protection coverage is also exclusive to Presale contributors. If the Centurion Network incurs a trading loss within the Centurion Capital Pool during the Pre-Launch Centurion Trading phase, CipheX will compensate participants with additional unrestricted CPX Tokens equal to 50% of their loss's currency value. These compensatory CPX Tokens will be claimable after the pre-launch test phase, which will last approximately six months. Once the Centurion Network becomes commercially available, this loss protection coverage will no longer be available to Presale contributors.
+3.7 Centurion Commercial Launch
+Once the Centurion Network is commercially available, anyone can sign up for free and access its advanced trading features. As a noncustodial ecosystem, CipheX does not require users to open an account or deposit funds to utilize the network. However, users will need funds in their wallets to build their trading portfolio and authorize Centurions to manage their financial goals.
+The Centurion Network will charge Centurion trading fees only on profitable trades, ranging from 0.10% to 0.50% per trade, calculated automatically based on trade value and volume. Additionally, regardless of profitability, Gwei (gas fees) and other third-party network transaction fees may apply to all Centurion trades.
+3.8 Liquidity Pool & Trading Fees
+CipheX will fund and deploy its own liquidity pool (LP) to enhance market stability and trading efficiency. For the first year following the launch of DEX trading and until liquid staking becomes available, Presale Contributors will receive quarterly distributions equal to 25% of accrued trading revenues, minus gas and transaction fees ("LP Fees"). These distributions will be proportionally allocated based on each contributor's Presale participation. After the first year, CipheX will extend the 25% LP Fee to all liquidity providers through a tiered liquidity staking rewards system, with governance mechanisms allowing for flexible adjustments as the ecosystem expands.
+The remaining 75% of CipheX trading revenues from its liquidity pool will be strategically reinvested to strengthen and diversify the platform's financial structure. A portion of these funds will be used to purchase additional USDT and ETH, ensuring a healthy liquidity reserve for additional stability during market volatility. To further mitigate market-driven losses, some revenues will be invested through the Centurion Network to accumulate stable short-term assets and generate lower-risk trading revenues. Additionally, CipheX will allocate funds to ongoing technological advancements and expanding long-term growth strategies.
+3.9 Distribution of Market Returns
+Profits from Centurion trading activities, less any transaction fees, are automatically transferred to user wallets based on their preferences. Distributable returns from future RWA services and other financial offerings are expected to be issued annually, if available, with distribution amounts determined through community voting.
+3.10 Buyback & Burn Program
+The CipheX ecosystem is designed to reduce about 95% of its total token supply over the next decade through an automated annual burn, randomly announced and executed within 30 days of each annual announcement, without community vote. Alternatively, within 30 days, community members can propose a buyback-and-burn using surplus capital, if available. This alternative program requires community approval and is designed not to impact ongoing innovation or future investments.
+3.11 CipheX Revenue Streams
+Over the next ten years, CipheX will focus on three primary revenue streams: Centurion Network market activities, RWA tokenization and financing, and commercial peer-to-peer lending services. CipheX also plans to introduce an open-source development environment, enhancing innovation, market transparency, and interoperability to increase market adoption and expand competitive advantage beyond cryptocurrency markets.
+Notes: (n1) Estimated Revenue from Centurion Network, CipheX LP Revenues, and Future Services, with EYE1 beginning upon full commercial launch of the Centurion Network; (n2) For this summary, CipheX includes investments in Non-Liquid Assets (NLA), attributed to early investments in RWA projects to be tokenized over a one-to-two-year period.
+Notes: (n1) Anticipated R&D and innovation development for the Centurion Network; (n2) General operations are projected to average around 12.11% annually; and (n3) Earnings Before Interest and Taxes (EBIT) expected to become available pre-tax distributable returns to the CipheX community, less proposed capital allocations approved by the CipheX community annually for ongoing innovations and market-driven strategies.
 
-2.8 CPX Lockup Restrictions
-Except for CPX Tokens issued during the lockup earning period, all other CPX Tokens are subject to a 
-six-month lockup and twelve-month vesting period. The lockup starts at distribution or PreSale 
-contribution, during which tokens earn fixed returns based on the 10-year US Treasury yield. Paid as 
-unrestricted CPX Tokens, these returns can be claimed after the PreSale. For tokens entering lockup 
-post-PreSale, earned unrestricted CPX Tokens are distributed monthly.
-(Table 2.8A Estimated Total Locked CPX Tokens)
-
-9 Page |
-(Table 2.8B Six Month Lockup Sample Earn Rate on Total Locked CPX Tokens)
-Notes Table 2.8B: (n1) Estimated total CPX Tokens subject to the six-month lockup (assumes Expert Contributors 
-totaling 148,089,674 are fully allocated for modeling purposes). (n2) Fixed rate of return is based on the 10-year 
-US Treasury yield at the start of each lockup. This yield is the effective rate for the six-month lockup period, 
-doubling the 10-year US Treasury yield. The exact rate may vary based on the start date of each lockup period, and 
-(n3) The fixed rate of return is calculated based on the total number of CPX Tokens, not on the market value of 
-each token.
-
-2.9 CPX Vesting Schedule
-Except for Creator Tokens, CPX Tokens will automatically enter a one-year vesting schedule once their
-six-month lockup period ends. In the first month, 3% of CPX Tokens will vest and become unrestricted, 
-followed by increasing monthly release rates until all CPX Tokens are fully vested within 12 months. 
-
-2.10 Fixed Term Staking and Rewards
-The CipheX Fixed Term Staking program (CPX Staking) lets CPX Token holders lock tokens for 6, 12, 
-or 24 months to earn CPX rewards. Launching after the PreSale, it offers fixed returns tied to the 10-
-year US Treasury yield plus a premium, with rates set per staking period and varying by term and 
-deposit size. For 12 months after the PreSale, CipheX will allow restaking in the program before 
-gradually transitioning to liquidity staking incentives. 
-
-2.11 Fixed Term Staking Redemptions
-CPX Staking participants may end their term early and withdraw their principal CPX Tokens. However,
-an early redemption incurs a penalty: forfeiture of any remaining returns and a redemption fee applied 
-from the month of withdrawal before the monthly payout.
-
-10 Page |
-3.0 Community Management
-
-3.1 Hybrid Organizational Model
-
-3.2 Operating Capital Reserves
-CipheX expects sufficient capital to cover daily operations, retain Expert Contributors, and support 
-product research, development, and marketing. A portion of revenue from the Abacus Network and 
-future services will be reserved as working capital and distributed with community approval. If mid_xfffe_year adjustments are needed, members can propose a reallocation vote to address urgent or evolving 
-needs, ensuring sufficient funding to meet the needs of the Community.
-
-3.3 Investment Participation
-CipheX Community members have full control over their returns. CipheX investment opportunities, 
-such as venture projects and lending services, are reviewed by elected Expert Contributors and require 
-Community approval before listing. Members independently select projects to invest in, acknowledging 
-associated risks beforehand. CipheX does make or manage investments for members.
-
-3.4 Distribution of Returns
-Profits from Abacus Network and future services are collected and entered into their revenue vault, 
-which is managed by a transparent smart contract. Members can track the accrued value of market_xfffe_generated returns and revenue from services on their community dashboard. Distributions approved by the CipheX Community are transferred directly to member wallets at the end of each year. CipheX is non-custodial and does not manage or host capital or asset deposits for members. CipheX operates as a non-custodial platform, meaning it does not hold or manage members' capital or assets. Instead, members retain full control and independently manage their funds.
-
-11 Page |
-3.5 Creators & Founding Contributors
-CipheX is a decentralized platform, ensuring that no single person or entity maintains majority control 
-over its Community or capital. Each Creator and Founding Contributor brings over 25 years of proven 
-expertise in cryptocurrency mining, cryptographic development, quantitative market analysis, capital 
-markets trading, structure finance, portfolio and asset management, and executive leadership.
-
-3.6 General and Expert Contributors
-Expert Contributors appointed to key roles, such as Independent Governance or Market Research and 
-Development teams, are elected or nominated by CipheX Community members. These positions carry 
-a term of up to two years, after which contributors may be nominated for re-election. In contrast, 
-General Contributors for community activities such as marketing and technical services are not elected 
-by the CipheX Community, as these roles are often short-term. Instead, General Contributors are 
-appointed with the approval of relevant Expert Contributors.
-
-3.7 Market Performance Rewards
-CipheX anticipates introducing annual Market Performance-based Rewards (MPR) within the first year 
-of community operations, issued in unrestricted CPX Tokens. Eligible participants include Creators, 
-Founding Contributors, and General and Expert Contributors who contribute directly to generating 
-market returns and revenue from future services. This compensation rewards model ensures that 
-investor returns are prioritized, with investors always receiving payment before MPR participants.
-
-3.8 Removals and Termination
-General Contributors may be removed for non-performance or voluntarily exiting before completing 
-tasks. In either case, allocated CPX Tokens are revoked and returned to the CipheX treasury. Creators 
-and Founding Contributors are exempt from direct community removal. However, they can be subject 
-to peer removal if two-thirds approve a petition. This petition is then submitted to the CipheX 
-Community for ratification, excluding the targeted member from voting. Upon ratification, smart 
-contracts execute a buyback of unvested or undistributed CPX Tokens at market value within 30 days. 
-If the buyback fails, the petition is voided, and the individual retains all rights and benefits.
-
-3.9 Eligibility for Community Voting
-CipheX will implement governance contracts using ERC20-based voting and consensus mechanisms, 
-empowering community members to vote on proposals proportional to their CPX Token holdings. 
-Token holders with at least 2,000 CPX Tokens are eligible to participate, with each token representing 
-one vote. 
-
-3.10 CPX Token Buyback Program
-CipheX will implement the ability of the Community to initiate a buyback-and-burn program to 
-repurchase CPX Tokens at a fixed price, reducing investment risk for token holders and improving 
-liquidity. Funded by surplus capital, the program will not affect innovation or future investments. 
-Community approval is required to initiate the program, and participation is optional for CPX Token 
-holders.
-
-12 Page |
-3.11 Total Supply Burn Program
-CipheX's tokenomics strategy is designed to reduce the maximum total supply of CPX Tokens by 
-approximately 95% over the next decade. This process, executed via smart contracts within 30 days of 
-each announcement, operates automatically without requiring a community vote, decreasing the 
-token's maximum supply.
-(Table 3.11A Planned Reduction of CipheX Maximum Supply)
-
-4.0 Performance Benchmarks
-
-4.1 CipheX Revenue Streams
-CipheX has identified three revenue sources for its Community: (a) Cryptocurrency market trading
-activities, (b) Initial Coin Offerings (ICOs) from venture capital investments in emerging markets and
-undervalued industry sectors, and (c) strategic partnerships for decentralized P2P credit services for
-small to mid-sized businesses. Over time, CipheX anticipates these revenue streams will produce
-additional long-term opportunities for the CipheX Community.
-
-4.2 Market Returns and Revenue Growth
-CipheX anticipates that, during the first five years, its revenues will primarily be driven by
-Cryptocurrency trading activities conducted by its Abacus Network. As the CipheX Community
-increases earnings, investments are planned to facilitate peer-to-peer (P2P) lending, venture-focused 
-initial coin offerings (ICOs), and derivative revenues generated by Abacus Network and future services. 
-These diversified revenue streams are expected to develop progressively over this initial five-year 
-period.
-
-13 Page |
-(Table 4.2A Anticipated Concentration of Revenue within the first 5 Years)
-Over the next five to ten years, CipheX expects to expand peer-to-peer (P2P) lending services and
-consumer usage fees from the Abacus Network to achieve increased market adoption. This growth is 
-anticipated to boost revenue and strengthen returns for the CipheX Community. CipheX believes 
-adoption will accelerate due to its strategy of delivering these services through strategic partnerships 
-rather than developing new business models. 
-(Table 4.2B Anticipated Concentration of Revenue within 5 to 10 Years)
-
-4.3 Scalable Growth and Efficiency
-CipheX's market activities are powered by highly automated systems designed to scale efficiently with 
-minimal human intervention. Manual oversight is required only for regular maintenance, system 
-enhancements, or emergency events, allowing for continuous, 24/7 capacity adjustments that optimize 
-market opportunities. By the third year, CipheX expects significant market traction driven by technical 
-advancements and increased automation, largely independent of traditional administrative functions. 
-
-14 Page |
-(Table 4.3A Forecast 10YR Growth from Market Activities and Future Services)
-(Table 4.3B Forecast Revenue Summary of Anticipated 10YR Growth)
-Notes: (n1) Estimated Revenue from Market Activities and future services, with EYE1 beginning upon the full 
-operational launch of the Abacus Network; (n2) For this summary, CipheX includes investments in Non-Liquid 
-Assets (NLA), primarily focusing on Venture ICOs and P2P Lending services. Each NLA investment is intended to 
-be monetized over a five-to-ten-year horizon, with allocations for annual follow-on or future NLA investments 
-capped at 5.5% of total revenue, contingent upon CipheX Community approval; and (n3) Related fees, including 
-market trading and service fees associated with P2P Lending and Venture ICO investments.
-(Table 4.3C Consolidated Operating Costs of Anticipated 10YR Growth)
-15 Page |
-Notes:(n1) Anticipated R&D and innovation development for the Abacus Network, with estimated average annual 
-expenditures allocated as follows: 50% for Abacus, 30% for Market Centurions, and 20% for broader development 
-and innovation; (n2) General operations are projected to average around 11.68% annually with 31.52% of the 
-annual average directed toward Expert and General Contributors and 68.48% toward General Operating expenses 
-to support technical infrastructure and CipheX Community activities; (n3) Earnings Before Interest and Taxes 
-(EBIT) are expected to be pre-tax earnings distributable to the CipheX Community, less any proposed capital 
-allocations approved by the CipheX Community to increase Abacus Network activities, maintain operations and
-expand services.
-
-5.0 Market Risk Factors
-5.1 Market/Economic Volatility
-Cryptocurrency markets are highly volatile, with prices that can change rapidly and dramatically. 
-The success of the CipheX Community will largely depend on the proprietary algorithms of the 
-Abacus Network, which generate returns for the CipheX Community. Investors should know the 
-cryptocurrency market is a high-risk trading environment, and Abacus Network strategies may 
-sometimes result in losses. 
-
-5.2 Autonomous Trading
-Autonomous trading bots in cryptocurrency markets can add extra volatility if not managed 
-properly. While these bots are expected to capitalize on market inefficiencies, they do not 
-guarantee profits. If the Abacus Network algorithms misinterpret market conditions, Centurions
-may respond unpredictably, potentially leading to significant financial losses.
-
-5.3 Cybersecurity Threats
-Cyberattacks, hacking, and security breaches can lead to theft and a decline in market trust. 
-Although CipheX implements top-tier security protocols, the risk of unauthorized access to the 
-CipheX ecosystem, Ethereum blockchain, and DEX assets remains. There is no guarantee that these 
-security risks can be entirely prevented.
-
-5.4 Liquidity/Price Volatility
-Certain cryptocurrencies, particularly newer or lesser-known tokens, can experience low liquidity, 
-making it challenging to buy or sell assets at preferred prices or within short timeframes. There 
-are no assurances that the CipheX Community can maintain strong liquidity or that demand for 
-CPX Tokens will continue to grow. 
-
-5.5 Operational Risks
-Blockchain networks and trading platforms depend on technology that can sometimes experience 
-unexpected issues, outages, or software bugs. Additionally, CipheX relies on Expert Contributors 
-for specific development and operational roles. If these Expert Contributors choose to leave or 
-cannot complete their tasks, it could lead to significant disruption in the operations of the CipheX 
-Community.
-
-16 Page |
-5.6 Fraud and Scam Risks
-CipheX may invest in other cryptocurrency or tokenization projects. However, the crypto market 
-is known for fraudulent schemes, such as phishing scams, Ponzi schemes, and misleading projects 
-that exploit investors. While CipheX uses experienced contributors to perform assessments and 
-thorough due diligence, there is no guarantee that some projects may be fraudulent.
-
-5.7 Contract Vulnerabilities
-Smart contracts are designed to enable and automate transactions within a decentralized, trustless 
-environment. However, they carry certain risks, including potential coding errors, unforeseen 
-vulnerabilities, or malicious exploits. Such failures may result in unexpected user losses, including 
-token loss, trade disruptions, or other unintended financial outcomes. No system is entirely 
-invulnerable to attacks or errors. 
-
-5.8 Privacy and Data Risks
-CipheX uses third party technologies and services to safeguard member identities. However, 
-blockchain transactions are not fully private and information on public blockchains can be 
-analyzed to reveal user identities and transaction histories, compromising privacy. While CipheX 
-is committed to protecting member privacy, there is no guarantee that these privacy measures will 
-be effective indefinitely.
-
-5.9 Market Manipulation
-Cryptocurrency markets, particularly those with lower liquidity, are vulnerable to manipulation 
-tactics such as pump-and-dump schemes, wash trading, and insider trading. Coordinated groups 
-may also attempt community hijacking by gaining control over key protocols or liquidity, 
-potentially distorting market prices, trading volumes, and governance decisions. These activities 
-can create misleading market conditions that disadvantage regular investors and may result in 
-financial loss and compromise the integrity of the CipheX Community. 
-
-5.10 Risk of Natural Disasters
-Natural disasters such as earthquakes, floods, hurricanes, and wildfires can impact the CipheX
-Community and those of its service providers and counterparties. These events may lead to power 
-outages, internet service interruptions, and physical damage to critical infrastructure, including 
-data centers and mining facilities. Such disruptions can result in transaction processing delays, 
-decreased network security, and potential financial losses for traders and investors who cannot
-access markets during critical periods.
+4.0 Market Risk Factors
+4.1 Market and Technical Volatility
+Cryptocurrency markets are highly volatile, with rapid price swings. CipheX relies on Centurion Network's proprietary algorithms to generate returns for its consumers and community members. However, investors should know that this high-risk trading environment can sometimes result in losses. In addition, autonomous trading bots can increase market volatility if not managed properly. If the Centurion Network misinterprets market conditions, Centurions may act unpredictably, potentially resulting in significant losses. 
+4.2 Market Liquidity 
+Certain cryptocurrencies, especially newer or lesser-known tokens, often face low liquidity, making trades difficult at preferred prices or within short timeframes. CipheX cannot guarantee sustained liquidity or continuous demand for CPX Tokens.
+4.3 Market and Price Manipulation
+Low-liquidity markets are vulnerable to manipulation, including pump-and-dump schemes, wash trading, and insider trading. Coordinated groups may exploit key protocols or liquidity, distorting prices, volumes, and governance. These tactics can mislead investors, cause financial losses, and threaten the integrity of the CipheX community.
+4.4 Privacy and Data Vulnerabilities
+CipheX employs third-party services to protect member identities. However, blockchain transactions are inherently public and can expose user details and histories. While CipheX is committed to privacy, these measures cannot guarantee indefinite protection and anonymity. In addition, smart contracts automate transactions in a decentralized environment but carry risks like coding errors and malicious exploits. These can lead to losses, transaction disruptions, and other unintended outcomes. 
+4.5 Operational Risks
+Blockchain networks and trading platforms can face unexpected issues, outages, or bugs. CipheX also relies on Expert Contributors for key development and operations; their departure or inability to perform could significantly disrupt community operations. Natural disasters such as earthquakes, floods, hurricanes, and wildfires can disrupt the services of the CipheX community, causing power outages and internet interruptions that may delay transactions, compromise networks, and lead to financial losses. 

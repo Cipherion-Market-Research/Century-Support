@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class Config:
     # Bot Configuration
     TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
@@ -31,7 +32,7 @@ class Config:
     CERTIK_URL = os.getenv("CERTIK_URL")
 
     # Sync Configuration
-    SYNC_INTERVAL_HOURS = 6
+    SYNC_INTERVAL_HOURS = 3  # Reduced from 6 to 3 hours
     MAX_RETRIES = 3
     RETRY_DELAY_SECONDS = 60
 

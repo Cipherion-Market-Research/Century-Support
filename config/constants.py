@@ -79,7 +79,7 @@ Visit our official website for the latest updates, news, and information.""",
 
     "contact_info": """**Contact CipheX Support:**
 
-• Email: help@ciphex.io
+• Email: support@ciphex.io
 • Website Support: https://ciphex.io/
 • Telegram: @CipheXChannel (announcements only)
 
@@ -89,17 +89,17 @@ Visit our official website for the latest updates, news, and information.""",
 • Never share wallet seed phrases
 • Verify all links through official channels
 
-For technical support or general inquiries, please email help@ciphex.io"""
+For technical support or general inquiries, please email support@ciphex.io"""
 }
 
 WHITEPAPER_SECTIONS = {
     # Introduction & Core Concepts
-    "1.0": "Introduction",
-    "1.1": "The CipheX Ecosystem",
-    "1.2": "The Origin of CipheX",
-    "1.3": "Autonomous Market Trading",
-    "1.4": "The Future of CipheX",
-    "1.5": "Road Map Overview",
+    "1.0": "CipheX Ecosystem",
+    "1.1": "The Problem",
+    "1.2": "The CipheX Mission",
+    "1.3": "Crypto Markets Simplified",
+    "1.4": "Centurion Market Advantage",
+    "1.5": "The CipheX Roadmap",
     
     # Tokenomics
     "2.0": "Tokenomics",
@@ -107,37 +107,32 @@ WHITEPAPER_SECTIONS = {
     "2.2": "Creator & Founder Tokens",
     "2.3": "Treasury Management",
     "2.4": "PreSale of CPX Tokens",
-    "2.5": "Automated Daily Pricing",
-    "2.6": "Costs of PreSale Activities",
-    "2.7": "Planned Use of Proceeds",
-    "2.8": "CPX Lockup Restrictions",
-    "2.9": "CPX Vesting Schedule",
-    "2.10": "Fixed Term Staking and Rewards",
-    "2.11": "Fixed Term Staking Redemptions",
+    "2.5": "Costs of PreSale Activities",
+    "2.6": "Lockup & Vesting Restrictions",
+    "2.7": "Use of Presale Contributions",
+    "2.8": "Fixed Term Staking and Rewards",
     
     # Community & Management
-    "3.0": "Community Management",
-    "3.1": "Hybrid Organizational Model",
-    "3.2": "Operating Capital Reserves",
-    "3.3": "Investment Participation",
-    "3.4": "Distribution of Returns",
-    "3.5": "Creators & Founding Contributors",
-    "3.6": "General and Expert Contributors",
-    "3.7": "Market Performance Rewards",
-    "3.8": "Removals and Termination",
-    "3.9": "Eligibility for Community Voting",
-    "3.10": "CPX Token Buyback Program",
-    "3.11": "Total Supply Burn Program",
+    "3.0": "The CipheX Community",
+    "3.1": "Operating Capital Reserves",
+    "3.2": "Eligibility for Community Voting",
+    "3.3": "Creators & Community Contributors",
+    "3.4": "Removals and Termination",
+    "3.5": "Pre-Launch Centurion Trading",
+    "3.6": "Pre-Launch Loss Coverage",
+    "3.7": "Centurion Commercial Launch",
+    "3.8": "Liquidity Pool & Trading Fees",
+    "3.9": "Distribution of Market Returns",
+    "3.10": "Buyback & Burn Program",
+    "3.11": "CipheX Revenue Streams",
     
     # Performance & Risk
-    "4.0": "Performance Benchmarks",
-    "4.1": "CipheX Revenue Streams",
-    "4.2": "Market Returns and Revenue Growth",
-    "4.3": "Scalable Growth and Efficiency",
-    "5.0": "Market Risk Factors",
-    "5.1": "Market/Economic Volatility",
-    "5.2": "Autonomous Trading",
-    "5.3": "Cybersecurity Threats"
+    "4.0": "Market Risk Factors",
+    "4.1": "Market and Technical Volatility",
+    "4.2": "Market Liquidity",
+    "4.3": "Market and Price Manipulation",
+    "4.4": "Privacy and Data Vulnerabilities",
+    "4.5": "Operational Risks",
 }
 
 # Topic to Section Mapping
@@ -165,7 +160,7 @@ SCHEDULED_MESSAGES = {
     
     "admin_warning": """Friendly reminder: CipheX Admins will NEVER DM you. Please do not respond to anyone claiming they are from our team. It is a scam!
 
-If you wish to contact us, please email us at help@ciphex.io""",
+If you wish to contact us, please email us at support@ciphex.io""",
 
     "start_message": """👋 Welcome to Century Support Bot!
 
