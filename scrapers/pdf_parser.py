@@ -2,7 +2,7 @@ from typing import Dict, Any
 import PyPDF2
 from .base_scraper import BaseScraper
 from utils.logger import setup_logger
-from config.constants import WHITEPAPER_SECTIONS
+from config.constants import COMPOSITE_SECTIONS
 import re
 
 logger = setup_logger()
@@ -19,10 +19,12 @@ class PDFParser(BaseScraper):
                 return {}
             
             sections = {}
-            for section_num in WHITEPAPER_SECTIONS.keys():
-                content = await self._extract_section_content(raw_text, section_num)
+            for section_name in COMPOSITE_SECTIONS:
+                # Note: The logic for PDF section extraction will need to be adapted
+                # to the new document structure. This is a placeholder for now.
+                content = await self._extract_section_content(raw_text, section_name)
                 if content:
-                    sections[WHITEPAPER_SECTIONS[section_num]] = content
+                    sections[section_name] = content
                 
             return sections
         except Exception as e:

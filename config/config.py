@@ -19,7 +19,7 @@ class Config:
     # AI Configuration
     MAX_TOKENS = 150
     TEMPERATURE = 0.7
-    MODEL = "gpt-3.5-turbo"
+    MODEL = "gpt-4o-mini"
 
     # Website URLs for scraping
     WEBSITE_URLS = {

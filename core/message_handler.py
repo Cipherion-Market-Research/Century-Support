@@ -2,7 +2,7 @@
 import json
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from config.constants import BOT_RESPONSES, WHITEPAPER_SECTIONS, TOPIC_SECTIONS, TECHNICAL_SECTIONS, TECHNICAL_DETAILS
+from config.constants import BOT_RESPONSES, COMPOSITE_SECTIONS, TOPIC_SECTIONS, TECHNICAL_SECTIONS, TECHNICAL_DETAILS
 from utils.logger import setup_logger
 from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
@@ -41,7 +41,7 @@ class BotMessageHandler:
 
             # Check for contact-related keywords
             contact_keywords = [
-                "contact", "support", "help desk", "email", 
+                "contact", "support", "help desk", "email",
                 "reach out", "get in touch", "contact team"
             ]
             
@@ -92,48 +92,27 @@ class BotMessageHandler:
             for topic, keywords in topics.items():
                 if any(keyword in message for keyword in keywords):
                     if topic == "presale":
-                        # Get current price from API
-                        stats_data = json.loads(await self.cache_manager.redis.get("ciphex_stats") or "{}")
-                        current_price = stats_data.get('price', {}).get('ui', '$0.10')
-                        
-                        response_parts.append(
-                            "**CipheX Public Presale - NOW LIVE! 🚀**\n\n"
-                            "**Key Details:**\n"
-                            "• Starting Price: $0.10 per CPX\n"
-                            f"• Current Price: {current_price} per CPX\n"
-                            "• Minimum Purchase: 2,000 CPX\n"
-                            "• Duration: 180 days\n"
-                            "• Target Funding: $20M\n"
-                            "• Accepted Payments: USDT, USDC, ETH\n\n"
-                            "The price increases automatically every 24 hours during the presale period.\n\n"
-                            "⚠️ **Important Reminders:**\n"
-                            "• Only use official links\n"
-                            "• Never share wallet seed phrases\n"
-                            "• CipheX team will never DM you first"
-                        )
+                        response_parts.append(BOT_RESPONSES["presale_info"])
                     elif topic == "supply":
                         response_parts.append(
                             "**Token Supply Information:**\n"
                             "• Maximum Supply: 1.5 billion CPX Tokens\n"
-                            "• Deflationary Model: Supply aims to reduce by ~95% over 10 years\n"
-                            "• PreSale Allocation: 142,738,450 CPX tokens"
+                            "• Unallocated Presale tokens will be reserved for private placements."
                         )
                     elif topic == "staking":
                         response_parts.append(
                             "**Staking Program:**\n"
-                            "• Terms: 6, 12, or 24-month options\n"
-                            "• Returns: 10-year US Treasury yield plus premium\n"
-                            "• Launch: Starts after presale completion\n"
-                            "• Rewards: Paid in unrestricted CPX tokens"
+                            "• CipheX has discontinued its Fixed Term Staking program.\n"
+                            "• A flexible liquidity staking model will be introduced, aligned with the upcoming Uniswap listing.\n"
+                            "• Staking incentives will be activated after the token establishes a trading history."
                         )
                     elif topic == "join":
                         response_parts.append(
-                            "**How to Join CipheX:**\n"
-                            "1. Prepare a self-custodial wallet (MetaMask, Trust Wallet, or WalletConnect)\n"
-                            "2. Have USDT, USDC, or ETH ready\n"
-                            "3. Visit [ciphex.io](https://ciphex.io) when presale launches (Jan 24, 2025)\n"
-                            "4. Connect wallet and complete purchase (min. 2,000 CPX)\n\n"
-                            "After purchase, you'll become a CipheX Community Member with voting rights once the presale completes!"
+                            "**Joining CipheX:**\n"
+                            "• The Alpha CPX platform is not yet available for public use.\n"
+                            "• The presale is no longer open to the general public.\n"
+                            "• Participation is currently limited to existing contributors and accredited investors.\n"
+                            "• Visit [ciphex.io](https://ciphex.io) for future announcements."
                         )
 
             if response_parts:
@@ -190,15 +169,10 @@ class BotMessageHandler:
 
             # Check for price queries first
             if any(kw in message.lower() for kw in ["price", "token price", "how much"]):
-                stats_data = json.loads(await self.cache_manager.redis.get("ciphex_stats") or "{}")
-                current_price = stats_data.get('price', {}).get('ui', '$0.10')
-                price_response = (
-                    f"**CPX Token Price Information:**\n"
-                    f"• Current Price: {current_price} per CPX\n"
-                    "• Starting Price: $0.10 per CPX\n\n"
-                    "The price increases automatically every 24 hours during the presale period."
+                await update.message.reply_text(
+                    BOT_RESPONSES["price_info"],
+                    parse_mode="Markdown"
                 )
-                await update.message.reply_text(price_response, parse_mode="Markdown")
                 return
 
             # Then attempt fuzzy match for FAQ
@@ -222,7 +196,7 @@ class BotMessageHandler:
             matched_section = None
 
             # The existing approach: check if any keyword in WHITEPAPER_MAP is in the user message
-            for section_num, section_name in WHITEPAPER_SECTIONS.items():
+            for section_name in COMPOSITE_SECTIONS:
                 section_name_lower = section_name.lower()
                 if section_name_lower in message:
                     matched_section = section_name_lower
@@ -380,9 +354,8 @@ class BotMessageHandler:
         relevant_content = []
         for topic, section_nums in TOPIC_SECTIONS.items():
             if any(keyword in message.lower() for keyword in topic.split('_')):
-                for section_num in section_nums:
-                    section_name = WHITEPAPER_SECTIONS.get(section_num)
-                    if section_name and section_name in whitepaper_data:
+                for section_name in section_nums:
+                    if section_name in whitepaper_data:
                         relevant_content.append(whitepaper_data[section_name])
         
         return "\n\n".join(relevant_content) if relevant_content else ""
@@ -406,20 +379,15 @@ class BotMessageHandler:
                 if topic == "lockup":
                     matched_responses.append(
                         "**CPX Lockup & Vesting Details:**\n"
-                        "• Initial Lockup: 6 months from purchase\n"
-                        "• Earning During Lockup: Fixed rate based on 10-year US Treasury yield\n"
-                        "• Vesting Schedule: Starts after lockup period\n"
-                        "• Monthly Release: Begins with 3% and increases over 12 months\n"
-                        "• Creator Tokens: Special terms with 80% locked for 2 years"
+                        "• **Incentive Tokens:** Subject to a 6-month lockup with no vesting schedule. Fully unrestricted and tradable after lockup.\n"
+                        "• **Creator & Co-Founder Tokens:** Release is tied to performance milestones over two years, commencing upon the launch of the Alpha CPX Network Performance Index."
                     )
                 elif topic == "governance":
                     matched_responses.append(
                         "**Community Governance:**\n"
-                        "• Voting Eligibility: Hold minimum 2,000 CPX tokens\n"
-                        "• Voting Power: 1 token = 1 vote\n"
-                        "• Decisions: Community votes on proposals and initiatives\n"
-                        "• Expert Contributors: Elected by community for 2-year terms\n"
-                        "• Transparency: All decisions recorded on blockchain"
+                        "• CipheX no longer implements broad community-based voting.\n"
+                        "• Ecosystem direction is managed by its creators and expert contributors.\n"
+                        "• This approach prioritizes expertise and long-term value over fragmented or uninformed governance."
                     )
                 elif topic == "treasury":
                     matched_responses.append(
@@ -442,13 +410,10 @@ class BotMessageHandler:
                 elif topic == "revenue":
                     matched_responses.append(
                         "**Revenue Streams & Distribution:**\n"
-                        "• Primary Sources: Crypto trading, ICO investments, P2P lending\n"
-                        "• Collection: All profits enter transparent revenue vault\n"
-                        "• Distribution: Direct to member wallets annually\n"
-                        "• Tracking: Real-time via community dashboard\n"
-                        "• Non-custodial: CipheX never holds member funds"
+                        "• **Alpha CPX Fees:** Revenue is generated from volume-based market execution fees.\n"
+                        "• **Liquidity Pool Fees:** A share of fees from the CipheX liquidity pool.\n"
+                        "• **Future Services:** Commercial opportunities using the Alpha CPX framework and RWA tokenization."
                     )
-
         # Add debug logging
         if matched_responses:
             self.logger.debug(f"Extended topic response matched for: {message}")
@@ -559,9 +524,8 @@ class BotMessageHandler:
                 return ""
             
             content = []
-            for section_num in section_nums:
-                section_name = WHITEPAPER_SECTIONS.get(section_num)
-                if section_name and section_name in whitepaper_data:
+            for section_name in section_nums:
+                if section_name in whitepaper_data:
                     content.append(whitepaper_data[section_name])
                 
             return "\n\n".join(content)

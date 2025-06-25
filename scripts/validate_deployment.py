@@ -16,7 +16,7 @@ class DeploymentValidator:
     def validate_file_structure(self) -> bool:
         """Validate required files and directories exist"""
         required_paths = [
-            ("data/training/whitepaper.txt", "Whitepaper"),
+            ("data/training/llm_composite.md", "Whitepaper"),
             ("data/training/faq.json", "FAQ Data"),
             ("config/constants.py", "Constants"),
             ("core/message_handler.py", "Message Handler"),

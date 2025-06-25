@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Dict, Any
 from config.config import Config
 from utils.logger import setup_logger
-from scrapers.whitepaper_parser import WhitepaperParser
+from scrapers.whitepaper_parser import CompositeDocumentParser
 
 logger = setup_logger()
 
@@ -17,7 +17,7 @@ class DataSyncer:
         self.cache_manager = cache_manager
         self.is_syncing = False
         self.last_sync = None
-        self.whitepaper_parser = WhitepaperParser()
+        self.whitepaper_parser = CompositeDocumentParser()
 
     async def start_periodic_sync(self):
         """Start periodic data synchronization"""
