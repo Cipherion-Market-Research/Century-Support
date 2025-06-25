@@ -28,10 +28,10 @@ You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
 View on [Etherscan](https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)""",
 
 		"price_info": """**CPX Token Price Information:**
-• Starting Price: $0.10 per CPX
-• Visit [ciphex.io](https://ciphex.io) for real-time pricing
+• Final Presale Price: ~$0.26 per CPX
+• Visit [ciphex.io](https://ciphex.io) for the most current information.
 
-The price increases automatically every 24 hours during the presale period.""",
+The presale is currently open only to existing contributors and accredited investors.""",
 
 		"whitepaper_info": """TLDR? Don't worry! I've studied the whitepaper from cover to cover and I'm here to help! 
   
@@ -47,18 +47,17 @@ To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/white
 - Allocated for Presale: 142M tokens
 - Total CPX Purchased (Staked)""",
 
-		"presale_info": """**CipheX Public Presale - NOW LIVE! 🚀**
+		"presale_info": """**CipheX Presale Information:**
+
+The CipheX Presale is no longer open to the general public and has transitioned to a private phase.
 
 Key Details:
-• Starting Price: $0.10 per CPX
-• Minimum Purchase: 2,000 CPX
-• Duration: 180 days
-• Target Funding: $20M
-• Accepted Payments: USDT, USDC, ETH
+• Final Price: ~$0.26 per CPX
+• Participation: Open to existing contributors and accredited investors only.
 
-The price increases automatically every 24 hours during the presale period.
+Unallocated presale tokens are reserved for private placements.
 
-Visit [ciphex.io](https://ciphex.io) to participate now and see the current price!
+Visit [ciphex.io](https://ciphex.io) for more details.
 
 ⚠️ Important Reminders:
 • Only use official links
@@ -68,8 +67,7 @@ Visit [ciphex.io](https://ciphex.io) to participate now and see the current pric
 		"data_info": """Data updates regularly. Check:
 [Community Stats](https://ciphex.io/#community)
 [CPX Contract](https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)
-[Presale Contract](https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc)
-[Staking Contract](https://etherscan.io/address/0xc3c0654172125E0e7001Af78Ead58190f4e50c6A)""",
+[Presale Contract](https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc)""",
     
     "certik_info": """**[Certik Skynet](https://skynet.certik.com/projects/ciphex)**:
 View our project page on Skynet for detailed audit reports and security scores.""",
@@ -92,60 +90,30 @@ Visit our official website for the latest updates, news, and information.""",
 For technical support or general inquiries, please email support@ciphex.io"""
 }
 
-WHITEPAPER_SECTIONS = {
-    # Introduction & Core Concepts
-    "1.0": "CipheX Ecosystem",
-    "1.1": "The Problem",
-    "1.2": "The CipheX Mission",
-    "1.3": "Crypto Markets Simplified",
-    "1.4": "Centurion Market Advantage",
-    "1.5": "The CipheX Roadmap",
-    
-    # Tokenomics
-    "2.0": "Tokenomics",
-    "2.1": "CipheX Maximum Supply",
-    "2.2": "Creator & Founder Tokens",
-    "2.3": "Treasury Management",
-    "2.4": "PreSale of CPX Tokens",
-    "2.5": "Costs of PreSale Activities",
-    "2.6": "Lockup & Vesting Restrictions",
-    "2.7": "Use of Presale Contributions",
-    "2.8": "Fixed Term Staking and Rewards",
-    
-    # Community & Management
-    "3.0": "The CipheX Community",
-    "3.1": "Operating Capital Reserves",
-    "3.2": "Eligibility for Community Voting",
-    "3.3": "Creators & Community Contributors",
-    "3.4": "Removals and Termination",
-    "3.5": "Pre-Launch Centurion Trading",
-    "3.6": "Pre-Launch Loss Coverage",
-    "3.7": "Centurion Commercial Launch",
-    "3.8": "Liquidity Pool & Trading Fees",
-    "3.9": "Distribution of Market Returns",
-    "3.10": "Buyback & Burn Program",
-    "3.11": "CipheX Revenue Streams",
-    
-    # Performance & Risk
-    "4.0": "Market Risk Factors",
-    "4.1": "Market and Technical Volatility",
-    "4.2": "Market Liquidity",
-    "4.3": "Market and Price Manipulation",
-    "4.4": "Privacy and Data Vulnerabilities",
-    "4.5": "Operational Risks",
-}
+COMPOSITE_SECTIONS = [
+    "CipheX Capital Ecosystem Overview",
+    "Ecosystem Operations",
+    "Governance & Compliance",
+    "Market Execution Fees",
+    "CipheX Tokenomics & Presale",
+    "The Alpha Centurion Network (Alpha CPX)",
+    "Cipherion Market Research Group (CMR)",
+    "Real-World Asset Tokenization (RWA)",
+    "Alpha CPX Frequently Asked Questions (FAQs)",
+    "General Contact Information"
+]
 
 # Topic to Section Mapping
 TOPIC_SECTIONS = {
-    "market_centurions": ["1.2", "1.3", "5.2"],  # Sections about Market Centurions
-    "abacus": ["1.1", "1.2", "1.3"],  # Sections about Abacus Network
-    "tokenomics": ["2.0", "2.1", "2.2", "2.3", "2.4"],
-    "presale": ["2.4", "2.5", "2.6"],
-    "staking": ["2.10", "2.11"],
-    "governance": ["3.0", "3.1", "3.9"],
-    "treasury": ["2.3", "3.2"],
-    "risks": ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5"],
-    "contact": ["3.0", "3.1"]  # Community Management sections
+    "market_centurions": ["The Alpha Centurion Network (Alpha CPX)"],
+    "abacus": ["Cipherion Market Research Group (CMR)"],
+    "tokenomics": ["CipheX Tokenomics & Presale"],
+    "presale": ["CipheX Tokenomics & Presale"],
+    "staking": ["Ecosystem Operations"],
+    "governance": ["Governance & Compliance"],
+    "treasury": ["CipheX Tokenomics & Presale"],
+    "risks": ["Real-World Asset Tokenization (RWA)"],
+    "contact": ["General Contact Information"]
 }
 
 ERROR_MESSAGES = {

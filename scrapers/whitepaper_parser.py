@@ -1,146 +1,102 @@
-from typing import Dict, Any
+from typing import Dict, Any, List
 from .base_scraper import BaseScraper
 from utils.logger import setup_logger
-from config.constants import WHITEPAPER_SECTIONS
+from config.constants import COMPOSITE_SECTIONS
 import re
 import os
 
 logger = setup_logger()
 
-class WhitepaperParser(BaseScraper):
+class CompositeDocumentParser(BaseScraper):
     def __init__(self, file_path: str = None):
-        # Try multiple possible file paths
-        self.possible_paths = [
-            "data/training/whitepaper.txt",
-            "data/training/WHITEPAPER.txt",
-            "./data/training/whitepaper.txt",
-            "./data/training/WHITEPAPER.txt"
-        ]
-        self.file_path = file_path or self._find_whitepaper()
-        
-    def _find_whitepaper(self) -> str:
-        """Try to find the whitepaper file in possible locations"""
-        for path in self.possible_paths:
-            if os.path.exists(path):
-                logger.info(f"Found whitepaper at: {path}")
-                return path
-        
-        # If no file found, use default path for error reporting
-        logger.error("Whitepaper not found in any expected location")
-        return "data/training/whitepaper.txt"
+        self.file_path = file_path or "data/llm_composite.md"
 
     async def fetch(self) -> str:
-        """Read whitepaper from plaintext file"""
+        """Read content from the composite markdown file."""
         try:
-            # Log attempt
-            logger.debug(f"Attempting to read whitepaper from: {self.file_path}")
+            logger.debug(f"Attempting to read composite document from: {self.file_path}")
+            if not os.path.exists(self.file_path):
+                logger.error(f"Composite document not found at: {self.file_path}")
+                return ""
             
             with open(self.file_path, "r", encoding="utf-8") as file:
                 content = file.read()
-                logger.info(f"Successfully read whitepaper ({len(content)} chars)")
+                logger.info(f"Successfully read composite document ({len(content)} chars)")
                 return content
-                
-        except FileNotFoundError:
-            paths_checked = "\n- ".join(self.possible_paths)
-            logger.error(
-                f"Whitepaper not found. Checked locations:\n- {paths_checked}"
-            )
-            return ""
         except Exception as e:
-            logger.error(f"Error reading whitepaper: {e}")
-            return "" 
+            logger.error(f"Error reading composite document: {e}")
+            return ""
 
     async def process(self) -> Dict[str, Any]:
-        """Process the whitepaper and extract structured content"""
+        """Process the composite document and extract structured content."""
         try:
             raw_text = await self.fetch()
             if not raw_text:
                 return {}
             
-            sections = {}
-            for section_num in WHITEPAPER_SECTIONS.keys():
-                content = await self._extract_section_content(raw_text, section_num)
-                if content:
-                    sections[WHITEPAPER_SECTIONS[section_num]] = content
-                
+            sections = self._extract_sections(raw_text)
             return sections
         except Exception as e:
-            logger.error(f"Error processing whitepaper: {e}")
+            logger.error(f"Error processing composite document: {e}")
             return {}
 
-    async def _extract_section_content(self, text: str, section_num: str) -> str:
-        """Extract content for a specific section number"""
-        try:
-            section_start = f"{section_num}\\s+[A-Za-z].*?\\n"
-            next_section = f"\\d+\\.\\d+\\s+[A-Za-z]"
+    def _extract_sections(self, text: str) -> Dict[str, str]:
+        """Extract content for each section based on markdown headers."""
+        sections = {}
+        for i, section_name in enumerate(COMPOSITE_SECTIONS):
+            start_pattern = f"## {re.escape(section_name)}"
             
-            start_match = re.search(section_start, text, re.MULTILINE)
-            if not start_match:
-                logger.warning(f"No start match found for section {section_num}")
-                return ""
-            
-            start_pos = start_match.start()
-            next_match = re.search(next_section, text[start_pos + 1:], re.MULTILINE)
-            end_pos = (next_match.start() + start_pos + 1) if next_match else len(text)
-            
-            content = text[start_pos:end_pos]
-            return self._clean_section_content(content)
-            
-        except Exception as e:
-            logger.error(f"Error extracting section {section_num}: {e}")
-            return ""
+            # Determine the end pattern (next section header or end of file)
+            if i + 1 < len(COMPOSITE_SECTIONS):
+                next_section_name = COMPOSITE_SECTIONS[i+1]
+                end_pattern = f"## {re.escape(next_section_name)}"
+            else:
+                end_pattern = None
 
-    def _clean_section_content(self, content: str) -> str:
-        """Clean and format section content"""
-        try:
-            lines = content.split('\n')
-            cleaned_lines = []
+            # Search for the start of the section
+            start_match = re.search(start_pattern, text, re.MULTILINE)
+            if not start_match:
+                logger.warning(f"Section not found: {section_name}")
+                continue
+
+            start_pos = start_match.end()
+
+            # Search for the end of the section
+            if end_pattern:
+                end_match = re.search(end_pattern, text[start_pos:], re.MULTILINE)
+                end_pos = end_match.start() + start_pos if end_match else len(text)
+            else:
+                end_pos = len(text)
             
-            for line in lines:
-                if re.match(r'^\d+\s*Page\s*\|', line) or line.strip() == '':
-                    continue
-                if re.match(r'^\.+\d+$', line):
-                    continue
-                
-                line = ' '.join(line.split())
-                if line:
-                    cleaned_lines.append(line)
+            content = text[start_pos:end_pos].strip()
+            sections[section_name] = self._clean_content(content)
             
-            cleaned = ' '.join(cleaned_lines)
-            cleaned = re.sub(r'^\d+\.\d+\s+', '', cleaned)
-            cleaned = re.sub(r'\s+', ' ', cleaned)
-            
-            return cleaned.strip()
-            
-        except Exception as e:
-            logger.error(f"Error cleaning content: {e}")
-            return content 
+        return sections
+
+    def _clean_content(self, content: str) -> str:
+        """Clean and format section content."""
+        # Removes markdown headers and extra whitespace
+        cleaned = re.sub(r'###\s.*', '', content)
+        cleaned = ' '.join(cleaned.split())
+        return cleaned.strip()
 
     async def validate(self, data: Dict[str, Any]) -> bool:
-        """Validate the parsed whitepaper data"""
+        """Validate the parsed composite document data."""
         try:
-            if not isinstance(data, dict):
+            if not isinstance(data, dict) or not data:
+                logger.error("Validation failed: Data is not a valid dictionary or is empty.")
                 return False
-            
-            # Check required sections
-            required_sections = [
-                "Introduction",
-                "The CipheX Ecosystem",
-                "The Origin of CipheX",
-                "Autonomous Market Trading"
-            ]
-            
-            # Verify content quality
-            for section in required_sections:
+
+            # Check for the presence of required sections
+            for section in COMPOSITE_SECTIONS:
                 if section not in data:
                     logger.error(f"Missing required section: {section}")
                     return False
-                if len(data[section]) < 50:  # Minimum content length
-                    logger.error(f"Section too short: {section}")
-                    return False
-                
+                # Optional: Check for minimum content length
+                if len(data[section]) < 20:
+                    logger.warning(f"Section content may be too short: {section}")
+
             return True
-            
         except Exception as e:
-            logger.error(f"Error validating whitepaper data: {e}")
-            return False 
+            logger.error(f"Error validating composite document data: {e}")
+            return False
