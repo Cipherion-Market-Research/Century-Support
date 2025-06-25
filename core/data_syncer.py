@@ -49,7 +49,7 @@ class DataSyncer:
         return data
 
     async def sync_presale_stats(self):
-        url = "https://ciphex.io/api/presale"
+        url = "https://presale.ciphex.io/api/presale"
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
