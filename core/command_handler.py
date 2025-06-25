@@ -47,7 +47,7 @@ class BotCommandHandler:
             keyboard = [
                 [
                     InlineKeyboardButton("Website", url="https://ciphex.io"),
-                    InlineKeyboardButton("Whitepaper", url="https://ciphex.io/whitepaper.pdf")
+                    InlineKeyboardButton("Whitepaper", url="https://ciphex.io/whitepapers")
                 ]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -67,7 +67,7 @@ class BotCommandHandler:
 
     async def _handle_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [
-            [InlineKeyboardButton("FAQ", url="https://ciphex.io/#faq")],
+            [InlineKeyboardButton("FAQ", url="https://ciphex.io/")],
             [InlineKeyboardButton("Twitter", url="https://x.com/ciphexio")]
             # Add more buttons as needed
         ]
@@ -89,7 +89,7 @@ class BotCommandHandler:
         if token_price and token_price != "Unknown":
             formatted_price = (
                 f"**Current CPX Token Price**: {token_price}\n"
-                f"Visit [ciphex.io](https://ciphex.io) for real-time pricing and to participate in the presale."
+                f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to participate in the presale."
             )
             await update.message.reply_text(formatted_price, parse_mode="Markdown")
         else:
@@ -101,7 +101,7 @@ class BotCommandHandler:
                 
                 formatted_price = (
                     f"**Current CPX Token Price**: {token_price} (cached)\n"
-                    f"Visit [ciphex.io](https://ciphex.io) for real-time pricing and to participate in the presale."
+                    f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to participate in the presale."
                 )
                 await update.message.reply_text(formatted_price, parse_mode="Markdown")
             else:
@@ -112,7 +112,7 @@ class BotCommandHandler:
         
     async def _get_live_stats_data(self):
         """Fetch real-time stats data directly from the API"""
-        url = "https://www.ciphex.io/api/presale"
+        url = "https://presale.ciphex.io/api/presale"
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, timeout=5) as response:

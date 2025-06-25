@@ -39,7 +39,7 @@ Simply tag me (@CiphexHelpBot) with your question about any topic - like tokenom
 
 For example: "@CiphexHelpBot What does the whitepaper say about token supply?"
 
-To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/whitepaper.pdf)""",
+To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/whitepapers)""",
 
 		"stats_info": """**Community & Presale Stats**:
 - Total Community Members (Wallets)
@@ -65,7 +65,7 @@ Visit [ciphex.io](https://ciphex.io) for more details.
 • CipheX team will never DM you first""",
 
 		"data_info": """Data updates regularly. Check:
-[Community Stats](https://ciphex.io/#community)
+[Community Stats](https://presale.ciphex.io)
 [CPX Contract](https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)
 [Presale Contract](https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc)""",
     
