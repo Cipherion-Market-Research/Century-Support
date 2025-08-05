@@ -53,8 +53,8 @@ class BotMessageHandler:
                 return
 
             # 1. First check exact matches (highest priority)
-            if any(keyword in message for keyword in ["presale", "minimum", "price"]):
-                response = BOT_RESPONSES["presale_info"]
+            if any(keyword in message for keyword in ["claim", "claiming", "minimum", "price"]):
+                response = BOT_RESPONSES["claim_info"]
                 await update.message.reply_text(response, parse_mode="Markdown")
                 return
 
@@ -81,7 +81,7 @@ class BotMessageHandler:
             
             # Define common topic keywords
             topics = {
-                "presale": ["presale", "pre-sale", "pre sale", "when start", "launch"],
+                "claim": ["claim", "claiming", "token claim", "vesting", "dashboard"],
                 "supply": ["supply", "total supply", "max supply", "token supply"],
                 "staking": ["staking", "stake", "rewards"],
                 "join": ["join", "how to join", "participate", "how do i"],
@@ -91,13 +91,13 @@ class BotMessageHandler:
             # Check each topic in the message
             for topic, keywords in topics.items():
                 if any(keyword in message for keyword in keywords):
-                    if topic == "presale":
-                        response_parts.append(BOT_RESPONSES["presale_info"])
+                    if topic == "claim":
+                        response_parts.append(BOT_RESPONSES["claim_info"])
                     elif topic == "supply":
                         response_parts.append(
                             "**Token Supply Information:**\n"
                             "• Maximum Supply: 1.5 billion CPX Tokens\n"
-                            "• Unallocated Presale tokens will be reserved for private placements."
+                            "• Tokens are available for claiming by existing contributors."
                         )
                     elif topic == "staking":
                         response_parts.append(
@@ -110,7 +110,7 @@ class BotMessageHandler:
                         response_parts.append(
                             "**Joining CipheX:**\n"
                             "• The Alpha CPX platform is not yet available for public use.\n"
-                            "• The presale is no longer open to the general public.\n"
+                            "• Token claiming is available for existing contributors.\n"
                             "• Participation is currently limited to existing contributors and accredited investors.\n"
                             "• Visit [ciphex.io](https://ciphex.io) for future announcements."
                         )
@@ -124,8 +124,8 @@ class BotMessageHandler:
                         if i > 0:
                             final_response += "\n\n---\n\n"  # Single separator between sections
                         # Remove redundant headers if they exist
-                        if "CipheX Public Presale:" in part and i > 0:
-                            part = part.replace("CipheX Public Presale:\nLaunching January 24, 2025! 🚀\n\n", "")
+                        if "CipheX Token Claiming Portal:" in part and i > 0:
+                            part = part.replace("CipheX Token Claiming Portal:\n\n", "")
                         final_response += part
                 else:
                     final_response = response_parts[0]
@@ -158,11 +158,11 @@ class BotMessageHandler:
             whitepaper_str = await self.cache_manager.redis.get("whitepaper_sections")
             whitepaper_data = json.loads(whitepaper_str) if whitepaper_str else {}
 
-            # Check for presale-related keywords first
-            presale_keywords = ["presale", "pre-sale", "pre sale", "when start", "when launch"]
-            if any(keyword in message for keyword in presale_keywords):
+            # Check for claim-related keywords first
+            claim_keywords = ["claim", "claiming", "token claim", "vesting", "dashboard"]
+            if any(keyword in message for keyword in claim_keywords):
                 await update.message.reply_text(
-                    BOT_RESPONSES["presale_info"],
+                    BOT_RESPONSES["claim_info"],
                     parse_mode="Markdown"
                 )
                 return
@@ -301,10 +301,10 @@ class BotMessageHandler:
         # Priority keywords that should trigger specific FAQ entries
         priority_matches = {
             "starting price": "What is the starting price in USD?",
-            # Add presale related priority matches
-            "presale": "Is the presale active?",
-            "when presale": "Is the presale active?",
-            "when does presale": "Is the presale active?"
+            # Add claim related priority matches
+            "claim": "How do I claim my tokens?",
+            "claiming": "How do I claim my tokens?",
+            "token claim": "How do I claim my tokens?"
         }
         # Check for priority keyword matches first
         user_msg_lower = user_message.lower()

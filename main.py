@@ -153,7 +153,7 @@ if __name__ == "__main__":
     application.add_handler(CommandHandler("ca", command_handler.handle_command))
     application.add_handler(CommandHandler("stats", command_handler.handle_command))
     application.add_handler(CommandHandler("audit", command_handler.handle_command))
-    application.add_handler(CommandHandler("presale", command_handler.handle_command))
+    application.add_handler(CommandHandler("claim", command_handler.handle_command))
     application.add_handler(CommandHandler("website", command_handler.handle_command))
 
 

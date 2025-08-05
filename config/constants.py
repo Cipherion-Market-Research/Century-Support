@@ -13,7 +13,7 @@ Tag me (@CiphexHelpBot) in any message to ask questions or use /help to see what
 /whitepaper - Access our official whitepaper 📄  
 /website - Access our official website 🌐  
 /ca - Show contract address & Etherscan link 📝  
-/presale - Check presale status 💵
+/claim - Access token claiming portal 🎯
 /audit - View Certik audit & Skynet scores 📖
 
 You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
@@ -28,10 +28,10 @@ You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
 View on [Etherscan](https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)""",
 
 		"price_info": """**CPX Token Price Information:**
-• Final Presale Price: ~$0.26 per CPX
+• Token Launch Price: ~$0.26 per CPX
 • Visit [ciphex.io](https://ciphex.io) for the most current information.
 
-The presale is currently open only to existing contributors and accredited investors.""",
+Tokens are now available for claiming by existing contributors through the claiming portal.""",
 
 		"whitepaper_info": """TLDR? Don't worry! I've studied the whitepaper from cover to cover and I'm here to help! 
   
@@ -41,23 +41,24 @@ For example: "@CiphexHelpBot What does the whitepaper say about token supply?"
 
 To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/whitepapers)""",
 
-		"stats_info": """**Community & Presale Stats**:
+		"stats_info": """**Community & Token Stats**:
 - Total Community Members (Wallets)
 - Total Funds Raised (USD)
-- Allocated for Presale: 142M tokens
+- Tokens Available for Claiming: 142M tokens
 - Total CPX Purchased (Staked)""",
 
-		"presale_info": """**CipheX Presale Information:**
+		"claim_info": """**CipheX Token Claiming Portal:**
 
-The CipheX Presale is no longer open to the general public and has transitioned to a private phase.
+Access your token claiming dashboard to view your CPX tokens and vesting schedule.
 
-Key Details:
-• Final Price: ~$0.26 per CPX
-• Participation: Open to existing contributors and accredited investors only.
+Key Features:
+• Connect your wallet to view your dashboard
+• Track your vesting schedule over 12 months
+• Claim tokens monthly as they vest
+• View transaction records for all purchases
+• Add CPX token to your wallet with one click
 
-Unallocated presale tokens are reserved for private placements.
-
-Visit [ciphex.io](https://ciphex.io) for more details.
+Visit [presale.ciphex.io](https://presale.ciphex.io) to access your claiming portal.
 
 ⚠️ Important Reminders:
 • Only use official links
@@ -65,9 +66,9 @@ Visit [ciphex.io](https://ciphex.io) for more details.
 • CipheX team will never DM you first""",
 
 		"data_info": """Data updates regularly. Check:
-[Community Stats](https://presale.ciphex.io)
+[Token Claiming Portal](https://presale.ciphex.io)
 [CPX Contract](https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)
-[Presale Contract](https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc)""",
+[Claiming Contract](https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc)""",
     
     "certik_info": """**[Certik Skynet](https://skynet.certik.com/projects/ciphex)**:
 View our project page on Skynet for detailed audit reports and security scores.""",
@@ -95,7 +96,7 @@ COMPOSITE_SECTIONS = [
     "Ecosystem Operations",
     "Governance & Compliance",
     "Market Execution Fees",
-    "CipheX Tokenomics & Presale",
+    "CipheX Tokenomics & Token Distribution",
     "The Alpha Centurion Network (Alpha CPX)",
     "Cipherion Market Research Group (CMR)",
     "Real-World Asset Tokenization (RWA)",
@@ -107,11 +108,12 @@ COMPOSITE_SECTIONS = [
 TOPIC_SECTIONS = {
     "market_centurions": ["The Alpha Centurion Network (Alpha CPX)"],
     "abacus": ["Cipherion Market Research Group (CMR)"],
-    "tokenomics": ["CipheX Tokenomics & Presale"],
-    "presale": ["CipheX Tokenomics & Presale"],
+    "tokenomics": ["CipheX Tokenomics & Token Distribution"],
+    "claim": ["CipheX Tokenomics & Token Distribution"],
+    "claiming": ["CipheX Tokenomics & Token Distribution"],
     "staking": ["Ecosystem Operations"],
     "governance": ["Governance & Compliance"],
-    "treasury": ["CipheX Tokenomics & Presale"],
+    "treasury": ["CipheX Tokenomics & Token Distribution"],
     "risks": ["Real-World Asset Tokenization (RWA)"],
     "contact": ["General Contact Information"]
 }

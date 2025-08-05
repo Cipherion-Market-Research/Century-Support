@@ -24,10 +24,10 @@ CipheX will continue using its remote team for non-Alpha CPX ecosystem needs. Pr
 Removals or terminations of expert contributors in the CipheX ecosystem follow their smart contracts, which outline services, engagement terms, and compensation. Enforcement is handled via protocol-level governance. CipheX plans to establish an independent compensation and review committee to oversee contributor agreements, including continuation, changes, or termination decisions. This committee will adopt governance models from traditional public companies and industry best practices, supporting CipheX's move toward more transparent, regulation-aligned operational structures.
 
 ### Pre-Launch Centurion Trading
-Aside from the Centurion Capital Pool, currently comprised primarily of contributions from existing CipheX relationships, participation in the pre-commercial testing of Alpha CPX by new Presale contributors during the remainder of the Presale period will no longer be available.
+Aside from the Centurion Capital Pool, currently comprised primarily of contributions from existing CipheX relationships, participation in the pre-commercial testing of Alpha CPX by new contributors is no longer available.
 
 ### Pre-Launch Loss Coverage
-Except for current contributors verified to participate in the Centurion Capital Pool for pre-commercial testing of Alpha CPX, this section no longer applies to any new Presale contributors during the remainder of the Presale period.
+Except for current contributors verified to participate in the Centurion Capital Pool for pre-commercial testing of Alpha CPX, this section no longer applies to any new contributors.
 
 ### Centurion Commercial Launch
 Alpha CPX has adopted an automated sliding volume-based market execution fee model to meet evolving regulatory requirements. Under this structure, market execution fees are based on trading volume regardless of trade outcomes, ensuring a standardized and transparent cost framework. This structure enhances accessibility across jurisdictions while promoting regulatory adherence, operational transparency, and a straightforward fee model aligned with commonly accepted marketplace standards.
@@ -70,13 +70,13 @@ The Alpha CPX fee model is structured to align with prevailing global financial 
 *   **European Union: MiCA Regulation (Markets in Crypto-Assets):** Alpha CPX's volume-based execution pricing aligns with MiCA's emphasis on clear, non-manipulative pricing and does not constitute portfolio management under its definitions.
 *   **Canada: CSA Staff Notice 21-327:** Alpha CPX does not take custody of assets, does not offer investment advice, and avoids performance fees, ensuring it does not fall under managed account rules of National Instrument 31-103.
 
-## CipheX Tokenomics & Presale
+## CipheX Tokenomics & Token Distribution
 
 ### Incentive Token Lockup & Vesting
 All incentive tokens are subject to a standardized 6-month lockup period with no vesting schedule. After lockup, tokens become fully unrestricted and immediately tradeable. This applies to Marketing Programs, Market Advisors, Expert Contributors, and Security & Bounty allocations. Performance-based conditions will apply to future allocations tied to expected services.
 
-### Use of Presale Contributions
-CipheX is fully focused on its Alpha Centurion Network (Alpha CPX), and its originally planned Presale Target Contributions are no longer required. CipheX can maintain sufficient ongoing operations and development without outside capital. However, CipheX anticipates seeking capital of up to $5 million to accelerate its remaining Alpha CPX optimization, expand infrastructure, and efficiently drive its initial commercialization efforts.
+### Use of Token Distribution Proceeds
+CipheX is fully focused on its Alpha Centurion Network (Alpha CPX), and its originally planned funding targets have been met. CipheX can maintain sufficient ongoing operations and development without outside capital. However, CipheX anticipates seeking capital of up to $5 million to accelerate its remaining Alpha CPX optimization, expand infrastructure, and efficiently drive its initial commercialization efforts.
 
 ### Creator & Co-Founder Tokens
 The release of Creator Tokens over two years will be directly tied to performance milestones associated with the Alpha CPX Network and the measurable contributions of creators and co-founders to the ongoing development of the Alpha CPX architecture and the broader CipheX ecosystem. The two-year lockup period commences upon the official release of the Alpha CPX Network Performance Index.
@@ -84,11 +84,11 @@ The release of Creator Tokens over two years will be directly tied to performanc
 ### Treasury Management
 CipheX utilizes multi-signature (multi-sig) authentication protocols to securely manage CPX Tokens and authorize transfers from treasury and capital wallets. Any transfer requires multi-sig approval, ensuring security and oversight by multiple stakeholders.
 
-### Presale of CPX Tokens
-CipheX will no longer market its Presale to the general public to align with evolving cryptocurrency regulations. The Presale will remain open at a final token price of approximately $0.26 until formally closed at CipheX's discretion. Its originally planned Target Contributions are no longer required. Over 90% of contributions have come from existing relationships. Unallocated Presale tokens will be reserved for private placements and available exclusively to accredited and institutional investors following applicable regulatory requirements.
+### CPX Token Distribution
+CipheX has completed its token distribution phase to align with evolving cryptocurrency regulations. The token distribution concluded at a final token price of approximately $0.26. Its originally planned funding targets were met. Over 90% of contributions came from existing relationships. Unallocated tokens are reserved for private placements and available exclusively to accredited and institutional investors following applicable regulatory requirements.
 
-### Cost of Presale Activities
-As part of CipheX's regulatory transition, all affiliate referral incentives, including the Affiliate Ultimate Arena and content creator rewards, have been discontinued and removed from the new platform. Affiliate registration is now closed. All current affiliates are verified early contributors and may claim any accrued rewards upon Presale closure. All expenses related to Presale development have been fully funded by CipheX.
+### Token Claiming Portal
+Contributors can now access their tokens through the token claiming portal at https://presale.ciphex.io. The portal provides a dashboard where users can connect their wallet, view their vesting schedule, track transaction records, and claim tokens monthly as they vest over the 12-month period. An "Add CPX to Wallet" feature is also available for easy wallet integration.
 
 ## The Alpha Centurion Network (Alpha CPX)
 

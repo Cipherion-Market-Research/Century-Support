@@ -16,7 +16,7 @@ class WebsiteScraper(BaseScraper):
 
     async def _fetch_ciphex_stats(self, html: str) -> dict:
         """
-        Parse the ciphex.io main page HTML to extract presale/community stats.
+        Parse the ciphex.io main page HTML to extract community/token stats.
         This is an example. You must identify actual HTML elements and classes/ids from ciphex.io.
         """
         soup = BeautifulSoup(html, "html.parser")
