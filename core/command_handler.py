@@ -26,7 +26,7 @@ class BotCommandHandler:
                 "ca": self._handle_contract,
                 "stats": self._handle_stats,
                 "audit": self._handle_certik,
-                "presale": self._handle_presale,
+                "claim": self._handle_claim,
                 "website": self._handle_website,
             }
 
@@ -89,7 +89,7 @@ class BotCommandHandler:
         if token_price and token_price != "Unknown":
             formatted_price = (
                 f"**Current CPX Token Price**: {token_price}\n"
-                f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to participate in the presale."
+                f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to access the token claiming portal."
             )
             await update.message.reply_text(formatted_price, parse_mode="Markdown")
         else:
@@ -101,7 +101,7 @@ class BotCommandHandler:
                 
                 formatted_price = (
                     f"**Current CPX Token Price**: {token_price} (cached)\n"
-                    f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to participate in the presale."
+                    f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to access the token claiming portal."
                 )
                 await update.message.reply_text(formatted_price, parse_mode="Markdown")
             else:
@@ -146,7 +146,7 @@ class BotCommandHandler:
             percent_staked = stats_data.get('percentStaked', {}).get('ui', 'Unknown')
 
             formatted_stats = (
-                f"**Community & Presale Stats**:\n"
+                f"**Community & Token Stats**:\n"
                 f"- Total Community Members: {cipherions}\n"
                 f"- Total Funds Raised: {total_contributions}\n"
                 f"- Total CPX Purchased: {total_cpx_presold}\n"
@@ -166,7 +166,7 @@ class BotCommandHandler:
                 percent_staked = stats_data.get('percentStaked', {}).get('ui', 'Unknown')
 
                 formatted_stats = (
-                    f"**Community & Presale Stats (cached)**:\n"
+                    f"**Community & Token Stats (cached)**:\n"
                     f"- Total Community Members: {cipherions}\n"
                     f"- Total Funds Raised: {total_contributions}\n"
                     f"- Total CPX Purchased: {total_cpx_presold}\n"
@@ -180,8 +180,8 @@ class BotCommandHandler:
     async def _handle_certik(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(BOT_RESPONSES["certik_info"], parse_mode="Markdown")
 
-    async def _handle_presale(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text(BOT_RESPONSES["presale_info"], parse_mode="Markdown")
+    async def _handle_claim(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(BOT_RESPONSES["claim_info"], parse_mode="Markdown")
 
     async def _handle_website(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(BOT_RESPONSES["website_info"], parse_mode="Markdown")

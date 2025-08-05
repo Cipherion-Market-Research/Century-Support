@@ -13,16 +13,16 @@
       "answer": "Not Yet. For now, the platform only displays its Network Performance Index, a non-interactive, real-time dashboard showcasing live market activity. It’s internally funded to complete optimization before its commercial release."
     },
     {
-      "question": "Where can I buy the token?",
-      "answer": "CPX tokens are currently available for purchase on the CipheX website during our active Public PreSale. Visit https://ciphex.io to participate."
+      "question": "How do I claim my tokens?",
+      "answer": "CPX tokens can be claimed through our token claiming portal. Visit https://presale.ciphex.io to connect your wallet and access your claiming dashboard where you can view your vesting schedule and claim tokens monthly."
     },
     {
-      "question": "Can I use my Centralized Exchange Account (like Kraken or Binance) to buy CipheX PreSale tokens?",
-      "answer": "No, do not use a centralized exchange wallet to purchase CipheX PreSale Tokens. You must use a self-custodial wallet that you control, such as MetaMask, Trust Wallet or WalletConnect."
+      "question": "Can I use my Centralized Exchange Account (like Kraken or Binance) to claim CipheX tokens?",
+      "answer": "No, do not use a centralized exchange wallet to claim CipheX tokens. You must use the same self-custodial wallet that you used for your original contribution, such as MetaMask, Trust Wallet or WalletConnect."
     },
     {
-      "question": "I bought the token, but I can't see it in my wallet. What should I do?",
-      "answer": "All PreSale CPX tokens are subject to our Lockup and Vesting schedule. Once the Public PreSale is closed, CipheX PreSale buyers will be able to claim their CPX tokens using the same wallet they contributed with. Token claiming will occur through our Community Portal and will be live shortly after the Public PreSale begins."
+      "question": "I can't see my tokens in my wallet. What should I do?",
+      "answer": "All CPX tokens are subject to our Lockup and Vesting schedule. You can claim your CPX tokens using the same wallet you contributed with through our token claiming portal at https://presale.ciphex.io. Connect your wallet to view your dashboard and claim tokens as they vest monthly over 12 months."
     },
     {
       "question": "What is the token symbol and contract address?",
@@ -45,12 +45,12 @@
       "answer": "Automated volume-based market execution fees ranging from 0.25% to 0.03%."
     },
     {
-      "question": "What is the minimum purchase amount?",
-      "answer": "The minimum purchase during presale is 2,000 CPX tokens. You can contribute using USDT, USDC, or ETH."
+      "question": "What was the minimum purchase amount?",
+      "answer": "The minimum purchase during the token sale was 2,000 CPX tokens. Contributors used USDT, USDC, or ETH."
     },
     {
-      "question": "Is the presale active?",
-      "answer": "The presale will run for 180 days, with a final price of $0.26. Contributions will stay open until it's officially closed, or the first version of the Alpha CPX is finished and getting ready for commercial launch."
+      "question": "How do I access my token claiming dashboard?",
+      "answer": "Visit https://presale.ciphex.io and connect your wallet to access your claiming dashboard. You can view your vesting schedule, transaction records, and claim tokens monthly as they vest over 12 months."
     },
     {
       "question": "What is the total token supply?",
@@ -64,19 +64,19 @@
   "Lockups & Vesting": [
     {
       "question": "What is a Lockup?",
-      "answer": "A lockup is a period during which a contributor's CPX Tokens are not available for trading. The lockup is a crucial aspect of the CipheX PreSale, as it ensures that the token price remains stable and prevents market manipulation. The lockup period is designed to protect all Contributors interests and maintain the integrity of the tokenomics. All CPX PreSale tokens are subject to the same lockup and vesting schedule, to be fair to all participants."
+      "answer": "A lockup is a period during which a contributor's CPX Tokens are not available for trading. The lockup was a crucial aspect of the CipheX token distribution, as it ensures that the token price remains stable and prevents market manipulation. The lockup period is designed to protect all contributors' interests and maintain the integrity of the tokenomics. All CPX tokens are subject to the same lockup and vesting schedule, to be fair to all participants."
     },
     {
       "question": "What is the Lockup Period?",
-      "answer": "All CPX Tokens will be subject to a six-month lockup period and a one-year vesting schedule after the six-month lockup is complete. The lockup period starts immediately after your CPX PreSale purchase and is managed by smart contracts. Lockup Earnings: You will earn a fixed rate of return on the value of your locked CPX Tokens. The lockup rate of return is equivalent to the yield rate of the 10-year US Treasury, determined at the start of the PreSale. Interest will be paid in unrestricted CPX Tokens, which are claimable at the end of the lockup period."
+      "answer": "All CPX Tokens are subject to a six-month lockup period and a one-year vesting schedule after the six-month lockup is complete. The lockup period started immediately after your CPX token purchase and is managed by smart contracts. Lockup Earnings: You earn a fixed rate of return on the value of your locked CPX Tokens. The lockup rate of return is equivalent to the yield rate of the 10-year US Treasury, determined at the start of the token distribution. Interest is paid in unrestricted CPX Tokens, which are claimable at the end of the lockup period."
     },
     {
       "question": "What is a Vesting Schedule?",
-      "answer": "A vesting schedule outlines the distribution of a contributor's CPX Tokens over a specific period. It ensures a gradual release of tokens to PreSale buyers, preventing a sudden influx that could destabilize the token price. Vesting Highlights: Duration: One-year vesting schedule. Distribution Pattern: First Month: 3% of your tokens will become claimable. Subsequent Months: Vesting rates increase incrementally each month. Completion: All CPX tokens are fully vested within 12-months. Example: If you have 100,000 CPX tokens released from lockup: First Month: 3,000 tokens vest. Following Months: Vesting amounts increase each month until all 100,000 tokens are vested by the end of the one-year period."
+      "answer": "A vesting schedule outlines the distribution of a contributor's CPX Tokens over a specific period. It ensures a gradual release of tokens to contributors, preventing a sudden influx that could destabilize the token price. Vesting Highlights: Duration: One-year vesting schedule. Distribution Pattern: First Month: 3% of your tokens will become claimable. Subsequent Months: Vesting rates increase incrementally each month. Completion: All CPX tokens are fully vested within 12-months. Example: If you have 100,000 CPX tokens released from lockup: First Month: 3,000 tokens vest. Following Months: Vesting amounts increase each month until all 100,000 tokens are vested by the end of the one-year period."
     },
     {
       "question": "Do I earn interest on my locked CPX tokens?",
-      "answer": "Yes, you will earn a fixed rate of return on the value of your locked CPX Tokens. The lockup rate of return is equivalent to the yield rate of the 10-year US Treasury, determined on the date CipheX Public PreSale begins."
+      "answer": "Yes, you earn a fixed rate of return on the value of your locked CPX Tokens. The lockup rate of return is equivalent to the yield rate of the 10-year US Treasury, determined on the date the CipheX token distribution began."
     },
     {
       "question": "Do Creator Tokens have a Lockup and Vesting Schedule?",
@@ -90,7 +90,7 @@
     },
     {
       "question": "Where will CipheX be listed?",
-      "answer": "Following the completion of our active Public PreSale, CipheX CPX Token will launch on Uniswap, our preferred decentralized exchange (DEX) platform. After our initial listing, we will focus on establishing market value and demonstrating the functionality of our Market Centurions. As demand for our tokens increases, we will pursue centralized exchanges (CEX) listings to further enhance accessibility, market value, and liquidity for CipheX's Community Members. Once we have finalized our listing strategy, we will make an announcement on our official channels."
+      "answer": "Following the completion of our token distribution phase, CipheX CPX Token will launch on Uniswap, our preferred decentralized exchange (DEX) platform. After our initial listing, we will focus on establishing market value and demonstrating the functionality of our Market Centurions. As demand for our tokens increases, we will pursue centralized exchanges (CEX) listings to further enhance accessibility, market value, and liquidity for CipheX's Community Members. Once we have finalized our listing strategy, we will make an announcement on our official channels."
     },
     {
       "question": "What is your regulatory compliance strategy?",

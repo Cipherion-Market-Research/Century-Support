@@ -48,7 +48,7 @@ class DataSyncer:
         data = await parser.process()
         return data
 
-    async def sync_presale_stats(self):
+    async def sync_claiming_stats(self):
         url = "https://presale.ciphex.io/api/presale"
         try:
             async with aiohttp.ClientSession() as session:
@@ -59,10 +59,10 @@ class DataSyncer:
                         await self.cache_manager.update_data({"ciphex_stats": data})
                         return data
                     else:
-                        logger.error(f"Failed to fetch presale stats: {response.status}")
+                        logger.error(f"Failed to fetch claiming stats: {response.status}")
                         return {}
         except Exception as e:
-            logger.error(f"Error fetching presale stats: {e}")
+            logger.error(f"Error fetching claiming stats: {e}")
             return {}
 
     async def sync_all(self):
@@ -90,7 +90,7 @@ class DataSyncer:
             # Continue with other syncs...
             website_data = await self.sync_website()
             certik_data = await self.sync_certik()
-            presale_data = await self.sync_presale_stats()
+            claiming_data = await self.sync_claiming_stats()
 
             self.last_sync = datetime.now()
             self.is_syncing = False
