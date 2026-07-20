@@ -47,7 +47,7 @@ class BotCommandHandler:
             keyboard = [
                 [
                     InlineKeyboardButton("Website", url="https://ciphex.io"),
-                    InlineKeyboardButton("Whitepaper", url="https://ciphex.io/whitepapers")
+                    InlineKeyboardButton("Publications", url="https://ciphex.io/ecosystem-publications")
                 ]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -88,8 +88,9 @@ class BotCommandHandler:
         
         if token_price and token_price != "Unknown":
             formatted_price = (
-                f"**Current CPX Token Price**: {token_price}\n"
-                f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to access the token claiming portal."
+                f"**CPX Contribution Price (2025 round, concluded)**: {token_price}\n"
+                f"This is not a live market price — CipheX has no trading pair yet. "
+                f"Visit [claim.ciphex.io](https://claim.ciphex.io) to access the token claiming portal."
             )
             await update.message.reply_text(formatted_price, parse_mode="Markdown")
         else:
@@ -98,10 +99,11 @@ class BotCommandHandler:
             if stats_data_str:
                 stats_data = json.loads(stats_data_str)
                 token_price = stats_data.get('price', {}).get('raw', 'Unknown')
-                
+
                 formatted_price = (
-                    f"**Current CPX Token Price**: {token_price} (cached)\n"
-                    f"Visit [presale.ciphex.io](https://presale.ciphex.io) for real-time pricing and to access the token claiming portal."
+                    f"**CPX Contribution Price (2025 round, concluded)**: {token_price} (cached)\n"
+                    f"This is not a live market price — CipheX has no trading pair yet. "
+                    f"Visit [claim.ciphex.io](https://claim.ciphex.io) to access the token claiming portal."
                 )
                 await update.message.reply_text(formatted_price, parse_mode="Markdown")
             else:
@@ -112,7 +114,7 @@ class BotCommandHandler:
         
     async def _get_live_stats_data(self):
         """Fetch real-time stats data directly from the API"""
-        url = "https://presale.ciphex.io/api/presale"
+        url = "https://claim.ciphex.io/api/presale"
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, timeout=5) as response:
@@ -143,15 +145,13 @@ class BotCommandHandler:
             total_contributions = stats_data.get('totalContributions', {}).get('ui', 'Unknown')
             total_cpx_presold = stats_data.get('totalCPXPresold', {}).get('ui', 'Unknown')
             total_staked = stats_data.get('totalStaked', {}).get('ui', 'Unknown')
-            percent_staked = stats_data.get('percentStaked', {}).get('ui', 'Unknown')
 
             formatted_stats = (
-                f"**Community & Token Stats**:\n"
-                f"- Total Community Members: {cipherions}\n"
+                f"**Claim Portal Stats (2025 round)**:\n"
+                f"- Claiming Wallets: {cipherions}\n"
                 f"- Total Funds Raised: {total_contributions}\n"
-                f"- Total CPX Purchased: {total_cpx_presold}\n"
-                f"- Total Staked: {total_staked}\n"
-                f"- Percent Staked: {percent_staked}%\n"
+                f"- Total CPX Presold: {total_cpx_presold}\n"
+                f"- Total CPX Staked: {total_staked}\n"
             )
             await update.message.reply_text(formatted_stats, parse_mode="Markdown")
         else:
@@ -163,15 +163,13 @@ class BotCommandHandler:
                 total_contributions = stats_data.get('totalContributions', {}).get('ui', 'Unknown')
                 total_cpx_presold = stats_data.get('totalCPXPresold', {}).get('ui', 'Unknown')
                 total_staked = stats_data.get('totalStaked', {}).get('ui', 'Unknown')
-                percent_staked = stats_data.get('percentStaked', {}).get('ui', 'Unknown')
 
                 formatted_stats = (
-                    f"**Community & Token Stats (cached)**:\n"
-                    f"- Total Community Members: {cipherions}\n"
+                    f"**Claim Portal Stats (2025 round, cached)**:\n"
+                    f"- Claiming Wallets: {cipherions}\n"
                     f"- Total Funds Raised: {total_contributions}\n"
-                    f"- Total CPX Purchased: {total_cpx_presold}\n"
-                    f"- Total Staked: {total_staked}\n"
-                    f"- Percent Staked: {percent_staked}%\n"
+                    f"- Total CPX Presold: {total_cpx_presold}\n"
+                    f"- Total CPX Staked: {total_staked}\n"
                 )
                 await update.message.reply_text(formatted_stats, parse_mode="Markdown")
             else:

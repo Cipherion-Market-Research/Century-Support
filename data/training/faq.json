@@ -14,7 +14,7 @@
     },
     {
       "question": "How do I claim my tokens?",
-      "answer": "CPX tokens can be claimed through our token claiming portal. Visit https://presale.ciphex.io to connect your wallet and access your claiming dashboard where you can view your vesting schedule and claim tokens monthly."
+      "answer": "CPX tokens can be claimed through our token claiming portal. Visit https://claim.ciphex.io to connect your wallet and access your claiming dashboard where you can view your vesting schedule and claim tokens monthly."
     },
     {
       "question": "Can I use my Centralized Exchange Account (like Kraken or Binance) to claim CipheX tokens?",
@@ -22,7 +22,7 @@
     },
     {
       "question": "I can't see my tokens in my wallet. What should I do?",
-      "answer": "All CPX tokens are subject to our Lockup and Vesting schedule. You can claim your CPX tokens using the same wallet you contributed with through our token claiming portal at https://presale.ciphex.io. Connect your wallet to view your dashboard and claim tokens as they vest monthly over 12 months."
+      "answer": "All CPX tokens are subject to our Lockup and Vesting schedule. You can claim your CPX tokens using the same wallet you contributed with through our token claiming portal at https://claim.ciphex.io. Connect your wallet to view your dashboard and claim tokens as they vest monthly over 12 months."
     },
     {
       "question": "What is the token symbol and contract address?",
@@ -50,11 +50,11 @@
     },
     {
       "question": "How do I access my token claiming dashboard?",
-      "answer": "Visit https://presale.ciphex.io and connect your wallet to access your claiming dashboard. You can view your vesting schedule, transaction records, and claim tokens monthly as they vest over 12 months."
+      "answer": "Visit https://claim.ciphex.io and connect your wallet to access your claiming dashboard. You can view your vesting schedule, transaction records, and claim tokens monthly as they vest over 12 months."
     },
     {
       "question": "What is the total token supply?",
-      "answer": "CipheX has a maximum supply of 1.5 billion CPX Tokens. The supply is structured with a deflationary model designed to reduce the total supply by approximately 95% over the next decade."
+      "answer": "CipheX has a maximum supply of 1.5 billion CPX Tokens. A deflationary burn program reduces total supply over time: Burn Cycle 1 (Dec 2025) burned 481,454,298 CPX (32.10% of supply), with a target of roughly 50% burned by EYE2030."
     },
     {
       "question": "How does the vesting schedule work?",

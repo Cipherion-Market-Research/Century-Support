@@ -213,7 +213,7 @@ class BotMessageHandler:
                 # Optionally append a “read more” snippet
                 response_text = (
                     f"{summarized_wp}\n\n"
-                    "Check out https://ciphex.io/whitepapers for more details!"
+                    "Check out https://ciphex.io/ecosystem-publications for more details!"
                 )
 
                 # Store & respond
@@ -401,7 +401,8 @@ class BotMessageHandler:
                 elif topic == "buyback":
                     matched_responses.append(
                         "**Buyback & Burn Program:**\n"
-                        "• Supply Reduction: ~95% over 10 years\n"
+                        "• Burn Cycle 1 (Dec 2025): 481,454,298 CPX burned (32.10% of supply)\n"
+                        "• Target: roughly 50% of total supply burned by EYE2030\n"
                         "• Automatic Burns: Execute within 30 days of announcement\n"
                         "• No Voting Required: Programmed into smart contracts\n"
                         "• Optional Participation: Token holders can choose to participate\n"
