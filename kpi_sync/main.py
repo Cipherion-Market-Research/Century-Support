@@ -24,7 +24,12 @@ from kpi_sync.pollers.abacus_index import AbacusIndexPoller
 from kpi_sync.pollers.ams_keymetrics import AmsKeyMetricsPoller
 from kpi_sync.pollers.ams_marketing import AmsMarketingPoller
 from kpi_sync.pollers.claim_api import ClaimApiPoller
-from kpi_sync.pollers.onchain import OnchainBasePoller, OnchainEthPoller, PresaleActivity
+from kpi_sync.pollers.onchain import (
+    BurnVerificationPoller,
+    OnchainBasePoller,
+    OnchainEthPoller,
+    PresaleActivity,
+)
 from kpi_sync.ratelimiter import AsyncRateLimiter
 
 logger = get_logger("kpi_sync.main")
@@ -41,6 +46,7 @@ def build_pollers(store: KpiStore, session: aiohttp.ClientSession) -> list:
         AmsKeyMetricsPoller(store, session, ams_rate_limiter),
         OnchainBasePoller(store, activity),
         OnchainEthPoller(store, activity),
+        BurnVerificationPoller(store),
     ]
     # Amendment C-R1: owner does not want Abacus Indexer data exposed
     # publicly. Off by default -- set KPI_SYNC_ABACUS_ENABLED=true to run

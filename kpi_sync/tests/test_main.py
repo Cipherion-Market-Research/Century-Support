@@ -20,6 +20,7 @@ async def test_build_pollers_excludes_abacus_by_default(fake_redis, monkeypatch)
         "ams_keymetrics",
         "onchain_base",
         "onchain_eth",
+        "onchain",
     }
 
 

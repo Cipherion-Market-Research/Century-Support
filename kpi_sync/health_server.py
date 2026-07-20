@@ -12,6 +12,7 @@ CORE_SOURCES = [
     "ams_keymetrics",
     "onchain_base",
     "onchain_eth",
+    "onchain",  # BurnVerificationPoller
 ]
 
 

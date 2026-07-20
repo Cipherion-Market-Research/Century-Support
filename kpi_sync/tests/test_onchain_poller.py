@@ -4,7 +4,12 @@ import pytest
 
 from kpi_sync.config import Config
 from kpi_sync.envelope import KpiStore
-from kpi_sync.pollers.onchain import OnchainBasePoller, OnchainEthPoller, PresaleActivity
+from kpi_sync.pollers.onchain import (
+    BurnVerificationPoller,
+    OnchainBasePoller,
+    OnchainEthPoller,
+    PresaleActivity,
+)
 
 
 class FakeCall:
@@ -97,3 +102,34 @@ async def test_onchain_eth_poller_reads_total_supply_and_shares_activity_interva
     assert total_supply["value"]["raw"] == ETH_TOTAL_SUPPLY
     assert total_supply["value"]["cpx"] == pytest.approx(1_500_000_000)
     assert total_supply["unit"] == "CPX"
+
+
+# Auditor's reference values, 2026-07-20: verified live against the real
+# Ethereum CPX contract + dead-address balance before this poller was
+# written -- 1,500,000,000 - 481,454,298 = 1,018,545,702 exactly, matching
+# the audit's stated FY2026 FD supply.
+BURN_BALANCE_RAW = 481_454_298 * 10 ** 18
+
+
+@pytest.mark.asyncio
+async def test_burn_verification_poller_derives_effective_supply(fake_redis):
+    store = KpiStore(fake_redis)
+    poller = BurnVerificationPoller(store)
+    poller.contract = FakeContract(totalSupply=ETH_TOTAL_SUPPLY, balanceOf=BURN_BALANCE_RAW)
+
+    await poller.fetch_and_store()
+
+    burn_balance = json.loads(await fake_redis.get("kpi:onchain:burn_balance_cpx"))
+    assert burn_balance["value"]["raw"] == BURN_BALANCE_RAW
+    assert burn_balance["value"]["cpx"] == pytest.approx(481_454_298)
+    assert burn_balance["unit"] == "CPX"
+
+    effective_supply = json.loads(await fake_redis.get("kpi:onchain:effective_supply_cpx"))
+    assert effective_supply["value"]["raw"] == ETH_TOTAL_SUPPLY - BURN_BALANCE_RAW
+    assert effective_supply["value"]["cpx"] == pytest.approx(1_018_545_702)
+
+
+def test_burn_verification_poller_uses_its_own_hourly_cadence():
+    poller = BurnVerificationPoller(KpiStore(None))
+    assert poller.get_interval_s() == Config.BURN_VERIFICATION_INTERVAL_S
+    assert poller.source_key == "onchain"
