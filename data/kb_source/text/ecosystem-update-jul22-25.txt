@@ -1,0 +1,95 @@
+[source_url: https://ciphex.io/assets/documents/ecosystem-update-jul22-25.pdf]
+[fetched: 2026-07-20]
+[title: New Crypto Regulations, Lockups, Vesting & Token Claiming]
+[date: July 22, 2025]
+[pages: 2] [extraction: ok]
+
+1 | Page  
+ 
+ 
+ 
+ECOSYSTEM UPDATE 
+Published July 22, 2025 
+ 
+New Crypto Regulations 
+The introduction of new crypto regulations presents significant benefits for CipheX, the Alpha CPX 
+Network, and its planned expansion into real -world services. Clearer regulatory frameworks will 
+allow CipheX to reinforce institutional credibility and attra ct higher-tier participants as it advances 
+its transformation toward regulatory compliance, institutional -grade governance, and enhanced 
+financial transparency across its Ecosystem. These developments will ultimately enhance trust and 
+accessibility for Alpha CPX' s AI-driven portfolio management systems among everyday consumers 
+and future institutional investors, lay ing a solid foundation for the secure integration of tokenized 
+real-world assets and broader market participation. 
+CipheX Token Lockups and Monthly Vesting 
+The completion of certain CPX Token lockups is just days away. This week, the earned portion of 
+unrestricted CPX Tokens, derived from each token holder' s principal balance of restricted CPX  
+Tokens, will become claimable. Once claimed, these tokens can be transferred directly to personal 
+digital wallets. After the lockup period ends, the principal balance of restricted CPX Tokens will 
+automatically transition into its twelve-month vesting schedule. Under this vesting schedule, token 
+holders may claim an equal portion of their principal CPX Tokens at the end of each month and 
+transfer those tokens to their wallets. Once claimed, these CPX Tokens will become unrestricted 
+and tradable upon CipheX's planned listing on the Uniswap decentralized exchange (DEX). 
+CipheX Token Claiming and Presale 
+The CipheX Token Claiming Dashboard is scheduled to open on or before July 31, 2025. Once live, 
+token holders will be able to connect their wallets to claim both their earned CPX Tokens from 
+completed lockups and their ongoing monthly vesting allocations. The current CipheX limited 
+presale section will transition into the dedicated access point for the Token Claiming Dashboard. 
+Upon this transition, the limited presale will officially close and no longer be accessible to the 
+general public. CipheX may continue certain financing activities after the  limited presale. However, 
+any future financing activities  will be restricted to accredited and qualified investors, following  
+applicable securities regulations. Additional information can be found on the limited presale section 
+of the CipheX website. 
+Active Trading of CipheX Tokens 
+Currently, CipheX Tokens (CPX) are not listed for trading on any decentralized exchange, and no 
+active market exists for thes e tokens. Any unrestricted CPX Tokens claimed through lockup 
+completion or monthly vesting will remain untradable until CipheX finalizes its planned listing on the 
+Uniswap decentralized exchange (DEX).  CipheX is currently targeting its initial DEX listing for 
+September 2025. This timeline is provisional and subject to change.  
+
+ 
+  2 | Page  
+ 
+ 
+ 
+The actual listing date will depend on the successful completion of key development milestones, 
+internal readiness assessments, and adherence to applicable regulatory compliance frameworks. 
+There can be no assurance that these conditions will be met within the projected timeframe. 
+About The CipheX Ecosystem 
+ 
+CipheX is a decentralized ecosystem providing access to the Alpha CPX Network (Alpha CPX), a fully 
+autonomous AI portfolio management platform delivering institutional -grade performance to 
+everyday consumers. Designed to operate without intermediaries, Alpha CPX gives users full control 
+of their digital assets while enabling advanced market execution, strategy automation, and portfolio 
+performance optimization. 
+ 
+Important Notice to Reader 
+Certain statements in this communication may constitute “forward -looking statements” within the meaning 
+of the U.S. Private Securities Litigation Reform Act of 1995 and applicable international securities laws. These 
+statements involve risks, uncertainties, and assumptions, and do not guarantee future performance. They may 
+include terms such as “expects,” “plans,” “projects,” “intends,” “believes,” “anticipates,” “targets,” or 
+similar language, as well as discussions of future operations, developments, regulatory outcomes, or financial 
+results. All forward-looking statements reflect the current views of CipheX as of the date of publication, based 
+on available information at that time. Actual results may differ materially due to various risks, uncertainties, 
+and assumptions, including factors not currently known. CipheX undertakes no obligation to update or revise 
+any forward-looking statement except as required by law. Readers should not place undue reliance on such 
+statements. 
+This communication does not constitute an offer to sell or a solicitation to buy any securities, tokens, or 
+financial instruments. CipheX is not a registered broker-dealer, investment adviser, or custodian, and does not 
+provide investment, legal, tax, or accounting advice. All content herein is provided for informational purposes 
+only and should not be relied upon for financial decision- making. Recipients should consult independent 
+financial, legal, and tax advisors before engaging in any investment or digital asset activity.  Use of the CipheX 
+Token Claiming Dashboard, Alpha CPX Network, or any other CipheX platform does not establish a client, 
+brokerage, or fiduciary relationship. Participation in CipheX services is entirely self -directed and does not 
+constitute investment management or financial advisory services under applicable law. 
+CPX Tokens have not been registered with, reviewed by, or approved by any financial or securities regulatory 
+authority, nor are they registered under any securities laws. No regulatory body has assessed the merits or 
+accuracy of CPX Tokens or any related materials, including CipheX communications or website content. CPX 
+Tokens may not offer protections commonly associated with securities, such as investor disclosures or 
+dispute resolution mechanisms. Digital asset markets are inherently speculative and involve substantial risk. 
+Participants may face extreme volatility, regulatory changes, technological disruptions, cyber threats, fraud, 
+and the potential loss of all invested capital. There is no assura nce of price stability, liquidity, or long- term 
+viability of CPX Tokens or related technologies. Statements regarding CipheX or CPX Tokens not made directly 
+by CipheX or its authorized representatives are unauthorized and disclaimed.  
+Access to CipheX services may be restricted or prohibited in certain jurisdictions. Participants are solely 
+responsible for understanding and complying with applicable laws and regulations. Past performance is not 
+indicative of future results.

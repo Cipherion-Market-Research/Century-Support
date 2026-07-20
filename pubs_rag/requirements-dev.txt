@@ -1,0 +1,6 @@
+# Test-only deps; not part of the deployed image (see requirements.txt).
+-r requirements.txt
+pytest==9.1.1
+pytest-asyncio==1.4.0
+# Generates a synthetic PDF fixture for the webhook end-to-end test only.
+fpdf2==2.8.7

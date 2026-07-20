@@ -1,0 +1,94 @@
+[source_url: https://ciphex.io/assets/documents/ecosystem-update-dec31-25.pdf]
+[fetched: 2026-07-20]
+[title: Ciphex Alpha Asset Management System (AMS) & Preparation for Market Trading]
+[date: December 31, 2025]
+[pages: 2] [extraction: ok]
+
+1 | Page  
+ 
+ 
+ 
+Ecosystem Update 
+Published December 31, 2025 
+ 
+CipheX Alpha (Formerly Alpha Centurion Network) 
+ 
+CipheX completed development of the CipheX Asset Management System (CipheX Alpha) during the second 
+half of 2025 and initiated live market trading to validate proof of concept and support continuous system 
+refinement. Since entering live market conditions in late May, CipheX Alpha has delivered strong performance 
+through year -end, demonstrating operational resilience, execution consistency, and reliability in real 
+markets. CipheX will publish these initial test results on the CipheX platform in January for reference, 
+including opening its view-only dashboard to see live market performance of the CipheX Alpha system. 
+Ongoing enhancements will continue as CipheX advances toward commercial deployment , targeted 
+sometime in 2026. This next phase is being structured with regulatory assurance as a core design principle, 
+aligning the CipheX Alpha Ecosystem with current and anticipated regulatory frameworks governing 
+autonomous portfolio management platforms. This disciplined approach positions CipheX for scalable 
+adoption, institutional credibility, and long-term relevance within an evolving global marketplace. 
+Preparation for Market Trading of CipheX Tokens 
+CipheX will begin preparing its CipheX Tokens for open market trading on or before the end of March 2026. All 
+related platform enhancements, marketing expansion, token supply adjustments, and financing are part of 
+the coordinated preparation for open market trading. Beginning in January and continuing through the 
+anticipated market opening, CipheX will implement phased improvements to the CipheX platform alongside 
+increased marketing and promotional activity to strengthen market readiness and commercial vis ibility. In 
+addition, CipheX will automatically execute its planned token burn effective January 1, 2026, reducing excess  
+supply by approximately 32%, with updated tokenomics published on the CipheX site in early January. 
+Financing during this preparation period will be provided internally, with any subsequent financing structured 
+to comply with applicable regulatory frameworks, thereby ensuring a disciplined, compliant transition into 
+open-market trading. 
+Ci
+pheX will provide more frequent updates on this exciting phase of our growth as we enter 2026. 
+Happy New Year. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+  2 | Page  
+ 
+ 
+ 
+About The CipheX Ecosystem 
+ 
+CipheX is a decentralized ecosystem providing access to the Alpha CPX Network (Alpha CPX), a fully 
+autonomous AI portfolio management platform delivering institutional -grade performance to everyday 
+consumers. Designed to operate without intermediaries, Alp ha CPX gives users full control of their digital 
+assets while enabling advanced market execution, strategy automation, and portfolio performance 
+optimization. 
+Important Notice to Reader 
+Certain statements in this communication may constitute “forward -looking statements” within the meaning 
+of the U.S. Private Securities Litigation Reform Act of 1995 and applicable international securities laws. These 
+statements involve risks, uncertainties, and assumptions, and do not guarantee future performance. They may 
+include terms such as “expects,” “plans,” “projects,” “intends,” “believes,” “anticipates,” “targets,” or 
+similar language, as well as discussions of future operations, developments, regulatory outcomes, or financial 
+results. All forward-looking statements reflect the current views of CipheX as of the date of publication, based 
+on available information at that time. Actual results may differ materially due to various risks, uncertainties, 
+and assumptions, including factors not currently known. CipheX undertakes no obligation to update or revise 
+any forward-looking statement except as required by law. Readers should not place undue reliance on such 
+statements. 
+This communication does not constitute an offer to sell or a solicitation to buy any securities, tokens, or 
+financial instruments. CipheX is not a registered broker-dealer, investment adviser, or custodian, and does not 
+provide investment, legal, tax, or accounting advice. All content herein is provided for informational purposes 
+only and should not be relied upon for financial decision- making. Recipients should consult independent 
+financial, legal, and tax advisors before engaging in any investment or digital asset activity.  Use of the CipheX 
+Token Claiming Dashboard, CipheX Alpha Asset Management System, or any other CipheX platform does not 
+establish a client, brokerage, or fiduciary relationship. Participation in CipheX services is entirely self-directed 
+and does not constitute investment management or financial advisory services under applicable law. 
+CPX Tokens have not been registered with, reviewed by, or approved by any financial or securities regulatory 
+authority, nor are they registered under any securities laws. No regulatory body has assessed the merits or 
+accuracy of CPX Tokens or any related materials, including CipheX communications or website content. CPX 
+Tokens may not offer protections commonly associated with securities, such as investor disclosures or 
+dispute resolution mechanisms. Digital asset markets are inherently speculative and involve substantial risk. 
+Participants may face extreme volatility, regulatory changes, technological disruptions, cyber threats, fraud, 
+and the potential loss of all invested capital. There is no assurance of price stability, liquidity, or long -term 
+viability of CPX Tokens or related technologies. Statements regarding CipheX or CPX Tokens not made directly 
+by CipheX or its authorized representatives are unauthorized and disclaimed.  
+Access to CipheX services may be restricted or prohibited in certain jurisdictions. Participants are solely 
+responsible for understanding and complying with applicable laws and regulations. Past performance is not 
+indicative of future results.
