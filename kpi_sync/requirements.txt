@@ -1,0 +1,9 @@
+# Tier-1 KPI sync service — deployed independently of the bot (see
+# docs/BUILD_HANDOFF.md: "Only WP-1 touches the live bot. Everything else
+# is new services beside it."). Deliberately its own requirements file so
+# this service's dependency set doesn't collide with concurrent edits to
+# the root requirements.txt (WP-1 is re-encoding that file UTF-16 -> UTF-8
+# in parallel).
+aiohttp==3.14.1
+redis==8.0.1
+web3==7.16.0
