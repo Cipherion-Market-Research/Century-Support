@@ -52,25 +52,41 @@ def test_repo_facts_yaml_resolved_oq_items_are_no_longer_unknown():
         assert not facts_file.facts[key].is_unknown, f"{key} was resolved by the owner and should not be unknown"
 
 
-def test_repo_facts_yaml_oq5_burn_address_is_unknown():
-    """OQ-5 (new, raised by Agent C's on-chain finding) must be the unknown sentinel."""
+def test_repo_facts_yaml_oq5_burn_address_is_resolved():
+    """OQ-5 was resolved 2026-07-20 (owner-provided, auditor-verified on-chain)
+    and must carry the real burn address, not the unknown sentinel."""
     facts_file = load_facts_file(DEFAULT_FACTS_PATH)
     assert "tokenomics.burn_cycle_1_burn_address" in facts_file.facts
-    assert facts_file.facts["tokenomics.burn_cycle_1_burn_address"].is_unknown
+    burn_fact = facts_file.facts["tokenomics.burn_cycle_1_burn_address"]
+    assert not burn_fact.is_unknown
+    assert burn_fact.value == "0x000000000000000000000000000000000000dEaD"
 
-    # round-terms.new_round_lockup_interest also remains an open unknown
-    assert facts_file.facts["round-terms.new_round_lockup_interest"].is_unknown
+
+def test_repo_facts_yaml_only_one_unknown_remains():
+    """Per the 2026-07-20 final pre-merge patch, only
+    round-terms.new_round_lockup_interest should still be unknown."""
+    facts_file = load_facts_file(DEFAULT_FACTS_PATH)
+    unknown_keys = {k for k, f in facts_file.facts.items() if f.is_unknown}
+    assert unknown_keys == {"round-terms.new_round_lockup_interest"}
 
 
 def test_repo_facts_yaml_distinguishes_onchain_from_fd_supply():
     """Guard against the on-chain-vs-FD-supply confusion flagged in review:
-    the two figures must never collapse to the same value."""
+    the two figures must never collapse to the same value, but must be
+    arithmetically consistent via the (now-known) burn address balance."""
     facts_file = load_facts_file(DEFAULT_FACTS_PATH)
     onchain = facts_file.facts["tokenomics.onchain_total_supply_eth"].value
     fd_supply = facts_file.facts["tokenomics.fy2026_fd_supply"].value
+    burn_amount = facts_file.facts["tokenomics.burn_cycle_1_amount_cpx"].value
     assert onchain == 1500000000
     assert fd_supply == 1018545702
     assert onchain != fd_supply
+    assert onchain - burn_amount == fd_supply
+
+
+def test_repo_facts_yaml_has_market_expansion_timeline():
+    facts_file = load_facts_file(DEFAULT_FACTS_PATH)
+    assert "round-terms.market_expansion_timeline" in facts_file.facts
 
 
 def test_repo_facts_yaml_has_at_least_ten_facts_per_wp2_acceptance():

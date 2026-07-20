@@ -243,7 +243,7 @@ facts:
     value: 0.25
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live. Heads-up from Agent C's on-chain read (2026-07-20): the Base presale contract's getTokenPrice() currently decodes to ~$0.115/CPX, not $0.25. This may reflect a pre-launch/test contract state (raisedFunds/contributorsAmount both 0) or a genuine change since the audit — flagging for the owner to reconcile, not silently overriding the advertised $0.25 value here. Do not quote a price to a user without checking for a newer resolution of this discrepancy."
+    notes: "audit — see round-terms.new_round_name note. Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live. Heads-up from Agent C's on-chain read (2026-07-20): the Base presale contract's getTokenPrice() currently decodes to ~$0.115/CPX, not $0.25. This may reflect a pre-launch/test contract state (raisedFunds/contributorsAmount both 0) or a genuine change since the audit — flagging for the owner to reconcile, not silently overriding the advertised $0.25 value here. Do not quote a price to a user without checking for a newer resolution of this discrepancy. OWNER DIRECTIVE, 2026-07-20 (see round-terms.market_expansion_timeline): this $0.25 figure and the on-chain ~$0.115 figure remain UNRECONCILED — the bot must quote NEITHER as the new round's price. If asked, answer that the new round's price has not been finalized/published and point to links.website for official updates."
 
   round-terms.new_round_cap_cpx:
     value: 64000000
@@ -317,6 +317,12 @@ facts:
     source_url: "internal://content-audit-2026-07-20"
     notes: "audit explicitly flags this as unstated for the new round: the 10-year-Treasury-yield lockup interest mechanic (round-terms.legacy_2025_lockup_interest) is documented for the 2025 round only. Do not assume it carries over — answer 'unknown, confirm with the team' if asked. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
+  round-terms.market_expansion_timeline:
+    value: "The 2025 presale has ended. A smaller market-expansion round is expected to complete within approximately 30 days of 2026-07-20, followed by a DEX launch."
+    verified_on: "2026-07-20"
+    source_url: "https://ciphex.io/ecosystem-updates"
+    notes: "Owner-provided timeline, 2026-07-20 — not yet reflected on any live, reachable page (the contribute/presale page itself returns HTTP 404 live; source_url points to the ecosystem-updates index as where an eventual official announcement would appear, not as current proof of this timeline). Phrase to users as an EXPECTATION/target ('the team has indicated it expects...'), never as a promised or guaranteed date — same treatment as identity.dex_live_status, and re-verify before quoting since this window will go stale. IMPORTANT: this timeline says nothing about the new round's PRICE or other terms, which remain unreconciled — the staged $0.25/CPX figure (round-terms.new_round_price_usd) conflicts with the Base presale contract's own on-chain getTokenPrice() read of ~$0.115/CPX. Per owner directive: the bot must quote NEITHER price. If a user asks 'when' expect a general answer from this fact; if a user asks 'how much,' answer that the price is not yet finalized/published rather than citing either figure."
+
   # ─────────────────────────── contracts ──────────────────────────────
 
   contracts.cpx_token_ethereum:
@@ -387,13 +393,13 @@ facts:
     value: 481454298
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/ciphex-token"
-    notes: "kb_source. This figure is the site's own published tokenomics number, NOT an on-chain read — see tokenomics.onchain_total_supply_eth for why Etherscan's totalSupply() will not itself show this reduction."
+    notes: "kb_source, and now INDEPENDENTLY VERIFIED on-chain (2026-07-20): tokenomics.max_supply_cpx (1,500,000,000) minus the burn address's CPX balance (see tokenomics.burn_cycle_1_burn_address) equals exactly 1,018,545,702 — matching tokenomics.fy2026_fd_supply exactly. See tokenomics.onchain_total_supply_eth for why Etherscan's raw totalSupply() will not itself show this reduction (the burn is a transfer to a dead address, not a supply-reducing call)."
 
   tokenomics.burn_cycle_1_percent:
     value: "32.10%"
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/ciphex-token"
-    notes: "kb_source. Labeled '32.10% Burn Cycle 1 – December 2025' on the tokenomics page. See tokenomics.onchain_total_supply_eth: this percentage is not (yet) independently verifiable against raw on-chain totalSupply()."
+    notes: "kb_source. Labeled '32.10% Burn Cycle 1 – December 2025' on the tokenomics page. Now INDEPENDENTLY VERIFIED on-chain (2026-07-20): 481,454,298 / 1,500,000,000 = 32.097%, matching the published 32.10% (the small difference is ordinary display rounding). See tokenomics.burn_cycle_1_burn_address for the verification address."
 
   tokenomics.burn_cycle_1_date:
     value: "December 2025 (per the tokenomics page label); the December 31, 2025 ecosystem update describes the burn as executing effective January 1, 2026"
@@ -405,19 +411,19 @@ facts:
     value: 1500000000
     verified_on: "2026-07-20"
     source_url: "https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E"
-    notes: "Agent C / WP-3 on-chain finding (2026-07-20): the Ethereum CPX contract's totalSupply() reads exactly 1,500,000,000 — unchanged, with NO reduction reflecting Burn Cycle 1. This is expected, not a contradiction: Burn Cycle 1 was evidently executed as a transfer of 481,454,298 CPX to a burn/dead address rather than a call to a supply-reducing burn function, so raw totalSupply() will never show it. IMPORTANT: this on-chain totalSupply is a DIFFERENT number from tokenomics.fy2026_fd_supply (1,018,545,702) — the FD/effective-supply figure nets out the burn-address balance and is what should be quoted as 'circulating/effective supply post-burn'. If a user checks Etherscan directly and sees 1.5B, that is not the bot being wrong — always distinguish on-chain totalSupply from FD/effective supply explicitly rather than letting the two numbers appear to conflict. Full independent verification is blocked on tokenomics.burn_cycle_1_burn_address (OQ-5), which is not yet known."
+    notes: "Agent C / WP-3 on-chain finding (2026-07-20): the Ethereum CPX contract's totalSupply() reads exactly 1,500,000,000 — unchanged, with NO reduction reflecting Burn Cycle 1. This is expected, not a contradiction: Burn Cycle 1 was executed as a transfer of 481,454,298 CPX to a burn/dead address rather than a call to a supply-reducing burn function, so raw totalSupply() will never show it. IMPORTANT: this on-chain totalSupply is a DIFFERENT number from tokenomics.fy2026_fd_supply (1,018,545,702) — the FD/effective-supply figure nets out the burn-address balance and is what should be quoted as 'circulating/effective supply post-burn'. If a user checks Etherscan directly and sees 1.5B, that is not the bot being wrong — always distinguish on-chain totalSupply from FD/effective supply explicitly rather than letting the two numbers appear to conflict. RESOLVED 2026-07-20: tokenomics.burn_cycle_1_burn_address is now known and auditor-verified on-chain (balanceOf reads exactly 481,454,298 CPX via two independent RPCs) — 1,500,000,000 − 481,454,298 = 1,018,545,702, an exact match to tokenomics.fy2026_fd_supply. The burn is now fully independently verifiable end-to-end on-chain."
 
   tokenomics.burn_cycle_1_burn_address:
-    value: unknown
+    value: "0x000000000000000000000000000000000000dEaD"
     verified_on: "2026-07-20"
-    source_url: "https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E"
-    notes: "OQ-5 (new — raised by Agent C's on-chain finding + owner review, 2026-07-20). Because Ethereum totalSupply() still reads the full 1,500,000,000 (see tokenomics.onchain_total_supply_eth), Burn Cycle 1's 481,454,298 CPX was evidently sent to a burn/dead address rather than removed via an actual supply-reducing burn call — but the specific address has not been identified or confirmed. Do not guess an address. Until this is resolved, the burn amount/percent should be cited as the site's own published tokenomics figures (tokenomics.burn_cycle_1_amount_cpx / _percent), not as something independently verifiable on Etherscan."
+    source_url: "https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E?a=0x000000000000000000000000000000000000dEaD"
+    notes: "OQ-5 RESOLVED, 2026-07-20: owner-provided address, same-day auditor-verified on-chain — balanceOf(0x...dEaD) on the CPX contract reads exactly 481,454,298 CPX via two independent RPCs. This is the standard Ethereum 'burn/dead' address convention (0x000...dEaD), not a Ciphex-specific contract. The burn is now independently verifiable end-to-end: tokenomics.max_supply_cpx (1,500,000,000) minus this address's balance (481,454,298) equals tokenomics.fy2026_fd_supply (1,018,545,702) exactly, and 481,454,298 / 1,500,000,000 = 32.097% ≈ the published 32.10% (tokenomics.burn_cycle_1_percent) — see those facts' notes."
 
   tokenomics.fy2026_fd_supply:
     value: 1018545702
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/ciphex-token"
-    notes: "kb_source. 'FY2026 Adjusted FD Total Supply — 1,018,545,702', labeled 'Post YE2025 Burn Cycle 1'. Equals max_supply_cpx minus burn_cycle_1_amount_cpx (1,500,000,000 − 481,454,298 = 1,018,545,702). This is the FD/EFFECTIVE supply, distinct from the raw on-chain totalSupply() reading of 1,500,000,000 — see tokenomics.onchain_total_supply_eth. Never present this number as 'what Etherscan will show'; it is the site's post-burn accounting figure, not an on-chain read."
+    notes: "kb_source. 'FY2026 Adjusted FD Total Supply — 1,018,545,702', labeled 'Post YE2025 Burn Cycle 1'. Equals max_supply_cpx minus burn_cycle_1_amount_cpx (1,500,000,000 − 481,454,298 = 1,018,545,702). This is the FD/EFFECTIVE supply, distinct from the raw on-chain totalSupply() reading of 1,500,000,000 — see tokenomics.onchain_total_supply_eth. It is now also cross-verified directly on-chain via the burn address's balance (tokenomics.burn_cycle_1_burn_address), independent of the site's own published arithmetic. Never present this number as 'what Etherscan's totalSupply() will show'; it is the post-burn effective-supply figure (site-published AND on-chain-corroborated), not a raw totalSupply() read."
 
   tokenomics.planned_burn_2026_2030_cpx:
     value: 509272851
