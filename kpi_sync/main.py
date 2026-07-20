@@ -35,14 +35,26 @@ def build_pollers(store: KpiStore, session: aiohttp.ClientSession) -> list:
     # not per poller.
     ams_rate_limiter = AsyncRateLimiter(Config.AMS_RATE_LIMIT_PER_MIN, 60.0)
     activity = PresaleActivity()
-    return [
+    pollers = [
         ClaimApiPoller(store, session),
         AmsMarketingPoller(store, session, ams_rate_limiter),
         AmsKeyMetricsPoller(store, session, ams_rate_limiter),
-        AbacusIndexPoller(store, session),
         OnchainBasePoller(store, activity),
         OnchainEthPoller(store, activity),
     ]
+    # Amendment C-R1: owner does not want Abacus Indexer data exposed
+    # publicly. Off by default -- set KPI_SYNC_ABACUS_ENABLED=true to run
+    # it, and see pollers/abacus_index.py before wiring its keys to
+    # anything user-facing.
+    if Config.ABACUS_ENABLED:
+        pollers.append(AbacusIndexPoller(store, session))
+    else:
+        logger.info(
+            "abacus_index poller disabled by default (Amendment C-R1); "
+            "set KPI_SYNC_ABACUS_ENABLED=true to run it",
+            extra={"event": "poller_disabled", "source_key": "abacus_index"},
+        )
+    return pollers
 
 
 async def main() -> None:

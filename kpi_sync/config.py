@@ -27,6 +27,13 @@ def _env_float(key: str, default: float) -> float:
     return float(raw)
 
 
+def _env_bool(key: str, default: bool) -> bool:
+    raw = os.environ.get(key)
+    if raw is None or raw == "":
+        return default
+    return raw.strip().lower() in ("1", "true", "yes", "on")
+
+
 class Config:
     REDIS_URL = _env("REDIS_URL", "redis://localhost:6379")
 
@@ -72,6 +79,11 @@ class Config:
     )
     ABACUS_LATEST_PATH = _env("KPI_SYNC_ABACUS_LATEST_PATH", "/v0/latest")
     ABACUS_INTERVAL_S = _env_int("KPI_SYNC_ABACUS_INTERVAL_S", 60)
+    # Amendment C-R1 (owner adjudication, 2026-07-20): the owner does not
+    # want Abacus Indexer data exposed publicly. Default-disabled -- the
+    # poller code stays in place, but it does not run (and its kpi:* keys
+    # never populate) unless explicitly turned on. See pollers/abacus_index.py.
+    ABACUS_ENABLED = _env_bool("KPI_SYNC_ABACUS_ENABLED", False)
 
     # --- On-chain reads ---
     BASE_RPC_URL = _env("KPI_SYNC_BASE_RPC_URL", "https://mainnet.base.org")

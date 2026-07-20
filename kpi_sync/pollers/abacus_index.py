@@ -6,6 +6,15 @@ cert doesn't even cover that hostname -- it's issued for api.ciphex.io).
 Config.ABACUS_BASE_URL is the single knob this poller depends on; nothing
 here hardcodes the ALB name so flipping to a stable subdomain later is a
 config change, not a code change.
+
+Amendment C-R1 (owner adjudication, 2026-07-20): the owner does not want
+Abacus Indexer data exposed publicly. This poller is therefore
+DISABLED BY DEFAULT (Config.ABACUS_ENABLED, see main.build_pollers()) --
+the code stays in place for when it's cleared, but does not run unless
+KPI_SYNC_ABACUS_ENABLED=true is set. Even once enabled for internal use,
+every `kpi:abacus_index:*` key is INTERNAL-ONLY pending owner/legal
+clearance: WP-5 (Century Core) must never surface these values, directly
+or derived, in a user-facing response.
 """
 from datetime import datetime, timezone
 
