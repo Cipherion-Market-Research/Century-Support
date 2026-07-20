@@ -28,8 +28,8 @@ You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
 View on [Etherscan](https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)""",
 
 		"price_info": """**CPX Token Price Information:**
-• 2025 contribution round (concluded): ~$0.26 per CPX
-• A new contribution round is in preparation on Base; pricing and terms are not yet final or published.
+• The 2025 distribution has concluded (contribution price: ~$0.26 per CPX).
+• A smaller market-expansion round is expected to complete in the coming weeks, followed by DEX listing. Pricing and terms are not yet final or published — watch ciphex.io for official announcements.
 • Visit [ciphex.io](https://ciphex.io) for the most current information.
 
 Tokens from the concluded 2025 round are available for claiming by existing contributors through the claiming portal.""",
