@@ -77,14 +77,14 @@ async def post_init(application: Application):
     else:
         logger.error("faq.json has an unexpected structure. It should be a dictionary with categories as keys.")
 
-        if faq_dict:
-            try:
-                await application.bot_data["cache_manager"].redis.set("faq_data", json.dumps(faq_dict))
-                logger.info("FAQ data loaded into Redis.")
-            except Exception as e:
-                logger.error(f"Failed to set faq_data in Redis: {e}")
-        else:
-            logger.warning("No valid FAQ data found to load into Redis.")
+    if faq_dict:
+        try:
+            await application.bot_data["cache_manager"].redis.set("faq_data", json.dumps(faq_dict))
+            logger.info("FAQ data loaded into Redis.")
+        except Exception as e:
+            logger.error(f"Failed to set faq_data in Redis: {e}")
+    else:
+        logger.warning("No valid FAQ data found to load into Redis.")
 
     # Run data sync for whitepaper and other data
     try:

@@ -29,7 +29,7 @@ class CacheManager:
         try:
             value = await self.redis.get(key)
             if value:
-                return value.decode("utf-8")
+                return value
         except Exception as e:
             logger.error(f"Error getting cached response: {e}")
         return None
