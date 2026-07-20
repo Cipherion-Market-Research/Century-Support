@@ -11,6 +11,7 @@ def test_abacus_excluded_from_health_by_default(monkeypatch):
         "ams_keymetrics",
         "onchain_base",
         "onchain_eth",
+        "onchain",
     }
 
 

@@ -100,6 +100,14 @@ class Config:
     # nothing (§WP-3 spec: "5 min while a round runs").
     ONCHAIN_IDLE_INTERVAL_S = _env_int("KPI_SYNC_ONCHAIN_IDLE_INTERVAL_S", 30 * 60)
 
+    # --- Burn verification (fast-follow, OQ-5 answered 2026-07-20) ---
+    # Unrelated to presale-round activity, so it runs on its own fixed
+    # cadence rather than PresaleActivity's dynamic one.
+    CPX_BURN_ADDRESS_ETH = _env(
+        "KPI_SYNC_CPX_BURN_ADDRESS_ETH", "0x000000000000000000000000000000000000dEaD"
+    )
+    BURN_VERIFICATION_INTERVAL_S = _env_int("KPI_SYNC_BURN_VERIFICATION_INTERVAL_S", 60 * 60)
+
     # --- Envelope / staleness defaults (C3) ---
     DEFAULT_TTL_S = _env_int("KPI_SYNC_DEFAULT_TTL_S", 3600)
     DEFAULT_STALE_AFTER_S = _env_int("KPI_SYNC_DEFAULT_STALE_AFTER_S", 1800)

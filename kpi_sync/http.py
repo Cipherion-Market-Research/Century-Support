@@ -3,22 +3,17 @@
 Zero scraping — every call here is a GET against a documented JSON API.
 """
 import asyncio
-import random
 from typing import Any, Optional
 
 import aiohttp
 
 from kpi_sync.config import Config
 from kpi_sync.ratelimiter import AsyncRateLimiter
+from kpi_sync.retry import backoff_delay as _backoff_delay
 
 
 class FetchError(Exception):
     pass
-
-
-def _backoff_delay(attempt: int, base_delay: float, max_delay: float) -> float:
-    delay = min(max_delay, base_delay * (2 ** (attempt - 1)))
-    return delay * (0.5 + random.random() * 0.5)  # jitter in [0.5x, 1x] of the capped delay
 
 
 async def fetch_json(
