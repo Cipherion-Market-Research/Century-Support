@@ -1,0 +1,28 @@
+# Century Core (WP-5) -- deployed independently of the bot, same
+# philosophy as kpi_sync/pubs_rag's own requirements files. Unlike those
+# two services, Century Core imports facts_store, kpi_sync (envelope key
+# builders only), and pubs_rag (retrieval + db) IN-PROCESS at runtime, so
+# this list is intentionally the union of its own needs (fastapi/uvicorn)
+# plus what those imports require to actually run — splitting them into
+# separate venvs isn't possible when the code paths call into each other
+# directly.
+fastapi==0.139.2
+uvicorn[standard]==0.51.0
+pydantic==2.13.4
+
+# facts_store (C4)
+PyYAML==6.0.3
+
+# kpi_sync envelope reuse (C3 key builders) + this service's own Redis use
+redis==8.0.1
+
+# pubs_rag reuse (retrieval, ingestion schema)
+asyncpg==0.31.0
+pgvector==0.5.0
+pypdf==6.14.2
+cryptography==49.0.0
+beautifulsoup4==4.15.0
+aiohttp==3.14.1
+
+# guarded LLM (modern SDK -- replaces the bot's legacy openai==0.27.8)
+openai==2.46.0
