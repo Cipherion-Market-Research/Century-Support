@@ -1,0 +1,37 @@
+name: facts.yaml CI
+
+on:
+  push:
+    paths:
+      - "facts.yaml"
+      - "facts_store/**"
+      - "scripts/validate_facts.py"
+      - ".github/workflows/facts-ci.yml"
+  pull_request:
+    paths:
+      - "facts.yaml"
+      - "facts_store/**"
+      - "scripts/validate_facts.py"
+      - ".github/workflows/facts-ci.yml"
+
+jobs:
+  validate:
+    name: Validate facts.yaml (schema + no-orphan-keys)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install validation dependencies
+        run: pip install pydantic PyYAML
+
+      - name: Validate facts.yaml
+        run: python scripts/validate_facts.py
+
+      - name: Run facts_store test suite
+        run: |
+          pip install pytest
+          python -m pytest tests/test_facts_store.py -v
