@@ -39,8 +39,9 @@ def test_repo_facts_yaml_every_fact_has_provenance():
         assert fact.verified_on is not None, f"{key} missing verified_on"
 
 
-def test_repo_facts_yaml_oq_items_are_unknown():
-    """OQ-1/OQ-2/OQ-3 (docs/CONTRACTS.md) must be entered as explicit unknown."""
+def test_repo_facts_yaml_resolved_oq_items_are_no_longer_unknown():
+    """OQ-1/OQ-2/OQ-3 (docs/CONTRACTS.md) were resolved by the owner on 2026-07-20
+    review and must carry real values now, not the unknown sentinel."""
     facts_file = load_facts_file(DEFAULT_FACTS_PATH)
     for key in (
         "identity.support_email",
@@ -48,7 +49,28 @@ def test_repo_facts_yaml_oq_items_are_unknown():
         "identity.dex_live_status",
     ):
         assert key in facts_file.facts, f"expected {key} to be present"
-        assert facts_file.facts[key].is_unknown, f"{key} must be the unknown sentinel"
+        assert not facts_file.facts[key].is_unknown, f"{key} was resolved by the owner and should not be unknown"
+
+
+def test_repo_facts_yaml_oq5_burn_address_is_unknown():
+    """OQ-5 (new, raised by Agent C's on-chain finding) must be the unknown sentinel."""
+    facts_file = load_facts_file(DEFAULT_FACTS_PATH)
+    assert "tokenomics.burn_cycle_1_burn_address" in facts_file.facts
+    assert facts_file.facts["tokenomics.burn_cycle_1_burn_address"].is_unknown
+
+    # round-terms.new_round_lockup_interest also remains an open unknown
+    assert facts_file.facts["round-terms.new_round_lockup_interest"].is_unknown
+
+
+def test_repo_facts_yaml_distinguishes_onchain_from_fd_supply():
+    """Guard against the on-chain-vs-FD-supply confusion flagged in review:
+    the two figures must never collapse to the same value."""
+    facts_file = load_facts_file(DEFAULT_FACTS_PATH)
+    onchain = facts_file.facts["tokenomics.onchain_total_supply_eth"].value
+    fd_supply = facts_file.facts["tokenomics.fy2026_fd_supply"].value
+    assert onchain == 1500000000
+    assert fd_supply == 1018545702
+    assert onchain != fd_supply
 
 
 def test_repo_facts_yaml_has_at_least_ten_facts_per_wp2_acceptance():
