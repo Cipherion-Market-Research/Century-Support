@@ -1,0 +1,97 @@
+[source_url: https://ciphex.io/assets/documents/ecosystem-update-may08-26.pdf]
+[fetched: 2026-07-20]
+[title: Exchange Listing and Go-to-Market Execution & Ciphex Alpha Phase III Optimization Summary]
+[date: May 08, 2026]
+[pages: 2] [extraction: ok]
+
+Ecosystem Update 
+May 08, 2026 
+ 
+Exchange Listing and Go-to-Market Execution 
+CipheX has engaged Verdicti Ventures  to support its CPX token listing strategy, financing readiness, and broader go-
+to-market execution, marking an important step in CipheX 's transition toward broader market access, token liquidity 
+development, and commercial growth for its  CipheX ecosystem which is comprised of its Abigail Execution 
+Management System (EMS), Abigail Asset Management System (AMS), and Altas RWA Capital Services (Atlas), which 
+together form the foundation of its digital asset execution, asset management, and real -world asset tok enization 
+infrastructure. 
+Over the first 120 days, Verdicti Ventures will focus on advancing CPX Token listings across both decentralized and 
+centralized exchanges, expanding CipheX 's international exchange network, and supporting early market access, 
+exchange readiness, and responsible liquidity development across key cryptocurrency markets. In parallel with 
+exchange execution, Verdicti will support strategic financing and partnership initiatives to strengthen CipheX 's 
+operational capacity, expand development resources, establish key commercial partnerships, and increase market 
+awareness of the broader CipheX ecosystem as its services move closer to commercialization. 
+Kevin O 'Brien, founder of Verdicti Ventures,  joins CipheX as an expert contributor and member of the CipheX 
+leadership team, focusing on executing these strategic initiatives. With more than 17 years of crypto -native venture 
+capital and go- to-market experience, Kevin brings established relationships across institutional investors, 
+cryptocurrency exchange networks, and strategic partners throughout North America, Europe, and Asia. His 
+experience and international network strengthen CipheX's market positioning as it advances toward exchange listings, 
+commercial partnerships, and broader ecosystem growth. Additional updates on these initiatives will be provided as 
+key milestones are achieved. 
+CipheX Alpha Phase III Optimization Summary 
+Phase III optimization of CipheX Alpha continues to demonstrate measurable progress. As of April 30, the system 
+recorded a 2.69% period -end return, an improvement of approximately 1.67% over the March 31 result. This 
+performance reflects continued enhancem ents in key optimization areas, including adaptive risk management, loss 
+containment, and asset selection across cryptocurrency markets. Further development details are available in the 
+Abacus I AMS/EMS Development Roadmap and the March 31, 2026, Q1 Optimization Results, both published on the 
+CipheX website. Live market activity updates remain available through the CipheX Alpha section. System refinement 
+and performance calibration remain active priorities as development progresses toward its initial commercial release, 
+with interim and quarterly optimization updates expected as major milestones are reached. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+  
+ 
+Important Notice to Reader 
+Certain statements contained in this communication may constitute "forward-looking statements" within the meaning 
+of the U.S. Private Securities Litigation Reform Act of 1995 and applicable international securities laws. These 
+statements involve risks, unc ertainties, and assumptions, and are not guarantees of future performance. Forward-
+looking statements may include terms such as "expects," "plans," "projects," "intends," "believes," "anticipate s," 
+"targets," "continues," or similar terminology, as well as  any discussions of future operations, developments, 
+regulatory outcomes, market growth, or financial performance. All forward -looking statements reflect current views 
+and expectations of CipheX  Capital Ecosystem ( "CipheX") at the time of publication and are based on information 
+available as of that date. These statements involve numerous assumptions, known and unknown risks, and other 
+factors that could cause actual results, performance, or achievements to differ materially  from those expressed or 
+implied in any forward-looking statement. CipheX undertakes no obligation to update, revise, or correct any forward-
+looking statement, whether as a result of new information, future events, or otherwise, except as required by 
+applicable law. Readers are cautioned not to place undue reliance on these statements. This communication does not 
+constitute an offer to sell, or a solicitation of an offer to buy, any securities, tokens, or financial instruments. CipheX is 
+not a registered broker-dealer, investment adviser, or custodian, and does not provide investment, legal, accounting, 
+or tax advice. All information provided herein is for information purposes only and should not be relied upon for making 
+financial decisions. Recipients are encouraged to consult independent  financial, legal, and tax advisors before 
+engaging in any investment or digital asset activities. 
+CipheX Capital Ecosystem 
+CipheX and its CPX Token, an Ethereum ERC- 20 network token, are designed to support participation across the 
+CipheX Capital Ecosystem by providing access to platform services, network incentives, and future utility features, 
+subject to applicable laws and jurisdictional restrictions. CPX does not represent equity, ownership rights, profit -
+sharing, or any direct claim to the revenues, assets, or investment performance of CipheX, CipheX Alpha, ATLAS, or 
+any affiliated entity. Instead, CPX is structured to provide exposure to the broader activit ies generated across the 
+CipheX Ecosystem, including market -driven outcomes connected to CipheX Alpha and ATLAS real -world asset 
+tokenization initiatives. CipheX provides a capital-efficient framework for tokenizing real-world assets and supporting 
+mid-stage venture projects within the growing digital asset economy. With global assets under management projected 
+to reach approximately USD 200 trillion by 2030 and digital trading infrastructure continuing its rapid expansion to USD 
+20 billion by 2033, CipheX is positioned at the intersection of two of the world’s fastest-growing financial markets. 
+Ciphex Alpha Network 
+ 
+The CipheX Alpha Network ("CipheX Alpha") is an autonomous asset management system currently operating in a 
+precommercial testing and optimization phase and is not available to the public. Information  displayed in the CipheX 
+Alpha section of the CipheX website  is provided solely for informational purposes. All capital deployed during this 
+phase is internally funded for testing and system evaluation only. No customer, investor, or third- party capital is 
+permitted to participate at any stage of this precommercial phase. This information should not be relied upon or used 
+as the basis for any investment, ﬁnancial, or strategic decision, nor acted upon for any purpose. It does not constitute, 
+and should not be construed as, investment advice, a recommendation, or an offer or solicitation to buy or sell  any 
+securities, digital assets, or ﬁnancial instruments. Live market activities conducted during testing are subject to 
+technical limitations, system modiﬁcations, data variability, and external market conditions inherent to an active 
+development environment. No representation or warranty is made regarding the accuracy, completeness, or timeliness 
+of the information provided, which may be incomplete, outdated, or subject to change without notice. CipheX assumes 
+no obligation to update, revise, or correct  information during the precommercial phase. Any future availability of the 
+CipheX Alpha Network for commercial or external use will be subject to applicable securities laws and regulatory 
+requirements. Access may be restricted or prohibited in certain jur isdictions. Past performance is not indicative of 
+future results.

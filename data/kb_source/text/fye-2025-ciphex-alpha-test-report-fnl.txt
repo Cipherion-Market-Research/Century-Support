@@ -1,0 +1,199 @@
+[source_url: https://ciphex.io/assets/documents/fye-2025-ciphex-alpha-test-report-fnl.pdf]
+[fetched: 2026-07-20]
+[title: FYE2025 Phase II Optimization Report Precommercial Testing/Optimization]
+[date: January 16, 2026]
+[pages: 5] [extraction: ok]
+
+Copyright © 2025-2026 Cipherion Capital SA, CipheX Capital Ecosystem. All Rights Reserved.
+YE2025 Optimization Summary
+Autonomous Market 
+Intelligence and Portfolio 
+Management
+Phase II Precommercial Testing & 
+Optimization
+Published January 16, 2026
+
+
+ 
+Copyright © 2024-2026 Cipherion Capital SA, CipheX Capital Ecosystem. All Rights Reserved. 
+ 
+ 
+ 
+IMPORTANT NOTICE TO READER 
+ 
+This CipheX Alpha YE2025 Optimization Summary  (the " Summary") and all information contained herein are 
+protected by applicable copyright and intellectual property laws. Any reproduction, distribution, transmission, display, 
+or other use of this material, in whole or in part, in any form or medium, is strictly prohibited without the prior written 
+authorization of Cipherion Capital SA or CipheX Capital Ecosystem ("CipheX Project").  
+ 
+FOR INFORMATIONAL PURPOSES ONLY 
+ 
+This Summary is provided solely for informational purposes. It does not constitute an offer to sell, a solicitation to buy, 
+or a recommendation regarding any transaction involving securities, digital assets, or other financial instruments. 
+Nothing herein constitutes a financial report, investment proposal, or an invitation to participate in any investment, 
+marketing, or utility program, or other activity relating to the CipheX Project. This Summary may contain forward-
+looking statements relating to economic and operational scenarios, development and commercialization plans, or 
+anticipated future events. Such statements are subject to significant risks, uncertainties, and other factors that may 
+cause actual results to differ materially from those expressed or implied. The CipheX Project undertakes no obligation 
+to update, revise, supplement, or otherwise clarify any forward-looking statements. References to third-party market 
+research, data, platforms , or services are based on publicly available information and are included solely for 
+contextual reference. No third party has reviewed, approved, endorsed, or assumed responsibility for the content of 
+this Summary. 
+CIPHEX ALPHA AUTONOMOUS MARKET SYSTEM 
+ 
+CipheX Alpha is an autonomous market execution and asset management system (the "System") currently operating 
+in a precommercial testing and optimization phase and is not available to the public. All capital deployed during this 
+phase is internally funded for testing and system evaluation only. No customer, investor, or third -party capital 
+participates at any stage of the precommercial phase. The System and the information provided in this Summary 
+should not be relied upon as the basis for any investment, f inancial, or strategic decision. The System does not 
+constitute, and should not be construed as, investment advice, a recommendation, an invitation to participate, or an 
+offer or solicitation to buy or sell any securities, digital assets, or financial inst ruments. Live market activities 
+conducted during precommercial testing and optimization are subject to technical limitations, system modifications, 
+data variability, human intervention, and external market conditions inherent to an active development envir onment. 
+No representation or warranty is made regarding the accuracy, completeness, or timeliness of the information 
+provided, which may be incomplete, outdated, or subject to change without notice. The CipheX Project assumes no 
+obligation to update, revise, or correct such information during its precommercial testing and optimization phase. Any 
+future availability of the System for commercial use may be subject to applicable securities laws and regulatory 
+requirements, and access may be restricted or prohi bited in certain jurisdictions. Past performance should not be 
+interpreted as indicative of, or a guarantee of, future results. 
+ 
+AMENDMENTS AND LIMITED INFORMATION 
+ 
+This Summary supersedes all prior materials, communications, and disclosures relating to its subject matter, whether 
+written, oral, or digital. No prior statements or materials should be relied upon for any current or future decision-making 
+purposes. The CipheX Projec t undertakes no obligation to update, revise, supplement, or otherwise clarify this 
+Summary. This Summary does not include the complete details or proprietary information relating to certain systems, 
+models, or strategies and expressly excludes confidential, sensitive, and trade -secret material. Access to certain 
+information may be restricted due to the inclusion of confidential intellectual property or trade -secret material 
+protected under applicable law. Nothing contained herein should be construed as a complete or final representation 
+of the CipheX Project. The recipient acknowledges that no statements, representations, or assurances made outside 
+the scope of this Summary, whether written, oral, or digital, may be relied upon. Any such statements are unauthorized 
+and expressly disclaimed. The CipheX Project reserves the right, in its sole discretion, to modify, restrict, or revoke 
+access to this Summary at any time without prior notice.
+ 
+
+ 
+ FYE2025 Phase II Optimization Report - 1 | Page  
+ 
+ 
+ 
+Scope and Data Basis 
+This FYE 2025 report incorporates results from two testing periods: (1)  May 25 (inception) through 
+November 30, 2025, and (2)  December 1 through December 31, 2025. Where relevant, November 2025 
+performance is benchmarked against Bitcoin and Ethereum using historical snapshot pricing from 
+CoinMarketCap, and against traditional risk assets using published total return series for the S&P 500 and 
+the Nasdaq 100. 
+Headline Results for FYE 2025 
+As of December 31, 2025, the CipheX Abacus AMS and EMS system (CipheX Alpha) delivered a total return 
+since inception of 9.96%, with a maximum drawdown of 11.46%  and a Capital Return Efficiency (CRE) of 
+0.87. Risk-adjusted returns since inception stand at 5.78%, indicating that volatility, drawdown depth, and 
+execution costs meaningfully reduce retained performance. At this early stage  of optimization, the system 
+demonstrated a credible performance edge, while requiring further refinement in risk calibration and 
+execution efficiency to achieve scalable, risk-normalized results suitable for commercial deployment. 
+Period Performance and Return Path 
+In 2025, a crypto -led drawdown in November was followed by stabilization and a partial recovery in 
+December. The Abacus system declined 6.28%  from November 1 to November 30 and recovered 3.02%  
+in December, maintaining controlled capital deployment through the correction and into year -end. 
+Importantly, Abacus is not designed to operate as a traditional investment fund, and its reported AUM 
+reflects an internal optimization phase rather than deployed third-party capital. Industry research published 
+by CoinShares shows that early-stage crypto hedge funds and trading platforms with comparable or smaller 
+capital bases frequently experienced losses of approximately 15% or more  during similar market 
+corrections, indicating that AUM size alone does not explain downside containment. In this context, the 
+system’s November performance reflects a genuine execution and risk -management edge driven by its 
+price-predictive and exposure -control framework, rather than reduced market impact associated with 
+lower AUM. 
+Drawdown Containment and Capital Preservation 
+During November, the system declined 6.28%, as AUM decreased from approximately $307 thousand at 
+the start of the month to about $288 thousand  by month-end. The maximum peak -to-trough drawdown 
+during the period reached 11.46%, as AUM moved from a high near $310 thousand  to a low around $275 
+thousand. This drawdown represents the primary constraint on full- year performance and results in a 
+Capital Return Efficiency (CRE) of 0.87. A CRE below 1.0 indicates that cumulative returns have not yet 
+exceeded the system’s largest drawdown, highlighting the need for continued refinement of drawdown 
+controls rather than a structural weakness in the strategy.  
+As volatility expanded and short- horizon stability deteriorated, the system identified conditions in which 
+loss absorption was preferable to continued exposure.  Capital-at-risk was reduced through compressed 
+position sizing and a coordinated derisking of aggregate exposure. Capital preservation preceded selective 
+redeployment into lower- beta structures, during which correlation to core crypto benchmarks declined. 
+These defensive adjustments were executed through the system’s price -predictive framework and 
+operated in a coordinated manner across strategies. 
+
+ 
+ FYE2025 Phase II Optimization Report - 2 | Page  
+ 
+ 
+ 
+This integrated response limited the propagation of adverse price movement before drawdowns could 
+compound. The controlled nature of the November drawdown preserved capital and execution capacity, 
+enabling participation in the December recovery without req uiring an aggressive increase in exposure as 
+market conditions stabilized. This was not a full transition to cash, but a measured contraction of risk that 
+preserved optionality. From an institutional risk perspective, the system prioritized loss containment over 
+trade duration, demonstrating disciplined risk governance under stressed market conditions. 
+November 2025 Crypto Correction Comparables 
+November 2025 represented a crypto -specific market correction, making Bitcoin and Ethereum the most 
+relevant benchmarks. Based on CoinMarketCap historical snapshots, Bitcoin declined from approximately 
+$110,064 on November 1 to $90,394 by November 30, a drawdown of roughly 17.9%. Over the same 
+period, Ethereum fell to approximately $2,992, representing a decline of about 22.8%. In contrast, 
+traditional markets remained comparatively stable throughout November. YCharts reports that the S&P 500 
+delivered an approximate monthly total return of +0.25%, while the Nasdaq 100 Total Return Index declined 
+by 1.57%, according to data published by Nasdaq (Nasdaq Global Index Watch). Against this backdrop, the 
+Abacus system demonstrated effective downside containment relative to core crypto benchmarks , 
+indicating its risk controls and exposure management operated as intended.  
+Asset / Benchmark Nov-2025 Return/ Drawdown Market Context 
+S&P 500 +0.13% Traditional equities broadly stable 
+Nasdaq 100 Total Return Index -1.51% Mild drawdown in large-cap growth 
+Bitcoin -16.9% Crypto-led selloff (Alpha Node Capital) 
+Ethereum -21.2% Deeper crypto drawdown (Alpha Node Capital) 
+Early-Stage Crypto/ Crypto Hedge 
+Funds (Indicative) ~-8% to -23% Crypto hedge funds faced broad weakness in 
+November 2025 (SQ Magazine) 
+Abacus System -6.28% period decline     
+-11.46% max drawdown Controlled downside during crypto stress 
+December 2025 Recovery Quality and Efficiency 
+December delivered a 3.02% gain , moving the system back toward prior equity levels and confirming its 
+ability to sustain market engagement both during stress and in the aftermath of a drawdown. For testing 
+purposes, risk-adjusted returns are calculated by subtracting the prevailing US 10-year Treasury Note yield 
+at each valuation point, isolating performance generated above a risk-free benchmark. Since inception, this 
+methodology produces a 5.78% risk-adjusted return versus a 9.96% total return, indicating that volatility 
+exposure, timing dispersion, and execution costs materially reduced retained performance. This spread 
+between total and risk-adjusted returns represents a core focus of ongoing system optimization rather than 
+a degradation of underlying signal quality. 
+ 
+
+ 
+ FYE2025 Phase II Optimization Report - 3 | Page  
+ 
+ 
+ 
+Execution Friction and Transaction Costs 
+The system attempts to separate trade-level fees and slippage by exchange venue, making execution costs 
+easier to diagnose where venue-level data is available. In crypto markets, these costs can fluctuate widely, 
+and fee disclosures vary across venues with no consistent reporting standards. December data show that 
+combined trade fees, slippage, and related transaction costs ranged from approximately 0.6 0% to around 
+2.0%, materially reducing net performance. Accordingly, improving execution efficiency remain s a core 
+optimization priority at this stage, with the objective of enhancing returns without increasing market 
+exposure. 
+Conclusion for FYE 2025 
+From an institutional perspective, the FYE 2025 results confirm that the system functions as a risk-managed 
+capital engine rather than a pro -cyclical trading vehicle. Down- market alpha in November was generated 
+through structural risk discipline rather tha n directional prediction. FYE 2025 demonstrated credible 
+downside containment during a meaningful crypto correction, supported by November Bitcoin and 
+Ethereum pricing from CoinMarketCap  historical snapshots. The primary constraint at this stage is 
+efficiency rather than edge, as maximum drawdown remains high relative to total return. Capital Return 
+Efficiency (CRE) remains below 1.0, making risk-adjusted performance and improved risk-state calibration 
+an optimization priority during precommercial testing. As these optimization efforts progress, the existing 
+performance profile has a clear path to higher CRE and stronger risk- adjusted results without increasing 
+directional market exposure. 
+FY2026 Phase III of V Optimization Requirements 
+As system optimization continues, Abacus deliberately maintains higher trading intervals to support deeper 
+signal analysis, isolate execution behavior, and evaluate optimization outcomes through internal expert 
+contributors. These initiatives focus on impr oving execution quality and strengthening downside controls 
+across varying market conditions. In parallel, strategy -based rules are refined to prioritize risk reduction 
+during sudden or prolonged stress events, with position reentry treated as a deliberate  strategic process 
+rather than a linear profit and loss response or conventional modeling assumption. 
+The objective of Optimization Phase III is to enhance adaptive risk awareness, gradually reduce trading 
+frequency through higher-confidence setups and improved target identification logic, and decrease manual 
+oversight as automation confidence increases. C ollectively, these improvements are intended to increase 
+probability consistency and return quality across multiple asset classes and market environments. 
+ 
+ 
+End of Report

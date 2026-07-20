@@ -1,0 +1,255 @@
+<!--
+source_url: https://ciphex.io/leadership-team
+fetched: 2026-07-20
+page_title: Ciphex | Leadership Team & Expert Contributors
+kind: live page copy
+-->
+
+# Ciphex | Leadership Team & Expert Contributors
+
+Skip to main content
+
+Ecosystem
+
+Leadership Team
+
+Insights
+
+Community
+
+CPXEcosystem token & liquidity coordination layerCiphex AlphaProfessional investing made simpleAtlasAsset origination & global distribution
+
+Ecosystem UpdatesEcosystem Updates & AnnouncementsEcosystem PublicationsInternal Systems, Product, Ecosystem and Contributor Publications.
+
+# Ciphex Leadership Team
+
+## Ciphex is Built on Decades of Real-WorldCapital Markets and Technology Expertise
+
+100+
+
+More than 100 years of combined professional expertise.
+
+Capital Management
+
+Traditional Fund Management
+
+Hybrid Trade Management
+
+Debt/Equity Financing
+
+Structured Finance
+
+Formation Management
+
+Project Due Diligence
+
+Market Risk Analysis
+
+Corporate Governance
+
+Regulatory Compliance
+
+Systems Development
+
+Enterprise Systems Architecture
+
+Distributive Network Development
+
+Artificial Intelligence and Data Analytics
+
+Blockchain Infrastructure Development
+
+Leadership
+
+## A proven track record in Finance, Innovation, and Execution.
+
+Co-founders and expert contributors who built the intelligence, framework, and governance.
+
+Co-founding Members
+
+Matt James
+
+Co-Founding Member
+
+25 Years Systems Architecture
+
+20 Years Software/Mobile Dev.
+
+10 Years Crypto Markets Trading
+
+Christina Marie
+
+Co-Founding Member
+
+15 Years Business Development
+
+15 Years Product Commercialization
+
+5 Years Asset Management
+
+Savanah Bree
+
+Co-Founding Member
+
+15 Years Image & Brand Marketing
+
+10 Years Market Development
+
+5 Years Early-Stage Ventures
+
+Justin Kirkwood
+
+Co-Founding Member
+
+25 Years Front End/UX Developer
+
+20 Years Systems Architecture
+
+8 Years Crypto Markets Trading
+
+Chris Carsley
+
+Co-Founding Member
+
+30 Years Asset Management
+
+25 Years Futures & Arbitrage
+
+20 Years Alternative Investments
+
+Anthony SA (Art Jay)
+
+Co-Founding Member
+
+25 Years Capital Markets
+
+20 Years Capital Formation
+
+15 Years Corp. Restructuring
+
+Co-Founding and Expert Contributors
+
+Kelly Hill
+
+Co-Founding Contributor
+
+30 Years Commodities & Futures
+
+25 Years Asymmetric Strategies
+
+20 Years Asset Management
+
+Michael Corbett
+
+Co-Founding Contributor
+
+30 Years Project Management
+
+25 Years Efficiency Management
+
+20 Years Change Management
+
+Lynne Hamilton
+
+Co-Founding Contributor
+
+25 Years Intl. Gov Relations
+
+20 Years Corporate Public Relations
+
+20 Years Crisis Management
+
+Stephan M. Houser
+
+Co-Founding Contributor
+
+15 Years Software Architecture
+
+15 Years Tech. Exec. Management
+
+10 Years Startups & Ventures
+
+Expert Contributors
+
+Wouter du Preez
+
+Expert Contributor
+
+30 Years Investment Banking
+
+20 Years RWA Management
+
+25 Years Structured Finance
+
+Michael Loberg
+
+Expert Contributor
+
+30 Years Global Banking & Trusts
+
+25 Years Corporate & Finance Litigation
+
+25 Years Corporate Structuring
+
+Paul Bolger
+
+Expert Contributor
+
+30 Years Securities and M&A
+
+25 Years Corporate Finance
+
+25 Years Corporate Structuring
+
+Kevin O’Brien
+
+Expert Contributor
+
+17 Years International Markets
+
+8 Years Crypto Venture Capital
+
+8 Years Crypto GTM Markets
+
+## One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets
+
+Stay connected
+
+### Ecosystem updates as they happen.
+
+Feature UpdatesSystem PublicationsAnnouncements
+
+Email
+
+Subscribe →
+
+No spam · Unsubscribe anytime
+
+You’re subscribed — intelligence, not noise.
+
+Contribute to the Growth of our Ecosystem.
+
+Contribute →
+
+Preparing Access
+
+#### Disclosures
+General DisclosureCommunicationsCPX Token TradingFuture FinancingSignificant Risks
+
+#### Ecosystem
+Ciphex AlphaAtlas RWA ServicesEcosystem PublicationsEcosystem UpdatesLeadership Team
+
+#### Resources
+CertiK Skynet AuditGitHub RepositoryClaim TokensContact
+
+#### Follow Us
+X (Twitter)Telegram
+
+##### Important Notice to Site Visitors
+
+The information presented on this website is provided solely for informational purposes and is protected by applicable copyright and intellectual property laws. No content on this website constitutes a financial report, investment proposal, or an invitation to participate in any investment, community incentive, utility program, or other activity relating to the Ciphex Capital Ecosystem and its products and services (the “Ciphex Project”). This website does not constitute an offer to sell, a solicitation to buy, or a recommendation to participate in any transaction involving securities, digital assets, or other financial instruments. No content on this website should be interpreted as investment, legal, accounting, or tax advice. Certain descriptions on this website may include forward-looking statements identified by words such as “anticipate,” “expect,” “intend,” “plan,” “foresee,” “foreseeable,” “seek,” “pursue,” or similar expressions indicating future events. These statements are subject to significant risks and uncertainties that may cause actual results to differ materially from those expressed or implied and are not guarantees of performance or availability. The Ciphex Project undertakes no obligation to update, revise, supplement, or otherwise clarify any forward-looking statements and reserves the right to modify, update, remove, or discontinue access to any information, materials, or publications on this website at any time without prior notice. Any statements, representations, or materials not issued directly by the Ciphex Project, Cipherion Capital SA, or duly authorized affiliates are unauthorized and expressly disclaimed. References to third-party market research, data, platforms, or services are based on publicly available information and are included solely for contextual reference. No third party has reviewed, approved, endorsed, or assumed responsibility for the content of this website. Past performance is not indicative of, or a guarantee of, future results.
+
+Copyright © 2026 Cipherion Capital SA, Ciphex Capital Ecosystem
+Terms of UsePrivacy PolicyContact
+
+Powered by Cipherion
