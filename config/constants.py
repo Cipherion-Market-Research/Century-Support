@@ -28,10 +28,11 @@ You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
 View on [Etherscan](https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)""",
 
 		"price_info": """**CPX Token Price Information:**
-• Token Launch Price: ~$0.26 per CPX
+• The 2025 distribution has concluded (contribution price: ~$0.26 per CPX).
+• A smaller market-expansion round is expected to complete in the coming weeks, followed by DEX listing. Pricing and terms are not yet final or published — watch ciphex.io for official announcements.
 • Visit [ciphex.io](https://ciphex.io) for the most current information.
 
-Tokens are now available for claiming by existing contributors through the claiming portal.""",
+Tokens from the concluded 2025 round are available for claiming by existing contributors through the claiming portal.""",
 
 		"whitepaper_info": """TLDR? Don't worry! I've studied the whitepaper from cover to cover and I'm here to help! 
   
@@ -39,7 +40,7 @@ Simply tag me (@CiphexHelpBot) with your question about any topic - like tokenom
 
 For example: "@CiphexHelpBot What does the whitepaper say about token supply?"
 
-To access the full whitepaper, visit [Ciphex Whitepaper](https://ciphex.io/whitepapers)""",
+To access the full whitepaper, visit [Ciphex Publications](https://ciphex.io/ecosystem-publications)""",
 
 		"stats_info": """**Community & Token Stats**:
 - Total Community Members (Wallets)
@@ -53,12 +54,12 @@ Access your token claiming dashboard to view your CPX tokens and vesting schedul
 
 Key Features:
 • Connect your wallet to view your dashboard
-• Track your vesting schedule over 12 months
+• Track your vesting schedule (2025 contributors: 12-month vesting after a 6-month lockup)
 • Claim tokens monthly as they vest
 • View transaction records for all purchases
 • Add CPX token to your wallet with one click
 
-Visit [presale.ciphex.io](https://presale.ciphex.io) to access your claiming portal.
+Visit [claim.ciphex.io](https://claim.ciphex.io) to access your claiming portal.
 
 ⚠️ Important Reminders:
 • Only use official links
@@ -66,7 +67,7 @@ Visit [presale.ciphex.io](https://presale.ciphex.io) to access your claiming por
 • CipheX team will never DM you first""",
 
 		"data_info": """Data updates regularly. Check:
-[Token Claiming Portal](https://presale.ciphex.io)
+[Token Claiming Portal](https://claim.ciphex.io)
 [CPX Contract](https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)
 [Claiming Contract](https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc)""",
     
@@ -78,7 +79,8 @@ Visit our official website for the latest updates, news, and information.""",
 
     "contact_info": """**Contact CipheX Support:**
 
-• Email: support@ciphex.io
+• Support Email: support@ciphex.io
+• General Inquiries: hello@ciphex.io
 • Website Support: https://ciphex.io/
 • Telegram: @CipheXChannel (announcements only)
 
@@ -88,7 +90,7 @@ Visit our official website for the latest updates, news, and information.""",
 • Never share wallet seed phrases
 • Verify all links through official channels
 
-For technical support or general inquiries, please email support@ciphex.io"""
+For technical support, please email support@ciphex.io (general inquiries: hello@ciphex.io)"""
 }
 
 COMPOSITE_SECTIONS = [

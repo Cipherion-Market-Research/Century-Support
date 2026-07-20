@@ -29,18 +29,6 @@ class DataSyncer:
                 logger.error(f"Error in periodic sync: {e}")
                 await asyncio.sleep(Config.RETRY_DELAY_SECONDS)
 
-    async def sync_website(self):
-        from scrapers.website_scraper import WebsiteScraper
-        scraper = WebsiteScraper()
-        data = await scraper.process()
-        return data  # data should contain "ciphex_stats"
-
-    async def sync_certik(self):
-        from scrapers.certik_scraper import CertikScraper
-        scraper = CertikScraper()
-        data = await scraper.process()
-        return data  # should contain audit_status, security_score, last_updated
-
     async def sync_pdf(self):
         # If you want to parse the PDF whitepaper each time:
         from scrapers.pdf_parser import PDFParser
@@ -49,7 +37,7 @@ class DataSyncer:
         return data
 
     async def sync_claiming_stats(self):
-        url = "https://presale.ciphex.io/api/presale"
+        url = "https://claim.ciphex.io/api/presale"
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -88,9 +76,8 @@ class DataSyncer:
                 logger.error("Failed to parse whitepaper data")
 
             # Continue with other syncs...
-            website_data = await self.sync_website()
-            certik_data = await self.sync_certik()
             claiming_data = await self.sync_claiming_stats()
+            await self.sync_faq_data()
 
             self.last_sync = datetime.now()
             self.is_syncing = False
