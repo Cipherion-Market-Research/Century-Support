@@ -1,0 +1,3 @@
+export const CPX_ETH_CONTRACT = "0x18b33687d1c804Dd4ea6c82106e54923c23a652E";
+export const CPX_BASE_CONTRACT = "0x7A8Fc21fd34DE3dD5131a965fb3995f484f50D59";
+export const BASE_CHAIN_ID = { chainId: 8453 };
