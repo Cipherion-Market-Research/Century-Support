@@ -40,26 +40,65 @@ def build_pollers(store: KpiStore, session: aiohttp.ClientSession) -> list:
     # not per poller.
     ams_rate_limiter = AsyncRateLimiter(Config.AMS_RATE_LIMIT_PER_MIN, 60.0)
     activity = PresaleActivity()
-    pollers = [
-        ClaimApiPoller(store, session),
-        AmsMarketingPoller(store, session, ams_rate_limiter),
-        AmsKeyMetricsPoller(store, session, ams_rate_limiter),
-        OnchainBasePoller(store, activity),
-        OnchainEthPoller(store, activity),
-        BurnVerificationPoller(store),
+
+    # WP-7c: KPI_SYNC_ABACUS_ENABLED's on/off pattern generalized to every
+    # source -- KPI_SYNC_<SOURCE>_ENABLED, default true for all of them
+    # except abacus_index (Amendment C-R1, stays default false). Disabling a
+    # source only stops building/running its poller: its keys simply age
+    # out and go stale per C3 semantics -- the intended fail-safe (the bot
+    # declines to quote a stale number rather than serving an old one
+    # forever), never a process crash or a code change.
+    candidates = [
+        ("claim_api", "KPI_SYNC_CLAIM_API_ENABLED", Config.CLAIM_API_ENABLED, lambda: ClaimApiPoller(store, session)),
+        (
+            "ams_marketing",
+            "KPI_SYNC_AMS_MARKETING_ENABLED",
+            Config.AMS_MARKETING_ENABLED,
+            lambda: AmsMarketingPoller(store, session, ams_rate_limiter),
+        ),
+        (
+            "ams_keymetrics",
+            "KPI_SYNC_AMS_KEYMETRICS_ENABLED",
+            Config.AMS_KEYMETRICS_ENABLED,
+            lambda: AmsKeyMetricsPoller(store, session, ams_rate_limiter),
+        ),
+        (
+            "onchain_base",
+            "KPI_SYNC_ONCHAIN_BASE_ENABLED",
+            Config.ONCHAIN_BASE_ENABLED,
+            lambda: OnchainBasePoller(store, activity),
+        ),
+        (
+            "onchain_eth",
+            "KPI_SYNC_ONCHAIN_ETH_ENABLED",
+            Config.ONCHAIN_ETH_ENABLED,
+            lambda: OnchainEthPoller(store, activity),
+        ),
+        (
+            "onchain",  # BurnVerificationPoller's source_key
+            "KPI_SYNC_BURN_VERIFICATION_ENABLED",
+            Config.BURN_VERIFICATION_ENABLED,
+            lambda: BurnVerificationPoller(store),
+        ),
+        (
+            "abacus_index",
+            "KPI_SYNC_ABACUS_ENABLED",
+            Config.ABACUS_ENABLED,
+            lambda: AbacusIndexPoller(store, session),
+        ),
     ]
-    # Amendment C-R1: owner does not want Abacus Indexer data exposed
-    # publicly. Off by default -- set KPI_SYNC_ABACUS_ENABLED=true to run
-    # it, and see pollers/abacus_index.py before wiring its keys to
-    # anything user-facing.
-    if Config.ABACUS_ENABLED:
-        pollers.append(AbacusIndexPoller(store, session))
-    else:
-        logger.info(
-            "abacus_index poller disabled by default (Amendment C-R1); "
-            "set KPI_SYNC_ABACUS_ENABLED=true to run it",
-            extra={"event": "poller_disabled", "source_key": "abacus_index"},
-        )
+
+    pollers = []
+    for source_key, env_var, enabled, factory in candidates:
+        if enabled:
+            pollers.append(factory())
+        else:
+            logger.info(
+                "%s poller disabled (%s=false)",
+                source_key,
+                env_var,
+                extra={"event": "poller_disabled", "source_key": source_key},
+            )
     return pollers
 
 

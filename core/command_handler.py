@@ -5,6 +5,7 @@ from telegram.ext import ContextTypes
 from config.constants import BOT_RESPONSES
 from config.asset_paths import WELCOME_GIF
 from utils.logger import setup_logger
+from utils.maintenance import get_maintenance_message
 
 logger = setup_logger()
 
@@ -15,6 +16,15 @@ class BotCommandHandler:
 
     async def handle_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
+            # Global maintenance-mode switch (WP-7c rollback ledger): checked
+            # first, before any command dispatch -- no command processing at
+            # all while it's active.
+            holding_message = await get_maintenance_message(self.cache_manager.redis)
+            if holding_message is not None:
+                logger.info("Maintenance mode active -- replying with holding message.")
+                await update.message.reply_text(holding_message, parse_mode="Markdown")
+                return
+
             raw_command = update.message.text.split()[0]  # e.g. "/certik@CiphexHelpBot"
             command = raw_command.split('@')[0][1:]       # Removes '/', then splits at '@' to handle bot mentions
             # user_id is not used currently but might be needed for future user-specific features

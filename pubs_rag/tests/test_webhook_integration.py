@@ -16,7 +16,7 @@ import aiohttp
 from aiohttp import web
 from aiohttp.test_utils import TestServer
 
-from pubs_rag import ingest
+from pubs_rag import db, ingest
 from pubs_rag.config import Config
 from pubs_rag.embeddings import HashingEmbeddingProvider
 from pubs_rag.retrieval import retrieve
@@ -149,13 +149,31 @@ async def test_simulated_webhook_push_ingests_new_pdf_end_to_end(db_conn, monkey
             assert len(unchanged) == 12
             assert all(by_slug[slug]["skipped"] for slug in unchanged)
 
-            # retrievable end-to-end via the same fn WP-5 will call
+            # WP-7c serving quarantine: a webhook-ingested document lands
+            # unapproved by default, so it must be invisible to the same
+            # retrieve() WP-5 calls -- not merely present-but-unranked.
             results = await retrieve(db_conn, provider, "simulated webhook push", top_k=3)
-            hit = next((r for r in results if r.slug == NEW_SLUG), None)
+            assert not any(r.slug == NEW_SLUG for r in results)
+
+            # The admin escape hatch sees it pending approval...
+            unapproved_results = await retrieve(
+                db_conn, provider, "simulated webhook push", top_k=3, include_unapproved=True
+            )
+            hit = next((r for r in unapproved_results if r.slug == NEW_SLUG), None)
             assert hit is not None
             assert hit.title == "New Test Publication"
             assert hit.date == "July 20, 2026"
             assert hit.source_url == f"{Config.SITE_BASE_URL}/assets/documents/{NEW_SLUG}.pdf"
+
+            # ...and once approved (the CLI's underlying DB call), it's
+            # retrievable end-to-end via the same fn WP-5 will call, with
+            # nothing mocked below the HTTP boundary.
+            updated = await db.set_approved(db_conn, NEW_SLUG, True)
+            assert updated == 1
+            approved_results = await retrieve(db_conn, provider, "simulated webhook push", top_k=3)
+            hit = next((r for r in approved_results if r.slug == NEW_SLUG), None)
+            assert hit is not None
+            assert hit.title == "New Test Publication"
 
             # replaying the identical push is idempotent — zero duplicates
             resp2 = await client.post("/webhook/github", data=body, headers=headers)
@@ -195,3 +213,57 @@ async def test_webhook_rejects_bad_signature(db_conn, monkeypatch):
         finally:
             await client.close()
             await server.close()
+
+
+async def test_webhook_ignores_non_main_branch_push_with_zero_ingestion(db_conn, monkeypatch):
+    """Owner directive (main-branch-only rule, docs/BUILD_HANDOFF.md): a
+    push to any ref other than refs/heads/main must be a pure no-op -- no
+    fetch, no ingest, not even an attempt -- since non-main branches may
+    carry unreleased/sensitive content. GITHUB_REPO_BRANCH defaults to
+    "main", so a refs/heads/dev push must be ignored without ever reaching
+    GitHub (no fake server is even started here -- if the code tried to
+    fetch, this test would hang/error on connection refused)."""
+    monkeypatch.setattr(Config, "GITHUB_WEBHOOK_SECRET", WEBHOOK_SECRET)
+    webhook_app = web.Application()
+    webhook_app["db_conn"] = db_conn
+    webhook_app["embedding_provider"] = HashingEmbeddingProvider(dim=Config.EMBEDDING_DIM)
+    webhook_app.router.add_post("/webhook/github", handle_webhook)
+
+    chunk_count_before = await db.count_chunks(db_conn)
+
+    async with aiohttp.ClientSession() as http_session:
+        webhook_app["http_session"] = http_session
+        server = TestServer(webhook_app)
+        await server.start_server()
+        client = aiohttp.ClientSession(base_url=f"http://127.0.0.1:{server.port}")
+        try:
+            payload = {
+                "ref": "refs/heads/dev",
+                "commits": [
+                    {
+                        "added": [f"public/assets/documents/{NEW_SLUG}.pdf", "src/ecosystem-updates.html"],
+                        "modified": [],
+                        "removed": [],
+                    }
+                ],
+            }
+            body = json.dumps(payload).encode("utf-8")
+            resp = await client.post(
+                "/webhook/github",
+                data=body,
+                headers={
+                    "X-GitHub-Event": "push",
+                    "X-Hub-Signature-256": _sign(WEBHOOK_SECRET, body),
+                    "Content-Type": "application/json",
+                },
+            )
+            assert resp.status == 202
+            data = await resp.json()
+            assert data == {"ignored": "ref=refs/heads/dev"}
+        finally:
+            await client.close()
+            await server.close()
+
+    assert await db.count_chunks(db_conn) == chunk_count_before
+    row_count = await db_conn.fetchval("SELECT count(*) FROM documents")
+    assert row_count == 0

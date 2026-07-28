@@ -39,8 +39,24 @@ def relevant_paths_changed(push_payload: dict) -> bool:
 
 
 async def fetch_raw_file(session: aiohttp.ClientSession, owner: str, repo: str, ref: str, path: str) -> bytes:
+    # ciphex-website is a private repo: unauthenticated raw-content fetches
+    # 404 in production. GITHUB_TOKEN is attached as a bearer token when
+    # configured; its value is never logged, only whether it's present.
     url = f"{Config.GITHUB_API_BASE_URL}/{owner}/{repo}/{ref}/{path}"
-    async with session.get(url, timeout=aiohttp.ClientTimeout(total=Config.HTTP_TIMEOUT_S)) as resp:
+    headers = {"Authorization": f"Bearer {Config.GITHUB_TOKEN}"} if Config.GITHUB_TOKEN else {}
+    async with session.get(
+        url, timeout=aiohttp.ClientTimeout(total=Config.HTTP_TIMEOUT_S), headers=headers
+    ) as resp:
+        if resp.status == 404:
+            hint = (
+                "PUBS_RAG_GITHUB_TOKEN is not set"
+                if not Config.GITHUB_TOKEN
+                else "check PUBS_RAG_GITHUB_TOKEN has read access to this repo"
+            )
+            raise RuntimeError(
+                f"GitHub raw-content fetch 404 for {owner}/{repo}@{ref}:{path} -- "
+                f"ciphex-website is a private repo ({hint})"
+            )
         resp.raise_for_status()
         return await resp.read()
 
