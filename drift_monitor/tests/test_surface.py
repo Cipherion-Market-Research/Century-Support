@@ -354,3 +354,123 @@ def test_fingerprint_is_order_independent_and_stable():
     diff_a = {"added": [{"type": "env_var", "subtype": "", "value": "X", "locations": [{"file": "a.py", "line": 1}]}], "removed": [], "moved": []}
     diff_b = json.loads(json.dumps(diff_a))  # deep copy, same content
     assert surface.fingerprint(diff_a) == surface.fingerprint(diff_b)
+
+
+# --------------------------------------------------------------------------
+# Private-repo token auth (owner amendment): construction, fail-loud on
+# missing token, and redaction of the token / credentialed URL everywhere
+# it could otherwise leak (errors, baselines).
+# --------------------------------------------------------------------------
+
+
+def test_default_clone_url_requires_github_token(monkeypatch):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    with pytest.raises(surface.SurfaceDriftConfigError):
+        surface.default_clone_url("atlas")
+
+
+def test_default_clone_url_constructs_token_auth_url(monkeypatch):
+    monkeypatch.setenv("GITHUB_TOKEN", "ghs_supersecrettoken123")
+    url = surface.default_clone_url("atlas")
+    assert url == (
+        "https://x-access-token:ghs_supersecrettoken123@"
+        f"github.com/{surface.REPO_ORG}/atlas.git"
+    )
+
+
+def test_run_scan_fails_loud_without_token_or_path(monkeypatch, isolated_dirs):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    with pytest.raises(surface.SurfaceDriftConfigError):
+        surface.run_scan(
+            "atlas", path=None, url=None, accept=True,
+            baseline_dir=isolated_dirs["baseline_dir"],
+            report_dir=isolated_dirs["report_dir"],
+            state_dir=isolated_dirs["state_dir"],
+        )
+    # fail-loud, not a swallowed status — and nothing got written
+    assert not isolated_dirs["baseline_dir"].exists() or not any(isolated_dirs["baseline_dir"].iterdir())
+
+
+def test_resolve_path_local_path_never_needs_token(monkeypatch, tmp_path):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    d = tmp_path / "local"
+    d.mkdir()
+    work_path, cleanup_dir, resolved_url = surface.resolve_path("atlas", str(d), None)
+    assert work_path == d
+    assert cleanup_dir is None
+    assert resolved_url is None  # local --path mode is token-free, no URL at all
+
+
+def test_clone_repo_main_only_uses_token_url_when_no_explicit_url(monkeypatch, tmp_path):
+    monkeypatch.setenv("GITHUB_TOKEN", "ghs_supersecrettoken123")
+    captured = {}
+
+    def fake_run(cmd, check, capture_output, text):
+        captured["cmd"] = cmd
+        Path(cmd[-1]).mkdir(parents=True, exist_ok=True)
+
+        class R:
+            pass
+        return R()
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    work_path, cleanup_dir, resolved_url = surface.resolve_path("atlas", None, None)
+
+    expected_url = f"https://x-access-token:ghs_supersecrettoken123@github.com/{surface.REPO_ORG}/atlas.git"
+    assert expected_url in captured["cmd"]
+    assert "--branch" in captured["cmd"] and captured["cmd"][captured["cmd"].index("--branch") + 1] == "main"
+    assert "--single-branch" in captured["cmd"]
+    assert resolved_url == expected_url
+    shutil.rmtree(cleanup_dir, ignore_errors=True)
+
+
+def test_clone_error_redacts_token_and_url(monkeypatch, tmp_path):
+    token = "ghs_supersecrettoken123"
+    url = f"https://x-access-token:{token}@github.com/{surface.REPO_ORG}/atlas.git"
+
+    def fake_run(cmd, check, capture_output, text):
+        raise subprocess.CalledProcessError(
+            returncode=128,
+            cmd=cmd,
+            output="",
+            stderr=f"fatal: repository '{url}' not found\nremote: {token} invalid",
+        )
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    dest = tmp_path / "cloned"
+    with pytest.raises(surface.SurfaceDriftCloneError) as excinfo:
+        surface.clone_repo_main_only(url, dest, secret=token)
+
+    message = str(excinfo.value)
+    assert token not in message
+    assert "x-access-token:***@" in message
+    assert "x-access-token:" + token not in message
+
+
+def test_redact_secret_scrubs_pattern_without_knowing_exact_token():
+    token = "ghs_anothersecret"
+    url = f"https://x-access-token:{token}@github.com/{surface.REPO_ORG}/atlas.git"
+    text = f"git clone failed for {url}"
+    redacted = surface._redact_secret(text)  # no secret= given — pattern-only redaction
+    assert token not in redacted
+    assert "x-access-token:***@" in redacted
+
+
+def test_sanitize_url_used_before_persisting_to_baseline(tmp_path):
+    token = "ghs_thirdsecret"
+    url = f"https://x-access-token:{token}@github.com/{surface.REPO_ORG}/atlas.git"
+    baseline_path = tmp_path / "atlas.json"
+    surface.write_baseline(baseline_path, "atlas", tmp_path, [], url=url)
+    raw = baseline_path.read_text()
+    assert token not in raw
+    assert "x-access-token:***@" in raw
+
+
+def test_local_path_mode_bypasses_token_requirement_end_to_end(monkeypatch, tmp_path, isolated_dirs):
+    # Full run_scan --accept using --path, with GITHUB_TOKEN deliberately
+    # unset, proving local fixture/re-seed mode never needs a token.
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    repo = "atlas"
+    work = _copy_fixture(repo, tmp_path / "work")
+    result = _run(repo, work, isolated_dirs, accept=True)
+    assert result["status"] == "accepted"

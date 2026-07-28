@@ -10,21 +10,32 @@ Ownership (WP-7b): this file, `surface_*.py` helpers, `baselines/surface/*`,
 and `tests/test_surface*.py`. Everything else under `drift_monitor/` belongs
 to the sibling WP-7a (content lane) — do not assume this module owns it.
 
-Main-branch-only rule (owner amendment): every clone this module performs is
-`git clone --branch main --single-branch --depth 1 <url> <dest>` — no other
-ref is ever fetched or read, and non-main content must never reach a report
-or baseline. See `MAIN_BRANCH_CLONE_ARGS` / `verify_main_branch_if_git`.
-Note: as of this writing that rule is NOT present anywhere in
-`docs/BUILD_HANDOFF.md` (checked both the worktree copy and `origin/main`);
-it is implemented here solely because the owner/coordinator instructed it
-directly, not because the cited doc section exists. Flagged for the record.
+Main-branch-only rule: every clone this module performs is `git clone
+--branch main --single-branch --depth 1 <url> <dest>` — no other ref is
+ever fetched or read, and non-main content must never reach a report or
+baseline. See `MAIN_BRANCH_CLONE_ARGS` / `verify_main_branch_if_git`. Now
+committed at `docs/BUILD_HANDOFF.md` (WP-7 section, commit cfe80d7) — an
+earlier revision of this docstring flagged the rule as owner-instructed but
+undocumented; that gap has since been closed and independently verified.
+
+The three source repos are PRIVATE. Production cloning requires
+`GITHUB_TOKEN`; the URL is built as
+`https://x-access-token:${GITHUB_TOKEN}@github.com/<REPO_ORG>/<repo>.git`
+(still main-branch-only/single-branch/depth-1). See `default_clone_url`.
+If `DRIFT_SURFACE_ENABLED` is true and neither `--path` nor a usable token
+is available, this fails loud with `SurfaceDriftConfigError` rather than
+silently reporting nothing. The token and the credentialed URL are never
+logged or persisted anywhere (baselines, reports, stdout, exceptions) —
+see `_redact_secret` / `sanitize_url`; local `--path` mode never touches a
+token at all.
 
 Run as a self-contained module:
 
     python -m drift_monitor.surface --repo atlas --path /path/to/local/clone
+    GITHUB_TOKEN=... python -m drift_monitor.surface --repo atlas   # production
     python -m drift_monitor.surface --repo atlas --url https://example/atlas.git
     python -m drift_monitor.surface --repo atlas --path ... --accept
-    python -m drift_monitor.surface --all --url-env   # uses DRIFT_SURFACE_URL_<REPO>
+    GITHUB_TOKEN=... python -m drift_monitor.surface --all          # all 3 repos
 
 Kill switch: DRIFT_SURFACE_ENABLED=false disables the entire lane (default
 true) — no reads beyond the check, no writes, exit 0.
@@ -56,31 +67,98 @@ DEFAULT_REPORT_DIR = PACKAGE_DIR / "reports" / "surface"
 DEFAULT_STATE_DIR = PACKAGE_DIR / "state" / "surface"
 DEFAULT_STATE_FILE = "state.json"
 
-# The three product repos this lane watches (weekly cadence). URLs are not
-# hardcoded here (none were available in this environment); supply one via
-# --url, or set DRIFT_SURFACE_URL_<REPO_UPPER_SNAKE> and pass --url-env.
+# The three product repos this lane watches (weekly cadence). They are
+# private GitHub repos under this org; production cloning requires
+# GITHUB_TOKEN (see default_clone_url / GITHUB_TOKEN_ENV below). Local
+# --path fixtures/checkouts stay token-free.
 DEFAULT_REPOS = ("ciphex-alpha-dashboard", "atlas", "abacus-trading-view")
+REPO_ORG = "Cipherion-Market-Research"
+GITHUB_TOKEN_ENV = "GITHUB_TOKEN"
 
 # --------------------------------------------------------------------------
-# Main-branch-only cloning
+# Main-branch-only cloning (+ token auth for private repos)
 # --------------------------------------------------------------------------
 
 MAIN_BRANCH_CLONE_ARGS = ("--branch", "main", "--single-branch", "--depth", "1")
+
+# Matches the credentialed-URL form we construct AND the form git itself
+# echoes back in clone error messages, so both can be scrubbed the same way.
+_TOKEN_URL_RE = re.compile(r"https://x-access-token:[^@\s]+@")
 
 
 class SurfaceDriftPolicyError(RuntimeError):
     """Raised when a scan target would violate the main-branch-only rule."""
 
 
-def clone_repo_main_only(url: str, dest: Path) -> Path:
+class SurfaceDriftConfigError(RuntimeError):
+    """Raised when the lane is enabled but not usably configured (e.g. no
+    GITHUB_TOKEN and no local --path override for a private source repo).
+    This is meant to fail loud — callers must not swallow it into a silent
+    'nothing to report' status."""
+
+
+class SurfaceDriftCloneError(RuntimeError):
+    """Wraps a failed `git clone` with the credentialed URL/token scrubbed
+    out of the message. Never construct this directly with unredacted text
+    — always go through `_redact_secret`."""
+
+
+def _redact_secret(text: str, secret: Optional[str] = None) -> str:
+    """Scrub a GitHub token and/or the credentialed clone URL out of `text`.
+    Used for both the token value (defense in depth against verbose
+    credential-helper output) and the structural `x-access-token:...@`
+    pattern git itself echoes into clone error messages."""
+    if secret:
+        text = text.replace(secret, "***")
+    text = _TOKEN_URL_RE.sub("https://x-access-token:***@", text)
+    return text
+
+
+def default_clone_url(repo: str) -> str:
+    """Production clone URL for one of the three private product repos.
+    Requires GITHUB_TOKEN — raises SurfaceDriftConfigError (fail loud) if
+    unset, since there is no other way to read a private repo without a
+    local --path override."""
+    token = os.getenv(GITHUB_TOKEN_ENV)
+    if not token:
+        raise SurfaceDriftConfigError(
+            f"{GITHUB_TOKEN_ENV} is not set and no local --path override was "
+            f"given for {repo!r} — the source repos are private, so a token "
+            "is required to clone them. Set GITHUB_TOKEN or pass --path."
+        )
+    return f"https://x-access-token:{token}@github.com/{REPO_ORG}/{repo}.git"
+
+
+def sanitize_url(url: Optional[str]) -> Optional[str]:
+    """Redacted form of a clone URL, safe to persist in a baseline manifest
+    or print. Never store/print a raw `url` that may carry a token."""
+    if url is None:
+        return None
+    return _redact_secret(url)
+
+
+def clone_repo_main_only(url: str, dest: Path, secret: Optional[str] = None) -> Path:
     """Shallow-clone `url` into `dest`, main branch only, single branch.
 
     Never fetches or checks out any other ref. Raises SurfaceDriftPolicyError
     if, after cloning, the checked-out branch is not `main` (defensive check
     in case a remote's clone behavior ever deviates).
+
+    `secret` (if the caller has the raw token) is scrubbed from any error
+    text alongside the structural `x-access-token:...@` pattern — git
+    itself echoes the remote URL into `fatal: ...` messages, so failures
+    here are caught and redacted before they ever reach a log or exception
+    that might be printed/reported.
     """
     cmd = ["git", "clone", *MAIN_BRANCH_CLONE_ARGS, url, str(dest)]
-    subprocess.run(cmd, check=True, capture_output=True, text=True)
+    try:
+        subprocess.run(cmd, check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as exc:
+        redacted_cmd = [_redact_secret(part, secret) for part in cmd]
+        redacted_stderr = _redact_secret(exc.stderr or "", secret)
+        raise SurfaceDriftCloneError(
+            f"git clone failed (exit {exc.returncode}): {redacted_cmd} — {redacted_stderr}"
+        ) from None
     verify_main_branch_if_git(dest)
     return dest
 
@@ -355,13 +433,15 @@ def _manifest_findings(findings: list[Finding]) -> list[dict]:
 
 def write_baseline(baseline_path: Path, repo: str, source_path: Path,
                     findings: list[Finding], url: Optional[str] = None) -> dict:
+    # Never persist a raw token/credentialed URL into a committed baseline.
+    safe_url = sanitize_url(url)
     manifest = {
         "repo": repo,
         "generated_at": _now_iso(),
         "source": {
             "path": str(source_path),
-            "url": url,
-            "clone_args": list(MAIN_BRANCH_CLONE_ARGS) if url else None,
+            "url": safe_url,
+            "clone_args": list(MAIN_BRANCH_CLONE_ARGS) if safe_url else None,
         },
         "findings": _manifest_findings(findings),
     }
@@ -508,18 +588,36 @@ def write_report(report_dir: Path, repo: str, markdown: str) -> Path:
 # --------------------------------------------------------------------------
 
 
+_TOKEN_CAPTURE_RE = re.compile(r"https://x-access-token:([^@\s]+)@")
+
+
+def _extract_token_from_url(url: Optional[str]) -> Optional[str]:
+    if not url:
+        return None
+    m = _TOKEN_CAPTURE_RE.search(url)
+    return m.group(1) if m else None
+
+
 def resolve_path(repo: str, path: Optional[str], url: Optional[str]):
-    """Returns (work_path, cleanup_dir_or_None)."""
+    """Returns (work_path, cleanup_dir_or_None, resolved_url_or_None).
+
+    Priority: explicit local --path (token-free, used for tests/fixtures and
+    the scratchpad re-seed) > explicit --url (caller-supplied, e.g. CI/tests)
+    > production default — a private-repo HTTPS URL built from GITHUB_TOKEN.
+    The production default raises SurfaceDriftConfigError (fail loud) if
+    GITHUB_TOKEN is unset, per the private-repo owner amendment: there is no
+    silent/degraded path here, only local --path or a working token.
+    """
     if path:
-        return Path(path), None
+        return Path(path), None, None
     if url:
         tmp = Path(tempfile.mkdtemp(prefix=f"surface-drift-{repo}-"))
-        clone_repo_main_only(url, tmp)
-        return tmp, tmp
-    raise ValueError(
-        f"repo {repo!r}: need --path (local clone/fixture) or --url "
-        "(git URL, cloned main-branch-only)"
-    )
+        clone_repo_main_only(url, tmp, secret=_extract_token_from_url(url))
+        return tmp, tmp, url
+    prod_url = default_clone_url(repo)  # raises SurfaceDriftConfigError if no token
+    tmp = Path(tempfile.mkdtemp(prefix=f"surface-drift-{repo}-"))
+    clone_repo_main_only(prod_url, tmp, secret=os.getenv(GITHUB_TOKEN_ENV))
+    return tmp, tmp, prod_url
 
 
 def count_by_type(findings: list[Finding]) -> dict:
@@ -541,14 +639,14 @@ def run_scan(
     if not surface_enabled():
         return {"status": "disabled", "repo": repo}
 
-    work_path, cleanup_dir = resolve_path(repo, path, url)
+    work_path, cleanup_dir, resolved_url = resolve_path(repo, path, url)
     try:
         branch = verify_main_branch_if_git(work_path)
         current = scan_repo(work_path)
         baseline_path = Path(baseline_dir) / f"{repo}.json"
 
         if accept:
-            manifest = write_baseline(baseline_path, repo, work_path, current, url)
+            manifest = write_baseline(baseline_path, repo, work_path, current, resolved_url)
             clear_state(state_dir, repo)
             return {
                 "status": "accepted",
@@ -621,9 +719,9 @@ def build_arg_parser() -> argparse.ArgumentParser:
         description=__doc__.splitlines()[0],
     )
     p.add_argument("--repo", help="repo name (one of: %s)" % ", ".join(DEFAULT_REPOS))
-    p.add_argument("--all", action="store_true", help="run all DEFAULT_REPOS (needs DRIFT_SURFACE_URL_<REPO> env vars or local fixture dirs)")
-    p.add_argument("--path", help="local directory to scan (test fixtures / pre-cloned checkout)")
-    p.add_argument("--url", help="git URL to shallow-clone (main branch only)")
+    p.add_argument("--all", action="store_true", help="run all DEFAULT_REPOS (needs GITHUB_TOKEN, --url/DRIFT_SURFACE_URL_<REPO>, or local fixture dirs)")
+    p.add_argument("--path", help="local directory to scan (test fixtures / pre-cloned checkout) — token-free")
+    p.add_argument("--url", help="git URL to shallow-clone (main branch only); overrides the GITHUB_TOKEN production default")
     p.add_argument("--accept", action="store_true", help="rewrite the baseline from the current scan")
     p.add_argument("--baseline-dir", default=str(DEFAULT_BASELINE_DIR))
     p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR))
@@ -656,7 +754,10 @@ def main(argv=None) -> int:
                 repo, path=path, url=url, accept=args.accept,
                 baseline_dir=baseline_dir, report_dir=report_dir, state_dir=state_dir,
             )
-        except (ValueError, SurfaceDriftPolicyError) as exc:
+        except (ValueError, SurfaceDriftPolicyError, SurfaceDriftConfigError, SurfaceDriftCloneError) as exc:
+            # exc's message is already redacted (see _redact_secret /
+            # SurfaceDriftCloneError) — safe to print verbatim. Fail loud:
+            # non-zero exit, no silent "nothing to report" status.
             print(f"[{repo}] error: {exc}", file=sys.stderr)
             exit_code = 1
             continue
