@@ -1,0 +1,476 @@
+"""Tests for drift_monitor.surface (WP-7b, surface-drift lane).
+
+Covers the extractor unit behavior plus the five acceptance criteria from
+the WP-7b brief:
+  1. seeding a new route file AND a new 0x address -> both detected w/ file:line
+  2. unchanged clone -> silent run
+  3. same seeded drift twice -> one finding (report written once)
+  4. --accept then re-run -> silent
+  5. zero writes outside drift_monitor/ paths this lane owns
+"""
+
+import json
+import os
+import shutil
+import subprocess
+from pathlib import Path
+
+import pytest
+
+from drift_monitor import surface
+
+FIXTURES = Path(__file__).parent / "fixtures" / "seed_repos"
+
+
+def _copy_fixture(repo: str, dest: Path) -> Path:
+    target = dest / repo
+    shutil.copytree(FIXTURES / repo, target)
+    return target
+
+
+@pytest.fixture
+def isolated_dirs(tmp_path):
+    """Baseline/report/state dirs isolated per test — never touches the
+    real drift_monitor/baselines/surface/*.json committed to git."""
+    return {
+        "baseline_dir": tmp_path / "baselines",
+        "report_dir": tmp_path / "reports",
+        "state_dir": tmp_path / "state",
+    }
+
+
+def _run(repo, path, dirs, accept=False):
+    return surface.run_scan(
+        repo,
+        path=str(path),
+        accept=accept,
+        baseline_dir=dirs["baseline_dir"],
+        report_dir=dirs["report_dir"],
+        state_dir=dirs["state_dir"],
+    )
+
+
+# --------------------------------------------------------------------------
+# Extractor unit tests
+# --------------------------------------------------------------------------
+
+
+def test_extract_api_routes_next_app_router():
+    root = FIXTURES / "ciphex-alpha-dashboard"
+    findings = surface.extract_api_routes(root)
+    identities = {(f.subtype, f.value, f.file, f.line) for f in findings}
+    assert ("GET", "/api/health", "app/api/health/route.ts", 1) in identities
+    assert ("GET", "/api/metrics/[key]", "app/api/metrics/[key]/route.ts", 3) in identities
+
+
+def test_extract_api_routes_vercel_function():
+    root = FIXTURES / "atlas"
+    findings = surface.extract_api_routes(root)
+    matches = [f for f in findings if f.file == "api/webhook.ts"]
+    assert len(matches) == 1
+    assert matches[0].value == "/api/webhook"
+
+
+def test_extract_api_routes_fastapi():
+    root = FIXTURES / "abacus-trading-view"
+    findings = surface.extract_api_routes(root)
+    identities = {(f.subtype, f.value, f.file, f.line) for f in findings}
+    assert ("GET", "/health", "webapp/server.py", 7) in identities
+    assert ("GET", "/v0/latest", "webapp/server.py", 12) in identities
+    assert ("POST", "/v0/predict", "webapp/server.py", 17) in identities
+
+
+def test_extract_env_vars_all_forms():
+    root = FIXTURES / "abacus-trading-view"
+    findings = surface.extract_env_vars(root)
+    names = {f.value for f in findings}
+    assert {"ABACUS_INDEXER_BASE", "ABACUS_API_KEY", "ABACUS_REDIS_URL", "ABACUS_PUBLIC_BASE"} <= names
+
+    root2 = FIXTURES / "atlas"
+    names2 = {f.value for f in surface.extract_env_vars(root2)}
+    assert "VITE_ATLAS_PUBLIC_KEY" in names2  # import.meta.env form
+
+
+def test_extract_addresses():
+    root = FIXTURES / "abacus-trading-view"
+    findings = surface.extract_addresses(root)
+    values = {f.value for f in findings}
+    assert "0x18b33687d1c804Dd4ea6c82106e54923c23a652E" in values
+    assert "0x000000000000000000000000000000000000dEaD" in values
+    for f in findings:
+        assert f.file and f.line > 0  # file:line evidence present
+
+
+def test_extract_domains():
+    root = FIXTURES / "ciphex-alpha-dashboard"
+    findings = surface.extract_domains(root)
+    values = {f.value for f in findings}
+    assert "ams.ciphex.io" in values
+
+
+def test_extract_chain_ids():
+    root = FIXTURES / "atlas"
+    findings = surface.extract_chain_ids(root)
+    values = {f.value for f in findings}
+    assert "8453" in values
+
+
+# --------------------------------------------------------------------------
+# Acceptance 1: new route file + new address detected with file:line evidence
+# --------------------------------------------------------------------------
+
+
+def test_acceptance_1_new_route_and_address_detected(tmp_path, isolated_dirs):
+    repo = "atlas"
+    work = _copy_fixture(repo, tmp_path / "work")
+
+    # seed the baseline from the unmodified fixture first
+    seed = _run(repo, work, isolated_dirs, accept=True)
+    assert seed["status"] == "accepted"
+
+    # now mutate a COPY: add a new route file and a new 0x address
+    new_route_dir = work / "app" / "api" / "vault"
+    new_route_dir.mkdir(parents=True)
+    (new_route_dir / "route.ts").write_text(
+        "export async function GET() {\n  return Response.json({ ok: true });\n}\n"
+    )
+    (work / "src" / "new_constants.ts").write_text(
+        'export const NEW_TOKEN = "0x1111111111111111111111111111111111111111";\n'
+    )
+
+    result = _run(repo, work, isolated_dirs, accept=False)
+    assert result["status"] == "reported"
+    assert result["diff_counts"]["added"] >= 2
+
+    report_text = Path(result["report_path"]).read_text()
+    assert "app/api/vault/route.ts:1" in report_text
+    assert "0x1111111111111111111111111111111111111111" in report_text
+    assert "src/new_constants.ts:1" in report_text
+
+
+# --------------------------------------------------------------------------
+# Acceptance 2: unchanged clone -> silent
+# --------------------------------------------------------------------------
+
+
+def test_acceptance_2_unchanged_is_silent(tmp_path, isolated_dirs):
+    repo = "ciphex-alpha-dashboard"
+    work = _copy_fixture(repo, tmp_path / "work")
+
+    seed = _run(repo, work, isolated_dirs, accept=True)
+    assert seed["status"] == "accepted"
+
+    result = _run(repo, work, isolated_dirs, accept=False)
+    assert result["status"] == "silent"
+    assert not isolated_dirs["report_dir"].exists() or not any(isolated_dirs["report_dir"].iterdir())
+
+
+# --------------------------------------------------------------------------
+# Acceptance 3: same seeded drift twice -> one finding (report written once)
+# --------------------------------------------------------------------------
+
+
+def test_acceptance_3_same_drift_twice_is_one_finding(tmp_path, isolated_dirs):
+    repo = "abacus-trading-view"
+    work = _copy_fixture(repo, tmp_path / "work")
+    _run(repo, work, isolated_dirs, accept=True)
+
+    (work / "webapp" / "new_route.py").write_text(
+        "from webapp.server import router\n\n\n"
+        "@router.get(\"/v0/new-endpoint\")\n"
+        "def new_endpoint():\n"
+        "    return {}\n"
+    )
+
+    first = _run(repo, work, isolated_dirs, accept=False)
+    assert first["status"] == "reported"
+
+    second = _run(repo, work, isolated_dirs, accept=False)
+    assert second["status"] == "suppressed"
+    assert second["fingerprint"] == first["fingerprint"]
+
+    reports = list(isolated_dirs["report_dir"].glob(f"{repo}-*.md"))
+    assert len(reports) == 1  # only one finding/report across both runs
+
+
+# --------------------------------------------------------------------------
+# Acceptance 4: --accept then re-run -> silent
+# --------------------------------------------------------------------------
+
+
+def test_acceptance_4_accept_then_rerun_silent(tmp_path, isolated_dirs):
+    repo = "atlas"
+    work = _copy_fixture(repo, tmp_path / "work")
+    _run(repo, work, isolated_dirs, accept=True)
+
+    new_dir = work / "app" / "api" / "kyc2"
+    new_dir.mkdir()
+    (new_dir / "route.ts").write_text(
+        "export async function GET() { return Response.json({}); }\n"
+    )
+
+    reported = _run(repo, work, isolated_dirs, accept=False)
+    assert reported["status"] == "reported"
+
+    accepted = _run(repo, work, isolated_dirs, accept=True)
+    assert accepted["status"] == "accepted"
+
+    silent = _run(repo, work, isolated_dirs, accept=False)
+    assert silent["status"] == "silent"
+
+
+# --------------------------------------------------------------------------
+# Acceptance 5: zero writes outside drift_monitor/ paths this lane owns
+# --------------------------------------------------------------------------
+
+
+def test_acceptance_5_zero_writes_outside_owned_paths(tmp_path, isolated_dirs):
+    repo = "ciphex-alpha-dashboard"
+    work = _copy_fixture(repo, tmp_path / "work")
+
+    def snapshot(root: Path):
+        return {
+            str(p.relative_to(root)): p.stat().st_mtime_ns
+            for p in root.rglob("*")
+            if p.is_file()
+        }
+
+    repo_root = Path(__file__).resolve().parents[2]  # century-support-bot repo root
+    before = snapshot(repo_root)
+
+    _run(repo, work, isolated_dirs, accept=True)
+    _run(repo, work, isolated_dirs, accept=False)  # silent, no drift
+
+    (work / "lib" / "extra.ts").write_text('export const X = process.env.NEW_VAR;\n')
+    _run(repo, work, isolated_dirs, accept=False)  # reported
+
+    after = snapshot(repo_root)
+
+    changed_or_new = {
+        k for k in after
+        if k not in before or after[k] != before[k]
+    }
+    removed = {k for k in before if k not in after}
+
+    # the only permissible touches are inside the isolated tmp dirs, which
+    # live under tmp_path (outside repo_root) — so nothing under repo_root
+    # should differ at all.
+    assert not changed_or_new, f"unexpected writes under repo root: {changed_or_new}"
+    assert not removed, f"unexpected deletions under repo root: {removed}"
+
+
+# --------------------------------------------------------------------------
+# Main-branch-only cloning (owner amendment)
+# --------------------------------------------------------------------------
+
+
+def test_clone_repo_main_only_uses_single_branch_main_depth1(monkeypatch, tmp_path):
+    captured = {}
+
+    def fake_run(cmd, check, capture_output, text):
+        captured["cmd"] = cmd
+        # simulate a real clone by creating the dest dir with no .git so
+        # verify_main_branch_if_git() short-circuits (fixture-like)
+        Path(cmd[-1]).mkdir(parents=True, exist_ok=True)
+
+        class R:
+            pass
+        return R()
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    dest = tmp_path / "cloned"
+    surface.clone_repo_main_only("https://example.invalid/repo.git", dest)
+
+    cmd = captured["cmd"]
+    assert cmd[:2] == ["git", "clone"]
+    assert "--branch" in cmd and cmd[cmd.index("--branch") + 1] == "main"
+    assert "--single-branch" in cmd
+    assert "--depth" in cmd and cmd[cmd.index("--depth") + 1] == "1"
+    assert cmd[-2] == "https://example.invalid/repo.git"
+    assert cmd[-1] == str(dest)
+
+
+def test_verify_main_branch_if_git_non_git_dir_is_noop(tmp_path):
+    d = tmp_path / "plain"
+    d.mkdir()
+    assert surface.verify_main_branch_if_git(d) is None
+
+
+def test_verify_main_branch_if_git_rejects_non_main(tmp_path):
+    repo_dir = tmp_path / "gitrepo"
+    repo_dir.mkdir()
+    subprocess.run(["git", "init", "-q", "-b", "not-main", str(repo_dir)], check=True)
+    subprocess.run(["git", "-C", str(repo_dir), "config", "user.email", "a@b.c"], check=True)
+    subprocess.run(["git", "-C", str(repo_dir), "config", "user.name", "t"], check=True)
+    (repo_dir / "f.txt").write_text("x")
+    subprocess.run(["git", "-C", str(repo_dir), "add", "."], check=True)
+    subprocess.run(["git", "-C", str(repo_dir), "commit", "-q", "-m", "x"], check=True)
+
+    with pytest.raises(surface.SurfaceDriftPolicyError):
+        surface.verify_main_branch_if_git(repo_dir)
+
+
+def test_verify_main_branch_if_git_accepts_main(tmp_path):
+    repo_dir = tmp_path / "gitrepo_main"
+    repo_dir.mkdir()
+    subprocess.run(["git", "init", "-q", "-b", "main", str(repo_dir)], check=True)
+    subprocess.run(["git", "-C", str(repo_dir), "config", "user.email", "a@b.c"], check=True)
+    subprocess.run(["git", "-C", str(repo_dir), "config", "user.name", "t"], check=True)
+    (repo_dir / "f.txt").write_text("x")
+    subprocess.run(["git", "-C", str(repo_dir), "add", "."], check=True)
+    subprocess.run(["git", "-C", str(repo_dir), "commit", "-q", "-m", "x"], check=True)
+
+    assert surface.verify_main_branch_if_git(repo_dir) == "main"
+
+
+# --------------------------------------------------------------------------
+# Kill switch
+# --------------------------------------------------------------------------
+
+
+def test_kill_switch_disables_lane(monkeypatch, tmp_path, isolated_dirs):
+    monkeypatch.setenv("DRIFT_SURFACE_ENABLED", "false")
+    repo = "atlas"
+    work = _copy_fixture(repo, tmp_path / "work")
+
+    result = _run(repo, work, isolated_dirs, accept=True)
+    assert result["status"] == "disabled"
+    assert not isolated_dirs["baseline_dir"].exists()
+    assert not isolated_dirs["report_dir"].exists()
+    assert not isolated_dirs["state_dir"].exists()
+
+
+def test_kill_switch_default_is_enabled(monkeypatch):
+    monkeypatch.delenv("DRIFT_SURFACE_ENABLED", raising=False)
+    assert surface.surface_enabled() is True
+
+
+# --------------------------------------------------------------------------
+# Fingerprint determinism
+# --------------------------------------------------------------------------
+
+
+def test_fingerprint_is_order_independent_and_stable():
+    diff_a = {"added": [{"type": "env_var", "subtype": "", "value": "X", "locations": [{"file": "a.py", "line": 1}]}], "removed": [], "moved": []}
+    diff_b = json.loads(json.dumps(diff_a))  # deep copy, same content
+    assert surface.fingerprint(diff_a) == surface.fingerprint(diff_b)
+
+
+# --------------------------------------------------------------------------
+# Private-repo token auth (owner amendment): construction, fail-loud on
+# missing token, and redaction of the token / credentialed URL everywhere
+# it could otherwise leak (errors, baselines).
+# --------------------------------------------------------------------------
+
+
+def test_default_clone_url_requires_github_token(monkeypatch):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    with pytest.raises(surface.SurfaceDriftConfigError):
+        surface.default_clone_url("atlas")
+
+
+def test_default_clone_url_constructs_token_auth_url(monkeypatch):
+    monkeypatch.setenv("GITHUB_TOKEN", "ghs_supersecrettoken123")
+    url = surface.default_clone_url("atlas")
+    assert url == (
+        "https://x-access-token:ghs_supersecrettoken123@"
+        f"github.com/{surface.REPO_ORG}/atlas.git"
+    )
+
+
+def test_run_scan_fails_loud_without_token_or_path(monkeypatch, isolated_dirs):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    with pytest.raises(surface.SurfaceDriftConfigError):
+        surface.run_scan(
+            "atlas", path=None, url=None, accept=True,
+            baseline_dir=isolated_dirs["baseline_dir"],
+            report_dir=isolated_dirs["report_dir"],
+            state_dir=isolated_dirs["state_dir"],
+        )
+    # fail-loud, not a swallowed status — and nothing got written
+    assert not isolated_dirs["baseline_dir"].exists() or not any(isolated_dirs["baseline_dir"].iterdir())
+
+
+def test_resolve_path_local_path_never_needs_token(monkeypatch, tmp_path):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    d = tmp_path / "local"
+    d.mkdir()
+    work_path, cleanup_dir, resolved_url = surface.resolve_path("atlas", str(d), None)
+    assert work_path == d
+    assert cleanup_dir is None
+    assert resolved_url is None  # local --path mode is token-free, no URL at all
+
+
+def test_clone_repo_main_only_uses_token_url_when_no_explicit_url(monkeypatch, tmp_path):
+    monkeypatch.setenv("GITHUB_TOKEN", "ghs_supersecrettoken123")
+    captured = {}
+
+    def fake_run(cmd, check, capture_output, text):
+        captured["cmd"] = cmd
+        Path(cmd[-1]).mkdir(parents=True, exist_ok=True)
+
+        class R:
+            pass
+        return R()
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    work_path, cleanup_dir, resolved_url = surface.resolve_path("atlas", None, None)
+
+    expected_url = f"https://x-access-token:ghs_supersecrettoken123@github.com/{surface.REPO_ORG}/atlas.git"
+    assert expected_url in captured["cmd"]
+    assert "--branch" in captured["cmd"] and captured["cmd"][captured["cmd"].index("--branch") + 1] == "main"
+    assert "--single-branch" in captured["cmd"]
+    assert resolved_url == expected_url
+    shutil.rmtree(cleanup_dir, ignore_errors=True)
+
+
+def test_clone_error_redacts_token_and_url(monkeypatch, tmp_path):
+    token = "ghs_supersecrettoken123"
+    url = f"https://x-access-token:{token}@github.com/{surface.REPO_ORG}/atlas.git"
+
+    def fake_run(cmd, check, capture_output, text):
+        raise subprocess.CalledProcessError(
+            returncode=128,
+            cmd=cmd,
+            output="",
+            stderr=f"fatal: repository '{url}' not found\nremote: {token} invalid",
+        )
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    dest = tmp_path / "cloned"
+    with pytest.raises(surface.SurfaceDriftCloneError) as excinfo:
+        surface.clone_repo_main_only(url, dest, secret=token)
+
+    message = str(excinfo.value)
+    assert token not in message
+    assert "x-access-token:***@" in message
+    assert "x-access-token:" + token not in message
+
+
+def test_redact_secret_scrubs_pattern_without_knowing_exact_token():
+    token = "ghs_anothersecret"
+    url = f"https://x-access-token:{token}@github.com/{surface.REPO_ORG}/atlas.git"
+    text = f"git clone failed for {url}"
+    redacted = surface._redact_secret(text)  # no secret= given — pattern-only redaction
+    assert token not in redacted
+    assert "x-access-token:***@" in redacted
+
+
+def test_sanitize_url_used_before_persisting_to_baseline(tmp_path):
+    token = "ghs_thirdsecret"
+    url = f"https://x-access-token:{token}@github.com/{surface.REPO_ORG}/atlas.git"
+    baseline_path = tmp_path / "atlas.json"
+    surface.write_baseline(baseline_path, "atlas", tmp_path, [], url=url)
+    raw = baseline_path.read_text()
+    assert token not in raw
+    assert "x-access-token:***@" in raw
+
+
+def test_local_path_mode_bypasses_token_requirement_end_to_end(monkeypatch, tmp_path, isolated_dirs):
+    # Full run_scan --accept using --path, with GITHUB_TOKEN deliberately
+    # unset, proving local fixture/re-seed mode never needs a token.
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    repo = "atlas"
+    work = _copy_fixture(repo, tmp_path / "work")
+    result = _run(repo, work, isolated_dirs, accept=True)
+    assert result["status"] == "accepted"
