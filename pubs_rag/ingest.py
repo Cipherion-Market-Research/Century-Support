@@ -28,6 +28,7 @@ from pubs_rag.chunking import chunk_text
 from pubs_rag.config import Config
 from pubs_rag.embeddings import EmbeddingProvider
 from pubs_rag.pdf_extract import extract_pdf_text
+from pubs_rag.quarantine import is_grandfathered
 
 logger = logging.getLogger(__name__)
 
@@ -70,6 +71,12 @@ async def ingest_document(conn, provider: EmbeddingProvider, doc_meta: dict, raw
     embeddings = provider.embed(chunks) if chunks else []
 
     superseded = existing_sha is not None and existing_sha != sha256
+    # WP-7c serving quarantine: approval is keyed off the document's own
+    # sha256 (an explicit, deterministic allowlist -- see quarantine.py),
+    # never off "when it was ingested". This is what makes a superseded doc
+    # correctly land unapproved even though its slug was grandfathered: new
+    # bytes -> a new sha256 that (by construction) isn't in the allowlist.
+    approved = is_grandfathered(sha256)
     tx = conn.transaction()
     await tx.start()
     try:
@@ -84,6 +91,7 @@ async def ingest_document(conn, provider: EmbeddingProvider, doc_meta: dict, raw
             date=doc_meta.get("date"),
             source_url=doc_meta["source_url"],
             listed_on=doc_meta.get("listed_on"),
+            approved=approved,
         )
         await db.insert_chunks(conn, sha256, chunks, embeddings)
     except Exception:

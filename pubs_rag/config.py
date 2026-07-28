@@ -18,6 +18,13 @@ def _env_int(key: str, default: int) -> int:
     return int(raw)
 
 
+def _env_bool(key: str, default: bool) -> bool:
+    raw = os.environ.get(key)
+    if raw is None or raw == "":
+        return default
+    return raw.strip().lower() in ("1", "true", "yes", "on")
+
+
 class Config:
     # --- Postgres / pgvector ---
     POSTGRES_DSN = _env("PUBS_RAG_POSTGRES_DSN", "postgresql://postgres:postgres@localhost:5433/pubs_rag")
@@ -47,6 +54,12 @@ class Config:
     GITHUB_REPO_NAME = _env("PUBS_RAG_GITHUB_REPO_NAME", "ciphex-website")
     GITHUB_REPO_BRANCH = _env("PUBS_RAG_GITHUB_REPO_BRANCH", "main")
     GITHUB_API_BASE_URL = _env("PUBS_RAG_GITHUB_API_BASE_URL", "https://raw.githubusercontent.com")
+    # ciphex-website is a private repo -- unauthenticated raw-content fetches
+    # 404 in production (it only ever worked locally via the owner's stored
+    # credentials). Set to a fine-grained PAT scoped read-only to this repo;
+    # attached as `Authorization: Bearer <token>` on every raw-content fetch.
+    # Never logged -- only its presence/absence is (see webhook.py, main.py).
+    GITHUB_TOKEN = _env("PUBS_RAG_GITHUB_TOKEN", "")
 
     # The two publication index pages (source, not the built site — see
     # site_parser.py for why: they're server-rendered multi-page-app entry
@@ -62,6 +75,14 @@ class Config:
 
     # --- HTTP client ---
     HTTP_TIMEOUT_S = _env_int("PUBS_RAG_HTTP_TIMEOUT_S", 20)
+
+    # --- Serving quarantine (WP-7c) ---
+    # retrieval.retrieve() filters documents.approved=false by default (an
+    # explicit include_unapproved=True lets admin tooling/tests see
+    # everything). Kill switch: setting this false disables the filter
+    # entirely (retrieval serves regardless of approval state) -- mirrors
+    # kpi_sync's KPI_SYNC_ABACUS_ENABLED-style on/off pattern.
+    QUARANTINE_ENABLED = _env_bool("PUBS_RAG_QUARANTINE_ENABLED", True)
 
     # --- Health / webhook server ---
     HEALTH_HOST = _env("PUBS_RAG_HEALTH_HOST", "0.0.0.0")

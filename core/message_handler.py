@@ -7,6 +7,7 @@ from utils.logger import setup_logger
 from .ai_handler import AIHandler
 from utils.db_manager import DatabaseManager
 from utils.cache_manager import CacheManager
+from utils.maintenance import get_maintenance_message
 from thefuzz import fuzz, process  # Added for fuzzy matching
 from typing import Optional, List, Dict
 
@@ -34,6 +35,18 @@ class BotMessageHandler:
             # Quick user mention or private chat check
             if not self._should_process_message(update, context):
                 self.logger.info("Skipping message as bot not mentioned or not in private chat.")
+                return
+
+            # Global maintenance-mode switch (WP-7c rollback ledger): checked
+            # before any FAQ/whitepaper matching or AI call. Placed after the
+            # mention/private-chat gate above rather than at the very first
+            # line, so maintenance mode silences answers the bot would
+            # otherwise have given -- it doesn't newly make the bot reply to
+            # unaddressed group chatter it would normally ignore.
+            holding_message = await get_maintenance_message(self.cache_manager.redis)
+            if holding_message is not None:
+                self.logger.info("Maintenance mode active -- replying with holding message.")
+                await update.message.reply_text(holding_message, parse_mode="Markdown")
                 return
 
             self.logger.info(f"Processing user {user_id} message: {message}")

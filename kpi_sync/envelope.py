@@ -83,13 +83,25 @@ class KpiStore:
             return None
 
     async def write_health(
-        self, source_key: str, *, ok: bool, last_success: Optional[str], consecutive_failures: int
+        self,
+        source_key: str,
+        *,
+        ok: bool,
+        last_success: Optional[str],
+        consecutive_failures: int,
+        reason: Optional[str] = None,
     ) -> None:
         payload = {
             "ok": ok,
             "last_success": last_success,
             "consecutive_failures": consecutive_failures,
         }
+        # `reason` is additive and omitted entirely when not given, so every
+        # pre-existing caller (plain success/failure) still writes the
+        # original 3-key C3 __health shape verbatim. Used today for
+        # WP-7c shape-degradation ("shape_change") -- see shape_validation.py.
+        if reason is not None:
+            payload["reason"] = reason
         # No expiry: a dead poller's last known health must stay readable
         # (that's the whole point of __health), not vanish on a TTL.
         await self.redis.set(self.health_key(source_key), json.dumps(payload))

@@ -10,6 +10,7 @@ from kpi_sync.http import fetch_json
 from kpi_sync.parsing import parse_upstream_datetime
 from kpi_sync.pollers.base import BasePoller
 from kpi_sync.ratelimiter import AsyncRateLimiter
+from kpi_sync.shape_validation import missing_keys
 
 
 class AmsMarketingPoller(BasePoller):
@@ -24,6 +25,10 @@ class AmsMarketingPoller(BasePoller):
 
     async def fetch_and_store(self) -> None:
         data = await fetch_json(self.session, self.url, rate_limiter=self.rate_limiter)
+        if Config.SHAPE_VALIDATION_ENABLED:
+            missing = missing_keys(data, Config.AMS_MARKETING_EXPECTED_KEYS)
+            if missing:
+                await self.report_shape_degraded(missing, source_url=self.url)
         as_of = parse_upstream_datetime(data.get("last_updated"))
         await self.store.write_flat_metrics(
             self.source_key,

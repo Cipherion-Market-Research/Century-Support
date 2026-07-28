@@ -64,3 +64,13 @@ class Config:
     # --- Broadcast queue (no channel adapters exist yet — WP-6 is Sprint 3;
     # broadcasts are durably queued here for adapters to consume later) ---
     BROADCAST_QUEUE_KEY = _env("CENTURY_CORE_BROADCAST_QUEUE_KEY", "century:broadcasts")
+
+    # --- Global maintenance-mode switch (WP-7c rollback ledger) ---
+    # Un-prefixed on purpose: the live Telegram bot's own copy of this
+    # default (utils/maintenance.py) reads the same env var so one setting
+    # produces one consistent holding message everywhere.
+    MAINTENANCE_DEFAULT_MESSAGE = _env(
+        "MAINTENANCE_DEFAULT_MESSAGE",
+        "We're currently updating our information. Please check back shortly "
+        "— for urgent issues contact support@ciphex.io.",
+    )

@@ -40,12 +40,38 @@ class Config:
     # --- Tier-1 HTTP feeds ---
     CLAIM_API_URL = _env("KPI_SYNC_CLAIM_API_URL", "https://claim.ciphex.io/api/presale")
     CLAIM_API_INTERVAL_S = _env_int("KPI_SYNC_CLAIM_API_INTERVAL_S", 15 * 60)
+    # WP-7c shape validation: top-level keys captured live from
+    # claim.ciphex.io/api/presale on 2026-07-20 (see
+    # tests/test_claim_api_poller.py LIVE_FIXTURE). A poller-enable flag
+    # generalizing KPI_SYNC_ABACUS_ENABLED to every source (WP-7c amendment):
+    # disabling a source simply stops building/running its poller, so its
+    # keys go stale per C3 (fail-safe -- the bot declines to quote rather
+    # than serving old numbers), never crashes the process.
+    CLAIM_API_EXPECTED_KEYS = (
+        "totalContributions",
+        "totalCPXPresold",
+        "totalStaked",
+        "percentStaked",
+        "cipherions",
+        "price",
+        "contract",
+    )
+    CLAIM_API_ENABLED = _env_bool("KPI_SYNC_CLAIM_API_ENABLED", True)
 
     AMS_BASE_URL = _env("KPI_SYNC_AMS_BASE_URL", "https://ams.ciphex.io")
     AMS_MARKETING_STATS_PATH = _env(
         "KPI_SYNC_AMS_MARKETING_STATS_PATH", "/api/ciphex-data/marketing-stats"
     )
     AMS_MARKETING_INTERVAL_S = _env_int("KPI_SYNC_AMS_MARKETING_INTERVAL_S", 15 * 60)
+    # Captured live from ams.ciphex.io/api/ciphex-data/marketing-stats on
+    # 2026-07-20 (see tests/test_ams_marketing_poller.py LIVE_FIXTURE).
+    AMS_MARKETING_EXPECTED_KEYS = (
+        "total_ra_return",
+        "validation_accuracy",
+        "trade_profitability",
+        "last_updated",
+    )
+    AMS_MARKETING_ENABLED = _env_bool("KPI_SYNC_AMS_MARKETING_ENABLED", True)
 
     AMS_KEY_METRICS_PATH = _env("KPI_SYNC_AMS_KEY_METRICS_PATH", "/api/ciphex-data/key-metrics")
     AMS_PUBLIC_METRICS_PATH = _env(
@@ -55,6 +81,14 @@ class Config:
         "KPI_SYNC_AMS_PUBLIC_CHARTS_PATH", "/api/ciphex-data/public-charts"
     )
     AMS_KEYMETRICS_INTERVAL_S = _env_int("KPI_SYNC_AMS_KEYMETRICS_INTERVAL_S", 30 * 60)
+    # ams_keymetrics makes three separate HTTP calls per cycle (key-metrics,
+    # public-metrics, public-charts -- all Sheets-backed); each has its own
+    # expected top-level shape, captured live on 2026-07-20 (see
+    # tests/test_ams_keymetrics_poller.py fixtures).
+    AMS_KEY_METRICS_EXPECTED_KEYS = ("metrics", "lastUpdated")
+    AMS_PUBLIC_METRICS_EXPECTED_KEYS = ("range", "majorDimension", "values")
+    AMS_PUBLIC_CHARTS_EXPECTED_KEYS = ("range", "majorDimension", "values")
+    AMS_KEYMETRICS_ENABLED = _env_bool("KPI_SYNC_AMS_KEYMETRICS_ENABLED", True)
 
     # ams.ciphex.io enforces 10 req/min server-side (x-ratelimit-* headers
     # confirm it); the poller's own budget is kept strictly under that so
@@ -99,6 +133,8 @@ class Config:
     # much slower cadence instead of hammering the RPC every 5 min for
     # nothing (§WP-3 spec: "5 min while a round runs").
     ONCHAIN_IDLE_INTERVAL_S = _env_int("KPI_SYNC_ONCHAIN_IDLE_INTERVAL_S", 30 * 60)
+    ONCHAIN_BASE_ENABLED = _env_bool("KPI_SYNC_ONCHAIN_BASE_ENABLED", True)
+    ONCHAIN_ETH_ENABLED = _env_bool("KPI_SYNC_ONCHAIN_ETH_ENABLED", True)
 
     # --- Burn verification (fast-follow, OQ-5 answered 2026-07-20) ---
     # Unrelated to presale-round activity, so it runs on its own fixed
@@ -107,10 +143,18 @@ class Config:
         "KPI_SYNC_CPX_BURN_ADDRESS_ETH", "0x000000000000000000000000000000000000dEaD"
     )
     BURN_VERIFICATION_INTERVAL_S = _env_int("KPI_SYNC_BURN_VERIFICATION_INTERVAL_S", 60 * 60)
+    BURN_VERIFICATION_ENABLED = _env_bool("KPI_SYNC_BURN_VERIFICATION_ENABLED", True)
 
     # --- Envelope / staleness defaults (C3) ---
     DEFAULT_TTL_S = _env_int("KPI_SYNC_DEFAULT_TTL_S", 3600)
     DEFAULT_STALE_AFTER_S = _env_int("KPI_SYNC_DEFAULT_STALE_AFTER_S", 1800)
+
+    # --- Serving-safety hardening (WP-7c) ---
+    # Payload shape validation: a poller whose upstream JSON is missing a
+    # declared top-level key marks itself degraded instead of silently
+    # serving/dropping fields (see shape_validation.py). One flag, safe
+    # default, mirrors KPI_SYNC_ABACUS_ENABLED's on/off shape.
+    SHAPE_VALIDATION_ENABLED = _env_bool("KPI_SYNC_SHAPE_VALIDATION_ENABLED", True)
 
     # --- HTTP client behavior ---
     HTTP_TIMEOUT_S = _env_float("KPI_SYNC_HTTP_TIMEOUT_S", 10.0)
