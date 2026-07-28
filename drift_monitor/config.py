@@ -68,8 +68,15 @@ class Config:
     TRACKED_REF = "main"
     GITHUB_API_BASE_URL = _env("DRIFT_GITHUB_API_BASE_URL", "https://api.github.com")
     GITHUB_RAW_BASE_URL = _env("DRIFT_GITHUB_RAW_BASE_URL", "https://raw.githubusercontent.com")
-    # Optional -- raises the commits-API rate limit from 60/hr to 5000/hr.
-    # Never required for correctness; the poller works unauthenticated.
+    # Required whenever DRIFT_CONTENT_ENABLED is true (enforced at startup
+    # by main.check_startup_requirements(), not here -- this module only
+    # reads env vars). Verified 2026-07-28 via a live, unauthenticated
+    # `curl` against the GitHub API: both the commits-API path and the
+    # raw-content path for the tracked repo return 404 without a token
+    # (a control request to a known-public repo returned 200 in the same
+    # check, ruling out a connectivity problem). A poll loop started
+    # without this set would silently 404 forever instead of detecting
+    # drift -- see main.py's startup check.
     GITHUB_TOKEN = _env("DRIFT_GITHUB_TOKEN", "")
 
     # Repo source pages this service watches. All are HTML entry files

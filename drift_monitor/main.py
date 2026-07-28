@@ -9,6 +9,12 @@ Modes:
     baseline from the live ciphex-website repo (recommended before the
     service first goes live -- see baseline.py's module docstring).
 
+`serve` fails loudly at startup (see check_startup_requirements()) if
+DRIFT_CONTENT_ENABLED is true and DRIFT_GITHUB_TOKEN is not set --
+unauthenticated GitHub access to the tracked repo currently 404s
+(verified 2026-07-28), and a poll loop that can't reach GitHub should not
+start silently.
+
 Unlike kpi_sync/ and pubs_rag/ (each self-contained with Railway's "Root
 Directory" pointed at the package itself), this service reads facts.yaml
 and data/kb_source/ from the repo root via the `facts_store` package, so
@@ -52,6 +58,41 @@ from drift_monitor.state import FindingsState, PollState
 from facts_store.loader import FactsStore
 
 logger = get_logger("drift_monitor.main")
+
+
+class StartupConfigError(RuntimeError):
+    """Raised by check_startup_requirements() when the service can't
+    safely start (see its docstring)."""
+
+
+def check_startup_requirements() -> None:
+    """Fail loudly instead of silently polling and 404ing forever.
+
+    Verified 2026-07-28 by direct, live `curl` against the GitHub API (no
+    auth headers): unauthenticated requests to both
+    api.github.com/repos/Cipherion-Market-Research/ciphex-website (404)
+    and its raw-content path (404) fail, while a control request to a
+    known-public repo (a known-public repository)
+    returned 200 in the same check -- so this is repo-specific, not a
+    connectivity artifact. A content-drift poll loop started without a
+    token would spend every cycle 404ing against the tracked repo and
+    never detect anything, which is worse than not starting at all.
+
+    Gated on Config.CONTENT_ENABLED, the single kill switch for the whole
+    7a lane (content-drift polling AND the parity probe, which also reads
+    the tracked repo): DRIFT_CONTENT_ENABLED=false never requires a
+    token. Never logs or otherwise includes Config.GITHUB_TOKEN's value
+    -- only whether it is present.
+    """
+    if Config.CONTENT_ENABLED and not Config.GITHUB_TOKEN:
+        raise StartupConfigError(
+            "DRIFT_CONTENT_ENABLED is true but DRIFT_GITHUB_TOKEN is not set. "
+            "Unauthenticated GitHub access to the tracked repo "
+            f"({Config.GITHUB_REPO_OWNER}/{Config.GITHUB_REPO_NAME}) currently returns 404 "
+            "(verified 2026-07-28) -- refusing to start a poll loop that would silently "
+            "fail every cycle. Set DRIFT_GITHUB_TOKEN, or set DRIFT_CONTENT_ENABLED=false "
+            "to run this service with only its health server active."
+        )
 
 
 async def run_content_poll_once(session: aiohttp.ClientSession) -> list:
@@ -147,6 +188,11 @@ async def parity_probe_loop(session: aiohttp.ClientSession, stop_event: asyncio.
 
 async def serve() -> None:
     setup_logging(Config.LOG_LEVEL)
+    try:
+        check_startup_requirements()
+    except StartupConfigError as e:
+        logger.error(str(e), extra={"event": "startup_config_error"})
+        raise
     poll_state = PollState().load()
     runner = await run_health_server(poll_state, Config.HEALTH_HOST, Config.HEALTH_PORT)
     logger.info("drift_monitor started", extra={"event": "startup"})
@@ -196,7 +242,11 @@ async def reseed_baseline() -> None:
 def main() -> None:
     mode = sys.argv[1] if len(sys.argv) > 1 else "serve"
     if mode == "serve":
-        asyncio.run(serve())
+        try:
+            asyncio.run(serve())
+        except StartupConfigError as e:
+            print(f"drift_monitor: startup configuration error: {e}", file=sys.stderr)
+            sys.exit(1)
     elif mode == "seed-baseline":
         seed_baseline()
     elif mode == "reseed-baseline":
