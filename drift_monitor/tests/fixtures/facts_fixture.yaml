@@ -1,0 +1,26 @@
+version: 1
+facts:
+  identity.support_email:
+    value: "support@ciphex.io"
+    verified_on: 2026-07-20
+    source_url: "https://ciphex.io/contact"
+  tokenomics.burn_cycle_1_cpx:
+    value: 481454298
+    verified_on: 2026-07-20
+    source_url: "https://ciphex.io/ciphex-token"
+  contracts.cpx_eth:
+    value: "0x18b33687d1c804Dd4ea6c82106e54923c23a652E"
+    verified_on: 2026-07-20
+    source_url: "https://ciphex.io/ciphex-token"
+  links.official_site:
+    value: "https://ciphex.io"
+    verified_on: 2026-07-20
+    source_url: "https://ciphex.io"
+  round-terms.new_round_price_usd:
+    value: 0.25
+    verified_on: 2026-07-20
+    source_url: "https://ciphex.io/future-financing"
+  identity.oq1_support_routing:
+    value: unknown
+    verified_on: 2026-07-20
+    source_url: "https://ciphex.io/contact"

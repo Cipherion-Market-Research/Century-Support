@@ -52,6 +52,13 @@ static/temp/*
 static/uploads/*
 !static/uploads/.gitkeep
 
+# drift_monitor (WP-7a) runtime output -- regenerated on every poll/report
+# cycle, never checked in. baselines/ IS checked in (the seeded manifest).
+drift_monitor/reports/*
+!drift_monitor/reports/.gitkeep
+drift_monitor/state/*
+!drift_monitor/state/.gitkeep
+
 # Secrets and configurations
 .env
 *.pem

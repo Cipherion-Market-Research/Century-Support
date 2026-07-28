@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "page",
+    "slug": "sample-page",
+    "title": "Sample Page",
+    "date": null,
+    "source_url": "https://ciphex.io/sample-page",
+    "local_path": "pages/sample-page.md",
+    "sha256": "deadbeef",
+    "bytes": 100,
+    "extraction": "ok",
+    "words": 20
+  }
+]
