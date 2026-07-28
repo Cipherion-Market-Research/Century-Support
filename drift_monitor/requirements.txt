@@ -3,12 +3,22 @@
 # PyYAML + pydantic; those are already in the root requirements.txt but are
 # repeated here so this package's requirements.txt is self-sufficient if it
 # is ever installed on its own.
-aiohttp==3.8.5
-beautifulsoup4==4.12.2
+#
+# This is a brand-new service (not a copy of the legacy bot's pins): every
+# version below was verified 2026-07-28 to build/install cleanly and pass
+# the full test suite (58/58) on Python 3.13.3. aiohttp==3.8.5 (an earlier
+# draft pin, copied by habit from the other services' requirements.txt)
+# fails to build from source on 3.13 -- its Cython-generated C extension
+# uses CPython internals removed/changed in 3.12+. Bumped to a current
+# stable release; beautifulsoup4/pytest/pytest-asyncio modernized too
+# since it cost nothing. PyYAML/pydantic were already fine on 3.13 (no
+# defect) and are left matching the root requirements.txt's pins.
+aiohttp==3.14.3
+beautifulsoup4==4.15.0
 PyYAML==6.0.1
 pydantic==2.10.3
 pydantic_core==2.27.1
 
 # --- Development / test dependencies ---
-pytest==7.4.0
-pytest-asyncio==0.21.1
+pytest==8.4.2
+pytest-asyncio==0.24.0
