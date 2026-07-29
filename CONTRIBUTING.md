@@ -8,7 +8,7 @@ emails/links, product descriptions, legal posture). Its schema is frozen as
 contract **C4** in `docs/CONTRACTS.md`.
 
 **`facts.yaml` changes only by reviewed pull request. No process — including
-the nightly drift checker (WP-7) — writes to this file automatically.** The
+the nightly drift checker — writes to this file automatically.** The
 drift checker's job is to *propose* changes (as a PR or notification) when
 live site copy disagrees with `facts.yaml`; a human always reviews before
 merge.

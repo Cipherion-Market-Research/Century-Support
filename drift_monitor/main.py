@@ -72,11 +72,11 @@ def check_startup_requirements() -> None:
     auth headers): unauthenticated requests to both
     api.github.com/repos/Cipherion-Market-Research/ciphex-website (404)
     and its raw-content path (404) fail, while a control request to a
-    known-public repo (a known-public repository)
-    returned 200 in the same check -- so this is repo-specific, not a
-    connectivity artifact. A content-drift poll loop started without a
-    token would spend every cycle 404ing against the tracked repo and
-    never detect anything, which is worse than not starting at all.
+    known-public repository returned 200 in the same check -- so this is
+    repo-specific, not a connectivity artifact. A content-drift poll loop
+    started without a token would spend every cycle 404ing against the
+    tracked repo and never detect anything, which is worse than not
+    starting at all.
 
     Gated on Config.CONTENT_ENABLED, the single kill switch for the whole
     7a lane (content-drift polling AND the parity probe, which also reads

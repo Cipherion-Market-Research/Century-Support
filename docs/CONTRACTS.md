@@ -1,10 +1,9 @@
 # Century Platform — Integration Contracts v1.0 (FROZEN 2026-07-20)
 
-These four contracts are the only coordination points between work packages
-(see the audit report, §7, and `docs/BUILD_HANDOFF.md`). They are frozen.
-Any agent needing a change raises it to the project owner in the audit
-thread — never edits this file unilaterally. Changes land as a version bump
-by owner PR only.
+These four contracts are the only coordination points between the services
+that make up the Century Support platform. They are frozen. Anyone needing
+a change raises it to the project owner — never edits this file
+unilaterally. Changes land as a version bump by owner PR only.
 
 ---
 
@@ -103,7 +102,7 @@ Rules:
   "stale" from "never existed".
 - Each poller also writes `kpi:<source>:__health` =
   `{ "ok": bool, "last_success": ISO-8601, "consecutive_failures": int }`
-  (consumed by WP-7 alerting).
+  (consumed by the drift monitor's alerting).
 - Rate limits are the poller's job: ≤10 req/min against `ams.ciphex.io`.
 
 ## C4 — facts.yaml schema (canonical facts store)
@@ -122,15 +121,15 @@ Rules:
 - `value: unknown` is a legal and REQUIRED sentinel for anything not
   verified (e.g. support@ routing — OQ-1). Never guess identity facts.
 - Every fact has `source_url` + `verified_on`. No fact without provenance.
-- The file changes only by PR reviewed by the project owner. The WP-7 drift
-  checker proposes changes; it never mutates this file.
+- The file changes only by PR reviewed by the project owner. The drift
+  monitor proposes changes; it never mutates this file.
 - Core's rule of use: numeric and identity answers come only from facts or
   C3 KPIs. A key that is absent or `unknown` → core answers "I don't know"
   plus the official link.
 
 ---
 
-## Open questions (owner to answer; agents treat as `unknown` meanwhile)
+## Open questions (owner to answer; services treat as `unknown` meanwhile)
 
 - OQ-1  Does support@ciphex.io still route? (site publishes only hello@ /
         partnerships@)
@@ -138,4 +137,5 @@ Rules:
 - OQ-3  Is the Uniswap DEX listing live? (dashboard listing block is
         labeled sample data in source)
 - OQ-4  Stable subdomain in front of the Abacus Indexer ALB
-        (e.g. index.ciphex.io) — WP-3 must keep the base URL configurable
+        (e.g. index.ciphex.io) — the KPI sync service must keep the base
+        URL configurable

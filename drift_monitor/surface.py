@@ -2,7 +2,10 @@
 
 Weekly-cadence lane that runs deterministic, regex-based extractors over the
 three product repos (ciphex-alpha-dashboard, atlas, abacus-trading-view) and
-diffs the result against a committed baseline manifest. It NEVER calls an
+diffs the result against an accepted baseline manifest (kept on disk under
+`baselines/surface/`, not tracked in git -- see
+`drift_monitor/baselines/.gitignore` -- since those three repos are private
+and their baselines enumerate private API routes/file paths). It NEVER calls an
 LLM, NEVER auto-mutates facts.yaml / kpi_sync config / any poller, and the
 only way a baseline moves is the explicit `--accept` CLI flag.
 

@@ -1,0 +1,9 @@
+# The WP-7b surface lane's baselines enumerate API routes and file paths
+# from PRIVATE repos (ciphex-alpha-dashboard, atlas, abacus-trading-view).
+# This lane is a manually-invoked local CLI (`python -m drift_monitor.surface`)
+# never read by the deployed Railway service (see drift_monitor/main.py and
+# drift_monitor/railway.json -- neither references drift_monitor/surface.py),
+# so these baselines do not need to be committed to a now-public repo. Kept
+# on disk locally; regenerate with `--accept` against a local checkout when
+# needed (see surface.py's module docstring).
+surface/*.json

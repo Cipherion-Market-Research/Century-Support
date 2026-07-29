@@ -31,7 +31,8 @@ def _copy_fixture(repo: str, dest: Path) -> Path:
 @pytest.fixture
 def isolated_dirs(tmp_path):
     """Baseline/report/state dirs isolated per test — never touches the
-    real drift_monitor/baselines/surface/*.json committed to git."""
+    real drift_monitor/baselines/surface/*.json files kept on disk (not
+    tracked in git; see drift_monitor/baselines/.gitignore)."""
     return {
         "baseline_dir": tmp_path / "baselines",
         "report_dir": tmp_path / "reports",

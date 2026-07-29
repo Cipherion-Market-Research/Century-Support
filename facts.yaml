@@ -2,7 +2,7 @@
 #
 # This file is the single source of truth for numeric and identity answers.
 # It is edited ONLY via a reviewed pull request — see CONTRIBUTING.md.
-# The WP-7 drift checker proposes changes by opening a PR; it never writes here directly.
+# The drift checker proposes changes by opening a PR; it never writes here directly.
 #
 # Schema (frozen, docs/CONTRACTS.md C4):
 #   version: 1
@@ -18,10 +18,13 @@
 # Provenance key used in notes below:
 #   "kb_source" = directly read off data/kb_source/ (ciphex.io pages/PDFs harvested 2026-07-20 —
 #                 this is a live-site spot-check)
-#   "audit"     = drawn from audit artifact redacted (cross-repo research: ciphex-website,
-#                 ciphex-alpha-dashboard, atlas, abacus-trading-view repos, and live endpoint
-#                 probes on 2026-07-20) where the underlying page is not present in kb_source —
-#                 flagged for an independent live-site spot-check before being treated as final.
+#   "audit"     = drawn from an internal content audit conducted 2026-07-20 (cross-repo research:
+#                 ciphex-website, ciphex-alpha-dashboard, atlas, abacus-trading-view repos, and
+#                 live endpoint probes on 2026-07-20) where the underlying page is not present in
+#                 kb_source — flagged for an independent live-site spot-check before being treated
+#                 as final. Facts sourced this way use source_url:
+#                 "internal://content-audit-2026-07-20" since no live ciphex.io page directly
+#                 supports them.
 
 version: 1
 facts:
@@ -71,13 +74,13 @@ facts:
     value: "ams.ciphex.io"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "OQ-2 (docs/CONTRACTS.md) — RESOLVED by owner, 2026-07-20: ams.ciphex.io is canonical (matches the website's own live-stats fetch, functionally confirmed working 2026-07-20). alpha.ciphex.io — documented as the production domain in the ciphex-alpha-dashboard repo — is an older API endpoint; never emit it in user-facing links."
+    notes: "OQ-2 (docs/CONTRACTS.md) — RESOLVED by owner, 2026-07-20: ams.ciphex.io is canonical (matches the website's own live-stats fetch, functionally confirmed working 2026-07-20). alpha.ciphex.io — documented as the production domain in the ciphex-alpha-dashboard repo — is an older API endpoint; never emit it in user-facing links. No page in the data/kb_source/ harvest states this domain in plain text (it is only observable via the homepage's live client-side data fetch, which the static-page harvest does not capture); this value rests on an internal content audit conducted 2026-07-20, not a citable kb_source page."
 
   identity.dex_live_status:
     value: "Not live as of 2026-07-20"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "OQ-3 (docs/CONTRACTS.md) — RESOLVED by owner, 2026-07-20: CPX is confirmed NOT live on any DEX as of this date. The owner expects a live listing within roughly 30-60 days of 2026-07-20 — this is an EXPECTATION/target, not a commitment: phrase it to users as something the team has indicated it expects, never as a promised date, and re-verify before quoting since this window will go stale quickly. The Alpha dashboard's apparent Uniswap v3/v4 positions and GeckoTerminal/DexTools pool remain marked sample data in source code and should not be cited as evidence of a live listing."
+    notes: "OQ-3 (docs/CONTRACTS.md) — RESOLVED by owner, 2026-07-20: CPX is confirmed NOT live on any DEX as of this date. The owner expects a live listing within roughly 30-60 days of 2026-07-20 — this is an EXPECTATION/target, not a commitment: phrase it to users as something the team has indicated it expects, never as a promised date, and re-verify before quoting since this window will go stale quickly. The Alpha dashboard's apparent Uniswap v3/v4 positions and GeckoTerminal/DexTools pool remain marked sample data in source code and should not be cited as evidence of a live listing. This specific as-of-2026-07-20 confirmation is an owner attestation from an internal content audit, not a citable live page; kb_source partially corroborates the broader non-listed status — the May 8, 2026 ecosystem update (https://ciphex.io/assets/documents/ecosystem-update-may08-26.pdf) describes CPX exchange listing work as only just beginning a 120-day initiative at that date."
 
   # ────────────────────────────── links ───────────────────────────────
 
@@ -121,13 +124,13 @@ facts:
     value: "https://claim.ciphex.io"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit, corroborated by kb_source (config/constants.py and data/training/faq.json already point here). Canonical 'Ciphex Token Claim Center' for the concluded 2025 distribution. Exposes a public JSON feed at /api/presale (Tier-1 KPI concern, not a fact — see docs/CONTRACTS.md C3 / WP-3)."
+    notes: "Internal content audit, 2026-07-20; corroborated by the bot's own config/constants.py and data/training/faq.json, which already point here. Canonical 'Ciphex Token Claim Center' for the concluded 2025 distribution. Exposes a public JSON feed at /api/presale (Tier-1 KPI concern, not a fact — see docs/CONTRACTS.md C3). Every harvested kb_source page shows a site-wide 'Claim Tokens' nav link, corroborating that a live claim portal exists, but the static-page harvest strips link targets, so the exact claim.ciphex.io domain itself is not independently confirmable from data/kb_source/ in this pass."
 
   links.claim_portal_legacy_redirect:
     value: "https://presale.ciphex.io"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit. This old domain now 308-redirects to claim.ciphex.io. Do not surface presale.ciphex.io as the primary link in new copy; kept here only so a drift check / old-link audit has the mapping."
+    notes: "Internal content audit, 2026-07-20 (live endpoint probe of the redirect). This old domain now 308-redirects to claim.ciphex.io. Do not surface presale.ciphex.io as the primary link in new copy; kept here only so a drift check / old-link audit has the mapping. Not present in the data/kb_source/ page harvest."
 
   links.ecosystem_publications:
     value: "https://ciphex.io/ecosystem-publications"
@@ -183,7 +186,7 @@ facts:
     value: 0.26
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit (claim.ciphex.io/api/presale live-probed 2026-07-20 still reports this as the historical contribution price). NEVER present as a current/live market price — Ciphex has no confirmed live trading pair (see identity.dex_live_status)."
+    notes: "Internal content audit, 2026-07-20 (claim.ciphex.io/api/presale live-probed 2026-07-20 still reports this as the historical contribution price). NEVER present as a current/live market price — Ciphex has no confirmed live trading pair (see identity.dex_live_status). This figure does not appear in the data/kb_source/ static-page harvest."
 
   round-terms.legacy_2025_min_purchase_cpx:
     value: 2000
@@ -231,49 +234,49 @@ facts:
     value: "Market Foundation Contributions — Phase I"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit. Sourced from the ciphex-website repo (503d98a, 2026-07-19) contribute-page copy / presale ABI (src/js/presale-live.js), per the audit's cross-repo research. The live ciphex.io contribute/presale page is NOT present in the data/kb_source/ 18-page harvest — recommend an independent live-site spot-check before final sign-off. All round-terms.new_round_* facts share this same provenance and caveat. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): the live contribute page these terms describe is gated off and returns HTTP 404 when probed live — treat all round-terms.new_round_* facts as staged, unpublished, and subject to change until a reachable page or on-chain contract state confirms them."
+    notes: "Internal content audit, 2026-07-20. Sourced from the ciphex-website repo (503d98a, 2026-07-19) contribute-page copy / presale ABI (src/js/presale-live.js), per the audit's cross-repo research. The live ciphex.io contribute/presale page is NOT present in the data/kb_source/ 18-page harvest — recommend an independent live-site spot-check before final sign-off. All round-terms.new_round_* facts share this same provenance and caveat. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): the live contribute page these terms describe is gated off and returns HTTP 404 when probed live — treat all round-terms.new_round_* facts as staged, unpublished, and subject to change until a reachable page or on-chain contract state confirms them."
 
   round-terms.new_round_status:
     value: "announced, gated (\"Preparing Access\" on-site) — not yet open to the public"
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/"
-    notes: "The \"Preparing Access\" gating label itself IS kb_source-verified (it appears site-wide, e.g. on ciphex.io/, in the newsletter/contribute footer block). The round's specific terms below are audit-sourced — see round-terms.new_round_name note. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): the contribute page itself now returns HTTP 404 live. Additional nuance from Agent C's on-chain read (2026-07-20): the Base presale contract's isPresaleActive() already reads true on-chain even though the public contribute page is gated/404 and raisedFunds/contributorsAmount are both still 0 — the round is technically 'active' at the contract level but not yet open or usable from a user's perspective. Do not tell a user the round is 'open'."
+    notes: "The \"Preparing Access\" gating label itself IS kb_source-verified (it appears site-wide, e.g. on ciphex.io/, in the newsletter/contribute footer block). The round's specific terms below are audit-sourced — see round-terms.new_round_name note. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): the contribute page itself now returns HTTP 404 live. Additional nuance from an internal on-chain read (2026-07-20): the Base presale contract's isPresaleActive() already reads true on-chain even though the public contribute page is gated/404 and raisedFunds/contributorsAmount are both still 0 — the round is technically 'active' at the contract level but not yet open or usable from a user's perspective. Do not tell a user the round is 'open'."
 
   round-terms.new_round_price_usd:
     value: 0.25
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live. Heads-up from Agent C's on-chain read (2026-07-20): the Base presale contract's getTokenPrice() currently decodes to ~$0.115/CPX, not $0.25. This may reflect a pre-launch/test contract state (raisedFunds/contributorsAmount both 0) or a genuine change since the audit — flagging for the owner to reconcile, not silently overriding the advertised $0.25 value here. Do not quote a price to a user without checking for a newer resolution of this discrepancy. OWNER DIRECTIVE, 2026-07-20 (see round-terms.market_expansion_timeline): this $0.25 figure and the on-chain ~$0.115 figure remain UNRECONCILED — the bot must quote NEITHER as the new round's price. If asked, answer that the new round's price has not been finalized/published and point to links.website for official updates."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live. Heads-up from an internal on-chain read (2026-07-20): the Base presale contract's getTokenPrice() currently decodes to ~$0.115/CPX, not $0.25. This may reflect a pre-launch/test contract state (raisedFunds/contributorsAmount both 0) or a genuine change since the audit — flagging for the owner to reconcile, not silently overriding the advertised $0.25 value here. Do not quote a price to a user without checking for a newer resolution of this discrepancy. OWNER DIRECTIVE, 2026-07-20 (see round-terms.market_expansion_timeline): this $0.25 figure and the on-chain ~$0.115 figure remain UNRECONCILED — the bot must quote NEITHER as the new round's price. If asked, answer that the new round's price has not been finalized/published and point to links.website for official updates."
 
   round-terms.new_round_cap_cpx:
     value: 64000000
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.new_round_cap_usd_approx:
     value: 16000000
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit. ~$16M, i.e. new_round_cap_cpx × new_round_price_usd (64,000,000 × $0.25). Approximate, per audit phrasing. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change; also see round-terms.new_round_price_usd for a live on-chain price discrepancy that would change this approximation."
+    notes: "Internal content audit, 2026-07-20. ~$16M, i.e. new_round_cap_cpx × new_round_price_usd (64,000,000 × $0.25). Approximate, per audit phrasing. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change; also see round-terms.new_round_price_usd for a live on-chain price discrepancy that would change this approximation."
 
   round-terms.new_round_tier_minimums_cpx:
     value: [1000, 2000, 5000]
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Supersedes the flat 2,000 CPX minimum quoted for the legacy 2025 round (round-terms.legacy_2025_min_purchase_cpx). STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. Supersedes the flat 2,000 CPX minimum quoted for the legacy 2025 round (round-terms.legacy_2025_min_purchase_cpx). STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.new_round_usd_floor_global:
     value: 5000
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Applies outside the restricted jurisdictions listed in round-terms.new_round_usd_floor_restricted. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. Applies outside the restricted jurisdictions listed in round-terms.new_round_usd_floor_restricted. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.new_round_usd_floor_restricted:
     value: 25000
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Applies to US / CA / GB participants per the audit's §2 phrasing ('USD floors $5k global / $25k US-CA-GB'). Cross-check against round-terms.new_round_restricted_jurisdictions, which is kb_source-verified and lists a broader restricted set (US, EU/EEA, Canada, UK) for future financings generally. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. Applies to US / CA / GB participants per the audit's §2 phrasing ('USD floors $5k global / $25k US-CA-GB'). Cross-check against round-terms.new_round_restricted_jurisdictions, which is kb_source-verified and lists a broader restricted set (US, EU/EEA, Canada, UK) for future financings generally. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.new_round_restricted_jurisdictions:
     value:
@@ -285,37 +288,37 @@ facts:
       - "Sanctioned, prohibited, or FATF high-risk persons"
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/future-financing"
-    notes: "kb_source. This is the general 'Future Financing' disclosure's prohibited/restricted persons list, dated 2026-05-25 on-page; it is written to apply to any future CPX financing, of which the new round is the current instance. Note: this restricted-persons LIST itself is confirmed live (future-financing.md is reachable, not gated) — what is staged/unpublished is its specific dollar-floor application to the new round (see round-terms.new_round_usd_floor_global / _restricted), which is sourced from the gated contribute page that returns HTTP 404 live (owner + Agent C, 2026-07-20)."
+    notes: "kb_source. This is the general 'Future Financing' disclosure's prohibited/restricted persons list, dated 2026-05-25 on-page; it is written to apply to any future CPX financing, of which the new round is the current instance. Note: this restricted-persons LIST itself is confirmed live (future-financing.md is reachable, not gated) — what is staged/unpublished is its specific dollar-floor application to the new round (see round-terms.new_round_usd_floor_global / _restricted), which is sourced from the gated contribute page that returns HTTP 404 live (owner + internal audit, 2026-07-20)."
 
   round-terms.new_round_chain:
     value: "Base (chain id 8453)"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Contrast with the legacy 2025 round, which ran on Ethereum mainnet (round-terms.legacy_2025_chain). See contracts.base_presale for the on-chain contract, which Agent C confirmed IS deployed and reads isPresaleActive()=true — so the chain itself is real infrastructure, even though STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): the public contribute page describing these terms returns HTTP 404 live."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. Contrast with the legacy 2025 round, which ran on Ethereum mainnet (round-terms.legacy_2025_chain). See contracts.base_presale for the on-chain contract, which the internal audit confirmed IS deployed and reads isPresaleActive()=true — so the chain itself is real infrastructure, even though STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): the public contribute page describing these terms returns HTTP 404 live."
 
   round-terms.new_round_lockup_days:
     value: 90
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Shorter than the legacy 180-day lockup (round-terms.legacy_2025_lockup_days). STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. Shorter than the legacy 180-day lockup (round-terms.legacy_2025_lockup_days). STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.new_round_vesting_days:
     value: 90
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.new_round_vesting_installments:
     value: "3 equal monthly installments"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. Contrast with the legacy round's 12 monthly installments (round-terms.legacy_2025_vesting_months). STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. Contrast with the legacy round's 12 monthly installments (round-terms.legacy_2025_vesting_months). STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.new_round_lockup_interest:
     value: unknown
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit explicitly flags this as unstated for the new round: the 10-year-Treasury-yield lockup interest mechanic (round-terms.legacy_2025_lockup_interest) is documented for the 2025 round only. Do not assume it carries over — answer 'unknown, confirm with the team' if asked. STAGED/UNPUBLISHED (owner + Agent C, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
+    notes: "Internal content audit, 2026-07-20, explicitly flags this as unstated for the new round: the 10-year-Treasury-yield lockup interest mechanic (round-terms.legacy_2025_lockup_interest) is documented for the 2025 round only. Do not assume it carries over — answer 'unknown, confirm with the team' if asked. STAGED/UNPUBLISHED (owner + internal audit, 2026-07-20): sourced from the gated contribute page, which returns HTTP 404 live — treat as staged and subject to change."
 
   round-terms.market_expansion_timeline:
     value: "The 2025 presale has ended. A smaller market-expansion round is expected to complete within approximately 30 days of 2026-07-20, followed by a DEX launch."
@@ -343,7 +346,7 @@ facts:
       explorer_url: "https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc"
     verified_on: "2026-07-20"
     source_url: "https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc"
-    notes: "Carried from the bot's existing config/constants.py; the audit's §2 table echoes this same address under 'Bot says' but its 'Truth' column does not separately re-confirm it (it only re-confirms the main CPX token address and adds the two Base addresses). Not disputed by the audit, but also not independently re-verified against Etherscan by WP-2 in this pass — recommend a spot-check before treating as fully confirmed."
+    notes: "Carried from the bot's existing config/constants.py; the audit's §2 table echoes this same address under 'Bot says' but its 'Truth' column does not separately re-confirm it (it only re-confirms the main CPX token address and adds the two Base addresses). Not disputed by the audit, but also not independently re-verified against Etherscan in this pass — recommend a spot-check before treating as fully confirmed."
 
   contracts.base_presale:
     value:
@@ -353,7 +356,7 @@ facts:
       explorer_url: "https://basescan.org/address/0xE8E53D687b1b806Da21a2D7DA73Ff56a34e07A49"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note for full provenance chain (ciphex-website repo presale ABI). WP-3's on-chain reads (docs/BUILD_HANDOFF.md §4.1) are expected to independently confirm this contract's live state (isPresaleActive, getTokenPrice, raisedFunds, contributorsAmount)."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note for full provenance chain (ciphex-website repo presale ABI). The KPI sync service's on-chain reads are expected to independently confirm this contract's live state (isPresaleActive, getTokenPrice, raisedFunds, contributorsAmount)."
 
   contracts.cpx_token_base:
     value:
@@ -363,7 +366,7 @@ facts:
       explorer_url: "https://basescan.org/address/0x7A8Fc21fd34DE3dD5131a965fb3995f484f50D59"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit — see round-terms.new_round_name note. IMPORTANT: this is a second, LEGITIMATE CPX deployment distinct from contracts.cpx_token_ethereum — a user citing this Base address is not necessarily describing a scam. The audit specifically flagged the pre-fix bot as having a false-positive risk here (it would have told a legitimate Base-address holder their token was fake). Always label both chains explicitly when answering contract-address questions."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. IMPORTANT: this is a second, LEGITIMATE CPX deployment distinct from contracts.cpx_token_ethereum — a user citing this Base address is not necessarily describing a scam. The audit specifically flagged the pre-fix bot as having a false-positive risk here (it would have told a legitimate Base-address holder their token was fake). Always label both chains explicitly when answering contract-address questions."
 
   # ────────────────────────── tokenomics ──────────────────────────────
 
@@ -411,7 +414,7 @@ facts:
     value: 1500000000
     verified_on: "2026-07-20"
     source_url: "https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E"
-    notes: "Agent C / WP-3 on-chain finding (2026-07-20): the Ethereum CPX contract's totalSupply() reads exactly 1,500,000,000 — unchanged, with NO reduction reflecting Burn Cycle 1. This is expected, not a contradiction: Burn Cycle 1 was executed as a transfer of 481,454,298 CPX to a burn/dead address rather than a call to a supply-reducing burn function, so raw totalSupply() will never show it. IMPORTANT: this on-chain totalSupply is a DIFFERENT number from tokenomics.fy2026_fd_supply (1,018,545,702) — the FD/effective-supply figure nets out the burn-address balance and is what should be quoted as 'circulating/effective supply post-burn'. If a user checks Etherscan directly and sees 1.5B, that is not the bot being wrong — always distinguish on-chain totalSupply from FD/effective supply explicitly rather than letting the two numbers appear to conflict. RESOLVED 2026-07-20: tokenomics.burn_cycle_1_burn_address is now known and auditor-verified on-chain (balanceOf reads exactly 481,454,298 CPX via two independent RPCs) — 1,500,000,000 − 481,454,298 = 1,018,545,702, an exact match to tokenomics.fy2026_fd_supply. The burn is now fully independently verifiable end-to-end on-chain."
+    notes: "Internal audit on-chain finding (2026-07-20): the Ethereum CPX contract's totalSupply() reads exactly 1,500,000,000 — unchanged, with NO reduction reflecting Burn Cycle 1. This is expected, not a contradiction: Burn Cycle 1 was executed as a transfer of 481,454,298 CPX to a burn/dead address rather than a call to a supply-reducing burn function, so raw totalSupply() will never show it. IMPORTANT: this on-chain totalSupply is a DIFFERENT number from tokenomics.fy2026_fd_supply (1,018,545,702) — the FD/effective-supply figure nets out the burn-address balance and is what should be quoted as 'circulating/effective supply post-burn'. If a user checks Etherscan directly and sees 1.5B, that is not the bot being wrong — always distinguish on-chain totalSupply from FD/effective supply explicitly rather than letting the two numbers appear to conflict. RESOLVED 2026-07-20: tokenomics.burn_cycle_1_burn_address is now known and auditor-verified on-chain (balanceOf reads exactly 481,454,298 CPX via two independent RPCs) — 1,500,000,000 − 481,454,298 = 1,018,545,702, an exact match to tokenomics.fy2026_fd_supply. The burn is now fully independently verifiable end-to-end on-chain."
 
   tokenomics.burn_cycle_1_burn_address:
     value: "0x000000000000000000000000000000000000dEaD"
@@ -459,7 +462,7 @@ facts:
     value: "Only the 'CPX Reserves' category (35.38%, 360,398,652 CPX) was captured in this harvest. The live page states a nine-category allocation table exists, but the other eight categories are revealed only via interactive hover/focus on the live chart and were not captured by the static page harvest."
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/ciphex-token"
-    notes: "kb_source. Do NOT fabricate the remaining 8 allocation categories. WP-4 (publications RAG) or a future re-harvest with interaction support should fill these in; until then, the bot should answer allocation-breakdown questions with only this one confirmed category and note the rest is unavailable."
+    notes: "kb_source. Do NOT fabricate the remaining 8 allocation categories. The publications RAG service or a future re-harvest with interaction support should fill these in; until then, the bot should answer allocation-breakdown questions with only this one confirmed category and note the rest is unavailable."
 
   tokenomics.audit_status:
     value: "Skynet audit completed (CertiK) — site displays 3.5/5, 24,364 ratings"
@@ -533,13 +536,13 @@ facts:
     value: "Per audit cross-repo research on the 'atlas' repo (not independently reproducible from the public kb_source corpus): Atlas is built on Solana (Token-2022 standard) and presently runs on Solana devnet — a different chain from CPX (Ethereum mainnet + Base)."
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit. Not verified against any page in this corpus (Atlas's on-chain details are not exposed on the marketing pages harvested). Confirm with the team before stating Atlas's chain to a user with confidence; if asked and unconfirmed, prefer answering 'Atlas is a separate product from the CPX token and runs its own infrastructure — check with the team for chain specifics' over guessing."
+    notes: "Internal content audit, 2026-07-20. Not verified against any page in this corpus (Atlas's on-chain details are not exposed on the marketing pages harvested). Confirm with the team before stating Atlas's chain to a user with confidence; if asked and unconfirmed, prefer answering 'Atlas is a separate product from the CPX token and runs its own infrastructure — check with the team for chain specifics' over guessing."
 
   products.atlas_demo_data_caveat:
     value: "Atlas RWA Services is pre-commercial. Per audit: dashboard/product financial figures associated with the Atlas product line (e.g. certain CPX listing price displays surfaced through the same dashboard tooling) are marked \"sample data\" or \"demo seed data\" in source code, not live figures."
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "audit, corroborated by kb_source (https://ciphex.io/atlas-rwa-services and https://ciphex.io/general-disclosure both state pre-commercial/internally-funded-only status). The bot must always caveat Atlas figures as pre-commercial/pipeline-stage, never presented as executed deals or live market data."
+    notes: "Internal content audit, 2026-07-20, corroborated by kb_source (https://ciphex.io/atlas-rwa-services and https://ciphex.io/general-disclosure both state pre-commercial/internally-funded-only status). The bot must always caveat Atlas figures as pre-commercial/pipeline-stage, never presented as executed deals or live market data."
 
   # ────────────────────────────── legal ───────────────────────────────
 
@@ -589,7 +592,7 @@ facts:
     value: "Ciphex maintains a dedicated 'Unavailable For Legal Reasons' page for geo-restricted access."
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/unavailable"
-    notes: "kb_source confirms the page exists (title: 'Ciphex | Unavailable For Legal Reasons'). audit additionally confirms this is served with an HTTP 451 status code when probed live on 2026-07-20 — that specific status-code detail is audit-sourced, not independently re-checked by WP-2."
+    notes: "kb_source confirms the page exists (title: 'Ciphex | Unavailable For Legal Reasons'). audit additionally confirms this is served with an HTTP 451 status code when probed live on 2026-07-20 — that specific status-code detail is audit-sourced, not independently re-checked in this pass."
 
   legal.governance:
     value: "No community or token-holder voting exists. Direction is set by the co-founders and expert contributors (see leadership team)."
