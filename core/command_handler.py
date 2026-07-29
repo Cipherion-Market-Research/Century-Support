@@ -99,7 +99,7 @@ class BotCommandHandler:
         if token_price and token_price != "Unknown":
             formatted_price = (
                 f"**CPX Contribution Price (2025 round, concluded)**: {token_price}\n"
-                f"This is not a live market price — CipheX has no trading pair yet. "
+                f"This is not a live market price — Ciphex has no trading pair yet. "
                 f"Visit [claim.ciphex.io](https://claim.ciphex.io) to access the token claiming portal."
             )
             await update.message.reply_text(formatted_price, parse_mode="Markdown")
@@ -112,7 +112,7 @@ class BotCommandHandler:
 
                 formatted_price = (
                     f"**CPX Contribution Price (2025 round, concluded)**: {token_price} (cached)\n"
-                    f"This is not a live market price — CipheX has no trading pair yet. "
+                    f"This is not a live market price — Ciphex has no trading pair yet. "
                     f"Visit [claim.ciphex.io](https://claim.ciphex.io) to access the token claiming portal."
                 )
                 await update.message.reply_text(formatted_price, parse_mode="Markdown")

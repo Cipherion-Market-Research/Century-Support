@@ -1,30 +1,30 @@
-# CipheX Capital Ecosystem: LLM-Friendly Composite Document
+# Ciphex Capital Ecosystem: LLM-Friendly Composite Document
 
-This document provides a concise, LLM-friendly overview of the CipheX Capital Ecosystem, its operations, governance, tokenomics, and the Alpha Centurion Network (Alpha CPX). It prioritizes the most current information, incorporating all relevant amendments and filtering out irrelevant or outdated content.
+This document provides a concise, LLM-friendly overview of the Ciphex Capital Ecosystem, its operations, governance, tokenomics, and the Alpha Centurion Network (Alpha CPX). It prioritizes the most current information, incorporating all relevant amendments and filtering out irrelevant or outdated content.
 
-## CipheX Capital Ecosystem Overview
+## Ciphex Capital Ecosystem Overview
 
-CipheX delivers AI-powered, noncustodial portfolio management through its Alpha Centurion Network (Alpha CPX), bringing institutional-grade performance to everyday investors. Alpha CPX operates as a noncustodial platform, ensuring that neither CipheX nor the Alpha CPX network holds, manages, or exercises control over user capital, assets, or returns through any custodial account or managed investment structure. Users maintain full ownership and control of their assets at all times.
+Ciphex delivers AI-powered, noncustodial portfolio management through its Alpha Centurion Network (Alpha CPX), bringing institutional-grade performance to everyday investors. Alpha CPX operates as a noncustodial platform, ensuring that neither Ciphex nor the Alpha CPX network holds, manages, or exercises control over user capital, assets, or returns through any custodial account or managed investment structure. Users maintain full ownership and control of their assets at all times.
 
 ## Ecosystem Operations
 
 ### Operating Capital Reserves
-Initial revenues are expected from Alpha CPX market execution fees and a proportionate share of CipheX liquidity pool trading fees. Future revenues from other services are expected from commercial opportunities using the Alpha CPX proprietary framework and RWA tokenization capabilities.
+Initial revenues are expected from Alpha CPX market execution fees and a proportionate share of Ciphex liquidity pool trading fees. Future revenues from other services are expected from commercial opportunities using the Alpha CPX proprietary framework and RWA tokenization capabilities.
 
 ### Community Voting
-CipheX will no longer implement broad community-based voting on ecosystem protocols, systems development, or other foundational decisions. Instead, the direction of the CipheX ecosystem will remain under the leadership of its creators and a curated group of expert contributors who possess deep knowledge in decentralized finance, algorithmic markets, and risk-controlled innovation. This decision reflects CipheX's ongoing commitment to preserving its ecosystem's integrity, performance, and long-term value, which fragmented or uninformed participants in open-community governance models can severely compromise.
+Ciphex will no longer implement broad community-based voting on ecosystem protocols, systems development, or other foundational decisions. Instead, the direction of the Ciphex ecosystem will remain under the leadership of its creators and a curated group of expert contributors who possess deep knowledge in decentralized finance, algorithmic markets, and risk-controlled innovation. This decision reflects Ciphex's ongoing commitment to preserving its ecosystem's integrity, performance, and long-term value, which fragmented or uninformed participants in open-community governance models can severely compromise.
 
 ### Creators & Community Contributors
-CipheX has published its full professional roster of Creators, Founding Members, and Expert Contributors on its most recent CipheX site, introducing its Alpha Centurion Network (Alpha CPX).
+Ciphex has published its full professional roster of Creators, Founding Members, and Expert Contributors on its most recent Ciphex site, introducing its Alpha Centurion Network (Alpha CPX).
 
 ### Staffing and Personnel
-CipheX will continue using its remote team for non-Alpha CPX ecosystem needs. Primary development will shift to Alpha CPX and its architecture. Sensitive R&D in algorithmic and quantitative strategies will be handled by Cipherion Capital SA and trusted networks of creators and founding contributors. Marketing of the Alpha CPX or any future services of CipheX will continue to be managed by established third-party marketing firms. CipheX will maintain its expert and general contributor model and may shift toward traditional employment of personnel in the future.
+Ciphex will continue using its remote team for non-Alpha CPX ecosystem needs. Primary development will shift to Alpha CPX and its architecture. Sensitive R&D in algorithmic and quantitative strategies will be handled by Cipherion Capital SA and trusted networks of creators and founding contributors. Marketing of the Alpha CPX or any future services of Ciphex will continue to be managed by established third-party marketing firms. Ciphex will maintain its expert and general contributor model and may shift toward traditional employment of personnel in the future.
 
 ### Removals and Termination
-Removals or terminations of expert contributors in the CipheX ecosystem follow their smart contracts, which outline services, engagement terms, and compensation. Enforcement is handled via protocol-level governance. CipheX plans to establish an independent compensation and review committee to oversee contributor agreements, including continuation, changes, or termination decisions. This committee will adopt governance models from traditional public companies and industry best practices, supporting CipheX's move toward more transparent, regulation-aligned operational structures.
+Removals or terminations of expert contributors in the Ciphex ecosystem follow their smart contracts, which outline services, engagement terms, and compensation. Enforcement is handled via protocol-level governance. Ciphex plans to establish an independent compensation and review committee to oversee contributor agreements, including continuation, changes, or termination decisions. This committee will adopt governance models from traditional public companies and industry best practices, supporting Ciphex's move toward more transparent, regulation-aligned operational structures.
 
 ### Pre-Launch Centurion Trading
-Aside from the Centurion Capital Pool, currently comprised primarily of contributions from existing CipheX relationships, participation in the pre-commercial testing of Alpha CPX by new contributors is no longer available.
+Aside from the Centurion Capital Pool, currently comprised primarily of contributions from existing Ciphex relationships, participation in the pre-commercial testing of Alpha CPX by new contributors is no longer available.
 
 ### Pre-Launch Loss Coverage
 Except for current contributors verified to participate in the Centurion Capital Pool for pre-commercial testing of Alpha CPX, this section no longer applies to any new contributors.
@@ -33,27 +33,27 @@ Except for current contributors verified to participate in the Centurion Capital
 Alpha CPX has adopted an automated sliding volume-based market execution fee model to meet evolving regulatory requirements. Under this structure, market execution fees are based on trading volume regardless of trade outcomes, ensuring a standardized and transparent cost framework. This structure enhances accessibility across jurisdictions while promoting regulatory adherence, operational transparency, and a straightforward fee model aligned with commonly accepted marketplace standards.
 
 ### Liquidity Pool & Trading Fees
-CipheX plans to launch its liquidity strategy by deploying a standard Uniswap v3 liquidity pool, enabling immediate trading, price discovery, and broad community participation. This open architecture accelerates early adoption and establishes on-chain trading volume. As activity scales, CipheX intends to introduce a custom vault layer to optimize liquidity management, enhance fee generation, and deliver institutional-grade features such as automated rebalancing, capital aggregation, and configurable access controls. This phased approach ensures efficient market entry while advancing long-term value creation and performance.
+Ciphex plans to launch its liquidity strategy by deploying a standard Uniswap v3 liquidity pool, enabling immediate trading, price discovery, and broad community participation. This open architecture accelerates early adoption and establishes on-chain trading volume. As activity scales, Ciphex intends to introduce a custom vault layer to optimize liquidity management, enhance fee generation, and deliver institutional-grade features such as automated rebalancing, capital aggregation, and configurable access controls. This phased approach ensures efficient market entry while advancing long-term value creation and performance.
 
 ### Fixed Term Staking and Rewards
-CipheX has discontinued its Fixed Term Staking in favor of a flexible liquidity staking model aligned with its upcoming Uniswap listing. This widely adopted approach allows users to contribute assets to Uniswap pools, earn trading fees, and retain control without lockups. The model enhances real-time utility, price discovery, and market depth. CipheX will activate staking incentives only after the token establishes a trading history, ensuring organic liquidity, community engagement, and demonstrable market demand.
+Ciphex has discontinued its Fixed Term Staking in favor of a flexible liquidity staking model aligned with its upcoming Uniswap listing. This widely adopted approach allows users to contribute assets to Uniswap pools, earn trading fees, and retain control without lockups. The model enhances real-time utility, price discovery, and market depth. Ciphex will activate staking incentives only after the token establishes a trading history, ensuring organic liquidity, community engagement, and demonstrable market demand.
 
 ### Distribution of Market Returns
 Profits from Centurion trading activities, less any transaction fees, are automatically transferred to user wallets based on their preferences. Distributable returns from future RWA services and other financial offerings are expected to be issued annually, if available, with distribution amounts determined through community voting.
 
 ## Governance & Compliance
 
-### Why CipheX Rejects Broad DAO-Style Voting
-CipheX will no longer implement broad community-based voting on ecosystem protocols, systems development, or other foundational decisions. This decision reflects CipheX's ongoing commitment to preserving its ecosystem's integrity, performance, and long-term value, which fragmented or uninformed governance models can severely compromise.
+### Why Ciphex Rejects Broad DAO-Style Voting
+Ciphex will no longer implement broad community-based voting on ecosystem protocols, systems development, or other foundational decisions. This decision reflects Ciphex's ongoing commitment to preserving its ecosystem's integrity, performance, and long-term value, which fragmented or uninformed governance models can severely compromise.
 
 ### Commitment to Open-Distributed Access
-By excluding broad community-based voting from its governance structure, CipheX is not rejecting decentralization but refining it. CipheX believes decentralized finance is centered on open, distributed access to financial opportunity, permissionless participation across global liquidity markets, and free access to sophisticated autonomous tools. Its mission is to empower wealth creation for all, regardless of background or experience, independent of traditional financial constraints.
+By excluding broad community-based voting from its governance structure, Ciphex is not rejecting decentralization but refining it. Ciphex believes decentralized finance is centered on open, distributed access to financial opportunity, permissionless participation across global liquidity markets, and free access to sophisticated autonomous tools. Its mission is to empower wealth creation for all, regardless of background or experience, independent of traditional financial constraints.
 
 ### Direction by Expertise, Not Popularity
-At the core of CipheX is a performance-driven architecture that demands precision, foresight, and domain expertise. Critical components like liquidity protocols, token value management, Alpha CPX Network frameworks, and regulatory alignment are managed by professionals within the CipheX network with decades of capital markets experience, corporate governance, legal and regulatory expertise, and proven execution ability. Governance decisions are informed by empirical performance data, operational expertise, and fiduciary discipline, not message board sentiment or social media campaigns.
+At the core of Ciphex is a performance-driven architecture that demands precision, foresight, and domain expertise. Critical components like liquidity protocols, token value management, Alpha CPX Network frameworks, and regulatory alignment are managed by professionals within the Ciphex network with decades of capital markets experience, corporate governance, legal and regulatory expertise, and proven execution ability. Governance decisions are informed by empirical performance data, operational expertise, and fiduciary discipline, not message board sentiment or social media campaigns.
 
 ### Focus on Regulatory Frameworks
-CipheX is actively advancing regulatory alignment by engaging with the evolving global compliance landscape. It is formalizing professional governance bodies comprised of experienced financial auditors and cybersecurity experts to ensure operational transparency and security. Independent oversight boards are being established to monitor internal compensation, conduct independent reviews, and supervise on-chain financial transactions, token treasury management, and smart contract integrity. All future CipheX-related financings will follow applicable regulatory frameworks.
+Ciphex is actively advancing regulatory alignment by engaging with the evolving global compliance landscape. It is formalizing professional governance bodies comprised of experienced financial auditors and cybersecurity experts to ensure operational transparency and security. Independent oversight boards are being established to monitor internal compensation, conduct independent reviews, and supervise on-chain financial transactions, token treasury management, and smart contract integrity. All future Ciphex-related financings will follow applicable regulatory frameworks.
 
 ## Market Execution Fees
 
@@ -70,22 +70,22 @@ The Alpha CPX fee model is structured to align with prevailing global financial 
 *   **European Union: MiCA Regulation (Markets in Crypto-Assets):** Alpha CPX's volume-based execution pricing aligns with MiCA's emphasis on clear, non-manipulative pricing and does not constitute portfolio management under its definitions.
 *   **Canada: CSA Staff Notice 21-327:** Alpha CPX does not take custody of assets, does not offer investment advice, and avoids performance fees, ensuring it does not fall under managed account rules of National Instrument 31-103.
 
-## CipheX Tokenomics & Token Distribution
+## Ciphex Tokenomics & Token Distribution
 
 ### Incentive Token Lockup & Vesting
 All incentive tokens are subject to a standardized 6-month lockup period with no vesting schedule. After lockup, tokens become fully unrestricted and immediately tradeable. This applies to Marketing Programs, Market Advisors, Expert Contributors, and Security & Bounty allocations. Performance-based conditions will apply to future allocations tied to expected services.
 
 ### Use of Token Distribution Proceeds
-CipheX is fully focused on its Alpha Centurion Network (Alpha CPX), and its originally planned funding targets have been met. CipheX can maintain sufficient ongoing operations and development without outside capital. However, CipheX anticipates seeking capital of up to $5 million to accelerate its remaining Alpha CPX optimization, expand infrastructure, and efficiently drive its initial commercialization efforts.
+Ciphex is fully focused on its Alpha Centurion Network (Alpha CPX), and its originally planned funding targets have been met. Ciphex can maintain sufficient ongoing operations and development without outside capital. However, Ciphex anticipates seeking capital of up to $5 million to accelerate its remaining Alpha CPX optimization, expand infrastructure, and efficiently drive its initial commercialization efforts.
 
 ### Creator & Co-Founder Tokens
-The release of Creator Tokens over two years will be directly tied to performance milestones associated with the Alpha CPX Network and the measurable contributions of creators and co-founders to the ongoing development of the Alpha CPX architecture and the broader CipheX ecosystem. The two-year lockup period commences upon the official release of the Alpha CPX Network Performance Index.
+The release of Creator Tokens over two years will be directly tied to performance milestones associated with the Alpha CPX Network and the measurable contributions of creators and co-founders to the ongoing development of the Alpha CPX architecture and the broader Ciphex ecosystem. The two-year lockup period commences upon the official release of the Alpha CPX Network Performance Index.
 
 ### Treasury Management
-CipheX utilizes multi-signature (multi-sig) authentication protocols to securely manage CPX Tokens and authorize transfers from treasury and capital wallets. Any transfer requires multi-sig approval, ensuring security and oversight by multiple stakeholders.
+Ciphex utilizes multi-signature (multi-sig) authentication protocols to securely manage CPX Tokens and authorize transfers from treasury and capital wallets. Any transfer requires multi-sig approval, ensuring security and oversight by multiple stakeholders.
 
 ### CPX Token Distribution
-CipheX has completed its token distribution phase to align with evolving cryptocurrency regulations. The token distribution concluded at a final token price of approximately $0.26. Its originally planned funding targets were met. Over 90% of contributions came from existing relationships. Unallocated tokens are reserved for private placements and available exclusively to accredited and institutional investors following applicable regulatory requirements.
+Ciphex has completed its token distribution phase to align with evolving cryptocurrency regulations. The token distribution concluded at a final token price of approximately $0.26. Its originally planned funding targets were met. Over 90% of contributions came from existing relationships. Unallocated tokens are reserved for private placements and available exclusively to accredited and institutional investors following applicable regulatory requirements.
 
 ### Token Claiming Portal
 Contributors can now access their tokens through the token claiming portal at https://presale.ciphex.io. The portal provides a dashboard where users can connect their wallet, view their vesting schedule, track transaction records, and claim tokens monthly as they vest over the 12-month period. An "Add CPX to Wallet" feature is also available for easy wallet integration.
@@ -114,14 +114,14 @@ Cipherion Market Research (“CMR”) is the private research and development di
 *   **Concentric Economics Risk Layer Interdependencies:** Applies a proprietary framework called Concentric Economics, which models the layered risk interdependencies between global macro- and microeconomic systems, identifying opportunity targets across interconnected execution layers.
 
 ### Applied Research Projects
-*   **2024–Current, CipheX Capital Ecosystem:** An open capital network allowing permissionless access to autonomous, noncustodial digital asset management systems through Alpha CPX.
+*   **2024–Current, Ciphex Capital Ecosystem:** An open capital network allowing permissionless access to autonomous, noncustodial digital asset management systems through Alpha CPX.
 *   **2022–Current, Alpha Centurion Network (Alpha CPX):** A fully autonomous, noncustodial portfolio management platform delivering institutional-grade performance to everyday consumers.
 *   **2022–2024, CPX Market Centurions:** Autonomous, self-learning trading agents integrated into Alpha CPX, enhancing its ability to adapt in real-time, identify optimal entry and exit points, and maintain user performance consistency.
 *   **2020–2022, Abacus EMS:** A proprietary arbitrage execution engine and foundational predecessor to several core features of the CPX Market Centurions.
 *   **2016–2019, Hypatia Data Intelligence:** A sophisticated data analytics and modeling system, predecessor to the CPX Framework, establishing the foundation for signal extraction, anomaly detection, and forecasting in volatile markets.
 
 ### Intellectual Properties
-*   **CipheX:** Derives from “Cipher” (encrypted intelligence) and “X” (exponential capability). CPX is short for Capital Predictive eXecution.
+*   **Ciphex:** Derives from “Cipher” (encrypted intelligence) and “X” (exponential capability). CPX is short for Capital Predictive eXecution.
 *   **2024 CPX Framework:** Alpha CPX’s proprietary AI core, enabling real-time signal analysis, predictive modeling, and autonomous trade execution.
 *   **2023 Adaptive Target Identification & Market Intelligence:** Combines Concentric Economics, Behavioral Analytics, and MEV research to detect high-probability trade opportunities and optimal downside protection strategies.
 *   **2021 Natural Capital & Modern Commodities:** Explores fractal volatility opportunities arising from flawed environmental valuation and pricing models.
@@ -171,7 +171,7 @@ Capital mobilization mechanisms (venture firms, junior exchanges, tokenization) 
 ## General Contact Information
 
 ### Registered Office
-CipheX Capital Ecosystem
+Ciphex Capital Ecosystem
 Cipherion Capital SA
 50th Street, PH Plaza 2000 17th Floor
 Panama City, Panama
@@ -179,11 +179,11 @@ www.ciphex.io
 legals@cipherion.co
 
 ### US Business Development
-CipheX Capital Ecosystem
+Ciphex Capital Ecosystem
 ArchRiver Capital LLC
 1942 Westlake Avenue, Suite 3204
 Seattle, WA, 98101
 archrivercapital.com
 services@archrivercapital.com
 
-Arch River Capital LLC (“ARC”) is a US private investment firm, registered with the U.S. Securities and Exchange Commission (“SEC”) and the Washington State Department of Financial Institutions (“WDFI”) CRD293804. ARC is not a registered broker-dealer and invests capital solely for its account. ARC is a principal investor in the CipheX Capital Ecosystem (“CipheX”). ARC contributes to CipheX in a limited, non-executive capacity, strictly confined to strategic consulting in financial market strategy, asset management frameworks, and operational efficiency planning, supporting the development of its Alpha Centurion Network (Alpha CPX) and future services. These contributions are advisory in nature and do not constitute managerial or fiduciary authority within CipheX.
+Arch River Capital LLC (“ARC”) is a US private investment firm, registered with the U.S. Securities and Exchange Commission (“SEC”) and the Washington State Department of Financial Institutions (“WDFI”) CRD293804. ARC is not a registered broker-dealer and invests capital solely for its account. ARC is a principal investor in the Ciphex Capital Ecosystem (“Ciphex”). ARC contributes to Ciphex in a limited, non-executive capacity, strictly confined to strategic consulting in financial market strategy, asset management frameworks, and operational efficiency planning, supporting the development of its Alpha Centurion Network (Alpha CPX) and future services. These contributions are advisory in nature and do not constitute managerial or fiduciary authority within Ciphex.

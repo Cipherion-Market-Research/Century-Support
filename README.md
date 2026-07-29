@@ -1,6 +1,6 @@
 # 🤖 Century Support 🤖
 
-Century Support is the platform behind CipheX's community support experience.
+Century Support is the platform behind Ciphex's community support experience.
 It started as a single Telegram bot and has grown into a small set of
 cooperating services: the bot itself, a core message-handling API, a KPI
 sync service, a publications RAG (retrieval-augmented generation) service,
@@ -9,15 +9,15 @@ and a content/surface drift monitor. This repo hosts all of them.
 ## The Telegram Bot 🌟
 
 The original piece: an AI-powered Telegram bot that answers questions about
-CipheX for the community, backed by cached FAQ/whitepaper context and live
-data from official CipheX endpoints.
+Ciphex for the community, backed by cached FAQ/whitepaper context and live
+data from official Ciphex endpoints.
 
 - **Real-time Support**: Instant responses to user queries, tagging the bot
   (`@CiphexHelpBot`) in any message
 - **AI-Powered Conversations**: Natural-language answers grounded in
   whitepaper/FAQ context — the bot never solicits purchases and always
   attaches risk disclaimers when discussing price or returns
-- **Live Data**: `/price` and `/stats` call the CipheX claim-portal API
+- **Live Data**: `/price` and `/stats` call the Ciphex claim-portal API
   directly for current figures, falling back to a short-lived Redis cache
   if the API is unavailable
 - **Command System**: Easy-to-use commands for quick access to information
@@ -33,7 +33,7 @@ data from official CipheX endpoints.
 - `/stats` - View claim-portal statistics
 - `/audit` - View CertiK Skynet audit & security score info
 - `/claim` - Access the token claiming portal
-- `/website` - Link to the official CipheX website
+- `/website` - Link to the official Ciphex website
 
 ## The Platform's Other Services 🏗️
 
@@ -46,15 +46,15 @@ same `facts.yaml` facts store and Redis-based contracts:
   or to Q&A (facts store, KPI store, publications RAG) and, when needed, a
   guarded LLM call (OpenAI, model configurable, default `gpt-4o-mini`) with
   guardrails against purchase solicitation and invented numbers.
-- **`kpi_sync/`** — A background polling service that reads CipheX's
+- **`kpi_sync/`** — A background polling service that reads Ciphex's
   claim-portal, marketing/key-metrics, and on-chain endpoints on a schedule
   and writes each value to Redis as a small JSON envelope (value, source,
   timestamps, TTL) so consumers can tell a fresh number from a stale one.
-- **`pubs_rag/`** — Ingests CipheX publications (PDFs and website pages)
+- **`pubs_rag/`** — Ingests Ciphex publications (PDFs and website pages)
   into Postgres with `pgvector`, chunked and embedded for retrieval with
   title/date/source citations. New publications arrive via a GitHub
   webhook and go through an approve/revoke workflow before they're served.
-- **`drift_monitor/`** — Watches the CipheX website and related product
+- **`drift_monitor/`** — Watches the Ciphex website and related product
   repos for content and surface changes, diffing them against a stored
   baseline. It only ever proposes changes (as a report or a PR) — it never
   edits `facts.yaml` automatically; a human always reviews before merge.
@@ -124,8 +124,8 @@ and tag @CenturySupport in your message.
 
 - OpenAI for AI integration
 - Python Telegram Bot community
-- CipheX community for continuous feedback and support
+- Ciphex community for continuous feedback and support
 
 ---
 
-Built with ❤️ by the CipheX Team
+Built with ❤️ by the Ciphex Team

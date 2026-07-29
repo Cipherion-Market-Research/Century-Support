@@ -115,13 +115,13 @@ class BotMessageHandler:
                     elif topic == "staking":
                         response_parts.append(
                             "**Staking Program:**\n"
-                            "• CipheX has discontinued its Fixed Term Staking program.\n"
+                            "• Ciphex has discontinued its Fixed Term Staking program.\n"
                             "• A flexible liquidity staking model will be introduced, aligned with the upcoming Uniswap listing.\n"
                             "• Staking incentives will be activated after the token establishes a trading history."
                         )
                     elif topic == "join":
                         response_parts.append(
-                            "**Joining CipheX:**\n"
+                            "**Joining Ciphex:**\n"
                             "• The Alpha CPX platform is not yet available for public use.\n"
                             "• Token claiming is available for existing contributors.\n"
                             "• Participation is currently limited to existing contributors and accredited investors.\n"
@@ -137,8 +137,8 @@ class BotMessageHandler:
                         if i > 0:
                             final_response += "\n\n---\n\n"  # Single separator between sections
                         # Remove redundant headers if they exist
-                        if "CipheX Token Claiming Portal:" in part and i > 0:
-                            part = part.replace("CipheX Token Claiming Portal:\n\n", "")
+                        if "Ciphex Token Claiming Portal:" in part and i > 0:
+                            part = part.replace("Ciphex Token Claiming Portal:\n\n", "")
                         final_response += part
                 else:
                     final_response = response_parts[0]
@@ -341,7 +341,7 @@ class BotMessageHandler:
         """
         # You could tailor your prompt for each source_label if needed.
         prompt = (
-            "You are CipheX Help Bot. Please rephrase or summarize the text below in a concise, "
+            "You are Ciphex Help Bot. Please rephrase or summarize the text below in a concise, "
             "friendly tone. Retain all essential information, but deliver it in a natural, "
             "user-friendly format.\n\n"
             f"Source: {source_label}\n"
@@ -398,7 +398,7 @@ class BotMessageHandler:
                 elif topic == "governance":
                     matched_responses.append(
                         "**Community Governance:**\n"
-                        "• CipheX no longer implements broad community-based voting.\n"
+                        "• Ciphex no longer implements broad community-based voting.\n"
                         "• Ecosystem direction is managed by its creators and expert contributors.\n"
                         "• This approach prioritizes expertise and long-term value over fragmented or uninformed governance."
                     )
@@ -425,7 +425,7 @@ class BotMessageHandler:
                     matched_responses.append(
                         "**Revenue Streams & Distribution:**\n"
                         "• **Alpha CPX Fees:** Revenue is generated from volume-based market execution fees.\n"
-                        "• **Liquidity Pool Fees:** A share of fees from the CipheX liquidity pool.\n"
+                        "• **Liquidity Pool Fees:** A share of fees from the Ciphex liquidity pool.\n"
                         "• **Future Services:** Commercial opportunities using the Alpha CPX framework and RWA tokenization."
                     )
         # Add debug logging
@@ -500,7 +500,7 @@ class BotMessageHandler:
         """Format technical response with enhanced templating"""
         templates = {
             "abacus": {
-                "core": """The Abacus Network is CipheX's neural analytics center that:
+                "core": """The Abacus Network is Ciphex's neural analytics center that:
 • {features}
 • Processes {data_types} in real-time
 • Adapts to {conditions} through {methods}""",

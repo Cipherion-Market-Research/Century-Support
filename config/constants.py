@@ -1,11 +1,11 @@
 BOT_RESPONSES = {
-	"welcome": """Welcome to the official CipheX Telegram Channel! 🚀
+	"welcome": """Welcome to the official Ciphex Telegram Channel! 🚀
 
-I'm your Centurion Assistant for all things CipheX. 
+I'm your Centurion Assistant for all things Ciphex. 
 Tag me (@CiphexHelpBot) in any message to ask questions or use /help to see what I can do for you.
 
 ⚠️ Important: ⚠️
-• CipheX will never DM you first
+• Ciphex will never DM you first
 • Never share your wallet seed phrases
 • Always verify links through official channels""",
 
@@ -22,7 +22,7 @@ You can also tag me (@CiphexHelpBot) in any message to ask questions!""",
 		"rate_limit": "Please wait a moment before sending another message.",
 		"thinking": "Let me think about that... 🤔",
 
-		"contract_info": """**CipheX (CPX) Contract Address:**
+		"contract_info": """**Ciphex (CPX) Contract Address:**
 `0x18b33687d1c804Dd4ea6c82106e54923c23a652E`
 
 View on [Etherscan](https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E)""",
@@ -48,7 +48,7 @@ To access the full whitepaper, visit [Ciphex Publications](https://ciphex.io/eco
 - Tokens Available for Claiming: 142M tokens
 - Total CPX Purchased (Staked)""",
 
-		"claim_info": """**CipheX Token Claiming Portal:**
+		"claim_info": """**Ciphex Token Claiming Portal:**
 
 Access your token claiming dashboard to view your CPX tokens and vesting schedule.
 
@@ -64,7 +64,7 @@ Visit [claim.ciphex.io](https://claim.ciphex.io) to access your claiming portal.
 ⚠️ Important Reminders:
 • Only use official links
 • Never share wallet seed phrases
-• CipheX team will never DM you first""",
+• Ciphex team will never DM you first""",
 
 		"data_info": """Data updates regularly. Check:
 [Token Claiming Portal](https://claim.ciphex.io)
@@ -77,7 +77,7 @@ View our project page on Skynet for detailed audit reports and security scores."
     "website_info": """**[https://ciphex.io](https://ciphex.io)**:
 Visit our official website for the latest updates, news, and information.""",
 
-    "contact_info": """**Contact CipheX Support:**
+    "contact_info": """**Contact Ciphex Support:**
 
 • Support Email: support@ciphex.io
 • General Inquiries: hello@ciphex.io
@@ -85,7 +85,7 @@ Visit our official website for the latest updates, news, and information.""",
 • Telegram: @CipheXChannel (announcements only)
 
 ⚠️ **Important Security Reminders:**
-• CipheX team will NEVER DM you first
+• Ciphex team will NEVER DM you first
 • Only use official email and website
 • Never share wallet seed phrases
 • Verify all links through official channels
@@ -94,11 +94,11 @@ For technical support, please email support@ciphex.io (general inquiries: hello@
 }
 
 COMPOSITE_SECTIONS = [
-    "CipheX Capital Ecosystem Overview",
+    "Ciphex Capital Ecosystem Overview",
     "Ecosystem Operations",
     "Governance & Compliance",
     "Market Execution Fees",
-    "CipheX Tokenomics & Token Distribution",
+    "Ciphex Tokenomics & Token Distribution",
     "The Alpha Centurion Network (Alpha CPX)",
     "Cipherion Market Research Group (CMR)",
     "Real-World Asset Tokenization (RWA)",
@@ -110,12 +110,12 @@ COMPOSITE_SECTIONS = [
 TOPIC_SECTIONS = {
     "market_centurions": ["The Alpha Centurion Network (Alpha CPX)"],
     "abacus": ["Cipherion Market Research Group (CMR)"],
-    "tokenomics": ["CipheX Tokenomics & Token Distribution"],
-    "claim": ["CipheX Tokenomics & Token Distribution"],
-    "claiming": ["CipheX Tokenomics & Token Distribution"],
+    "tokenomics": ["Ciphex Tokenomics & Token Distribution"],
+    "claim": ["Ciphex Tokenomics & Token Distribution"],
+    "claiming": ["Ciphex Tokenomics & Token Distribution"],
     "staking": ["Ecosystem Operations"],
     "governance": ["Governance & Compliance"],
-    "treasury": ["CipheX Tokenomics & Token Distribution"],
+    "treasury": ["Ciphex Tokenomics & Token Distribution"],
     "risks": ["Real-World Asset Tokenization (RWA)"],
     "contact": ["General Contact Information"]
 }
@@ -130,13 +130,13 @@ ERROR_MESSAGES = {
 SCHEDULED_MESSAGES = {
     "privacy_reminder": "Adjust your Telegram Privacy Settings & Avoid Spam Calls:\n\n• Change Calls to Contacts only\n• Set New Chats from Unknown Users to Archive and Mute\n• Set Who Can Add You to Groups to Nobody 👮",
     
-    "admin_warning": """Friendly reminder: CipheX Admins will NEVER DM you. Please do not respond to anyone claiming they are from our team. It is a scam!
+    "admin_warning": """Friendly reminder: Ciphex Admins will NEVER DM you. Please do not respond to anyone claiming they are from our team. It is a scam!
 
 If you wish to contact us, please email us at support@ciphex.io""",
 
     "start_message": """👋 Welcome to Century Support Bot!
 
-I'm here to help you with all things CipheX. Use commands like:
+I'm here to help you with all things Ciphex. Use commands like:
 📊 /price - Check current token price
 📄 /whitepaper - Access whitepaper
 🔍 /stats - View trading statistics

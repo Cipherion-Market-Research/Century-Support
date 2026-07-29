@@ -53,7 +53,7 @@ facts:
     value: "Ciphex"
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/"
-    notes: "kb_source. Every harvested page titles itself 'Ciphex | ...'. Older bot code and some internal repo/document text still use 'CipheX' — both variants exist in the wild; the live site has standardized on 'Ciphex'. Not an OQ item (unlike identity.support_email etc.) since it is directly observable, not contested."
+    notes: "kb_source. Every harvested page titles itself 'Ciphex | ...'. Older bot code and some internal repo/document text previously used 'CipheX' (uppercase X) until the 2026-07-29 brand-copy rename; the kb_source harvest itself (byte-exact, unedited) still shows 'CipheX' in some legal/copyright boilerplate — both variants exist in the wild; the live site has standardized on 'Ciphex'. Not an OQ item (unlike identity.support_email etc.) since it is directly observable, not contested."
 
   identity.product_stack:
     value:
@@ -408,7 +408,7 @@ facts:
     value: "December 2025 (per the tokenomics page label); the December 31, 2025 ecosystem update describes the burn as executing effective January 1, 2026"
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/assets/documents/ecosystem-update-dec31-25.pdf"
-    notes: "kb_source. Both dates are shown verbatim rather than picked between: the tokenomics page labels the cycle 'December 2025', while the dated PDF states 'CipheX will automatically execute its planned token burn effective January 1, 2026, reducing excess supply by approximately 32%.'"
+    notes: "kb_source. Both dates are shown verbatim rather than picked between: the tokenomics page labels the cycle 'December 2025', while the dated PDF states 'Ciphex will automatically execute its planned token burn effective January 1, 2026, reducing excess supply by approximately 32%.'"
 
   tokenomics.onchain_total_supply_eth:
     value: 1500000000
@@ -568,7 +568,7 @@ facts:
     value: "CPX Tokens are not offered, marketed, promoted, or distributed as investments and should not be acquired with any expectation of profit, appreciation, or return. CPX does not represent equity, ownership rights, profit-sharing, or a direct claim on Ciphex's revenues, assets, or investment performance."
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/communications"
-    notes: "kb_source, corroborated by the 2026-05-08 ecosystem update PDF's 'CipheX Capital Ecosystem' boilerplate (same 'no equity/ownership/profit-sharing' language)."
+    notes: "kb_source, corroborated by the 2026-05-08 ecosystem update PDF's 'Ciphex Capital Ecosystem' boilerplate (same 'no equity/ownership/profit-sharing' language)."
 
   legal.dex_trading_posture:
     value: "CPX may be transferred via DEX/AMM liquidity pools; Ciphex may periodically contribute reserves to such pools solely to support liquidity/functionality, but does not engage in market-making, price stabilization, or generating trading volume, and gives no assurance of liquidity or market value. Any future CEX listing is determined solely by the applicable exchange's own review/approval process — Ciphex does not control, operate, or guarantee any exchange listing."
