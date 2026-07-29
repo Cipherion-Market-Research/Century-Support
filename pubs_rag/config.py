@@ -66,9 +66,17 @@ class Config:
     # HTML with data-slug/data-title/data-date/data-pdf attributes baked in
     # at build time, so a GitHub raw fetch gets the same metadata a headless
     # browser would get from the live site, without needing one).
-    PUBLICATION_INDEX_PATHS = (
-        "src/ecosystem-publications.html",
-        "src/ecosystem-updates.html",
+    # Overridable because these pages have already been renamed once on the
+    # website repo (ecosystem-publications -> insights-and-publications,
+    # ecosystem-updates -> internal-updates, 2026-07-28); the next rename
+    # should be an env change, not a code change.
+    PUBLICATION_INDEX_PATHS = tuple(
+        p.strip()
+        for p in _env(
+            "PUBS_RAG_PUBLICATION_INDEX_PATHS",
+            "src/insights-and-publications.html,src/internal-updates.html",
+        ).split(",")
+        if p.strip()
     )
     PDF_ASSET_PATH_PREFIX = _env("PUBS_RAG_PDF_ASSET_PATH_PREFIX", "public/assets/documents/")
     SITE_BASE_URL = _env("PUBS_RAG_SITE_BASE_URL", "https://ciphex.io")
