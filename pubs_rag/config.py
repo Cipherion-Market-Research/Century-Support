@@ -85,7 +85,7 @@ class Config:
     QUARANTINE_ENABLED = _env_bool("PUBS_RAG_QUARANTINE_ENABLED", True)
 
     # --- Health / webhook server ---
-    HEALTH_HOST = _env("PUBS_RAG_HEALTH_HOST", "::")
+    HEALTH_HOST = _env("PUBS_RAG_HEALTH_HOST", "0.0.0.0")
     HEALTH_PORT = _env_int("PORT", _env_int("PUBS_RAG_HEALTH_PORT", 8081))
 
     LOG_LEVEL = _env("PUBS_RAG_LOG_LEVEL", "INFO")

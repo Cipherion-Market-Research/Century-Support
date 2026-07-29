@@ -165,7 +165,7 @@ class Config:
     # --- Health endpoint ---
     # "::" binds dual-stack (IPv6 + IPv4): Railway healthchecks arrive over
     # its IPv6 private network, so an IPv4-only 0.0.0.0 bind fails deploys.
-    HEALTH_HOST = _env("KPI_SYNC_HEALTH_HOST", "::")
+    HEALTH_HOST = _env("KPI_SYNC_HEALTH_HOST", "0.0.0.0")
     HEALTH_PORT = _env_int("PORT", _env_int("KPI_SYNC_HEALTH_PORT", 8080))
 
     LOG_LEVEL = _env("KPI_SYNC_LOG_LEVEL", "INFO")
