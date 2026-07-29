@@ -101,8 +101,11 @@ class Config:
     PARITY_INTERVAL_S = _env_int("DRIFT_PARITY_INTERVAL_S", 7 * 24 * 60 * 60)  # weekly
 
     # Three sentinel pages for the live-vs-repo parity probe (§ brief).
+    # ecosystem-publications was renamed to insights-and-publications in the
+    # website repo's 2026-07-28 restructure (PR #100); updated here so the
+    # weekly probe doesn't sentinel a slug that no longer exists.
     PARITY_SENTINEL_SLUGS = _env_list(
-        "DRIFT_PARITY_SENTINEL_SLUGS", ("index", "ciphex-token", "ecosystem-publications")
+        "DRIFT_PARITY_SENTINEL_SLUGS", ("index", "ciphex-token", "insights-and-publications")
     )
 
     # --- HTTP client behavior ---
