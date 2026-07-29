@@ -1,0 +1,39 @@
+name: Provenance guard
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  provenance-guard:
+    name: Provenance guard (no vendor references)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan tracked files for vendor references
+        run: |
+          set -euo pipefail
+          # Obfuscated so this file does not itself contain the literal
+          # strings it hunts for (they still match the real strings).
+          pattern='cl[a]ude|anthr[o]pic|3fa9[2]713'
+          if grep -rIlEi "$pattern" --exclude-dir=.git .; then
+            echo "::error::Vendor reference found in tracked files (see above)."
+            exit 1
+          fi
+
+      - name: Scan commit messages for vendor references
+        run: |
+          set -euo pipefail
+          pattern='cl[a]ude|anthr[o]pic|3fa9[2]713'
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            messages="$(git log --format=%B origin/${{ github.base_ref }}..HEAD)"
+          else
+            messages="$(git log --format=%B -n 20)"
+          fi
+          if echo "$messages" | grep -iEq "$pattern"; then
+            echo "::error::Vendor reference found in scanned commit messages."
+            exit 1
+          fi
