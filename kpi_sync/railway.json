@@ -5,7 +5,7 @@
     "buildCommand": "pip install -r requirements.txt"
   },
   "deploy": {
-    "startCommand": "python main.py",
+    "startCommand": "mkdir -p /srv && ln -sfn /app /srv/kpi_sync && cd /srv && python -m kpi_sync.main",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 120,
     "restartPolicyType": "ON_FAILURE",

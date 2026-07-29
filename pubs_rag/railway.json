@@ -5,7 +5,7 @@
     "buildCommand": "pip install -r requirements.txt"
   },
   "deploy": {
-    "startCommand": "python -m pubs_rag.main serve",
+    "startCommand": "mkdir -p /srv && ln -sfn /app /srv/pubs_rag && cd /srv && python -m pubs_rag.main serve",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 120,
     "restartPolicyType": "ON_FAILURE",
