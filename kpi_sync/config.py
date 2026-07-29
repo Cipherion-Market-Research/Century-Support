@@ -163,7 +163,7 @@ class Config:
     RETRY_MAX_DELAY_S = _env_float("KPI_SYNC_RETRY_MAX_DELAY_S", 30.0)
 
     # --- Health endpoint ---
-    HEALTH_HOST = _env("KPI_SYNC_HEALTH_HOST", "0.0.0.0")
+    HEALTH_HOST = _env("KPI_SYNC_HEALTH_HOST", "::")
     HEALTH_PORT = _env_int("PORT", _env_int("KPI_SYNC_HEALTH_PORT", 8080))
 
     LOG_LEVEL = _env("KPI_SYNC_LOG_LEVEL", "INFO")

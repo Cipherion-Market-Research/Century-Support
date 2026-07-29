@@ -117,7 +117,7 @@ class Config:
     REPORTS_DIR = _env("DRIFT_REPORTS_DIR", "drift_monitor/reports")
 
     # --- Health endpoint ---
-    HEALTH_HOST = _env("DRIFT_HEALTH_HOST", "0.0.0.0")
+    HEALTH_HOST = _env("DRIFT_HEALTH_HOST", "::")
     HEALTH_PORT = _env_int("PORT", _env_int("DRIFT_HEALTH_PORT", 8082))
 
     LOG_LEVEL = _env("DRIFT_LOG_LEVEL", "INFO")
