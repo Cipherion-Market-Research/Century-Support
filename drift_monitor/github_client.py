@@ -100,7 +100,10 @@ class GitHubClient:
 
         async def _do() -> bytes:
             timeout = aiohttp.ClientTimeout(total=Config.HTTP_TIMEOUT_S)
-            async with self.session.get(url, timeout=timeout) as resp:
+            headers = {}
+            if Config.GITHUB_TOKEN:
+                headers["Authorization"] = f"Bearer {Config.GITHUB_TOKEN}"
+            async with self.session.get(url, timeout=timeout, headers=headers) as resp:
                 if resp.status != 200:
                     body = await resp.text()
                     raise GitHubClientError(f"raw fetch {resp.status} from {url}: {body[:300]}")
