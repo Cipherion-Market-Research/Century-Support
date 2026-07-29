@@ -1,9 +1,3 @@
-[source_url: https://ciphex.io/assets/documents/ecosystem-update-may08-26.pdf]
-[fetched: 2026-07-20]
-[title: Exchange Listing and Go-to-Market Execution & Ciphex Alpha Phase III Optimization Summary]
-[date: May 08, 2026]
-[pages: 2] [extraction: ok]
-
 Ecosystem Update 
 May 08, 2026 
  
@@ -35,20 +29,8 @@ containment, and asset selection across cryptocurrency markets. Further developm
 Abacus I AMS/EMS Development Roadmap and the March 31, 2026, Q1 Optimization Results, both published on the 
 CipheX website. Live market activity updates remain available through the CipheX Alpha section. System refinement 
 and performance calibration remain active priorities as development progresses toward its initial commercial release, 
-with interim and quarterly optimization updates expected as major milestones are reached. 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+with interim and quarterly optimization updates expected as major milestones are reached.
 
-  
- 
 Important Notice to Reader 
 Certain statements contained in this communication may constitute "forward-looking statements" within the meaning 
 of the U.S. Private Securities Litigation Reform Act of 1995 and applicable international securities laws. These 

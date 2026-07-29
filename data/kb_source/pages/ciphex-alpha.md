@@ -1,6 +1,6 @@
 <!--
 source_url: https://ciphex.io/ciphex-alpha
-fetched: 2026-07-20
+fetched: 2026-07-29
 page_title: Ciphex Alpha | Systemized Execution & Portfolio Management
 kind: live page copy
 -->
@@ -17,13 +17,37 @@ Insights
 
 Community
 
-CPXEcosystem token & liquidity coordination layerCiphex AlphaProfessional investing made simpleAtlasAsset origination & global distribution
+Connect
 
-Ecosystem UpdatesEcosystem Updates & AnnouncementsEcosystem PublicationsInternal Systems, Product, Ecosystem and Contributor Publications.
+Disconnect
+
+CPX
+
+Ecosystem token & liquidity coordination layer
+
+Ciphex Alpha
+
+Professional investing made simple
+
+Atlas
+
+Asset origination & global distribution
+
+Internal Updates
+
+Internal Updates & Announcements
+
+Insights & Publications
+
+Internal Systems, Product, Ecosystem and Contributor Publications.
 
 Advanced Portfolio Management
 
-# Autonomous Market Intelligenceand Portfolio Management
+Autonomous Market Intelligence
+
+and
+
+Portfolio Management
 
 Ciphex Alpha is an autonomous market system focused on evolving digital capital markets, reducing user complexity while increasing confidence through consistent market execution, intelligent risk oversight, and disciplined portfolio management.
 
@@ -39,40 +63,53 @@ Live data temporarily unavailable
 
 Total RA Return
 
-—%
+—
+
+%
 
 —
+
 24H
 
 Risk Adjusted (SI) Y2025
 
 SI - Confidence Accuracy
 
-—%
+—
+
+%
 
 —
+
 24H
 
 5,800+ assets every 24H
 
 SI P/L Success Rate
 
-—%
+—
+
+%
 
 —
+
 24H
 
 Return on Risk Capital (RORC)
 
 Target Eq AUM
 
-$200M
+$200
+
+M
 
 Target Connections after launch
 
 Market Data Points
 
-5.7B
+50
+
+B
 
 YTD Compounding Collection
 
@@ -80,7 +117,9 @@ Ciphex Alpha and Atlas RWA (Real World Asset) Services are currently in pre-comm
 
 ABACUS I EMS (Abigail) · Execution Management System
 
-## Identifies and executes.
+Identifies and
+
+executes.
 
 Real-time execution across the digital asset universe.
 
@@ -88,29 +127,45 @@ Real-time multi-market predictive analytics across a broad digital asset univers
 
 ABACUS I AMS (Abigail) · Asset Management System
 
-## Manages and protects.
+Manages and
+
+protects.
 
 Volatility-aware capital allocation and position sizing.
 
 Real-time volatility capital allocation weighting frameworks applied to multiple simultaneous opportunities. Capital commitment at entry is determined by broader market conditions and asset-specific factors, disciplined position sizing and balanced portfolio allocation, applied autonomously based on individual settings.
 
-## Introducing Abigail, an Autonomous System Executing Opportunities and Managing Risk Across Increasingly Complex Capital Markets
+Introducing Abigail, an Autonomous System Executing Opportunities and Managing Risk
 
-### Identifies Market Opportunities and Executes with Systemized Discipline
+Across Increasingly Complex Capital Markets
+
+Identifies Market Opportunities and Executes
+
+with Systemized Discipline
 
 Abigail EMS autonomously identifies and executes opportunities across selected capital markets, while Abigail AMS continuously adapts to changing market conditions to preserve capital and maintain long-term objectives.
 
-01Digital Asset Markets
+01
 
-02Traditional Markets
+Digital Asset Markets
 
-03Eligible Tokenized Projects
+02
 
-04Prediction Markets
+Traditional Markets
+
+03
+
+Eligible Tokenized Projects
+
+04
+
+Prediction Markets
 
 Operating model
 
-## How Abigail operates.
+How Abigail
+
+operates.
 
 Validation
 
@@ -126,43 +181,55 @@ The system monitors major market movements and every shift in conditions across 
 
 Capabilities
 
-## Autonomous Market Intelligence
+Autonomous
+
+Market Intelligence
 
 01
 
-### Identifies and Executes
+Consistent
 
-Abigail EMS (Execution Management System) autonomously identifies and executes market opportunities across selected capital markets 24/7. Real-time market analysis enables disciplined execution while continuously adapting to changing market conditions, liquidity, and risk.
+Market Execution
+
+Abigail reduces user complexity and operational variability across changing market conditions by providing autonomous market execution through consistent market analysis and systematic opportunity selection across selected digital capital markets.
 
 02
 
-### Disciplined and Systematic
+Intelligent
 
-Abigail EMS continuously monitors thousands of market opportunities across selected capital markets, identifying those that satisfy predefined criteria. Disciplined market execution and dynamic capital preservation adapt to changing market conditions while maintaining consistency with established market strategies.
+Risk Oversight
+
+Intelligent risk oversight reduces emotional bias by evaluating asset liquidity, market volatility, individual asset and portfolio exposure, determining the most probable market outcomes for capital allocation, position management, and downside containment before executing qualifying opportunities.
 
 03
 
-### Manages and Protects
+Disciplined
 
-Abigail AMS (Asset Management System) manages portfolio exposure through proprietary adaptive risk management and portfolio oversight. As market conditions evolve, the system responds to preserve capital, containing downside risk, and maintaining long-term portfolio objectives.
+Management
 
-04
+The combination of consistent market execution and intelligent risk oversight applies a disciplined and adaptive process focused on capital preservation and maintaining portfolio objectives across changing market conditions, increasing user confidence in evolving digital asset markets.
 
-### Intelligence and Oversight
+Simplifying Complex Capital Markets through Autonomous Market Systems, delivering
 
-Abigail combines expertise across traditional capital markets, digital asset markets, and prediction markets with disciplined governance and portfolio oversight. Continuous monitoring through proprietary data-driven processes maintains consistent execution as market conditions evolve.
-
-## Simplifying Complex Capital Markets through Autonomous Market Systems, delivering Intelligent Execution, Transparency, and Capital Efficiency.
+Intelligent Execution, Transparency, and Capital Efficiency.
 
 View Live Market Optimization Activities
 
-View Ciphex Alpha → (opens in new tab)
+View Ciphex Alpha →
+
+(opens in new tab)
 
 Stay connected
 
-### Ecosystem updates as they happen.
+Ecosystem updates
 
-Feature UpdatesSystem PublicationsAnnouncements
+as they happen.
+
+Feature Updates
+
+System Publications
+
+Announcements
 
 Email
 
@@ -172,29 +239,140 @@ No spam · Unsubscribe anytime
 
 You’re subscribed — intelligence, not noise.
 
-Contribute to the Growth of our Ecosystem.
+Contribute to the Growth of our
 
-Contribute →
+Ecosystem.
 
-Preparing Access
+Contribute
 
-#### Disclosures
-General DisclosureCommunicationsCPX Token TradingFuture FinancingSignificant Risks
+→
 
-#### Ecosystem
-Ciphex AlphaAtlas RWA ServicesEcosystem PublicationsEcosystem UpdatesLeadership Team
+Disclosures
 
-#### Resources
-CertiK Skynet AuditGitHub RepositoryClaim TokensContact
+General Disclosure
 
-#### Follow Us
-X (Twitter)Telegram
+Communications
 
-##### Important Notice to Site Visitors
+CPX Tokens & Utility
 
-The information presented on this website is provided solely for informational purposes and is protected by applicable copyright and intellectual property laws. No content on this website constitutes a financial report, investment proposal, or an invitation to participate in any investment, community incentive, utility program, or other activity relating to the Ciphex Capital Ecosystem and its products and services (the “Ciphex Project”). This website does not constitute an offer to sell, a solicitation to buy, or a recommendation to participate in any transaction involving securities, digital assets, or other financial instruments. No content on this website should be interpreted as investment, legal, accounting, or tax advice. Certain descriptions on this website may include forward-looking statements identified by words such as “anticipate,” “expect,” “intend,” “plan,” “foresee,” “foreseeable,” “seek,” “pursue,” or similar expressions indicating future events. These statements are subject to significant risks and uncertainties that may cause actual results to differ materially from those expressed or implied and are not guarantees of performance or availability. The Ciphex Project undertakes no obligation to update, revise, supplement, or otherwise clarify any forward-looking statements and reserves the right to modify, update, remove, or discontinue access to any information, materials, or publications on this website at any time without prior notice. Any statements, representations, or materials not issued directly by the Ciphex Project, Cipherion Capital SA, or duly authorized affiliates are unauthorized and expressly disclaimed. References to third-party market research, data, platforms, or services are based on publicly available information and are included solely for contextual reference. No third party has reviewed, approved, endorsed, or assumed responsibility for the content of this website. Past performance is not indicative of, or a guarantee of, future results.
+Financing Activities
 
-Copyright © 2026 Cipherion Capital SA, Ciphex Capital Ecosystem
-Terms of UsePrivacy PolicyContact
+Significant Risks
+
+Ecosystem
+
+Ciphex Alpha
+
+Atlas RWA Services
+
+Insights & Publications
+
+Internal Updates
+
+Leadership Team
+
+Resources
+
+CertiK Skynet Audit
+
+GitHub Repository
+
+Token Claim Center
+
+Contact Ciphex
+
+Follow Us
+
+X (Twitter)
+
+Telegram
+
+Important Notice to Site Visitors
+
+Any information presented on this website, including without
+
+limitation commercial or technical descriptions, illustrations,
+
+publications, or other materials relating to the products, services,
+
+or ecosystem of the Ciphex Capital Ecosystem (or
+
+“Ciphex”), is provided solely for informational purposes
+
+and is protected by applicable copyright and intellectual property
+
+laws (or collectively, the “Ciphex Content”). The Ciphex
+
+Content should not be relied upon for decision-making purposes or
+
+construed as an offer to sell, a solicitation to buy, or a
+
+recommendation, endorsement, or invitation to participate in any
+
+digital assets, tokens, financial instruments, ecosystem
+
+initiatives, community engagement activities, token utility
+
+features, or tokenized real-world assets associated with Ciphex, its
+
+products, or its services in any jurisdiction where such
+
+participation is restricted or prohibited under applicable law.
+
+Subject to applicable law and regulations, Ciphex reserves the right
+
+to modify, update, remove, or discontinue any Ciphex Content without
+
+notification. Viewers are solely responsible for conducting their
+
+own independent due diligence and consulting their own professional
+
+advisers regarding any contemplated participation.
+
+Ciphex Content may include forward-looking statements identified by
+
+words such as “anticipate,” “expect,”
+
+“intend,” “plan,” “foresee,”
+
+“foreseeable,” “seek,” “pursue,”
+
+or similar expressions indicating future events. These statements
+
+are subject to significant risks and uncertainties that may cause
+
+actual results to differ materially from those expressed or implied
+
+and are not guarantees of future performance, outcomes, or
+
+availability. Ciphex undertakes no obligation to update, revise,
+
+supplement, or otherwise clarify any forward-looking statements. Any
+
+statements, representations, or materials not issued directly by
+
+Ciphex, Cipherion Capital SA, or their authorized representatives
+
+are unauthorized and expressly disclaimed. References to third-party
+
+market research, data, platforms, or services are based on publicly
+
+available information and are included solely for contextual
+
+reference. No third party has reviewed, approved, endorsed, or
+
+assumed responsibility for the Ciphex Content. Past performance
+
+should not be interpreted as an expectation of, or guarantee of,
+
+future results.
+
+Copyright © 2026 Ciphex Capital Ecosystem
+
+Terms of Use
+
+Privacy Policy
+
+Contact Ciphex
 
 Powered by Cipherion

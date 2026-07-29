@@ -1,6 +1,6 @@
 <!--
 source_url: https://ciphex.io/leadership-team
-fetched: 2026-07-20
+fetched: 2026-07-29
 page_title: Ciphex | Leadership Team & Expert Contributors
 kind: live page copy
 -->
@@ -17,15 +17,39 @@ Insights
 
 Community
 
-CPXEcosystem token & liquidity coordination layerCiphex AlphaProfessional investing made simpleAtlasAsset origination & global distribution
+Connect
 
-Ecosystem UpdatesEcosystem Updates & AnnouncementsEcosystem PublicationsInternal Systems, Product, Ecosystem and Contributor Publications.
+Disconnect
 
-# Ciphex Leadership Team
+CPX
 
-## Ciphex is Built on Decades of Real-WorldCapital Markets and Technology Expertise
+Ecosystem token & liquidity coordination layer
 
-100+
+Ciphex Alpha
+
+Professional investing made simple
+
+Atlas
+
+Asset origination & global distribution
+
+Internal Updates
+
+Internal Updates & Announcements
+
+Insights & Publications
+
+Internal Systems, Product, Ecosystem and Contributor Publications.
+
+Ciphex Leadership Team
+
+Ciphex is Built on Decades of Real-World
+
+Capital Markets and Technology Expertise
+
+100
+
++
 
 More than 100 years of combined professional expertise.
 
@@ -61,9 +85,13 @@ Blockchain Infrastructure Development
 
 Leadership
 
-## A proven track record in Finance, Innovation, and Execution.
+A proven track record in Finance,
 
-Co-founders and expert contributors who built the intelligence, framework, and governance.
+Innovation, and Execution.
+
+Co-founders and expert contributors who built the intelligence,
+
+framework, and governance.
 
 Co-founding Members
 
@@ -117,7 +145,9 @@ Co-Founding Member
 
 20 Years Alternative Investments
 
-Anthony SA (Art Jay)
+Anthony SA
+
+(Art Jay)
 
 Co-Founding Member
 
@@ -211,13 +241,21 @@ Expert Contributor
 
 8 Years Crypto GTM Markets
 
-## One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets
+One Capital Ecosystem Shaping the Future of
+
+Intelligent Digital Capital Markets
 
 Stay connected
 
-### Ecosystem updates as they happen.
+Ecosystem updates
 
-Feature UpdatesSystem PublicationsAnnouncements
+as they happen.
+
+Feature Updates
+
+System Publications
+
+Announcements
 
 Email
 
@@ -227,29 +265,140 @@ No spam · Unsubscribe anytime
 
 You’re subscribed — intelligence, not noise.
 
-Contribute to the Growth of our Ecosystem.
+Contribute to the Growth of our
 
-Contribute →
+Ecosystem.
 
-Preparing Access
+Contribute
 
-#### Disclosures
-General DisclosureCommunicationsCPX Token TradingFuture FinancingSignificant Risks
+→
 
-#### Ecosystem
-Ciphex AlphaAtlas RWA ServicesEcosystem PublicationsEcosystem UpdatesLeadership Team
+Disclosures
 
-#### Resources
-CertiK Skynet AuditGitHub RepositoryClaim TokensContact
+General Disclosure
 
-#### Follow Us
-X (Twitter)Telegram
+Communications
 
-##### Important Notice to Site Visitors
+CPX Tokens & Utility
 
-The information presented on this website is provided solely for informational purposes and is protected by applicable copyright and intellectual property laws. No content on this website constitutes a financial report, investment proposal, or an invitation to participate in any investment, community incentive, utility program, or other activity relating to the Ciphex Capital Ecosystem and its products and services (the “Ciphex Project”). This website does not constitute an offer to sell, a solicitation to buy, or a recommendation to participate in any transaction involving securities, digital assets, or other financial instruments. No content on this website should be interpreted as investment, legal, accounting, or tax advice. Certain descriptions on this website may include forward-looking statements identified by words such as “anticipate,” “expect,” “intend,” “plan,” “foresee,” “foreseeable,” “seek,” “pursue,” or similar expressions indicating future events. These statements are subject to significant risks and uncertainties that may cause actual results to differ materially from those expressed or implied and are not guarantees of performance or availability. The Ciphex Project undertakes no obligation to update, revise, supplement, or otherwise clarify any forward-looking statements and reserves the right to modify, update, remove, or discontinue access to any information, materials, or publications on this website at any time without prior notice. Any statements, representations, or materials not issued directly by the Ciphex Project, Cipherion Capital SA, or duly authorized affiliates are unauthorized and expressly disclaimed. References to third-party market research, data, platforms, or services are based on publicly available information and are included solely for contextual reference. No third party has reviewed, approved, endorsed, or assumed responsibility for the content of this website. Past performance is not indicative of, or a guarantee of, future results.
+Financing Activities
 
-Copyright © 2026 Cipherion Capital SA, Ciphex Capital Ecosystem
-Terms of UsePrivacy PolicyContact
+Significant Risks
+
+Ecosystem
+
+Ciphex Alpha
+
+Atlas RWA Services
+
+Insights & Publications
+
+Internal Updates
+
+Leadership Team
+
+Resources
+
+CertiK Skynet Audit
+
+GitHub Repository
+
+Token Claim Center
+
+Contact Ciphex
+
+Follow Us
+
+X (Twitter)
+
+Telegram
+
+Important Notice to Site Visitors
+
+Any information presented on this website, including without
+
+limitation commercial or technical descriptions, illustrations,
+
+publications, or other materials relating to the products, services,
+
+or ecosystem of the Ciphex Capital Ecosystem (or
+
+“Ciphex”), is provided solely for informational purposes
+
+and is protected by applicable copyright and intellectual property
+
+laws (or collectively, the “Ciphex Content”). The Ciphex
+
+Content should not be relied upon for decision-making purposes or
+
+construed as an offer to sell, a solicitation to buy, or a
+
+recommendation, endorsement, or invitation to participate in any
+
+digital assets, tokens, financial instruments, ecosystem
+
+initiatives, community engagement activities, token utility
+
+features, or tokenized real-world assets associated with Ciphex, its
+
+products, or its services in any jurisdiction where such
+
+participation is restricted or prohibited under applicable law.
+
+Subject to applicable law and regulations, Ciphex reserves the right
+
+to modify, update, remove, or discontinue any Ciphex Content without
+
+notification. Viewers are solely responsible for conducting their
+
+own independent due diligence and consulting their own professional
+
+advisers regarding any contemplated participation.
+
+Ciphex Content may include forward-looking statements identified by
+
+words such as “anticipate,” “expect,”
+
+“intend,” “plan,” “foresee,”
+
+“foreseeable,” “seek,” “pursue,”
+
+or similar expressions indicating future events. These statements
+
+are subject to significant risks and uncertainties that may cause
+
+actual results to differ materially from those expressed or implied
+
+and are not guarantees of future performance, outcomes, or
+
+availability. Ciphex undertakes no obligation to update, revise,
+
+supplement, or otherwise clarify any forward-looking statements. Any
+
+statements, representations, or materials not issued directly by
+
+Ciphex, Cipherion Capital SA, or their authorized representatives
+
+are unauthorized and expressly disclaimed. References to third-party
+
+market research, data, platforms, or services are based on publicly
+
+available information and are included solely for contextual
+
+reference. No third party has reviewed, approved, endorsed, or
+
+assumed responsibility for the Ciphex Content. Past performance
+
+should not be interpreted as an expectation of, or guarantee of,
+
+future results.
+
+Copyright © 2026 Ciphex Capital Ecosystem
+
+Terms of Use
+
+Privacy Policy
+
+Contact Ciphex
 
 Powered by Cipherion

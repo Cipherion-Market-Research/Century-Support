@@ -1,9 +1,3 @@
-[source_url: https://ciphex.io/assets/documents/ecosystem-update-jul31-25.pdf]
-[fetched: 2026-07-20]
-[title: Ciphex Token Claiming Dashboard & Development Update]
-[date: July 31, 2025]
-[pages: 2] [extraction: ok]
-
 1 | Page  
  
  
@@ -42,14 +36,9 @@ regulatory shifts that have favored broader cryptocurrency adoption. The company
 traditional financial engagement with crypto remains in its early stages. For recent updates on this 
 trend, refer to industry cov erage such as CNBC Crypto World . Additional information on the Alpha 
 CPX and other related publications can be found in the whitepapers and internal updates section of 
-the CipheX website.  
- 
- 
- 
- 
+the CipheX website.
 
- 
-  2 | Page  
+2 | Page  
  
  
  

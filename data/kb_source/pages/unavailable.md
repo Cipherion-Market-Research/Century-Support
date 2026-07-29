@@ -1,18 +1,22 @@
 <!--
 source_url: https://ciphex.io/unavailable
-fetched: 2026-07-20
+fetched: 2026-07-29
 page_title: Ciphex | Unavailable For Legal Reasons
 kind: live page copy
 -->
 
 # Ciphex | Unavailable For Legal Reasons
 
-HTTP 451Unavailable For Legal Reasons
+HTTP 451
+
+Unavailable For Legal Reasons
 
 451
 
 Unavailable For Legal Reasons
 
-# Ciphex isn't available in your region.
+Ciphex isn't available
+
+in your region.
 
 Due to legal and regulatory requirements, access to this site is not available from your current location.

@@ -1,9 +1,3 @@
-[source_url: https://ciphex.io/assets/documents/ecosystem-update-jul22-25.pdf]
-[fetched: 2026-07-20]
-[title: New Crypto Regulations, Lockups, Vesting & Token Claiming]
-[date: July 22, 2025]
-[pages: 2] [extraction: ok]
-
 1 | Page  
  
  
@@ -44,10 +38,9 @@ Currently, CipheX Tokens (CPX) are not listed for trading on any decentralized e
 active market exists for thes e tokens. Any unrestricted CPX Tokens claimed through lockup 
 completion or monthly vesting will remain untradable until CipheX finalizes its planned listing on the 
 Uniswap decentralized exchange (DEX).  CipheX is currently targeting its initial DEX listing for 
-September 2025. This timeline is provisional and subject to change.  
+September 2025. This timeline is provisional and subject to change.
 
- 
-  2 | Page  
+2 | Page  
  
  
  

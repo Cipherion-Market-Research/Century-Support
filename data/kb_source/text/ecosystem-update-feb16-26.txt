@@ -1,9 +1,3 @@
-[source_url: https://ciphex.io/assets/documents/ecosystem-update-feb16-26.pdf]
-[fetched: 2026-07-20]
-[title: 2026 Growth & Expansion RFP, Ciphex Alpha Advances to Next Phase]
-[date: February 16, 2026]
-[pages: 2] [extraction: ok]
-
 Ecosystem Update 
 Published February 16, 2026 
  
@@ -31,26 +25,8 @@ development. The FYE 2025 Phase II Optimization Report is available on the Ciphe
  
 System refinement and performance calibration remain active priorities as development advances toward 
 the initial commercial release. Interim or quarterly optimization updates may be issued as meaningful 
-testing milestones are reached, reflecting continued momentum toward commercialization. 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+testing milestones are reached, reflecting continued momentum toward commercialization.
 
-  
- 
 Important Notice to Reader 
 Certain statements contained in this communication may constitute "forward-looking statements" within the meaning 
 of the U.S. Private Securities Litigation Reform Act of 1995 and applicable international securities laws. These 

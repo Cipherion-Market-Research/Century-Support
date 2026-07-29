@@ -1,6 +1,6 @@
 <!--
 source_url: https://ciphex.io/privacy-policy
-fetched: 2026-07-20
+fetched: 2026-07-29
 page_title: Ciphex | Privacy Policy
 kind: live page copy
 -->
@@ -17,129 +17,195 @@ Insights
 
 Community
 
-CPXEcosystem token & liquidity coordination layerCiphex AlphaProfessional investing made simpleAtlasAsset origination & global distribution
+Connect
 
-Ecosystem UpdatesEcosystem Updates & AnnouncementsEcosystem PublicationsInternal Systems, Product, Ecosystem and Contributor Publications.
+Disconnect
+
+CPX
+
+Ecosystem token & liquidity coordination layer
+
+Ciphex Alpha
+
+Professional investing made simple
+
+Atlas
+
+Asset origination & global distribution
+
+Internal Updates
+
+Internal Updates & Announcements
+
+Insights & Publications
+
+Internal Systems, Product, Ecosystem and Contributor Publications.
 
 Legal · Ciphex Capital Ecosystem
 
-# Site Privacy Policy
+Site Privacy Policy
 
-Revised: May 25, 2026
+June 28, 2026, as Amended
 
-Ciphex is committed to protecting your privacy. This Privacy Policy describes how personal information is collected, used, processed, stored, disclosed, and protected when you access or use the Ciphex website or any related products, services, applications, features, or content (collectively, “Ciphex,” the “Site,” “Services,” “we,” “us,” or “our”). For purposes of this Privacy Policy, “Personal Information” means any information that identifies, relates to, describes, or can reasonably be associated with an identifiable individual, subject to applicable law. The terms “user” or “you” include: (i) visitors to the Site, including those referred by affiliates, partners, or other third parties; (ii) individuals who access, interact with, or use any Ciphex products, services, applications, or features; and (iii) individuals who acquire, hold, transfer, stake, claim, redeem, or otherwise interact with CPX Tokens, whether obtained directly from Ciphex or through independent decentralized or centralized trading venues (collectively, “Users”).
+1.0 Introduction
 
-By accessing or using the Site or Services, you acknowledge that you have read and understood this Privacy Policy and consent to the collection, use, processing, storage, disclosure, and transfer of your Personal Information as described herein, to the extent permitted by applicable law. If you do not agree with this Privacy Policy, you should not access or use the Site or Services.
+Ciphex Capital Ecosystem
 
-## 1. Service Applicability
+(or “Ciphex”)
 
-This Privacy Policy applies to Ciphex and any affiliated entities, service providers, contractors, contributors, agents, or partners with whom we may share Personal Information in connection with the operation, administration, development, or provision of our products and services. It applies to all Ciphex products, services, applications, platforms, websites, and activities, whether provided online, offline, or through a combination of both channels.
+is committed to protecting your privacy. This policy describes how Personal Information is collected, used, processed, stored, disclosed, and protected
 
-## 2. Ciphex Products and Services
+(“Privacy Policy”)
 
-For purposes of this Privacy Policy, the “Services” include, without limitation, the Ciphex website (the “Site”), the Ciphex Capital Ecosystem, Ciphex Alpha, Ciphex Atlas RWA Services, CPX Token-related services, and any current or future software applications, digital platforms, interfaces, tools, products, features, content, communications, or online services that Ciphex may make available from time to time.
+when you access or use the Ciphex website or any related products, services, applications, features, or content
 
-## 3. Community and Online Interactions
+(collectively, the “Site”)
+
+.
+
+For purposes of this Privacy Policy, personal Information means any information that identifies, relates to, describes, or can reasonably be associated with an identifiable individual, subject to applicable law
+
+(“Personal Information”)
+
+. The terms “user” or “you” include: (i) visitors to the Site, including those referred by affiliates, partners, or other third parties; (ii) individuals who access or use the Services; and (iii) individuals who acquire, hold, transfer, stake, claim, redeem, or otherwise interact with CPX Tokens, whether obtained directly from Ciphex or through independent decentralized or centralized trading venues
+
+(collectively, “Users”)
+
+. By accessing or using the Site, you acknowledge that you have read and understood this Privacy Policy and, to the extent permitted by applicable law, consent to the collection, use, processing, storage, disclosure, and transfer of your Personal Information as described herein. If you do not agree with this Privacy Policy, you should not access or use the Site.
+
+2.0 Service Applicability
+
+This Privacy Policy applies to Ciphex, its affiliated entities, service providers, contractors, contributors, agents, and partners that process Personal Information in connection with the operation, administration, development, or provision of the Services. It applies to all Services provided online, offline, or through a combination of both.
+
+3.0 Ciphex Products and Services
+
+For purposes of this Privacy Policy, “Services” include, without limitation, the Ciphex website, the Ciphex Capital Ecosystem, Ciphex Alpha, Atlas RWA Services, CPX Token-related utilities, and any current or future software applications, digital platforms, interfaces, tools, products, features, content, communications, or online services made available by Ciphex from time to time.
+
+4.0 Community and Online Interactions
 
 This Privacy Policy also applies when you interact with Ciphex through social media platforms, community forums, customer support channels, email communications, messaging applications, online chat services, surveys, events, promotional activities, or any other communication channel through which information may be exchanged between you and Ciphex. When you engage directly with Ciphex, this Privacy Policy governs our collection, use, processing, storage, disclosure, and protection of your Personal Information in connection with your access to or use of the Site, Services, products, features, or communications.
 
-## 4. Communications and Marketing
+5.0 Communications and Marketing
 
-Ciphex may, from time to time, send you email or other communications regarding the Services, including updates, feature announcements, and information about new offerings that may be of interest to you. If you have subscribed to our newsletters or promotional communications, you may opt out at any time by following the unsubscribe instructions included in each message. Please note that opting out of promotional communications does not affect our ability to send you important administrative or transactional messages related to your use of the Ciphex Services or other legally required communications. These communications are necessary to ensure compliance with applicable laws and to maintain the integrity of the Ciphex protocol. Please review the Disclosure section of this Site for additional information regarding risks, limitations, and regulatory considerations.
+Ciphex may, from time to time, where your email is required, send communications through its announcement system regarding its Services, including updates, feature announcements, and information about new offerings that may be of interest to you. If you have subscribed to our newsletters or promotional communications, you may opt out at any time by following the unsubscribe instructions included in each message. Please note that opting out of promotional communications does not affect our ability to send you important administrative or transactional messages related to your use of the Ciphex Services or other legally required communications. These communications are necessary to ensure compliance with applicable laws and to maintain the integrity of the Ciphex protocol. Additional information is available in the Disclosures section and various publications on this Site.
 
-## 5. Third Party Service Providers
+6.0 Third Party Service Providers
 
 Certain Services may involve independent third-party providers, including identity verification providers, Know Your Customer (KYC) service providers, payment processors, blockchain analytics providers, hosting providers, cloud service providers, customer support platforms, or other external service providers. Where your Personal Information is collected, processed, stored, or controlled by an independent third party, that third party may be responsible for the handling of such information in accordance with its own privacy practices and policies.
 
-## 6. Third Party Privacy Policies
+7.0 Third Party Privacy Policies
 
 Ciphex does not control or is responsible for the privacy, security, or data-handling practices of independent third parties. You should review the applicable privacy policies, terms of use, and related disclosures of any third-party provider before providing Personal Information or using services operated by such provider. The collection, use, processing, disclosure, retention, and protection of information by those third parties may be governed by their own policies rather than this Privacy Policy.
 
-## 7. Decentralized Environments
+8.0 Decentralized Environments
 
-Ciphex and its current and future products and services are designed to operate within a decentralized protocol-based environment. The architecture of the Ciphex Capital Ecosystem is intended to support principles of decentralization, user autonomy, transparency, and direct user interaction with blockchain-based systems and smart contracts.
+Ciphex and its current and future products and services are designed to operate within a decentralized protocol-based environment. The architecture of the Ciphex Capital Ecosystem is intended to primarily function under the principles of a decentralized environment where user autonomy, transaction transparency, and interaction between users and Ciphex products, services, utility features, community participation, and other ecosystem activities interact through blockchain-based systems and smart contracts.
 
-## 8. No Account Registration Requirement
+9.0 No Account Registration Requirement
 
-Except where required by applicable law, contractual arrangements, governance participation requirements, or specific product features, Ciphex generally does not require users to create or maintain registered accounts to access or interact with decentralized protocol functionality. Users may access certain Services through compatible blockchain wallets or other supported technologies without establishing a traditional customer account relationship with Ciphex.
+Except where required by applicable law, contractual arrangements, governance participation requirements, or specific product features, Ciphex generally does not require users to create or maintain registered accounts to access or interact with its ecosystem and utility features, products and services. Users may access certain Services through compatible blockchain wallets or other supported technologies without establishing a traditional customer account relationship with Ciphex.
 
-## 9. Non-Custodial Services
+10.0 Use of Cookies
 
-Ciphex generally does not take custody, possession, or control of users’ digital assets. Users remain solely responsible for maintaining control of their wallets, private keys, credentials, and digital assets. Transactions involving blockchain networks, smart contracts, decentralized protocols, and digital assets are initiated and controlled directly by users, subject to the rules and functionality of the applicable protocol or smart contract.
+Ciphex uses cookies and similar tracking technologies to enhance your experience, analyze Site traffic, and personalize content and services. Cookies are small text files that are stored on your device when you access the Site. These files allow us to recognize your browser, remember user preferences, and improve the functionality and security of the Site. Ciphex uses both session cookies, which expire when you close your browser, and persistent cookies, which remain on your device until you delete them or they expire. Some cookies are essential for the operation of the Site or its Services, while others are used for analytics, performance monitoring, or to provide customized content. By continuing to use the Site, you consent to the placement and use of cookies as described in this Privacy Policy. You may choose to turn off cookies through your browser settings; however, doing so may affect your ability to access certain features or functionality of the Site or its Services. You may manage your cookie preferences in your browser settings.
 
-## 10. Limited Personal Information
-
-Notwithstanding the decentralized nature of the Services, Ciphex may collect, use, process, and retain limited Personal Information where reasonably necessary to administer governance-related activities, comply with legal or regulatory obligations, facilitate community participation, verify eligibility for specific programs, administer CPX Tokens subject to lockup, vesting, staking, distribution, rewards, or similar contractual arrangements, or otherwise provide certain Services (collectively, “Limited Personal Information”). Any collection, use, processing, storage, disclosure, retention, or transfer of such information will be conducted in accordance with this Privacy Policy, applicable data protection laws, and relevant governance or operational requirements.
-
-## 11. Use of Cookies
-
-Ciphex uses cookies and similar tracking technologies to enhance your experience, analyze Site traffic, and personalize content and services. Cookies are small text files that are stored on your device when you access the Site. These files allow us to recognize your browser, remember user preferences, and improve the functionality and security of the Site. We use both session cookies, which expire when you close your browser, and persistent cookies, which remain on your device until you delete them or they expire. Some cookies are essential for the operation of the Site or its Services, while others are used for analytics, performance monitoring, or to provide customized content. By continuing to use the Site, you consent to the placement and use of cookies as described in this Privacy Policy. You may choose to turn off cookies through your browser settings; however, doing so may affect your ability to access certain features or functionality of the Site or its Services. You may manage your cookie preferences in your browser settings.
-
-## 12. Sharing of Personal Information
+11.0 Sharing of Personal Information
 
 Ciphex may disclose Personal Information to third parties where reasonably necessary to operate the Services, administer the Ciphex Capital Ecosystem, comply with legal obligations, protect users and the integrity of the Services, or otherwise conduct legitimate business activities consistent with this Privacy Policy.
 
-### a. Service Providers
+a. Service Providers
 
-We may share Personal Information with third-party service providers that assist in the operation, maintenance, security, administration, and delivery of the Services. These providers may include payment processors, identity verification and Know Your Customer (KYC) providers, centralized digital asset exchanges, cloud hosting providers, web infrastructure providers, cybersecurity providers, software developers, blockchain analytics providers, communications providers, customer support platforms, data storage providers, and other vendors that support the functionality, security, and operation of the Services. Such service providers are generally authorized to access and process Personal Information only as necessary to perform services on our behalf and subject to applicable contractual, legal, confidentiality, and security obligations.
+Ciphex may share Personal Information with third-party service providers that assist in the operation, maintenance, security, administration, and delivery of the Services. These providers may include payment processors, identity verification and Know Your Customer (KYC) providers, centralized digital asset exchanges, cloud hosting providers, web infrastructure providers, cybersecurity providers, software developers, blockchain analytics providers, communications providers, customer support platforms, data storage providers, and other vendors that support the functionality, security, and operation of the Services. Such service providers are generally authorized to access and process Personal Information only as necessary to perform services on our behalf and subject to applicable contractual, legal, confidentiality, and security obligations.
 
-### b. Regulatory, Legal, and Government Disclosures
+b. Regulatory, Legal, and Government Disclosures
 
-We may disclose Personal Information to courts, regulatory authorities, governmental agencies, law enforcement authorities, self-regulatory organizations, tax authorities, or other third parties where we reasonably believe such disclosure is necessary or appropriate to comply with applicable laws, regulations, legal processes, judicial proceedings, governmental requests, enforcement actions, or legal obligations. We may also disclose Personal Information where necessary to establish, exercise, protect, or defend the rights, property, security, operations, or legal interests of Ciphex, its users, contributors, service providers, or other affected parties.
+Ciphex may disclose Personal Information to courts, regulatory authorities, governmental agencies, law enforcement authorities, or other third parties where Ciphex reasonably believes such disclosure is necessary or to comply with applicable legal processes, judicial proceedings, governmental requests, enforcement actions, or legal obligations. Ciphex may also disclose Personal Information where necessary to establish, exercise, protect, or defend the rights, property, security, operations, or legal interests of Ciphex, its users, contributors, service providers, or other affected parties.
 
-### c. Anonymized and Aggregated Information
+c. Anonymized and Aggregated Information
 
-We may anonymize, aggregate, de-identify, or otherwise transform Personal Information so that it cannot reasonably be used to identify an individual. Anonymization involves applying technical and organizational measures to remove or obscure identifying elements from Personal Information. Anonymized or aggregated information may be used for research, analytics, product development, security monitoring, operational improvement, reporting, ecosystem development, statistical analysis, and other legitimate business purposes. Such information is intended to prevent the identification of individual users while supporting the continued development and improvement of the Services.
+Ciphex may anonymize, aggregate, de-identify, or otherwise transform Personal Information so that it cannot reasonably be used to identify an individual. Anonymization involves applying technical and organizational measures to remove or obscure identifying elements from Personal Information. Anonymized or aggregated information may be used for research, analytics, product development, security monitoring, operational improvement, reporting, ecosystem development, statistical analysis, and other legitimate business purposes. Such information is intended to prevent the identification of individual users while supporting the continued development and improvement of its Services.
 
-### d. Blockchain and Public Network Information
+d. Blockchain and Public Network Information
 
 Certain information associated with public blockchain networks, including wallet addresses, smart contract interactions, transaction hashes, and on-chain activity, may be publicly visible by design. While Ciphex may implement measures intended to reduce the association of such information with identifiable individuals, Ciphex cannot control, modify, delete, or restrict information that is permanently recorded on public blockchain networks.
 
-## 13. No Sale of Personal Information
+12.0 Non-Custodial Services
 
-Ciphex does not sell, rent, lease, or otherwise monetize Personal Information by exchanging it with third parties for monetary consideration. Any disclosure of Personal Information is limited to the purposes described in this Privacy Policy, including the operation of the Services, compliance with legal obligations, security and fraud prevention, business administration, and related operational activities.
+Ciphex does not accept custody, possession, or control of users’ digital assets. Users remain solely responsible for maintaining control of their wallets, private keys, credentials, and digital assets. Transactions involving blockchain networks, smart contracts, decentralized protocols, and digital assets are initiated and controlled directly by users, subject to the rules and functionality of the applicable protocol or smart contract.
 
-## 14. Retention of Limited Personal Information
+13.0 No Sale of Personal Information
+
+Ciphex does not sell, rent, lease, trade, or otherwise monetize Personal Information by exchanging it with third parties for monetary consideration. Any disclosure of Personal Information is limited to the purposes described in this Privacy Policy, including the operation of the Services, compliance with legal obligations, security and fraud prevention, business administration, and related operational activities.
+
+14.0 Limited Personal Information
+
+Notwithstanding the decentralized nature of its Services, Ciphex may collect, use, process, and retain limited Personal Information where reasonably necessary to administer governance-related activities, comply with legal or regulatory obligations, facilitate community participation, verify eligibility for specific programs, administer CPX Tokens subject to lockup, vesting, staking, distribution, rewards, or similar contractual arrangements (collectively, “Limited Personal Information”). Any collection, use, processing, storage, disclosure, retention, or transfer of such information will be conducted in accordance with this Privacy Policy, applicable data protection laws, and relevant governance or operational requirements.
+
+15.0 Retention of Limited Personal Information
 
 Ciphex is committed to protecting the privacy and security of Personal Information collected in connection with the Services. Limited Personal Information is maintained using reasonable technical, administrative, and organizational safeguards designed to protect against unauthorized access, disclosure, alteration, loss, misuse, or destruction. Such information is retained only for as long as reasonably necessary to fulfill the purposes for which it was collected, to satisfy contractual requirements, to resolve disputes, to enforce agreements, to protect the security and integrity of the Services, or to comply with applicable legal and regulatory obligations. When Limited Personal Information is no longer required for these purposes, Ciphex may delete, anonymize, aggregate, or otherwise de-identify such information, unless continued retention is required or permitted by applicable law.
 
-## 15. User Privacy Rights
+16.0 User Privacy Rights
 
 Subject to applicable law, users may have certain rights regarding their Personal Information, including the right to request access to, correction of, deletion of, restriction of, or objection to the processing of Personal Information held by Ciphex. Where legally required, users may also have the right to withdraw previously provided consent, request information regarding the processing of their Personal Information, or request the transfer of certain Personal Information to another service provider in a structured and commonly used format. Ciphex will consider and respond to verified requests in accordance with applicable legal and regulatory requirements. Certain requests may be limited where Ciphex is required to retain information to comply with legal obligations, protect the security and integrity of the Services, enforce contractual rights, prevent fraud or abuse, resolve disputes, or satisfy other legitimate business and operational requirements.
 
-## 16. Submission of Privacy Requests
+17.0 Submission of Privacy Requests
 
 Users wishing to exercise applicable privacy rights or submit privacy-related inquiries may contact Ciphex through the communication channels identified on the Site. Ciphex may request additional information to verify the identity and authority of the requesting individual before processing any request involving Personal Information. Verified requests will be reviewed and addressed within a reasonable period of time and in accordance with applicable legal and regulatory requirements.
 
-## 17. Security Safeguards
+18.0 Security Safeguards
 
 Ciphex implements reasonable technical, administrative, and organizational safeguards designed to protect the confidentiality, integrity, availability, and security of Personal Information collected in connection with the Services. These safeguards may include measures implemented directly by Ciphex as well as security controls provided by third-party service providers, infrastructure providers, technology partners, contractors, and community contributors that support the operation, maintenance, and delivery of the Services.
 
-## 18. Security Limitations
+19.0 Security Limitations
 
 Our security practices are intended to reduce the risk of unauthorized access, acquisition, disclosure, alteration, loss, misuse, destruction, or other unauthorized processing of Personal Information. However, no method of transmitting, storing, securing, or processing information through the internet, blockchain networks, digital systems, cloud infrastructure, or electronic communications can be guaranteed to be completely secure. Accordingly, Ciphex cannot guarantee that unauthorized access, data breaches, cyberattacks, system failures, human error, or other security incidents will never occur.
 
-## 19. Security Incidents and Data Breaches
+20.0 Security Incident and Data Breaches
 
 If Ciphex becomes aware of a security incident or data breach involving Personal Information under its control, Ciphex may investigate the incident and implement such remedial, corrective, containment, mitigation, or recovery measures as it determines appropriate under the circumstances. Where required by applicable law, regulation, or legal process, Ciphex may provide notifications to affected individuals, regulatory authorities, or other parties.
 
-For additional inquiries regarding this Ciphex Privacy Policy, please use our Contact Section.
+For additional inquiries regarding this Privacy Policy, visit
 
-## Separate Notice · Cloudflare
+Contact Section
 
-We use Cloudflare for bot detection and protection on this Site. How Cloudflare handles information in connection with that service is governed by its own privacy practices, not this Privacy Policy. Cloudflare privacy policy: https://www.cloudflare.com/en-gb/turnstile-privacy-policy/.
+.
 
-## Separate Notice · Google Analytics
+Separate Notice · Cloudflare
 
-We use Google Analytics 4, a web analytics service provided by Google LLC (“Google”), to understand how visitors use this Site. Google Analytics uses cookies and similar identifiers to collect usage information such as the pages viewed, referring links, general device and browser characteristics, and an approximate, non-precise location derived from your IP address; Google Analytics 4 does not log or store IP addresses. This information is processed by Google in accordance with its own privacy practices, not this Privacy Policy. You can review how Google handles data collected through Google Analytics at https://policies.google.com/privacy, and you can opt out of Google Analytics across websites using the Google Analytics Opt-out Browser Add-on at https://tools.google.com/dlpage/gaoptout.
+We use Cloudflare for bot detection and protection on this Site. How Cloudflare handles information in connection with that service is governed by its own privacy practices, not this Privacy Policy. Cloudflare privacy policy:
 
-## One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets
+https://www.cloudflare.com/en-gb/turnstile-privacy-policy/
+
+.
+
+Separate Notice · Google Analytics
+
+We use Google Analytics 4, a web analytics service provided by Google LLC (“Google”), to understand how visitors use this Site. Google Analytics uses cookies and similar identifiers to collect usage information such as the pages viewed, referring links, general device and browser characteristics, and an approximate, non-precise location derived from your IP address; Google Analytics 4 does not log or store IP addresses. This information is processed by Google in accordance with its own privacy practices, not this Privacy Policy. You can review how Google handles data collected through Google Analytics at
+
+https://policies.google.com/privacy
+
+, and you can opt out of Google Analytics across websites using the Google Analytics Opt-out Browser Add-on at
+
+https://tools.google.com/dlpage/gaoptout
+
+.
+
+One Capital Ecosystem Shaping the Future of
+
+Intelligent Digital Capital Markets
 
 Stay connected
 
-### Ecosystem updates as they happen.
+Ecosystem updates
 
-Feature UpdatesSystem PublicationsAnnouncements
+as they happen.
+
+Feature Updates
+
+System Publications
+
+Announcements
 
 Email
 
@@ -149,29 +215,140 @@ No spam · Unsubscribe anytime
 
 You’re subscribed — intelligence, not noise.
 
-Contribute to the Growth of our Ecosystem.
+Contribute to the Growth of our
 
-Contribute →
+Ecosystem.
 
-Preparing Access
+Contribute
 
-#### Disclosures
-General DisclosureCommunicationsCPX Token TradingFuture FinancingSignificant Risks
+→
 
-#### Ecosystem
-Ciphex AlphaAtlas RWA ServicesEcosystem PublicationsEcosystem UpdatesLeadership Team
+Disclosures
 
-#### Resources
-CertiK Skynet AuditGitHub RepositoryClaim TokensContact
+General Disclosure
 
-#### Follow Us
-X (Twitter)Telegram
+Communications
 
-##### Important Notice to Site Visitors
+CPX Tokens & Utility
 
-The information presented on this website is provided solely for informational purposes and is protected by applicable copyright and intellectual property laws. No content on this website constitutes a financial report, investment proposal, or an invitation to participate in any investment, community incentive, utility program, or other activity relating to the Ciphex Capital Ecosystem and its products and services (the “Ciphex Project”). This website does not constitute an offer to sell, a solicitation to buy, or a recommendation to participate in any transaction involving securities, digital assets, or other financial instruments. No content on this website should be interpreted as investment, legal, accounting, or tax advice. Certain descriptions on this website may include forward-looking statements identified by words such as “anticipate,” “expect,” “intend,” “plan,” “foresee,” “foreseeable,” “seek,” “pursue,” or similar expressions indicating future events. These statements are subject to significant risks and uncertainties that may cause actual results to differ materially from those expressed or implied and are not guarantees of performance or availability. The Ciphex Project undertakes no obligation to update, revise, supplement, or otherwise clarify any forward-looking statements and reserves the right to modify, update, remove, or discontinue access to any information, materials, or publications on this website at any time without prior notice. Any statements, representations, or materials not issued directly by the Ciphex Project, Cipherion Capital SA, or duly authorized affiliates are unauthorized and expressly disclaimed. References to third-party market research, data, platforms, or services are based on publicly available information and are included solely for contextual reference. No third party has reviewed, approved, endorsed, or assumed responsibility for the content of this website. Past performance is not indicative of, or a guarantee of, future results.
+Financing Activities
 
-Copyright © 2026 Cipherion Capital SA, Ciphex Capital Ecosystem
-Terms of UsePrivacy PolicyContact
+Significant Risks
+
+Ecosystem
+
+Ciphex Alpha
+
+Atlas RWA Services
+
+Insights & Publications
+
+Internal Updates
+
+Leadership Team
+
+Resources
+
+CertiK Skynet Audit
+
+GitHub Repository
+
+Token Claim Center
+
+Contact Ciphex
+
+Follow Us
+
+X (Twitter)
+
+Telegram
+
+Important Notice to Site Visitors
+
+Any information presented on this website, including without
+
+limitation commercial or technical descriptions, illustrations,
+
+publications, or other materials relating to the products, services,
+
+or ecosystem of the Ciphex Capital Ecosystem (or
+
+“Ciphex”), is provided solely for informational purposes
+
+and is protected by applicable copyright and intellectual property
+
+laws (or collectively, the “Ciphex Content”). The Ciphex
+
+Content should not be relied upon for decision-making purposes or
+
+construed as an offer to sell, a solicitation to buy, or a
+
+recommendation, endorsement, or invitation to participate in any
+
+digital assets, tokens, financial instruments, ecosystem
+
+initiatives, community engagement activities, token utility
+
+features, or tokenized real-world assets associated with Ciphex, its
+
+products, or its services in any jurisdiction where such
+
+participation is restricted or prohibited under applicable law.
+
+Subject to applicable law and regulations, Ciphex reserves the right
+
+to modify, update, remove, or discontinue any Ciphex Content without
+
+notification. Viewers are solely responsible for conducting their
+
+own independent due diligence and consulting their own professional
+
+advisers regarding any contemplated participation.
+
+Ciphex Content may include forward-looking statements identified by
+
+words such as “anticipate,” “expect,”
+
+“intend,” “plan,” “foresee,”
+
+“foreseeable,” “seek,” “pursue,”
+
+or similar expressions indicating future events. These statements
+
+are subject to significant risks and uncertainties that may cause
+
+actual results to differ materially from those expressed or implied
+
+and are not guarantees of future performance, outcomes, or
+
+availability. Ciphex undertakes no obligation to update, revise,
+
+supplement, or otherwise clarify any forward-looking statements. Any
+
+statements, representations, or materials not issued directly by
+
+Ciphex, Cipherion Capital SA, or their authorized representatives
+
+are unauthorized and expressly disclaimed. References to third-party
+
+market research, data, platforms, or services are based on publicly
+
+available information and are included solely for contextual
+
+reference. No third party has reviewed, approved, endorsed, or
+
+assumed responsibility for the Ciphex Content. Past performance
+
+should not be interpreted as an expectation of, or guarantee of,
+
+future results.
+
+Copyright © 2026 Ciphex Capital Ecosystem
+
+Terms of Use
+
+Privacy Policy
+
+Contact Ciphex
 
 Powered by Cipherion

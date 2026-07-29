@@ -1,9 +1,3 @@
-[source_url: https://ciphex.io/assets/documents/algorithmic-austerity.pdf]
-[fetched: 2026-07-20]
-[title: Self-Optimizing Smart Contracts]
-[date: January 28, 2025]
-[pages: 12] [extraction: ok]
-
 Copyright © 2024-2025 Cipherion Capital SA, Ciphex Capital Ecosystem. All Rights Reserved. 
 Ciphex Self-Optimizing Smart 
 Contracts and the Future of  
@@ -13,8 +7,7 @@ By Matt James, Co-Founder
 Ciphex Capital Ecosystem 
 Cipherion Capital SA 
 Summarized Publication 
-January 28, 2025 
-
+January 28, 2025
 
 IMPORTANT NOTICE TO READER 
 Applicable copyright laws protect this document and the information contained herein. 
@@ -57,7 +50,7 @@ written, oral, or digital, made outside the scope of this publication may be rel
 statements, if made, are considered unauthorized and are expressly disclaimed. Ciphex reserves the 
 right, in its sole discretion, to modify, restrict, or revoke access to this publication at any time without 
 prior notice. 
-Copyright © 2024-2025 Cipherion Capital SA, Ciphex Capital Ecosystem. All Rights Reserved. 
+Copyright © 2024-2025 Cipherion Capital SA, Ciphex Capital Ecosystem. All Rights Reserved.
 
 Ciphex's Self-Optimizing Smart 
 Contracts and the Future of On-Chain 

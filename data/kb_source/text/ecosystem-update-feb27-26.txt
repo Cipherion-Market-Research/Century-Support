@@ -1,9 +1,3 @@
-[source_url: https://ciphex.io/assets/documents/ecosystem-update-feb27-26.pdf]
-[fetched: 2026-07-20]
-[title: Growth & Expansion RFP Deadline, Ciphex Alpha Reduces AI Functionality]
-[date: February 27, 2026]
-[pages: 2] [extraction: ok]
-
 Ecosystem Update 
 Published February 27, 2026 
  
@@ -40,16 +34,8 @@ architectural oversight, the system continues improving target identification ac
 and layered risk controls, supporting reduced loss exposure and consistent capital preservation disciplines. 
 System refinement and performance calibration remain active priorities as development advances toward 
 initial commercial release. Interim or quarterly optimization updates may be issued as material milestones 
-are achieved. 
- 
- 
- 
- 
- 
- 
+are achieved.
 
-  
- 
 Important Notice to Reader 
 Certain statements contained in this communication may constitute "forward-looking statements" within the meaning 
 of the U.S. Private Securities Litigation Reform Act of 1995 and applicable international securities laws. These 

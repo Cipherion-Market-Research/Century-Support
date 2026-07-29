@@ -1,6 +1,6 @@
 <!--
 source_url: https://ciphex.io/general-disclosure
-fetched: 2026-07-20
+fetched: 2026-07-29
 page_title: Ciphex | General Disclosure
 kind: live page copy
 -->
@@ -17,65 +17,145 @@ Insights
 
 Community
 
-CPXEcosystem token & liquidity coordination layerCiphex AlphaProfessional investing made simpleAtlasAsset origination & global distribution
+Connect
 
-Ecosystem UpdatesEcosystem Updates & AnnouncementsEcosystem PublicationsInternal Systems, Product, Ecosystem and Contributor Publications.
+Disconnect
+
+CPX
+
+Ecosystem token & liquidity coordination layer
+
+Ciphex Alpha
+
+Professional investing made simple
+
+Atlas
+
+Asset origination & global distribution
+
+Internal Updates
+
+Internal Updates & Announcements
+
+Insights & Publications
+
+Internal Systems, Product, Ecosystem and Contributor Publications.
 
 Disclosures · Ciphex Capital Ecosystem
 
-# General Disclosure
+General Disclosure
 
-Date: May 25, 2026
+Date: July 18, 2026
 
-## General Disclosure
+I. General Disclosure
 
-1.0 General Information
+1.0 General Information
 
-The information available on the Ciphex.io website ("Ciphex"), including any related materials, is provided solely for general informational and illustrative purposes. It does not constitute financial, investment, legal, accounting, tax, regulatory, or other professional advice and should not be relied upon when making financial or investment decisions. The Ciphex Alpha and Atlas RWA Services of the Ciphex Capital Ecosystem are currently in various pre-commercial testing and optimization phases and are not available to the public. All capital deployed during these phases is internally funded for testing and system evaluation only. No customer, investor, or third-party capital participates at any stage of the precommercial phase. Ciphex is not registered as a broker-dealer, investment adviser, securities exchange, cryptocurrency exchange, or trading platform in any jurisdiction and does not provide brokerage, investment advisory, exchange, or custodial services.
+Cipherion Capital SA, or Cipherion Market Research Group
 
-2.0 Forward-Looking Statements
+(or "Cipherion")
 
-Certain information contained on this website, including descriptions of potential products, services, system capabilities, financial models, market strategies, or anticipated outcomes, may constitute forward-looking statements within the meaning of the U.S. Private Securities Litigation Reform Act of 1995 and applicable securities laws in other jurisdictions. Forward-looking statements are based on current expectations, assumptions, estimates, and projections and may be identified by words such as "expects," "plans," "projects," "intends," "believes," "anticipates," "estimates," "targets," "may," "will," or similar expressions. These statements relate to future events, business activities, operational developments, regulatory matters, or financial performance. They are inherently subject to risks, uncertainties, and other factors that may cause actual results to differ materially from those expressed or implied. All forward-looking statements reflect the views of Ciphex as of the date they are published and speak only as of that date. No representation or warranty, express or implied, is made regarding the accuracy, completeness, reliability, or timeliness of any information provided. Information may be incomplete, become outdated, or change without notice, and should not be relied upon as a guarantee of future performance, results, or outcomes. Ciphex undertakes no obligation to update, revise, or supplement any forward-looking statement to reflect subsequent events, circumstances, or changes in expectations, except as required by applicable law.
+, is a legal entity registered under the laws of the Republic of Panama, and parent to the Ciphex Capital Ecosystem
 
-3.0 Third-Party References
+(or "Ciphex")
 
-References to third-party organizations, platforms, securities, digital assets, protocols, products, or services are derived from publicly available information and are provided solely for informational, illustrative, or citation purposes. Unless expressly stated otherwise, no third party referenced on this website has reviewed, approved, endorsed, sponsored, or verified the contents of this website, the Ciphex Ecosystem, or any current or future Ciphex products or services.
+, or collectively referred to as "The Ciphex Project", where applicable. Ciphex is a unified Ecosystem focused on enterprise tokenization and autonomous market systems, improving efficiency across capital formation, commercialization, and market participation as global financial markets evolve into intelligent digital capital markets (or collectively
 
-4.0 No Offer or Solicitation
+"Ecosystem"
 
-Nothing contained on the Ciphex website, in any related materials, or in any communications issued by Ciphex constitutes or should be construed as an offer to sell, a solicitation of an offer to buy, a recommendation, endorsement, or invitation to participate in any securities, commodities, derivatives, digital assets, virtual assets, investment contracts, collective investment schemes, or other financial instruments. The information presented is intended solely for informational purposes. It is not directed toward any person or entity in any jurisdiction where such distribution, publication, access, or use would be contrary to applicable law or regulatory requirements.
+). The Ecosystem comprises two primary products and services: Atlas RWA Services
 
-5.0 Reliance on Information
+(or "Atlas")
 
-References to financial markets, digital assets, tokenized assets, investment activities, or commercial opportunities are provided solely for informational, educational, and illustrative purposes. Such information should not be relied upon as investment, legal, tax, accounting, financial, or other professional advice, nor should it form the basis of any investment, financial, legal, or commercial decision. Visitors should not interpret any content on the Ciphex website as a representation, warranty, or assurance regarding the regulatory classification, registration, licensing, approval, or legal status of any product, service, digital asset, or activity in any jurisdiction.
+, an enterprise tokenization system focused on efficient capital formation, information transparency, and project lifecycle management, improving commercial efficiency while expanding market accessibility. Ciphex Alpha
 
-6.0 Regulatory Framework
+(or "Alpha")
 
-The following disclosures shall be interpreted and applied in a manner consistent with applicable laws and regulations, including applicable securities, crypto-asset, financial services, anti-money laundering, counter-terrorist financing, sanctions, and related laws and regulations in any jurisdiction where CPX Tokens, Ciphex products or services, or related activities may be subject to legal or regulatory requirements. References to specific laws, regulations, regulatory authorities, or guidance are illustrative and non-exclusive. They shall not be interpreted as limiting the application of any other applicable legal or regulatory framework.
+, an autonomous market system focused on intelligent digital capital markets, reducing user complexity while increasing confidence in market participation through consistent market execution, intelligent risk oversight, and disciplined portfolio management.
 
-7.0 User Responsibility
+Ciphex products, services, utilities, and other developments intended for commercial use are currently in various stages of development or precommercial optimization and are not available to the public. All capital deployed by the Ciphex Alpha (or "Alpha") autonomous market system during this phase is proprietary and used exclusively for testing and evaluation. No third-party capital participates during any precommercial testing, evaluation, or optimization phase. Atlas RWA Services (or "Atlas") is available for demonstration upon request and is not currently available to the public (collectively, the "Ciphex Services"). Testing, evaluation, and optimization in an active market environment is subject to, without limitation, system modifications, data variability, technical limitations, process failures, human intervention, human error, and sudden external market conditions to which systems may not respond adequately.
 
-Access to and use of any Ciphex product, service, or ecosystem participation is entirely self-directed and undertaken at the user's sole risk. Such access or use does not create, and shall not be construed as creating, any client, customer, brokerage, advisory, fiduciary, custodial, agency, investment management, or similar relationship under applicable law. Users acknowledge and accept that participation in digital asset activities involves substantial risks, including the potential for partial or total loss of any capital, digital assets, tokens, or other value allocated to, acquired through, or associated with any Ciphex product, service, utility, or activity.
+Information relating to the Ciphex Services should not be relied upon as the basis for any strategic decision or participation. It should not be construed as investment advice, a recommendation, or invitation to participate in the Ciphex Services. No representation or warranty is made regarding the accuracy, completeness, or timeliness of the information provided in this publication, which may be incomplete, outdated, or subject to change without notice. The Ciphex Project assumes no obligation to update, revise, or correct such information during the precommercial testing and optimization phase. Any future commercial availability of the Ciphex Services may be subject to applicable securities laws and regulatory requirements, and access may be restricted or prohibited in certain jurisdictions. Past performance should not be interpreted as indicative of, or a guarantee of, future results.
 
-8.0 Substantial Risk
+1.1 Forward-Looking Statements
 
-Digital assets involve substantial risks, including but not limited to price volatility, limited liquidity, technological failures, market disruptions, cybersecurity threats, and evolving legal and regulatory requirements. No representation, warranty, or assurance is made that any product, service, strategy, autonomous trading activity, financial model, or future Ciphex offering will achieve any particular result, performance level, objective, or expected outcome. (See additional Significant Risk Disclosure)
+Certain information published on the Ciphex website, including descriptions of current or future products, services, Ecosystem activities, system capabilities, commercial strategies, financial models, operational initiatives, market opportunities, or anticipated outcomes, may constitute forward-looking statements within the meaning of the U.S. Private Securities Litigation Reform Act of 1995 and applicable securities laws of other jurisdictions. Forward-looking statements are based on current expectations, assumptions, estimates, and projections and may be identified by words such as "expects," "plans," "projects," "intends," "believes," "anticipates," "estimates," "targets," "may," "will," or similar expressions.
 
-9.0 Changes to Products or Services
+Forward-looking statements relate to future events and are inherently subject to risks, uncertainties, and other factors that may cause actual results to differ materially from those expressed or implied. All forward-looking statements reflect the views of Ciphex only as of the date published. No representation or warranty, express or implied, is made regarding the accuracy, completeness, reliability, or timeliness of such information, which may change, become outdated, or be removed without notice. Forward-looking statements should not be relied upon as guarantees of future performance, results, or outcomes. Except as required by applicable law, Ciphex undertakes no obligation to update, revise, or supplement any forward-looking statement.
 
-Ciphex reserves the right, in its sole discretion and at any time, to modify, update, supplement, suspend, restrict, replace, discontinue, or remove any information, products, services, features, policies, tokenomics structures, pricing frameworks, operational procedures, disclosures, materials, or website content. Where reasonably practicable and deemed appropriate by Ciphex, notice of material changes, service discontinuations, feature removals, pricing modifications, or operational updates may be provided through the applicable product or service pages of the Ciphex website, user dashboards, electronic communications, or other official communication channels. However, Ciphex shall have no obligation to provide advance notice of any such changes unless otherwise required by applicable law, contractual agreement, or the specific terms governing a particular product or service. Neither Ciphex nor any of its affiliates shall have any duty or obligation to update, revise, correct, supplement, maintain, or continue providing any information, products, services, disclosures, materials, features, or functionality, except as required by applicable law or an applicable written agreement. Registered users, licensees, tokenholders, participants, and other users are responsible for monitoring official Ciphex communications for updates relating to products, services, and platform activities.
+1.2 No Offer or Solicitation
+
+Nothing contained on the Ciphex website, or in any publication, marketing brochure, presentation, report, newsletter, advertisement, public statement, interview, podcast, video, webinar, or any other information, material, or communication distributed, published, made available, or otherwise disseminated by Ciphex or its authorized representatives
+
+(collectively "Ciphex Content")
+
+should be relied upon for decision-making purposes or construed as an offer to sell, a solicitation of an offer to buy, or a recommendation, endorsement, or invitation to participate in any digital assets, tokens, Ecosystem initiatives, community engagement activities, token utility features, or tokenized real-world assets associated with Ciphex, its products, or its services in any jurisdiction where such participation is restricted or prohibited under applicable law.
+
+1.3 Reliance on Information
+
+The Ciphex Content is provided solely for informational, educational, and illustrative purposes. Such information should not be relied upon as investment, legal, tax, accounting, financial, or other professional advice. Nothing contained in the Ciphex Content should be interpreted as a representation, warranty, or assurance regarding the regulatory classification, registration, authorization, approval, or legal status of Ciphex, the Ecosystem, or any related products or services in any jurisdiction.
+
+1.4 Third-Party References
+
+References to third-party organizations, platforms, digital assets, protocols, products, services, or other third-party information are derived from publicly available sources. They are provided solely for informational, illustrative, or citation purposes. Unless expressly stated otherwise, no third party referenced by Ciphex has reviewed, approved, endorsed, sponsored, or verified the contents of this website, Ciphex, or any current or future products, services, or Ecosystem activities.
+
+1.5 Changes to Products or Services
+
+Except as required by applicable law, Ciphex reserves the right, at its sole discretion and at any time without advanced notification, to modify, update, supplement, suspend, replace, discontinue, or remove any products, services, features, Digital Financing activities, tokenomics, pricing structures, operational procedures, disclosures, publications, website content, or other Ecosystem activities. Where reasonably practicable and deemed appropriate by Ciphex, notice of material changes, service discontinuations, feature removals, pricing modifications, or operational updates may be provided through the Ciphex website, applicable product or service pages, user dashboards, electronic or other official communication channels. However, except as required by applicable law, a written agreement, or the terms governing a particular product or service, Ciphex assumes no obligation to provide advance notice of such changes. Neither Ciphex nor its affiliates shall have any obligation to update, revise, correct, supplement, maintain, or continue providing any product, service, disclosure, publication, website content, feature, functionality, or Ecosystem activity except as required by applicable law or an applicable written agreement. Users, licensees, tokenholders, or participants are responsible for periodically reviewing official Ciphex communications for updates relating to products, services, and Ecosystem activities.
+
+1.6 User Responsibility
+
+Access to and use of, or participation in, Ciphex products, services, contributions, or Ecosystem activities is entirely self-directed and undertaken at the user's sole risk. Such access or participation does not create, and shall not be construed as creating, any client, customer, brokerage, advisory, fiduciary, custodial, agency, investment management, or similar relationship under applicable law. Users acknowledge and accept that participation in digital asset and related market activities involves substantial risks, including the potential for partial or total loss of capital, digital assets, CPX Tokens, tokenized assets, or other value associated with any Ciphex product, service, Digital Financing, or Ecosystem activity.
+
+1.7 Substantial Risk
+
+Digital assets and related market activities involve substantial risks, including, without limitation, price volatility, limited liquidity, technological failures, operational disruptions, cybersecurity incidents, market disruptions, and evolving legal and regulatory requirements. No representation, warranty, or assurance is made that any product, service, strategy, autonomous system, tokenization system, analytical framework, economic model, or future Ecosystem activity will achieve any particular objective, commercial outcome, performance level, or expected result. (See additional
+
+V. Significant Risk Disclosures
+
+)
+
+1.8 Proprietary Properties
+
+Ciphex provides non-proprietary and non-confidential information relating to its Proprietary Properties that it considers appropriate, in its sole discretion, to facilitate informed, independent due diligence. Such public disclosures are developed following regulatory disclosure objectives described in
+
+Section 4.7
+
+, intended to provide balanced, factual, and non-promotional information regarding Ciphex and its products, services, governance, operating policies and procedures, and related Ecosystem activities, while protecting Proprietary Properties, confidential information, trade secrets, and commercial interests.
+
+1.9 Limited Safeguards and Protection
+
+Participation in digital asset markets, including the buying, holding, transferring, staking, lending, borrowing, and swapping of cryptocurrencies, tokens, and other digital assets, involves substantial risk, including the partial or total loss of any invested capital. Participants may not benefit from the legal protections, safeguards, rights, remedies, or regulatory oversight applicable to securities, investment instruments, banking and financial services, or other regulated financial products.
+
+Accordingly, participants should not expect statutory disclosures, prospectus-level protections, registration safeguards, suitability or appropriateness assessments, fiduciary duties, investor compensation schemes, dispute resolution mechanisms, continuous disclosure obligations, periodic financial reporting, audit requirements, governance rights, or other protections that may otherwise apply to regulated issuers, listed securities, or regulated financial products under applicable law.
 
 Disclosures
 
-General DisclosureCommunicationsCPX Token TradingFuture FinancingSignificant Risks
+General Disclosure
 
-## One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets
+Communications
+
+CPX Tokens & Utility
+
+Financing Activities
+
+Significant Risks
+
+One Capital Ecosystem Shaping the Future of
+
+Intelligent Digital Capital Markets
 
 Stay connected
 
-### Ecosystem updates as they happen.
+Ecosystem updates
 
-Feature UpdatesSystem PublicationsAnnouncements
+as they happen.
+
+Feature Updates
+
+System Publications
+
+Announcements
 
 Email
 
@@ -85,29 +165,140 @@ No spam · Unsubscribe anytime
 
 You’re subscribed — intelligence, not noise.
 
-Contribute to the Growth of our Ecosystem.
+Contribute to the Growth of our
 
-Contribute →
+Ecosystem.
 
-Preparing Access
+Contribute
 
-#### Disclosures
-General DisclosureCommunicationsCPX Token TradingFuture FinancingSignificant Risks
+→
 
-#### Ecosystem
-Ciphex AlphaAtlas RWA ServicesEcosystem PublicationsEcosystem UpdatesLeadership Team
+Disclosures
 
-#### Resources
-CertiK Skynet AuditGitHub RepositoryClaim TokensContact
+General Disclosure
 
-#### Follow Us
-X (Twitter)Telegram
+Communications
 
-##### Important Notice to Site Visitors
+CPX Tokens & Utility
 
-The information presented on this website is provided solely for informational purposes and is protected by applicable copyright and intellectual property laws. No content on this website constitutes a financial report, investment proposal, or an invitation to participate in any investment, community incentive, utility program, or other activity relating to the Ciphex Capital Ecosystem and its products and services (the “Ciphex Project”). This website does not constitute an offer to sell, a solicitation to buy, or a recommendation to participate in any transaction involving securities, digital assets, or other financial instruments. No content on this website should be interpreted as investment, legal, accounting, or tax advice. Certain descriptions on this website may include forward-looking statements identified by words such as “anticipate,” “expect,” “intend,” “plan,” “foresee,” “foreseeable,” “seek,” “pursue,” or similar expressions indicating future events. These statements are subject to significant risks and uncertainties that may cause actual results to differ materially from those expressed or implied and are not guarantees of performance or availability. The Ciphex Project undertakes no obligation to update, revise, supplement, or otherwise clarify any forward-looking statements and reserves the right to modify, update, remove, or discontinue access to any information, materials, or publications on this website at any time without prior notice. Any statements, representations, or materials not issued directly by the Ciphex Project, Cipherion Capital SA, or duly authorized affiliates are unauthorized and expressly disclaimed. References to third-party market research, data, platforms, or services are based on publicly available information and are included solely for contextual reference. No third party has reviewed, approved, endorsed, or assumed responsibility for the content of this website. Past performance is not indicative of, or a guarantee of, future results.
+Financing Activities
 
-Copyright © 2026 Cipherion Capital SA, Ciphex Capital Ecosystem
-Terms of UsePrivacy PolicyContact
+Significant Risks
+
+Ecosystem
+
+Ciphex Alpha
+
+Atlas RWA Services
+
+Insights & Publications
+
+Internal Updates
+
+Leadership Team
+
+Resources
+
+CertiK Skynet Audit
+
+GitHub Repository
+
+Token Claim Center
+
+Contact Ciphex
+
+Follow Us
+
+X (Twitter)
+
+Telegram
+
+Important Notice to Site Visitors
+
+Any information presented on this website, including without
+
+limitation commercial or technical descriptions, illustrations,
+
+publications, or other materials relating to the products, services,
+
+or ecosystem of the Ciphex Capital Ecosystem (or
+
+“Ciphex”), is provided solely for informational purposes
+
+and is protected by applicable copyright and intellectual property
+
+laws (or collectively, the “Ciphex Content”). The Ciphex
+
+Content should not be relied upon for decision-making purposes or
+
+construed as an offer to sell, a solicitation to buy, or a
+
+recommendation, endorsement, or invitation to participate in any
+
+digital assets, tokens, financial instruments, ecosystem
+
+initiatives, community engagement activities, token utility
+
+features, or tokenized real-world assets associated with Ciphex, its
+
+products, or its services in any jurisdiction where such
+
+participation is restricted or prohibited under applicable law.
+
+Subject to applicable law and regulations, Ciphex reserves the right
+
+to modify, update, remove, or discontinue any Ciphex Content without
+
+notification. Viewers are solely responsible for conducting their
+
+own independent due diligence and consulting their own professional
+
+advisers regarding any contemplated participation.
+
+Ciphex Content may include forward-looking statements identified by
+
+words such as “anticipate,” “expect,”
+
+“intend,” “plan,” “foresee,”
+
+“foreseeable,” “seek,” “pursue,”
+
+or similar expressions indicating future events. These statements
+
+are subject to significant risks and uncertainties that may cause
+
+actual results to differ materially from those expressed or implied
+
+and are not guarantees of future performance, outcomes, or
+
+availability. Ciphex undertakes no obligation to update, revise,
+
+supplement, or otherwise clarify any forward-looking statements. Any
+
+statements, representations, or materials not issued directly by
+
+Ciphex, Cipherion Capital SA, or their authorized representatives
+
+are unauthorized and expressly disclaimed. References to third-party
+
+market research, data, platforms, or services are based on publicly
+
+available information and are included solely for contextual
+
+reference. No third party has reviewed, approved, endorsed, or
+
+assumed responsibility for the Ciphex Content. Past performance
+
+should not be interpreted as an expectation of, or guarantee of,
+
+future results.
+
+Copyright © 2026 Ciphex Capital Ecosystem
+
+Terms of Use
+
+Privacy Policy
+
+Contact Ciphex
 
 Powered by Cipherion
