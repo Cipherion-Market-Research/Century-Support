@@ -59,7 +59,9 @@ class Config:
     # --- Sprint-1 owner ruling: Abacus Indexer KPIs are internal-only and
     # must never reach a user-facing response, even though C3 lists
     # abacus_index as a valid source. Enforced in kpi_reader.py. ---
-    BLOCKED_KPI_SOURCES = frozenset({"abacus_index"})
+    # onchain_base added 2026-07-30: reads a deprecated legacy contract
+    # (owner ruling -- the contribute page is source of truth).
+    BLOCKED_KPI_SOURCES = frozenset({"abacus_index", "onchain_base"})
 
     # --- Broadcast queue (no channel adapters exist yet — WP-6 is Sprint 3;
     # broadcasts are durably queued here for adapters to consume later) ---

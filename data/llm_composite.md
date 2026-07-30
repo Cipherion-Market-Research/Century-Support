@@ -88,7 +88,7 @@ Ciphex utilizes multi-signature (multi-sig) authentication protocols to securely
 Ciphex has completed its token distribution phase to align with evolving cryptocurrency regulations. The token distribution concluded at a final token price of approximately $0.26. Its originally planned funding targets were met. Over 90% of contributions came from existing relationships. Unallocated tokens are reserved for private placements and available exclusively to accredited and institutional investors following applicable regulatory requirements.
 
 ### Token Claiming Portal
-Contributors can now access their tokens through the token claiming portal at https://presale.ciphex.io. The portal provides a dashboard where users can connect their wallet, view their vesting schedule, track transaction records, and claim tokens monthly as they vest over the 12-month period. An "Add CPX to Wallet" feature is also available for easy wallet integration.
+Contributors can now access their tokens through the token claiming portal at https://claim.ciphex.io. The portal provides a dashboard where users can connect their wallet, view their vesting schedule, track transaction records, and claim tokens monthly as they vest over the 12-month period. An "Add CPX to Wallet" feature is also available for easy wallet integration.
 
 ## The Alpha Centurion Network (Alpha CPX)
 

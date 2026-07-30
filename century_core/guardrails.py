@@ -40,15 +40,23 @@ _APY_PATTERNS = [
 # round's price is unreconciled between staged copy ($0.25) and an on-chain
 # read (~$0.115) -- quote NEITHER, unconditionally, regardless of source or
 # phrasing. Word-boundary-safe so "$1.025" or "10.250" don't false-positive.
+# Owner ruling 2026-07-30: the live contribute page is the source of truth
+# for the current Contribution Program -- its published $0.20/CPX (held in
+# facts.yaml) is the ONLY referenceable price. Every earlier figure is
+# legacy/deprecated and stays banned: the $0.25 staged copy and the
+# on-chain reads (~$0.115-$0.124) from the deprecated base contract.
 _BANNED_PRICE_PATTERNS = [
     re.compile(r"(?<![\d.])\$?0\.25(?!\d)"),
     re.compile(r"(?<![\d.])\$?0\.115(?!\d)"),
-    # 2026-07-30: the live contribute page now publishes $0.20 while the
-    # on-chain read reports ~$0.124 (and the contract price escalates over
-    # time) -- still unreconciled, so the standing quote-neither directive
-    # extends to both new observations until the owner closes it.
-    re.compile(r"(?<![\d.])\$?0\.20(?!\d)"),
     re.compile(r"(?<![\d.])\$?0\.124(?!\d)"),
+]
+
+# Owner ruling 2026-07-30: "presale" is banned vocabulary in user-facing
+# output (legal exposure). The program is a Contribution Program; the
+# terminology is "contribution(s)". Historic rounds are "the 2025 token
+# distribution".
+_BANNED_TERM_PATTERNS = [
+    re.compile(r"(?i)\bpre-?sales?\b"),
 ]
 
 _NUMBER_RE = re.compile(r"\d[\d,]*\.?\d*")
@@ -76,6 +84,9 @@ def check_text(text: str) -> GuardrailResult:
     for pattern in _BANNED_PRICE_PATTERNS:
         if pattern.search(text):
             violations.append(f"banned new-round price figure matched {pattern.pattern!r}")
+    for pattern in _BANNED_TERM_PATTERNS:
+        if pattern.search(text):
+            violations.append(f"banned terminology matched {pattern.pattern!r}")
     return GuardrailResult(violations=violations)
 
 

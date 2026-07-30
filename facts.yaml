@@ -180,7 +180,7 @@ facts:
     value: "concluded"
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/assets/documents/ecosystem-update-jul22-25.pdf"
-    notes: "kb_source. The limited presale closed when the Token Claiming Dashboard opened (on/before 2025-07-31); further financing after that point is restricted to accredited/qualified investors under applicable securities law."
+    notes: "kb_source. The limited 2025 distribution closed when the Token Claiming Dashboard opened (on/before 2025-07-31); further financing after that point is restricted to accredited/qualified investors under applicable securities law."
 
   round-terms.legacy_2025_price_usd:
     value: 0.26
@@ -240,13 +240,13 @@ facts:
     value: "Live informational page published (ciphex.io/contribute) describing Phase I terms in full; contribution panel shows \"Preparing Access\" with progress 0 / 70,000,000 CPX (0%) — not yet open to the public. The program begins on a date to be determined by Ciphex (no start date published)."
     verified_on: "2026-07-29"
     source_url: "https://ciphex.io/contribute"
-    notes: "kb_source. Supersedes the 2026-07-20 note that the contribute page returned HTTP 404 — it is now live and detailed, but per the page's own §2 ('Contribution Stages'), the program 'begins on a date determined by Ciphex' and the contribution panel is still gated (0% progress). Do not tell a user the round is open. The 2026-07-20 on-chain finding (Base presale contract's isPresaleActive()==true while raisedFunds/contributorsAmount read 0) was never reconciled against this live page, which does not mention a chain or contract address at all — see round-terms.new_round_chain. OWNER DECISION NEEDED: confirm whether the live contribute page describes the SAME on-chain program as contracts.base_presale, or a distinct/newer one, before the KPI sync service's on-chain reads are presented alongside these page-sourced terms."
+    notes: "kb_source. Supersedes the 2026-07-20 note that the contribute page returned HTTP 404 — it is now live and detailed, but per the page's own §2 ('Contribution Stages'), the program 'begins on a date determined by Ciphex' and the contribution panel is still gated (0% progress). Do not tell a user the round is open. The 2026-07-20 on-chain finding (Base presale contract's isPresaleActive()==true while raisedFunds/contributorsAmount read 0) was never reconciled against this live page, which does not mention a chain or contract address at all — see round-terms.new_round_chain. OWNER RULING 2026-07-30: the page is the source of truth; contracts.base_presale on-chain reads are legacy/deprecated and are never presented alongside these terms (KPI source onchain_base is disabled at the poller and blocked in core)."
 
   round-terms.new_round_price_usd:
     value: 0.20
     verified_on: "2026-07-29"
     source_url: "https://ciphex.io/contribute"
-    notes: "kb_source, CHANGED from the prior $0.25 staged figure: the live contribute page states twice, consistently, that 'the exchange value of each Ciphex token remains fixed at $0.20 (USD) throughout the Contribution Program' (top summary widget + §2 body text), and Table 2.1's own math confirms it (70,000,000 CPX x $0.20 = the table's stated $14,000,000 total). Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. OWNER DECISION NEEDED: this is now a THIRD distinct figure across time for this round -- $0.25 (2026-07-20 audit, from a since-404'd page), ~$0.115 (2026-07-20 on-chain read of the Base presale contract's getTokenPrice()), and now $0.20 (2026-07-29, the live contribute page, internally consistent). This pass did not re-check the chain (out of scope for a content re-harvest) -- recommend the KPI sync service's on-chain reads be reconciled against this new page-published $0.20 figure before treating it as fully confirmed end-to-end. Until reconciled, still phrase this to users as the site's currently published price for a program that has not opened, not as a live trading price."
+    notes: "kb_source, CHANGED from the prior $0.25 staged figure: the live contribute page states twice, consistently, that 'the exchange value of each Ciphex token remains fixed at $0.20 (USD) throughout the Contribution Program' (top summary widget + §2 body text), and Table 2.1's own math confirms it (70,000,000 CPX x $0.20 = the table's stated $14,000,000 total). Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. OWNER RULING 2026-07-30: the live contribute page is the source of truth for the current Contribution Program; $0.20 is THE referenceable published price. The $0.25 staged figure and all on-chain reads of contracts.base_presale (~$0.115-$0.124) are legacy/deprecated and must never be quoted (guardrails enforce this). Still phrase as the published program price -- the program has not opened (see new_round_status)."
 
   round-terms.new_round_cap_cpx:
     value: 70000000
@@ -294,7 +294,7 @@ facts:
     value: "Base (chain id 8453)"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "UNCHANGED, still internal-audit-only as of 2026-07-29: the newly-live contribute page (see round-terms.new_round_name) does NOT mention a chain, network, or contract address anywhere in its 20 sections -- it only references an unnamed 'Smart Contract' governing the stages. This fact still rests solely on the 2026-07-20 internal audit / contracts.base_presale, not re-confirmed by this pass. Contrast with the legacy 2025 round, which ran on Ethereum mainnet (round-terms.legacy_2025_chain). OWNER DECISION NEEDED: confirm whether the live Contribution Program described in round-terms.new_round_* is the same on-chain deployment as contracts.base_presale before quoting a chain to a user with confidence."
+    notes: "UNCHANGED, still internal-audit-only as of 2026-07-29: the newly-live contribute page (see round-terms.new_round_name) does NOT mention a chain, network, or contract address anywhere in its 20 sections -- it only references an unnamed 'Smart Contract' governing the stages. This fact still rests solely on the 2026-07-20 internal audit / contracts.base_presale, not re-confirmed by this pass. Contrast with the legacy 2025 round, which ran on Ethereum mainnet (round-terms.legacy_2025_chain). OWNER RULING 2026-07-30: contracts.base_presale and its on-chain reads are legacy/deprecated. The page publishes no chain or contract; treat the program's chain as not-published and do not quote one."
 
   round-terms.new_round_lockup_days:
     value: 90
@@ -321,10 +321,10 @@ facts:
     notes: "kb_source, CONFIRMED STILL UNSTATED on a live, reachable page (previously this was inferred from a 404 page): the contribute page's §5 ('Lockup and Vesting') describes the lockup/vesting mechanics in full and does not mention any interest accrual, unlike the legacy round's 10-year-Treasury-yield mechanic (round-terms.legacy_2025_lockup_interest). Do not assume it carries over — answer 'unknown, confirm with the team' if asked."
 
   round-terms.market_expansion_timeline:
-    value: "The 2025 presale has ended. The live contribute page (ciphex.io/contribute, published since the 2026-07-20 audit) describes a 3-stage, 90-day-total Contribution Program (30 active days per stage) but states it 'begins on a date determined by Ciphex' — no start date is published, and the contribution panel still reads \"Preparing Access\" at 0% progress as of 2026-07-29."
+    value: "The 2025 token distribution has concluded. The live contribute page (ciphex.io/contribute, published since the 2026-07-20 audit) describes a 3-stage, 90-day-total Contribution Program (30 active days per stage) but states it 'begins on a date determined by Ciphex' — no start date is published, and the contribution panel still reads \"Preparing Access\" at 0% progress as of 2026-07-29."
     verified_on: "2026-07-29"
     source_url: "https://ciphex.io/internal-updates"
-    notes: "kb_source for the contribute page's own stage/day structure (https://ciphex.io/contribute). source_url points to internal-updates (renamed from /ecosystem-updates, PR #100, 2026-07-28) as where an eventual official launch announcement would appear — no such announcement has been published yet (most recent update, 2026-07-25, does not mention a start date). Phrase to users as informational about the program's structure, never as a promised or guaranteed start date. IMPORTANT: this fact says nothing about the new round's PRICE — round-terms.new_round_price_usd was updated this pass to the live page's own published $0.20/CPX figure, but that figure has not been reconciled against the Base presale contract's on-chain price read from 2026-07-20 (~$0.115/CPX) — see that fact's notes before quoting a price with full confidence."
+    notes: "kb_source for the contribute page's own stage/day structure (https://ciphex.io/contribute). source_url points to internal-updates (renamed from /ecosystem-updates, PR #100, 2026-07-28) as where an eventual official launch announcement would appear — no such announcement has been published yet (most recent update, 2026-07-25, does not mention a start date). Phrase to users as informational about the program's structure, never as a promised or guaranteed start date. For price see round-terms.new_round_price_usd — per the 2026-07-30 owner ruling, the page-published $0.20 is the referenceable figure; on-chain reads are deprecated."
 
   # ─────────────────────────── contracts ──────────────────────────────
 
@@ -352,11 +352,11 @@ facts:
     value:
       chain: "Base (chain id 8453)"
       address: "0xE8E53D687b1b806Da21a2D7DA73Ff56a34e07A49"
-      purpose: "New round (\"Market Foundation Contributions\") presale contract"
+      purpose: "Legacy on-chain contract from earlier staging of the current round (DEPRECATED -- see notes; never reference for current state)"
       explorer_url: "https://basescan.org/address/0xE8E53D687b1b806Da21a2D7DA73Ff56a34e07A49"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note for full provenance chain (ciphex-website repo presale ABI). The KPI sync service's on-chain reads are expected to independently confirm this contract's live state (isPresaleActive, getTokenPrice, raisedFunds, contributorsAmount). UPDATE 2026-07-29: the contribute page is now live (see round-terms.new_round_name/_status) and publishes a full set of Contribution Program terms, but does not mention this contract's address or any chain at all — not independently re-verified against this address in this pass. OWNER DECISION NEEDED: confirm the live page's program is the same on-chain deployment as this contract before presenting the two side by side to a user."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note for full provenance chain (ciphex-website repo presale ABI). The KPI sync service's on-chain reads are expected to independently confirm this contract's live state (isPresaleActive, getTokenPrice, raisedFunds, contributorsAmount). UPDATE 2026-07-29: the contribute page is now live (see round-terms.new_round_name/_status) and publishes a full set of Contribution Program terms, but does not mention this contract's address or any chain at all — not independently re-verified against this address in this pass. OWNER RULING 2026-07-30: DEPRECATED. The live contribute page is the source of truth for the Contribution Program; this contract's live state (price, dates, raised, remaining) is legacy staging data and must never be referenced when discussing current state. Retained for historical and scam-verification purposes only."
 
   contracts.cpx_token_base:
     value:
