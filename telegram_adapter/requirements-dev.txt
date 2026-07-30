@@ -1,0 +1,4 @@
+# Test-only deps; not part of the deployed image (see requirements.txt).
+-r requirements.txt
+pytest==9.1.1
+pytest-asyncio==1.4.0
