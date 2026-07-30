@@ -57,8 +57,16 @@ def test_link_url_escapes_only_close_paren_and_backslash():
 
 
 def test_render_code_span():
+    # Inside a code span, only backtick/backslash are escaped (Telegram
+    # rule) -- '.', '(', ')' etc. pass through untouched here even though
+    # they'd be escaped in plain text.
     rendered = render_portable_markdown("run `pip.install(x)` now")
-    assert rendered == "run `pip\\.install\\(x\\)` now"
+    assert rendered == "run `pip.install(x)` now"
+
+
+def test_render_code_span_escapes_backtick_and_backslash_inside():
+    rendered = render_portable_markdown("see `a\\b` here")
+    assert rendered == "see `a\\\\b` here"
 
 
 def test_render_bold_maps_double_star_to_single_star_telegram_bold():
@@ -72,8 +80,11 @@ def test_render_italic_maps_single_star_to_underscore_telegram_italic():
 
 
 def test_render_link():
+    # Inside the (...) part of a link, only ')' and '\' are escaped
+    # (Telegram rule) -- the literal '(' in the URL is left alone; the
+    # final ')' is the syntax closer we emit ourselves, not escaped.
     rendered = render_portable_markdown("[Ciphex](https://ciphex.io/page(1))")
-    assert rendered == "[Ciphex](https://ciphex.io/page\\(1\\))"
+    assert rendered == "[Ciphex](https://ciphex.io/page(1)\\)"
 
 
 def test_render_mixed_portable_markdown():

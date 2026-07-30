@@ -49,14 +49,23 @@ def escape_link_url(s: str) -> str:
 # `code`, [label](url). No nesting, no tables/images/raw HTML. Order
 # matters: `code` and `link` are unambiguous (backtick / `[` prefixed);
 # `bold` is tried before `italic` so "**x**" isn't mis-tokenized as italic
-# markers around a lone "*".
+# markers around a lone "*". Label/URL require >=1 char (`+`, not `*`) --
+# a real link is never empty, and this also keeps incidental "[]()"-shaped
+# character runs (e.g. several reserved chars typed adjacently in plain
+# text) from being mis-tokenized as a bogus empty link.
 _TOKEN_RE = re.compile(
     r"(?P<code>`[^`]*`)"
-    r"|(?P<link>\[[^\]]*\]\([^)]*\))"
+    r"|(?P<link>\[[^\]]+\]\([^)]+\))"
     r"|(?P<bold>\*\*[^*]+?\*\*)"
     r"|(?P<italic>\*[^*]+?\*)"
 )
-_LINK_RE = re.compile(r"^\[(?P<label>[^\]]*)\]\((?P<url>[^)]*)\)$")
+_LINK_RE = re.compile(r"^\[(?P<label>[^\]]+)\]\((?P<url>[^)]+)\)$")
+
+# Known limitation shared with plain CommonMark: a URL containing a literal
+# ')' (e.g. a Wikipedia-style disambiguation link) truncates at that first
+# ')' rather than the link's real closing delimiter. Century Core's own
+# link/button URLs are plain ciphex.io paths and have never needed a
+# parenthesized URL; documented here rather than hidden.
 
 
 def render_portable_markdown(md: str) -> str:
