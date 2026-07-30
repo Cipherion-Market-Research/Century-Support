@@ -57,7 +57,7 @@ class BotCommandHandler:
             keyboard = [
                 [
                     InlineKeyboardButton("Website", url="https://ciphex.io"),
-                    InlineKeyboardButton("Publications", url="https://ciphex.io/ecosystem-publications")
+                    InlineKeyboardButton("Publications", url="https://ciphex.io/insights-and-publications")
                 ]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)

@@ -226,7 +226,7 @@ class BotMessageHandler:
                 # Optionally append a “read more” snippet
                 response_text = (
                     f"{summarized_wp}\n\n"
-                    "Check out https://ciphex.io/ecosystem-publications for more details!"
+                    "Check out https://ciphex.io/insights-and-publications for more details!"
                 )
 
                 # Store & respond

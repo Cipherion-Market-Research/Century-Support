@@ -135,4 +135,4 @@ async def test_publications_degrades_gracefully_without_rag(stub_stores):
     response = await handle_publications("", stub_stores)
     text = _all_text(response).lower()
     assert "unavailable" in text
-    assert "ciphex.io/ecosystem-publications" in _all_text(response)
+    assert "ciphex.io/insights-and-publications" in _all_text(response)

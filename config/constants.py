@@ -40,7 +40,7 @@ Simply tag me (@CiphexHelpBot) with your question about any topic - like tokenom
 
 For example: "@CiphexHelpBot What does the whitepaper say about token supply?"
 
-To access the full whitepaper, visit [Ciphex Publications](https://ciphex.io/ecosystem-publications)""",
+To access the full whitepaper, visit [Ciphex Publications](https://ciphex.io/insights-and-publications)""",
 
 		"stats_info": """**Community & Token Stats**:
 - Total Community Members (Wallets)
