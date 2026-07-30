@@ -10,20 +10,22 @@ CORE_SOURCES = [
     "claim_api",
     "ams_marketing",
     "ams_keymetrics",
-    "onchain_base",
     "onchain_eth",
     "onchain",  # BurnVerificationPoller
 ]
 
 
 def active_sources() -> list:
-    """Sources this deployment actually polls. abacus_index is omitted
-    unless explicitly enabled (Amendment C-R1) -- a poller that isn't
-    running has no health to report, and listing it as permanently
-    unhealthy would just be noise."""
+    """Sources this deployment actually polls. abacus_index and
+    onchain_base are omitted unless their pollers are enabled -- a poller
+    that isn't running has no health to report, and listing it as
+    permanently unhealthy would just be noise (and fails the Railway
+    healthcheck)."""
     sources = list(CORE_SOURCES)
     if Config.ABACUS_ENABLED:
         sources.append("abacus_index")
+    if Config.ONCHAIN_BASE_ENABLED:
+        sources.append("onchain_base")
     return sources
 
 
