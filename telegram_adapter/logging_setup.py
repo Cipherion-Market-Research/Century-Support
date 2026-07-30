@@ -31,6 +31,9 @@ class JsonFormatter(logging.Formatter):
 def setup_logging(level: str = "INFO") -> None:
     root = logging.getLogger()
     root.setLevel(level)
+    # httpx logs every request URL at INFO, and Telegram Bot API URLs embed
+    # the bot token -- keep it at WARNING so the token never reaches logs.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
     root.handlers.clear()
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(JsonFormatter())
