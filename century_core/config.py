@@ -49,7 +49,12 @@ class Config:
     RAG_MIN_SCORE = _env_float("CENTURY_CORE_RAG_MIN_SCORE", 0.05)
 
     # --- Server ---
-    HOST = _env("CENTURY_CORE_HOST", "0.0.0.0")
+    # "::" (dual-stack) is required, not optional: Railway's healthcheck
+    # probes over IPv4, but private-network traffic from the channel
+    # adapters arrives over IPv6 (railway.internal resolves to AAAA).
+    # An IPv4-only 0.0.0.0 bind passes healthchecks yet is unreachable
+    # from the adapters. Linux binds "::" dual-stack by default.
+    HOST = _env("CENTURY_CORE_HOST", "::")
     PORT = _env_int("PORT", _env_int("CENTURY_CORE_PORT", 8082))
     LOG_LEVEL = _env("CENTURY_CORE_LOG_LEVEL", "INFO")
 
