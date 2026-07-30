@@ -43,6 +43,12 @@ _APY_PATTERNS = [
 _BANNED_PRICE_PATTERNS = [
     re.compile(r"(?<![\d.])\$?0\.25(?!\d)"),
     re.compile(r"(?<![\d.])\$?0\.115(?!\d)"),
+    # 2026-07-30: the live contribute page now publishes $0.20 while the
+    # on-chain read reports ~$0.124 (and the contract price escalates over
+    # time) -- still unreconciled, so the standing quote-neither directive
+    # extends to both new observations until the owner closes it.
+    re.compile(r"(?<![\d.])\$?0\.20(?!\d)"),
+    re.compile(r"(?<![\d.])\$?0\.124(?!\d)"),
 ]
 
 _NUMBER_RE = re.compile(r"\d[\d,]*\.?\d*")
