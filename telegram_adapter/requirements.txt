@@ -1,0 +1,6 @@
+# Telegram adapter (WP-6a) -- deployed independently of the bot and of
+# century_core (see kpi_sync/requirements.txt for the same pattern: its
+# own requirements file so this service's dependency set doesn't collide
+# with the root requirements.txt or century_core's).
+python-telegram-bot==22.8
+aiohttp==3.14.3
