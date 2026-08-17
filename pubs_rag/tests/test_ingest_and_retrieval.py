@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pytest
@@ -9,6 +10,14 @@ from pubs_rag.retrieval import retrieve
 
 KB_SOURCE = Path(__file__).resolve().parents[2] / "data" / "kb_source"
 
+# The corpus grows forever, so "how many PDFs get ingested" is never a
+# frozen number -- it's whatever inventory.json currently lists with
+# extraction=="ok" (exactly ingest_inventory()'s own filter, see ingest.py).
+_INVENTORY = json.loads((KB_SOURCE / "inventory.json").read_text())
+INGESTABLE_PDF_COUNT = sum(
+    1 for e in _INVENTORY if e["kind"] == "pdf" and e.get("extraction") == "ok"
+)
+
 
 @pytest.fixture
 def provider():
@@ -17,14 +26,14 @@ def provider():
 
 async def test_full_corpus_ingest_is_idempotent(db_conn, provider):
     first = await ingest.ingest_inventory(db_conn, provider, str(KB_SOURCE))
-    assert first.ingested == 12  # PDFs only — see ingest.py module docstring
+    assert first.ingested == INGESTABLE_PDF_COUNT > 0  # every extraction=="ok" PDF, whatever that count is today
     assert first.skipped == 0
     chunk_count_after_first = await db.count_chunks(db_conn)
     assert chunk_count_after_first > 0
 
     second = await ingest.ingest_inventory(db_conn, provider, str(KB_SOURCE))
     assert second.ingested == 0
-    assert second.skipped == 12
+    assert second.skipped == INGESTABLE_PDF_COUNT
 
     chunk_count_after_second = await db.count_chunks(db_conn)
     assert chunk_count_after_second == chunk_count_after_first  # zero duplicates
