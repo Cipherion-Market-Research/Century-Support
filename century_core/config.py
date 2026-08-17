@@ -54,10 +54,13 @@ class Config:
     # relevance filter at all against this model -- text-embedding-3-small
     # cosine similarities between totally unrelated short strings routinely
     # land in the 0.1-0.25 band (the model's embedding space isn't
-    # zero-centered), while genuinely on-topic matches we've observed (e.g.
-    # a "burn cycle" query against the algorithmic-austerity publication)
-    # score 0.5+. 0.3 sits above the unrelated-text noise floor and below
-    # real topical matches, so it's the new default; the off-topic
+    # zero-centered), while genuinely on-topic matches score higher.
+    # Measured against the production index (2026-08-17): "burn cycle" ->
+    # algorithmic-austerity 0.370/0.369/0.291; "lockup terms" ->
+    # ecosystem-update-jul22-25 0.390; vs noise: "hello" peaks at 0.245,
+    # "write me a poem" at 0.082. 0.3 separates the two bands with ~0.05
+    # margin each side (a top-scoring on-topic chunk always clears it; a
+    # marginal third chunk may be cut, which is acceptable); the off-topic
     # short-circuit in qa/offtopic.py is the primary defense for smalltalk
     # (it never reaches RAG at all), this threshold is the backstop for
     # on-topic-sounding but actually-irrelevant queries.
