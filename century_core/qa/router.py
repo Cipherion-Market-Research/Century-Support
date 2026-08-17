@@ -12,6 +12,9 @@ from century_core.commands.price import handle_price
 from century_core.config import Config
 from century_core.models import LinkItem, LinksBlock, ParagraphBlock, ResponseIR, ResponseMeta
 from century_core.qa import facts_search
+from century_core.qa.holders import answer_holder_question, is_holder_question
+from century_core.qa.labels import humanize_fact_key
+from century_core.qa.offtopic import is_offtopic_question, offtopic_response
 from century_core.qa.price import is_price_question
 from century_core.qa.supply import answer_supply_question, is_supply_question
 
@@ -38,6 +41,20 @@ async def answer_question(question: str, stores) -> ResponseIR:
     if is_price_question(question):
         return await handle_price("", stores)
 
+    # Holder-count questions ("how many holders does CPX have") -- checked
+    # after is_price_question/is_supply_question (same reasoning: a query
+    # like "total supply" must never be misrouted here), before facts
+    # search/RAG since neither has a real answer for this -- see
+    # qa/holders.py.
+    if is_holder_question(question):
+        return response_guard.enforce_response(await answer_holder_question(stores))
+
+    # Greetings/smalltalk/off-topic short-circuit (go-live incident
+    # 2026-08-17): "write me a poem" must never reach facts search or the
+    # LLM at all -- see qa/offtopic.py.
+    if is_offtopic_question(question):
+        return response_guard.enforce_response(offtopic_response())
+
     fact_hits = facts_search.search_facts(stores.facts, question, limit=3)
     rag_hits = await _rag_search(stores, question)
 
@@ -52,7 +69,7 @@ async def answer_question(question: str, stores) -> ResponseIR:
     for key, fact in fact_hits:
         context_parts.append(f"[{key}] {fact.value} (verified {fact.verified_on}, source {fact.source_url})")
         facts_used.append(key)
-        fact_links.append(LinkItem(label=key, url=fact.source_url))
+        fact_links.append(LinkItem(label=humanize_fact_key(key), url=fact.source_url))
 
     seen_rag_urls = set()
     for hit in rag_hits:
@@ -78,6 +95,25 @@ async def answer_question(question: str, stores) -> ResponseIR:
     allowed_numbers = guardrails.extract_numbers(context)
 
     raw_answer = await stores.llm.generate(question, context)
+
+    # Go-live incident 2026-08-17: fact/RAG hits existed for the *question's
+    # tokens* even when the LLM correctly answered "I don't know" (e.g.
+    # "write me a poem" partially token-matched unrelated publications).
+    # Attaching those citations dressed an honest non-answer up as a
+    # sourced one and leaked irrelevant links. When the raw LLM output is
+    # itself a refusal/unknown-style non-answer, return it as-is with a
+    # single official-site link and NO fact/RAG citations -- checked before
+    # the numeric-provenance gate since a refusal like "I don't know how to
+    # create a poem." trivially has no numbers to check anyway.
+    if guardrails.is_unknown_answer(raw_answer):
+        response = ResponseIR(
+            blocks=[
+                ParagraphBlock(md=raw_answer),
+                LinksBlock(items=[LinkItem(label="Ciphex", url=Config.OFFICIAL_SITE_URL)]),
+            ],
+            meta=ResponseMeta(answer_kind="refusal", facts_used=[], kpis_used=[]),
+        )
+        return response_guard.enforce_response(response)
 
     provenance = guardrails.check_numeric_provenance(raw_answer, allowed_numbers)
     if not provenance.ok:

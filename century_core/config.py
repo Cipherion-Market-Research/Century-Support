@@ -46,7 +46,25 @@ class Config:
 
     # --- Q&A retrieval tuning ---
     RAG_TOP_K = _env_int("CENTURY_CORE_RAG_TOP_K", 4)
-    RAG_MIN_SCORE = _env_float("CENTURY_CORE_RAG_MIN_SCORE", 0.05)
+    # pubs_rag/retrieval.py's score is `1 - cosine_distance` (pgvector `<=>`
+    # on text-embedding-3-small vectors), i.e. plain cosine similarity.
+    # Go-live incident 2026-08-17: "write me a poem" (pure smalltalk, zero
+    # Ciphex-related tokens) scored >= 0.05 against three unrelated
+    # publications and got cited as if it were a real answer. 0.05 is not a
+    # relevance filter at all against this model -- text-embedding-3-small
+    # cosine similarities between totally unrelated short strings routinely
+    # land in the 0.1-0.25 band (the model's embedding space isn't
+    # zero-centered), while genuinely on-topic matches score higher.
+    # Measured against the production index (2026-08-17): "burn cycle" ->
+    # algorithmic-austerity 0.370/0.369/0.291; "lockup terms" ->
+    # ecosystem-update-jul22-25 0.390; vs noise: "hello" peaks at 0.245,
+    # "write me a poem" at 0.082. 0.3 separates the two bands with ~0.05
+    # margin each side (a top-scoring on-topic chunk always clears it; a
+    # marginal third chunk may be cut, which is acceptable); the off-topic
+    # short-circuit in qa/offtopic.py is the primary defense for smalltalk
+    # (it never reaches RAG at all), this threshold is the backstop for
+    # on-topic-sounding but actually-irrelevant queries.
+    RAG_MIN_SCORE = _env_float("CENTURY_CORE_RAG_MIN_SCORE", 0.3)
 
     # --- Server ---
     # "::" (dual-stack) is required, not optional: Railway's healthcheck
