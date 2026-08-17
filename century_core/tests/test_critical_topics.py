@@ -60,12 +60,15 @@ async def test_dex_not_live_oq3_resolved():
     assert "not live" in fact.value.lower()
 
 
-async def test_price_command_never_leaks_new_round_figures(stub_stores):
+async def test_price_command_never_leaks_any_price_figure(stub_stores):
+    # Owner ruling 2026-08-17: CPX has no market price to quote -- no price
+    # figure of any kind, current or historical, is ever output.
     response = await handle_price("", stub_stores)
     result = guardrails.check_text(_all_text(response))
     assert result.ok, result.violations
     text = _all_text(response)
-    assert "0.26" in text  # historical price still allowed
+    assert "$" not in text
+    assert "TBD" in text
 
 
 async def test_claim_portal_topic(stub_stores):
@@ -73,16 +76,23 @@ async def test_claim_portal_topic(stub_stores):
     assert "claim.ciphex.io" in _all_text(response)
 
 
-async def test_contract_address_topic_labels_both_chains(stub_stores):
+async def test_contract_address_topic_is_ethereum_only(stub_stores):
+    # Owner ruling 2026-08-17: CPX is ERC-20 on Ethereum mainnet only --
+    # Base is never presented as a legitimate deployment.
     response = await handle_ca("", stub_stores)
     text = _all_text(response)
     assert "Ethereum" in text
-    assert "Base" in text
+    assert "Base" not in text
 
 
-async def test_qa_new_round_price_question_never_leaks_banned_figures(stub_stores):
-    stub_stores.llm._response = "The new round price has not been finalized or published yet."
+async def test_qa_price_question_routes_to_deterministic_price_command_not_llm(stub_stores):
+    # Owner ruling 2026-08-17: price questions are intercepted by the
+    # price-intent detector and answered deterministically -- the LLM is
+    # never even called, so it can never leak a banned figure here. Even
+    # a query using banned "presale" vocabulary must never echo it back.
+    stub_stores.llm._response = "The new round is priced at $0.25/CPX."
     response = await answer_question("what is the price of the new presale round?", stub_stores)
+    assert response.meta.answer_kind == "command"
     text_parts = []
     for block in response.blocks:
         if block.type == "paragraph":
@@ -91,7 +101,9 @@ async def test_qa_new_round_price_question_never_leaks_banned_figures(stub_store
     assert result.ok, result.violations
 
 
-async def test_qa_llm_leaking_new_round_price_is_blocked(stub_stores):
-    stub_stores.llm._response = "The new round is priced at $0.25/CPX."
-    response = await answer_question("what is the price of the new presale round?", stub_stores)
+async def test_qa_llm_leaking_price_on_a_non_price_question_is_blocked(stub_stores):
+    # A question that does NOT hit the price-intent detector, where the LLM
+    # invents a banned price figure anyway -- guardrails must still catch it.
+    stub_stores.llm._response = "By the way, the token is priced at $0.25/CPX."
+    response = await answer_question("where can I claim my tokens?", stub_stores)
     assert response.meta.answer_kind == "refusal"

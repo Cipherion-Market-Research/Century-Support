@@ -1,0 +1,97 @@
+name: Service test suites
+
+# Runs each service's test suite in its own job with its own dependency
+# set. Suites are deliberately never combined into a single pytest
+# invocation: century_core and kpi_sync have a conftest fixture collision
+# when collected together, and kpi_sync/http.py shadows the stdlib `http`
+# module if pytest is ever invoked from inside kpi_sync/ instead of the
+# repo root. Every job below runs `pytest <service>/tests` from the repo
+# root (the default working directory) for exactly that reason -- do not
+# add a `working-directory` override for the kpi_sync job.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Legacy bot + facts_store. Root requirements.txt (large legacy
+          # dependency set: python-telegram-bot, PyPDF2, openai==0.27.8).
+          # Python version from the repo-root runtime.txt (this is also
+          # what Railway deploys the bot with).
+          - name: tests
+            python-version: "3.11.7"
+            install: pip install -r requirements.txt
+            cache-path: requirements.txt
+            test-path: tests
+
+          # century_core has no runtime.txt of its own: its Railway Root
+          # Directory is the repo root (not flattened), so the root
+          # runtime.txt governs its deployed Python version too.
+          - name: century_core
+            python-version: "3.11.7"
+            install: pip install -r century_core/requirements-dev.txt
+            cache-path: |
+              century_core/requirements.txt
+              century_core/requirements-dev.txt
+            test-path: century_core/tests
+
+          - name: kpi_sync
+            python-version: "3.12"
+            install: pip install -r kpi_sync/requirements-dev.txt
+            cache-path: |
+              kpi_sync/requirements.txt
+              kpi_sync/requirements-dev.txt
+            test-path: kpi_sync/tests
+
+          - name: pubs_rag
+            python-version: "3.12"
+            install: pip install -r pubs_rag/requirements-dev.txt
+            cache-path: |
+              pubs_rag/requirements.txt
+              pubs_rag/requirements-dev.txt
+            test-path: pubs_rag/tests
+
+          # drift_monitor has no runtime.txt of its own either: like
+          # century_core, its Railway Root Directory is the repo root, so
+          # the root runtime.txt governs its deployed Python version.
+          - name: drift_monitor
+            python-version: "3.11.7"
+            install: pip install -r drift_monitor/requirements.txt
+            cache-path: drift_monitor/requirements.txt
+            test-path: drift_monitor/tests
+
+          - name: telegram_adapter
+            python-version: "3.12"
+            install: pip install -r telegram_adapter/requirements-dev.txt
+            cache-path: |
+              telegram_adapter/requirements.txt
+              telegram_adapter/requirements-dev.txt
+            test-path: telegram_adapter/tests
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: ${{ matrix.cache-path }}
+
+      - name: Install dependencies
+        run: ${{ matrix.install }}
+
+      - name: Validate facts.yaml
+        if: matrix.name == 'tests'
+        run: python scripts/validate_facts.py
+
+      - name: Run tests
+        run: pytest ${{ matrix.test-path }} -q

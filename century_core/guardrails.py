@@ -3,10 +3,13 @@
 Enforced structurally on every outgoing response (not just via an LLM
 system prompt) so this behavior is unit-testable without a live LLM and
 can't be talked around by a misbehaving or jailbroken model. Per the WP-5
-brief: no purchase solicitation; no APY/yield invention; the new round's
-price is quoted as neither $0.25 nor $0.115 (round-terms.new_round_price_usd
-note — unreconciled staged-vs-on-chain figures, owner directive); LLM-
-composed numbers must trace back to the supplied context.
+brief: no purchase solicitation; no APY/yield invention; LLM-composed
+numbers must trace back to the supplied context. Owner ruling 2026-08-17:
+CPX has no market price to quote -- it is not yet listed on any exchange.
+The bot must NEVER output a CPX price figure in any form. Every historical
+or staged figure stays banned regardless of phrasing or source, including
+the $0.20 figure that was briefly referenced from the contribute page:
+$0.25, $0.115, $0.124, and $0.20 are all banned.
 """
 import re
 from dataclasses import dataclass, field
@@ -36,25 +39,28 @@ _APY_PATTERNS = [
     ]
 ]
 
-# Owner directive (round-terms.new_round_price_usd note, Sprint-1): the new
-# round's price is unreconciled between staged copy ($0.25) and an on-chain
-# read (~$0.115) -- quote NEITHER, unconditionally, regardless of source or
-# phrasing. Word-boundary-safe so "$1.025" or "10.250" don't false-positive.
-# Owner ruling 2026-07-30: the live contribute page is the source of truth
-# for the current Contribution Program -- its published $0.20/CPX (held in
-# facts.yaml) is the ONLY referenceable price. Every earlier figure is
-# legacy/deprecated and stays banned: the $0.25 staged copy and the
-# on-chain reads (~$0.115-$0.124) from the deprecated base contract.
+# Owner ruling 2026-08-17: CPX is not listed on any exchange -- there is no
+# market price to quote. The bot must NEVER output a CPX price figure, full
+# stop, regardless of source or phrasing. Word-boundary-safe so "$1.025" or
+# "10.250" don't false-positive. Each pattern also excludes a trailing "%"
+# (optionally preceded by whitespace): "0.25%" is a percentage (e.g. the fee
+# schedule "0.25% to 0.03%" in data/llm_composite.md / data/training/faq.json),
+# not a price, and must not be caught here -- a bare number followed by "%"
+# can never be a USD price quote in this bot's copy.
 _BANNED_PRICE_PATTERNS = [
-    re.compile(r"(?<![\d.])\$?0\.25(?!\d)"),
-    re.compile(r"(?<![\d.])\$?0\.115(?!\d)"),
-    re.compile(r"(?<![\d.])\$?0\.124(?!\d)"),
+    re.compile(r"(?<![\d.])\$?0\.25(?!\d)(?!\s*%)"),
+    re.compile(r"(?<![\d.])\$?0\.115(?!\d)(?!\s*%)"),
+    re.compile(r"(?<![\d.])\$?0\.124(?!\d)(?!\s*%)"),
+    re.compile(r"(?<![\d.])\$?0\.20(?!\d)(?!\s*%)"),
 ]
 
-# Owner ruling 2026-07-30: "presale" is banned vocabulary in user-facing
-# output (legal exposure). The program is a Contribution Program; the
-# terminology is "contribution(s)". Historic rounds are "the 2025 token
-# distribution".
+# Owner ruling 2026-07-30 (reaffirmed 2026-08-17): "presale" is banned
+# vocabulary in user-facing output (legal exposure), with NO exemptions --
+# not even inside a URL/hostname/path. The program is a Contribution
+# Program; the terminology is "contribution(s)". Historic rounds are "the
+# 2025 token distribution". A string like "presale.ciphex.io" or
+# "/api/presale" must never reach a user, so it is not exempted from this
+# ban even when it originates from facts.yaml or RAG context.
 _BANNED_TERM_PATTERNS = [
     re.compile(r"(?i)\bpre-?sales?\b"),
 ]

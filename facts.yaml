@@ -82,6 +82,18 @@ facts:
     source_url: "internal://content-audit-2026-07-20"
     notes: "OQ-3 (docs/CONTRACTS.md) — RESOLVED by owner, 2026-07-20: CPX is confirmed NOT live on any DEX as of this date. The owner expects a live listing within roughly 30-60 days of 2026-07-20 — this is an EXPECTATION/target, not a commitment: phrase it to users as something the team has indicated it expects, never as a promised date, and re-verify before quoting since this window will go stale quickly. The Alpha dashboard's apparent Uniswap v3/v4 positions and GeckoTerminal/DexTools pool remain marked sample data in source code and should not be cited as evidence of a live listing. This specific as-of-2026-07-20 confirmation is an owner attestation from an internal content audit, not a citable live page; kb_source partially corroborates the broader non-listed status — the May 8, 2026 ecosystem update (https://ciphex.io/assets/documents/ecosystem-update-may08-26.pdf) describes CPX exchange listing work as only just beginning a 120-day initiative at that date."
 
+  identity.listing_initiative:
+    value: "CPX is not yet listed on any exchange. The Ciphex roadmap lists a 'DEX / CEX Initiative' under Phase III, tagged EY2026; a listing announcement is expected Q3/Q4 2026."
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/"
+    notes: "kb_source for the Phase III / 'DEX / CEX Initiative' / EY2026 tag (homepage roadmap; corroborates identity.dex_live_status and products.ciphex_alpha_status, which also cite the Phase III EY2026 roadmap). The Q3/Q4 2026 announcement window is an owner statement (2026-08-17), phrased as an expectation, not a promise — never present it to users as a committed date. Per round-terms.new_round_price_usd's owner ruling, the bot quotes NO price anywhere until a live market feed is connected post-listing."
+
+  identity.connect_program:
+    value: "Ciphex Connect™ & Momentum Rewards™ — a community participation/loyalty program at connect.ciphex.io."
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/community"
+    notes: "kb_source. See links.connect_portal for the portal URL and gating details."
+
   # ────────────────────────────── links ───────────────────────────────
 
   links.website:
@@ -92,19 +104,19 @@ facts:
 
   links.contact_page:
     value: "https://ciphex.io/contact-ciphex"
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contact-ciphex"
     notes: "kb_source. Renamed from /contact to /contact-ciphex (ciphex-website PR #100, 2026-07-28); the live site 308-redirects the old URL. Never emit the old /contact path in new links."
 
   links.general_inquiries_email:
     value: "hello@ciphex.io"
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contact-ciphex"
     notes: "kb_source. Use this for general/support-style routing pending resolution of identity.support_email (OQ-1). contact -> contact-ciphex rename (PR #100); re-verified unchanged."
 
   links.partnerships_email:
     value: "partnerships@ciphex.io"
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contact-ciphex"
     notes: "kb_source. Press & Partnerships desk. contact -> contact-ciphex rename (PR #100); re-verified unchanged."
 
@@ -122,7 +134,7 @@ facts:
 
   links.claim_portal:
     value: "https://claim.ciphex.io"
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "internal://content-audit-2026-07-20"
     notes: "Internal content audit, 2026-07-20; corroborated by the bot's own config/constants.py and data/training/faq.json, which already point here. Canonical 'Ciphex Token Claim Center' for the concluded 2025 distribution. Exposes a public JSON feed at /api/presale (Tier-1 KPI concern, not a fact — see docs/CONTRACTS.md C3). Every harvested kb_source page shows a site-wide 'Claim Tokens' nav link, corroborating that a live claim portal exists, but the static-page harvest strips link targets, so the exact claim.ciphex.io domain itself is not independently confirmable from data/kb_source/ in this pass."
 
@@ -130,13 +142,13 @@ facts:
     value: "https://presale.ciphex.io"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "Internal content audit, 2026-07-20 (live endpoint probe of the redirect). This old domain now 308-redirects to claim.ciphex.io. Do not surface presale.ciphex.io as the primary link in new copy; kept here only so a drift check / old-link audit has the mapping. Not present in the data/kb_source/ page harvest."
+    notes: "Internal content audit, 2026-07-20 (live endpoint probe of the redirect). This old domain now 308-redirects to claim.ciphex.io. Do not surface presale.ciphex.io as the primary link in new copy; kept here only so a drift check / old-link audit has the mapping. Not present in the data/kb_source/ page harvest. INTERNAL-ONLY (owner ruling 2026-08-17): the word in this hostname is banned vocabulary; this fact must never be served to users. century_core blocks it from the servable search set."
 
   links.ecosystem_publications:
     value: "https://ciphex.io/insights-and-publications"
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/insights-and-publications"
-    notes: "kb_source. Renamed from /ecosystem-publications (ciphex-website PR #100, 2026-07-28); the live site 308-redirects the old URL. The page itself was restructured, not just renamed: it now shows 4 ungated 'Legacy Contributor Publications' PDFs (same as before) plus a NEW wallet-gated document library (3 sections: Quick Read Introductions, Full Reports & Overviews, System Evaluation Summaries — 7 registry documents via GET /api/library, full download requires a SIWE wallet sign-in). The two previously free-standing reports (2026q1-optimization-results, fye-2025-ciphex-alpha-test-report-fnl) no longer exist as public assets; 2 of the 7 gated registry documents look like renamed/superseded versions of them, but only a public first-page image teaser (no text) could be harvested anonymously for any of the 7 — see data/kb_source/inventory.json entries marked gated:true. OWNER DECISION NEEDED: confirm whether the bot/RAG service should ever surface content from these gated documents (would require a service-held wallet credential to sign in), or continue to only link users to the page."
+    notes: "kb_source. Renamed from /ecosystem-publications (ciphex-website PR #100, 2026-07-28); the live site 308-redirects the old URL. The page itself was restructured, not just renamed: it now shows 4 ungated 'Legacy Contributor Publications' PDFs (same as before) plus a NEW wallet-gated document library (3 sections: Quick Read Introductions, Full Reports & Overviews, System Evaluation Summaries — 7 registry documents via GET /api/library, full download requires a SIWE wallet sign-in). The two previously free-standing reports (2026q1-optimization-results, fye-2025-ciphex-alpha-test-report-fnl) no longer exist as public assets; 2 of the 7 gated registry documents look like renamed/superseded versions of them, but only a public first-page image teaser (no text) could be harvested anonymously for any of the 7 — see data/kb_source/inventory.json entries marked gated:true. OWNER DECISION NEEDED: confirm whether the bot/RAG service should ever surface content from these gated documents (would require a service-held wallet credential to sign in), or continue to only link users to the page. UPDATE (2026-08-15 site change, confirmed by the 2026-08-17 website re-audit): the page is now a database-backed, wallet-gated document registry (GET /api/library, SIWE auth) rather than a static harvest target; only the 4 legacy publications remain static/public. links.ecosystem_updates (/internal-updates) remains fully static/public and is unaffected by this change."
 
   links.ecosystem_updates:
     value: "https://ciphex.io/internal-updates"
@@ -152,7 +164,7 @@ facts:
 
   links.telegram:
     value: "https://t.me/ciphexgroup"
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/community"
     notes: "kb_source. Handle @ciphexgroup, described on-site as 'real-time community discussions, network announcements, and ecosystem updates.' Note the bot's own README links t.me/Ciphexgroup and constants.py references a different handle (@CipheXChannel) for scheduled admin warnings — reconcile against this site-verified handle."
 
@@ -164,7 +176,7 @@ facts:
 
   links.certik_skynet:
     value: "https://skynet.certik.com/projects/ciphex"
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/ciphex-token"
     notes: "kb_source for the audit-status claim ('Skynet audit completed', 3.5/5, 24,364 ratings). audit: CertiK Skynet returns HTTP 403 to plain (non-browser) HTTP clients, and the site's own rating display is a hardcoded fallback (its proxy route does not exist) — link only, never scrape or re-derive a score."
 
@@ -173,6 +185,30 @@ facts:
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/communications"
     notes: "kb_source + audit. ciphex.io/whitepapers returns HTTP 404, and the Official Communications disclosure states: 'no crypto-asset whitepaper, business plan, economic overview, offering document, or similar disclosure relating to CPX Tokens has been approved, authorized, endorsed, reviewed, or notified' (unless expressly stated otherwise). This is a confirmed negative fact, not an unresolved OQ — do not link a whitepaper; point users to links.ecosystem_publications instead."
+
+  links.connect_portal:
+    value: "https://connect.ciphex.io"
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/community"
+    notes: "kb_source. Ciphex Connect™ & Momentum Rewards™ community participation program (\"Redeem Connect Points for Momentum Dollars\"), surfaced on community.html. Its overview publication is wallet-gated (preview added 2026-07-30)."
+
+  links.alpha_ams:
+    value: "https://ams.ciphex.io"
+    verified_on: "2026-08-17"
+    source_url: "https://ams.ciphex.io"
+    notes: "Ciphex Alpha live dashboard ('Phase 3 pre-commercial performance'), captured during the 2026-08-17 website re-audit. Cross-reference identity.canonical_alpha_domain (OQ-2, resolved 2026-07-20), which established ams.ciphex.io as the canonical domain from an internal audit only; this links.* fact adds the direct servable URL. Do not present as a public product — the dashboard reflects internally-funded pre-commercial testing only (see products.ciphex_alpha_status)."
+
+  links.atlas_page:
+    value: "https://ciphex.io/atlas-rwa-services"
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/atlas-rwa-services"
+    notes: "kb_source. Atlas RWA Services in pre-commercial testing, not available to the general public; demos by request via the contact page (links.contact_page). See products.atlas_description / products.atlas_status for full details."
+
+  links.token_page:
+    value: "https://ciphex.io/ciphex-token"
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/ciphex-token"
+    notes: "kb_source. CPX Tokenomics / 'Ciphex Token' page — canonical source for contracts.cpx_token_ethereum, tokenomics.* allocation and burn figures, and contracts.cpx_chain_exclusivity."
 
   # ─────────────────────────── round-terms ────────────────────────────
 
@@ -238,33 +274,45 @@ facts:
 
   round-terms.new_round_status:
     value: "Live informational page published (ciphex.io/contribute) describing Phase I terms in full; contribution panel shows \"Preparing Access\" with progress 0 / 70,000,000 CPX (0%) — not yet open to the public. The program begins on a date to be determined by Ciphex (no start date published)."
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
     notes: "kb_source. Supersedes the 2026-07-20 note that the contribute page returned HTTP 404 — it is now live and detailed, but per the page's own §2 ('Contribution Stages'), the program 'begins on a date determined by Ciphex' and the contribution panel is still gated (0% progress). Do not tell a user the round is open. The 2026-07-20 on-chain finding (Base presale contract's isPresaleActive()==true while raisedFunds/contributorsAmount read 0) was never reconciled against this live page, which does not mention a chain or contract address at all — see round-terms.new_round_chain. OWNER RULING 2026-07-30: the page is the source of truth; contracts.base_presale on-chain reads are legacy/deprecated and are never presented alongside these terms (KPI source onchain_base is disabled at the poller and blocked in core)."
 
   round-terms.new_round_price_usd:
     value: 0.20
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
-    notes: "kb_source, CHANGED from the prior $0.25 staged figure: the live contribute page states twice, consistently, that 'the exchange value of each Ciphex token remains fixed at $0.20 (USD) throughout the Contribution Program' (top summary widget + §2 body text), and Table 2.1's own math confirms it (70,000,000 CPX x $0.20 = the table's stated $14,000,000 total). Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. OWNER RULING 2026-07-30: the live contribute page is the source of truth for the current Contribution Program; $0.20 is THE referenceable published price. The $0.25 staged figure and all on-chain reads of contracts.base_presale (~$0.115-$0.124) are legacy/deprecated and must never be quoted (guardrails enforce this). Still phrase as the published program price -- the program has not opened (see new_round_status)."
+    notes: "kb_source, CHANGED from the prior $0.25 staged figure: the live contribute page states twice, consistently, that 'the exchange value of each Ciphex token remains fixed at $0.20 (USD) throughout the Contribution Program' (top summary widget + §2 body text), and Table 2.1's own math confirms it (70,000,000 CPX x $0.20 = the table's stated $14,000,000 total). Never conflate with round-terms.legacy_2025_price_usd (0.26); the legacy price is concluded and historical. OWNER RULING 2026-07-30: the live contribute page is the source of truth for the current Contribution Program; $0.20 is THE referenceable published price. The $0.25 staged figure and all on-chain reads of contracts.base_presale (~$0.115-$0.124) are legacy/deprecated and must never be quoted (guardrails enforce this). Still phrase as the published program price -- the program has not opened (see new_round_status). OWNER RULING 2026-08-17: the bot must not quote this figure anywhere (conversational surfaces answer price as TBD pending listing); retained as a data-plane fact."
 
   round-terms.new_round_cap_cpx:
     value: 70000000
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
     notes: "kb_source, CHANGED from the prior staged 64,000,000 figure: the live contribute page's contribution widget states 'Max. CPX Token Allocation: 70,000,000', and Table 2.1's three-stage breakdown (7,000,000 + 21,000,000 + 42,000,000) sums to the same 70,000,000. Sourced from CPX Reserves (~19.42% of existing CPX Reserves per the page's own §3 arithmetic)."
 
   round-terms.new_round_cap_usd_approx:
     value: 14000000
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
     notes: "kb_source, CHANGED from the prior staged ~$16,000,000 figure: Table 2.1 states a Total exchange value of $14,000,000 across all three stages (70,000,000 CPX x $0.20 -- see round-terms.new_round_price_usd). The page separately states an 'implied fully diluted ecosystem valuation' of approximately $203.71M based on the same $0.20 rate applied to total FD supply -- a different figure answering a different question; do not conflate the two."
 
   round-terms.new_round_tier_minimums_cpx:
     value: [1000, 2000, 3000]
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
     notes: "kb_source, CHANGED from the prior staged [1000, 2000, 5000]: Table 2.1 ('Illustrative Contribution Stages') states minimum CPX contributions of 1,000 (Early/Stage 1), 2,000 (Growth/Stage 2), and 3,000 (Final/Stage 3) -- the third tier is now 3,000, not 5,000. Supersedes the flat 2,000 CPX minimum quoted for the legacy 2025 round (round-terms.legacy_2025_min_purchase_cpx)."
+
+  round-terms.new_round_max_contribution:
+    value: "100,000 CPX or the equivalent exchange value of $20,000 (USD) per Contribution Stage"
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/contribute"
+    notes: "kb_source. Contribute page §2 states a per-stage maximum contribution of 100,000 CPX or its $20,000 USD-equivalent exchange value, per Contribution Stage (see round-terms.new_round_stage_structure for the three stages). Confirmed by the 2026-08-17 website re-audit."
+
+  round-terms.new_round_stage_structure:
+    value: "Three 30-day Contribution Stages: Early (7,000,000 CPX, 10%), Growth (21,000,000 CPX, 30%), Final (42,000,000 CPX, 60%) -- summing to the 70,000,000 CPX cap (see round-terms.new_round_cap_cpx). Stages may be ended early by Ciphex but cannot be paused, extended, or reopened. Contributions are final and non-refundable. Any unsold CPX returns to CPX Reserves at Final Stage completion."
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/contribute"
+    notes: "kb_source. Contribute page §2 ('Contribution Stages') / Table 2.1. Confirmed by the 2026-08-17 website re-audit."
 
   round-terms.new_round_usd_floor_global:
     value: "Superseded -- see notes."
@@ -298,19 +346,19 @@ facts:
 
   round-terms.new_round_lockup_days:
     value: 90
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
     notes: "kb_source, CONFIRMED UNCHANGED and now upgraded from audit-only to a live citable page: the contribute page's §5 ('Lockup and Vesting') states 'a 3 (three) month (90-day) lockup period'. Shorter than the legacy 180-day lockup (round-terms.legacy_2025_lockup_days)."
 
   round-terms.new_round_vesting_days:
     value: 90
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
     notes: "kb_source, CONFIRMED UNCHANGED and now upgraded from audit-only to a live citable page: the contribute page's §5 states 'followed by a 3 (three) month (90-day) vesting period'."
 
   round-terms.new_round_vesting_installments:
     value: "3 equal monthly installments"
-    verified_on: "2026-07-29"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/contribute"
     notes: "kb_source, CONFIRMED UNCHANGED and now upgraded from audit-only to a live citable page: the contribute page's §5 states 'Vesting immediately begins in 3 (three) equal monthly installments'. Contrast with the legacy round's 12 monthly installments (round-terms.legacy_2025_vesting_months)."
 
@@ -334,7 +382,7 @@ facts:
       standard: "ERC-20"
       address: "0x18b33687d1c804Dd4ea6c82106e54923c23a652E"
       explorer_url: "https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E"
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/ciphex-token"
     notes: "kb_source. The CPX Tokenomics page shows this address directly under 'ERC-20 Contract ... (opens Etherscan in new tab) Ethereum Mainnet'. This is the canonical CPX token contract — confirmed unchanged/correct by the audit's §2 review."
 
@@ -362,11 +410,17 @@ facts:
     value:
       chain: "Base (chain id 8453)"
       address: "0x7A8Fc21fd34DE3dD5131a965fb3995f484f50D59"
-      purpose: "CPX token deployed on Base for the new round"
+      purpose: "Legacy on-chain artifact from the abandoned Base staging round (DEPRECATED -- see notes; never reference as a legitimate CPX deployment)"
       explorer_url: "https://basescan.org/address/0x7A8Fc21fd34DE3dD5131a965fb3995f484f50D59"
     verified_on: "2026-07-20"
     source_url: "internal://content-audit-2026-07-20"
-    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note. IMPORTANT: this is a second, LEGITIMATE CPX deployment distinct from contracts.cpx_token_ethereum — a user citing this Base address is not necessarily describing a scam. The audit specifically flagged the pre-fix bot as having a false-positive risk here (it would have told a legitimate Base-address holder their token was fake). Always label both chains explicitly when answering contract-address questions."
+    notes: "Internal content audit, 2026-07-20 — see round-terms.new_round_name note for full provenance chain. OWNER RULING 2026-08-17: DEPRECATED. This address came from internal staging artifacts of the abandoned Base staging round; it was never published on any Ciphex page. CPX is an ERC-20 token on Ethereum mainnet ONLY (see contracts.cpx_token_ethereum, contracts.cpx_chain_exclusivity) — this address must NEVER be referenced as a legitimate CPX deployment. Retained for scam-triage history only."
+
+  contracts.cpx_chain_exclusivity:
+    value: "CPX is an ERC-20 token deployed on Ethereum mainnet only. Any 'CPX' token on another chain is not the official Ciphex token."
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/ciphex-token"
+    notes: "kb_source. The token page's stats strip shows 'ERC-20 · Chain-agnostic deployment' — this describes the token standard's design posture (ERC-20 is technically deployable on any EVM chain), not a claim of multiple live deployments. OWNER RULING 2026-08-17: CPX is an ERC-20 token on Ethereum mainnet ONLY (see contracts.cpx_token_ethereum); contracts.cpx_token_base and contracts.base_presale are deprecated staging artifacts on Base, never legitimate deployments, and must never be presented as a second live CPX chain."
 
   # ────────────────────────── tokenomics ──────────────────────────────
 
@@ -394,13 +448,13 @@ facts:
 
   tokenomics.burn_cycle_1_amount_cpx:
     value: 481454298
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/ciphex-token"
     notes: "kb_source, and now INDEPENDENTLY VERIFIED on-chain (2026-07-20): tokenomics.max_supply_cpx (1,500,000,000) minus the burn address's CPX balance (see tokenomics.burn_cycle_1_burn_address) equals exactly 1,018,545,702 — matching tokenomics.fy2026_fd_supply exactly. See tokenomics.onchain_total_supply_eth for why Etherscan's raw totalSupply() will not itself show this reduction (the burn is a transfer to a dead address, not a supply-reducing call)."
 
   tokenomics.burn_cycle_1_percent:
     value: "32.10%"
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/ciphex-token"
     notes: "kb_source. Labeled '32.10% Burn Cycle 1 – December 2025' on the tokenomics page. Now INDEPENDENTLY VERIFIED on-chain (2026-07-20): 481,454,298 / 1,500,000,000 = 32.097%, matching the published 32.10% (the small difference is ordinary display rounding). See tokenomics.burn_cycle_1_burn_address for the verification address."
 
@@ -424,7 +478,7 @@ facts:
 
   tokenomics.fy2026_fd_supply:
     value: 1018545702
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/ciphex-token"
     notes: "kb_source. 'FY2026 Adjusted FD Total Supply — 1,018,545,702', labeled 'Post YE2025 Burn Cycle 1'. Equals max_supply_cpx minus burn_cycle_1_amount_cpx (1,500,000,000 − 481,454,298 = 1,018,545,702). This is the FD/EFFECTIVE supply, distinct from the raw on-chain totalSupply() reading of 1,500,000,000 — see tokenomics.onchain_total_supply_eth. It is now also cross-verified directly on-chain via the burn address's balance (tokenomics.burn_cycle_1_burn_address), independent of the site's own published arithmetic. Never present this number as 'what Etherscan's totalSupply() will show'; it is the post-burn effective-supply figure (site-published AND on-chain-corroborated), not a raw totalSupply() read."
 
@@ -442,7 +496,7 @@ facts:
 
   tokenomics.planned_burn_percent_by_eye2030:
     value: "~50%"
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/ciphex-token"
     notes: "kb_source. 'Multi-Year Burn Cycle Engineered to Reduce Total FD Supply by approximately 50% by EYE2030' — measured from the FY2026 FD supply, not the original 1.5B max supply. NEVER use the stale '~95% burn over a decade' figure the audit flagged as 10x overstated."
 
@@ -462,11 +516,26 @@ facts:
     value: "Only the 'CPX Reserves' category (35.38%, 360,398,652 CPX) was captured in this harvest. The live page states a nine-category allocation table exists, but the other eight categories are revealed only via interactive hover/focus on the live chart and were not captured by the static page harvest."
     verified_on: "2026-07-20"
     source_url: "https://ciphex.io/ciphex-token"
-    notes: "kb_source. Do NOT fabricate the remaining 8 allocation categories. The publications RAG service or a future re-harvest with interaction support should fill these in; until then, the bot should answer allocation-breakdown questions with only this one confirmed category and note the rest is unavailable."
+    notes: "kb_source. Do NOT fabricate the remaining 8 allocation categories. The publications RAG service or a future re-harvest with interaction support should fill these in; until then, the bot should answer allocation-breakdown questions with only this one confirmed category and note the rest is unavailable. SUPERSEDED 2026-08-17 — see tokenomics.allocation_breakdown, which now carries the full nine-category table captured by the 2026-08-17 website re-audit."
+
+  tokenomics.allocation_breakdown:
+    value:
+      - "CPX Reserves — 35.38%"
+      - "Early Investors — 34.49%"
+      - "Creators/Founders — 21.75%"
+      - "Market Advisors — 2.89%"
+      - "Expert Contributors — 2.45%"
+      - "Staking & Rewards — 1.76%"
+      - "Marketing Programs — 1.01%"
+      - "Public Presale — 0.21% (2,171,834 CPX)"
+      - "Security & Bounty — 0.05%"
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/ciphex-token"
+    notes: "kb_source. Full nine-category allocation table captured via the 2026-08-17 website re-audit, completing the eight categories tokenomics.allocation_table_completeness_note previously flagged as missing from the 2026-07-20 static-page harvest (only 'CPX Reserves' was captured then — see tokenomics.allocation_cpx_reserves_percent / _cpx). The 'Public Presale' category name is the site's own historical allocation-bucket label; per the vocabulary ruling, the bot renders this category as '2025 public distribution' in user-facing copy and never emits the site's 'presale' label verbatim (see links.claim_portal_legacy_redirect for the same banned-vocabulary ruling)."
 
   tokenomics.audit_status:
     value: "Skynet audit completed (CertiK) — site displays 3.5/5, 24,364 ratings"
-    verified_on: "2026-07-20"
+    verified_on: "2026-08-17"
     source_url: "https://ciphex.io/ciphex-token"
     notes: "kb_source for the displayed rating. audit: this rating display is a hardcoded fallback in the site's own code (its live proxy route to CertiK does not exist), and CertiK Skynet returns HTTP 403 to plain HTTP clients — meaning the number cannot be independently re-verified by polling Skynet directly. Link to links.certik_skynet; never scrape or recompute this score."
 
@@ -545,6 +614,18 @@ facts:
     notes: "Internal content audit, 2026-07-20, corroborated by kb_source (https://ciphex.io/atlas-rwa-services and https://ciphex.io/general-disclosure both state pre-commercial/internally-funded-only status). The bot must always caveat Atlas figures as pre-commercial/pipeline-stage, never presented as executed deals or live market data."
 
   # ────────────────────────────── legal ───────────────────────────────
+
+  legal.terms_of_use_revised:
+    value: "2026-05-25"
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/terms-of-use"
+    notes: "kb_source. Site states 'Revised: May 25, 2026' on the Terms of Use page. Captured during the 2026-08-17 website re-audit."
+
+  legal.privacy_policy_revised:
+    value: "2026-06-28"
+    verified_on: "2026-08-17"
+    source_url: "https://ciphex.io/privacy-policy"
+    notes: "kb_source. Site states 'June 28, 2026, as Amended' on the Privacy Policy page. Captured during the 2026-08-17 website re-audit."
 
   legal.registration_status:
     value: "Ciphex/Cipherion is not registered as a broker-dealer, investment adviser, securities exchange, cryptocurrency exchange, or trading platform in any jurisdiction, and does not provide brokerage, investment advisory, exchange, or custodial services."

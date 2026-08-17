@@ -72,6 +72,26 @@ class Config:
     # broadcasts are durably queued here for adapters to consume later) ---
     BROADCAST_QUEUE_KEY = _env("CENTURY_CORE_BROADCAST_QUEUE_KEY", "century:broadcasts")
 
+    # --- Servable-facts exclusion (owner rulings, 2026-08-17) ---
+    # These keys exist in facts.yaml for historical/scam-verification/audit
+    # purposes only and must never be servable to a user, in a command
+    # response OR a Q&A search hit: contracts.base_presale and
+    # contracts.cpx_token_base are the deprecated/non-Ethereum chain data
+    # (CPX is ERC-20 on Ethereum mainnet only -- Base is never presented as
+    # a legitimate deployment); links.claim_portal_legacy_redirect is the
+    # old presale.ciphex.io domain ("presale" is banned vocabulary with no
+    # exemptions); round-terms.new_round_price_usd is a CPX price figure
+    # (the bot must never output a CPX price -- it is not listed, TBD).
+    # Enforced in qa/facts_search.py.
+    BLOCKED_FACT_KEYS = frozenset(
+        {
+            "contracts.base_presale",
+            "contracts.cpx_token_base",
+            "links.claim_portal_legacy_redirect",
+            "round-terms.new_round_price_usd",
+        }
+    )
+
     # --- Global maintenance-mode switch (WP-7c rollback ledger) ---
     # Un-prefixed on purpose: the live Telegram bot's own copy of this
     # default (utils/maintenance.py) reads the same env var so one setting

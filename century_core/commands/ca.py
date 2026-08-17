@@ -1,45 +1,43 @@
-"""/ca -- contract addresses. Both Ethereum and Base deployments are
-legitimate (contracts.cpx_token_base's note: "a second, LEGITIMATE CPX
-deployment... a user citing this Base address is not necessarily
-describing a scam" -- the pre-fix bot had a false-positive risk here)."""
+"""/ca -- contract addresses. Owner ruling 2026-08-17: CPX is an ERC-20
+token on Ethereum mainnet ONLY. Base is never presented as a legitimate
+CPX deployment -- contracts.cpx_token_base is excluded from this handler
+entirely (and from Q&A search results, see Config.BLOCKED_FACT_KEYS)."""
 from century_core.config import Config
 from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, ResponseIR, ResponseMeta, WarningBlock
 
-_CONTRACT_FACTS = [
-    ("contracts.cpx_token_ethereum", "CPX on Ethereum mainnet"),
-    ("contracts.cpx_token_base", "CPX on Base (new round)"),
-]
+_DEFAULT_EXCLUSIVITY_SENTENCE = (
+    'CPX exists only on Ethereum mainnet. A "CPX" token on any other chain is not the official '
+    "Ciphex token — verify the address above before interacting with anything."
+)
 
 
 async def handle_ca(args: str, stores) -> ResponseIR:
     blocks = [HeadingBlock(text="CPX Contract Addresses")]
     facts_used = []
 
-    for key, label in _CONTRACT_FACTS:
-        fact = stores.facts.get(key)
-        if fact is None or fact.is_unknown:
-            continue
+    fact = stores.facts.get("contracts.cpx_token_ethereum")
+    if fact is not None and not fact.is_unknown:
         value = fact.value
         blocks.append(
             FactBlock(
-                label=label,
+                label="CPX on Ethereum mainnet",
                 value=f"{value['address']} ({value['chain']})",
                 source=fact.source_url,
                 as_of=str(fact.verified_on),
             )
         )
-        facts_used.append(key)
+        facts_used.append("contracts.cpx_token_ethereum")
 
     if not facts_used:
         blocks.append(WarningBlock(md="I don't have a verified contract address on file right now."))
     else:
-        blocks.append(
-            WarningBlock(
-                md="Both addresses above are legitimate Ciphex deployments on different chains — "
-                "a Base-chain address is not by itself evidence of a scam. Always verify against "
-                "the official site before sending funds anywhere."
-            )
-        )
+        exclusivity = stores.facts.get("contracts.cpx_chain_exclusivity")
+        if exclusivity is not None and not exclusivity.is_unknown:
+            exclusivity_text = str(exclusivity.value)
+            facts_used.append("contracts.cpx_chain_exclusivity")
+        else:
+            exclusivity_text = _DEFAULT_EXCLUSIVITY_SENTENCE
+        blocks.append(WarningBlock(md=exclusivity_text))
 
     blocks.append(LinksBlock(items=[LinkItem(label="Ciphex", url=Config.OFFICIAL_SITE_URL)]))
 

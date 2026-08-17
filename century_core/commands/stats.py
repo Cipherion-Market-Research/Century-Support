@@ -11,7 +11,7 @@ from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, R
 _METRICS = [
     ("cipherions", "Claiming wallets"),
     ("total_contributions", "Total funds raised"),
-    ("total_cpx_presold", "Total CPX presold"),
+    ("total_cpx_presold", "Total CPX distributed"),
     ("total_staked", "Total CPX staked"),
 ]
 
@@ -23,7 +23,7 @@ def _display_value(value) -> str:
 
 
 async def handle_stats(args: str, stores) -> ResponseIR:
-    blocks = [HeadingBlock(text="Claim Portal Stats (2025 round)")]
+    blocks = [HeadingBlock(text="Claim Portal Stats (2025 token distribution)")]
     kpis_used = []
 
     for metric, label in _METRICS:
