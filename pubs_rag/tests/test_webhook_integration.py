@@ -27,6 +27,13 @@ KB_SOURCE = Path(__file__).resolve().parents[2] / "data" / "kb_source"
 WEBHOOK_SECRET = "test-webhook-secret"
 NEW_SLUG = "new-test-publication"
 
+# The corpus grows forever, so "how many already-known PDFs get re-synced
+# unchanged" is never a frozen number -- it's whatever inventory.json
+# currently lists with extraction=="ok" (exactly what ingest_inventory()
+# seeds the corpus with in the setup step below).
+_INVENTORY = json.loads((KB_SOURCE / "inventory.json").read_text())
+KNOWN_PDF_COUNT = sum(1 for e in _INVENTORY if e["kind"] == "pdf" and e.get("extraction") == "ok")
+
 _NEW_CARD_HTML = (
     f'<button type="button" class="pdf-preview-card" data-slug="{NEW_SLUG}" '
     f'data-title="New Test Publication" data-date="July 20, 2026" '
@@ -35,7 +42,7 @@ _NEW_CARD_HTML = (
 
 
 def _updates_html_with_new_entry() -> str:
-    html = (FIXTURES / "ecosystem-updates.html").read_text()
+    html = (FIXTURES / "internal-updates.html").read_text()
     marker = '<main id="main-content">'
     assert marker in html
     return html.replace(marker, marker + _NEW_CARD_HTML, 1)
@@ -64,7 +71,7 @@ async def _make_fake_github_server(updates_html: str) -> TestServer:
     )
 
     async def serve_publications_html(request):
-        return web.Response(body=(FIXTURES / "ecosystem-publications.html").read_bytes())
+        return web.Response(body=(FIXTURES / "insights-and-publications.html").read_bytes())
 
     async def serve_updates_html(request):
         return web.Response(body=updates_html.encode("utf-8"))
@@ -80,8 +87,14 @@ async def _make_fake_github_server(updates_html: str) -> TestServer:
             body = path.read_bytes()
         return web.Response(body=body)
 
-    app.router.add_get(f"/{owner}/{repo}/{ref}/src/ecosystem-publications.html", serve_publications_html)
-    app.router.add_get(f"/{owner}/{repo}/{ref}/src/ecosystem-updates.html", serve_updates_html)
+    # Route registration is driven by the real Config.PUBLICATION_INDEX_PATHS
+    # (not hardcoded page names) so this fake server always matches whatever
+    # index-page paths the code under test will actually request -- the site
+    # has already been renamed once (see config.py's comment) and this must
+    # not need editing on the next rename.
+    publications_path, updates_path = Config.PUBLICATION_INDEX_PATHS
+    app.router.add_get(f"/{owner}/{repo}/{ref}/{publications_path}", serve_publications_html)
+    app.router.add_get(f"/{owner}/{repo}/{ref}/{updates_path}", serve_updates_html)
     app.router.add_get(f"/{owner}/{repo}/{ref}/public/assets/documents/{{filename}}", serve_pdf)
 
     server = TestServer(app)
@@ -94,11 +107,12 @@ def _sign(secret: str, body: bytes) -> str:
 
 
 def _push_payload_adding_new_pdf() -> bytes:
+    _, updates_path = Config.PUBLICATION_INDEX_PATHS
     payload = {
         "ref": f"refs/heads/{Config.GITHUB_REPO_BRANCH}",
         "commits": [
             {
-                "added": [f"public/assets/documents/{NEW_SLUG}.pdf", "src/ecosystem-updates.html"],
+                "added": [f"public/assets/documents/{NEW_SLUG}.pdf", updates_path],
                 "modified": [],
                 "removed": [],
             }
@@ -142,11 +156,13 @@ async def test_simulated_webhook_push_ingests_new_pdf_end_to_end(db_conn, monkey
             assert NEW_SLUG in by_slug
             assert by_slug[NEW_SLUG]["skipped"] is False
             assert by_slug[NEW_SLUG]["chunk_count"] >= 1
-            # the 12 already-known PDFs on the updates+publications pages
-            # are re-synced but unchanged -> skipped, proving the webhook
-            # doesn't blindly re-embed the whole corpus on every push.
+            # Every already-known PDF on the updates+publications pages is
+            # re-synced but unchanged -> skipped, proving the webhook
+            # doesn't blindly re-embed the whole corpus on every push. Not a
+            # frozen count: whatever the current ok-extraction corpus holds
+            # (KNOWN_PDF_COUNT, seeded above by ingest_inventory).
             unchanged = [slug for slug, r in by_slug.items() if slug != NEW_SLUG]
-            assert len(unchanged) == 12
+            assert len(unchanged) == KNOWN_PDF_COUNT
             assert all(by_slug[slug]["skipped"] for slug in unchanged)
 
             # WP-7c serving quarantine: a webhook-ingested document lands
