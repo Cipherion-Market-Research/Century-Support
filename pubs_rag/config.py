@@ -84,6 +84,26 @@ class Config:
     # --- HTTP client ---
     HTTP_TIMEOUT_S = _env_int("PUBS_RAG_HTTP_TIMEOUT_S", 20)
 
+    # --- Corpus policy: ungated documents only (owner decision, 2026-08-17, D-3) ---
+    # ciphex.io's insights-and-publications page is a database-backed,
+    # wallet-gated (SIWE) document registry: most publications are fetched
+    # client-side from an authenticated API (GET /api/library) after wallet
+    # sign-in and are never present in the server-rendered HTML this service
+    # reads. Only a small "Legacy Contributor Publications" set still ships
+    # as static, server-rendered `.pdf-preview-card` markup with a publicly
+    # resolvable PDF asset path -- that markup is all site_parser.py ever
+    # sees, so today it structurally cannot select a gated entry.
+    #
+    # Policy (explicit, not a parser accident): THE RAG CORPUS SERVES
+    # UNGATED DOCUMENTS ONLY. Gated/wallet-restricted publications must
+    # never be ingested for serving, however they might appear in future
+    # site markup (e.g. a teaser/preview asset baked into a data-pdf
+    # attribute instead of the full public PDF). site_parser.py enforces
+    # this with a defensive public-PDF-path check gated on this flag; it is
+    # not read anywhere else, and exists as the single source of truth for
+    # the policy if enforcement ever needs to move.
+    SERVE_GATED_DOCUMENTS = _env_bool("PUBS_RAG_SERVE_GATED_DOCUMENTS", False)
+
     # --- Serving quarantine (WP-7c) ---
     # retrieval.retrieve() filters documents.approved=false by default (an
     # explicit include_unapproved=True lets admin tooling/tests see
