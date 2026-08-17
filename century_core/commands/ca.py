@@ -7,7 +7,7 @@ from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, R
 
 _CONTRACT_FACTS = [
     ("contracts.cpx_token_ethereum", "CPX on Ethereum mainnet"),
-    ("contracts.cpx_token_base", "CPX on Base (new round)"),
+    ("contracts.cpx_token_base", "CPX on Base"),
 ]
 
 

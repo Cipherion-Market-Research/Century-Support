@@ -66,6 +66,7 @@ async def test_price_command_never_leaks_new_round_figures(stub_stores):
     assert result.ok, result.violations
     text = _all_text(response)
     assert "0.26" in text  # historical price still allowed
+    assert "$0.20" in text  # published Contribution Program price is allowed and sourced from facts
 
 
 async def test_claim_portal_topic(stub_stores):

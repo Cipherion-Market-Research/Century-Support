@@ -50,6 +50,20 @@ async def test_abacus_index_health_is_also_blocked(fake_redis):
         await reader.read_health("abacus_index")
 
 
+async def test_onchain_base_source_is_blocked(fake_redis):
+    fake_redis.seed_kpi("onchain_base", "token_price", 0.115)
+    reader = KpiReader(fake_redis)
+
+    with pytest.raises(BlockedKpiSourceError):
+        await reader.read("onchain_base", "token_price")
+
+
+async def test_onchain_base_health_is_also_blocked(fake_redis):
+    reader = KpiReader(fake_redis)
+    with pytest.raises(BlockedKpiSourceError):
+        await reader.read_health("onchain_base")
+
+
 async def test_read_health_returns_health_payload(fake_redis):
     await fake_redis.set(
         "kpi:claim_api:__health", '{"ok": true, "last_success": "2026-07-20T00:00:00Z", "consecutive_failures": 0}'

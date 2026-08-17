@@ -74,6 +74,74 @@ def test_does_not_false_positive_on_0_2501():
     assert result.ok
 
 
+def test_does_not_flag_fee_percentage_0_25_percent():
+    # "0.25%" is a fee-schedule percentage (data/llm_composite.md,
+    # data/training/faq.json: "fees range from 0.25% to 0.03%"), not a
+    # price quote -- must not be caught by the banned-price patterns.
+    result = guardrails.check_text("Fees range from 0.25% to 0.03% depending on tier.")
+    assert result.ok, result.violations
+
+
+def test_does_not_flag_fee_percentage_with_dollar_sign_style_spacing():
+    result = guardrails.check_text("The maker fee is 0.25 % of the trade.")
+    assert result.ok, result.violations
+
+
+def test_still_flags_bare_0_25_per_cpx():
+    result = guardrails.check_text("0.25 per CPX is the going rate.")
+    assert not result.ok
+
+
+def test_still_flags_price_is_0_25():
+    result = guardrails.check_text("The price is 0.25 for the new round.")
+    assert not result.ok
+
+
+def test_still_flags_dollar_0_25_alongside_percent_elsewhere():
+    # A genuine price quote must still be caught even in a message that
+    # also contains an unrelated legitimate percentage.
+    result = guardrails.check_text("Fees are 0.25% but the token is $0.25.")
+    assert not result.ok
+
+
+# ────────────────────────── banned-term ("presale") ban ──────────────────────────
+
+
+def test_does_not_flag_presale_inside_legacy_redirect_url():
+    # facts.yaml's links.claim_portal_legacy_redirect literal value.
+    result = guardrails.check_text(
+        "The old link https://presale.ciphex.io now redirects to claim.ciphex.io."
+    )
+    assert result.ok, result.violations
+
+
+def test_does_not_flag_presale_inside_api_path():
+    # facts.yaml's links.claim_portal note mentions this literal path.
+    result = guardrails.check_text("The claim portal exposes a public JSON feed at /api/presale.")
+    assert result.ok, result.violations
+
+
+def test_flags_standalone_presale_in_prose():
+    result = guardrails.check_text("Is the presale open yet?")
+    assert not result.ok
+    assert any("terminology" in v for v in result.violations)
+
+
+def test_flags_standalone_pre_sale_hyphenated():
+    result = guardrails.check_text("The pre-sale hasn't started.")
+    assert not result.ok
+
+
+def test_flags_standalone_presales_plural():
+    result = guardrails.check_text("We don't run presales here.")
+    assert not result.ok
+
+
+def test_flags_capitalized_pre_sale():
+    result = guardrails.check_text("Join our Pre-Sale today!")
+    assert not result.ok
+
+
 # ───────────────────────── numeric provenance ─────────────────────────
 
 

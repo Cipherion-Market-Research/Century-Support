@@ -23,7 +23,7 @@ def _display_value(value) -> str:
 
 
 async def handle_stats(args: str, stores) -> ResponseIR:
-    blocks = [HeadingBlock(text="Claim Portal Stats (2025 round)")]
+    blocks = [HeadingBlock(text="Claim Portal Stats (2025 token distribution)")]
     kpis_used = []
 
     for metric, label in _METRICS:

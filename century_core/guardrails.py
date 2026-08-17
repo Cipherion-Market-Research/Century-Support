@@ -3,10 +3,14 @@
 Enforced structurally on every outgoing response (not just via an LLM
 system prompt) so this behavior is unit-testable without a live LLM and
 can't be talked around by a misbehaving or jailbroken model. Per the WP-5
-brief: no purchase solicitation; no APY/yield invention; the new round's
-price is quoted as neither $0.25 nor $0.115 (round-terms.new_round_price_usd
-note — unreconciled staged-vs-on-chain figures, owner directive); LLM-
-composed numbers must trace back to the supplied context.
+brief: no purchase solicitation; no APY/yield invention; LLM-composed
+numbers must trace back to the supplied context. Owner ruling 2026-07-30
+(round-terms.new_round_price_usd note): the live ciphex.io/contribute page
+is the source of truth for the current Contribution Program, and its
+published $0.20/CPX is THE referenceable price -- $0.20 is explicitly
+UNBANNED. Every earlier/legacy figure stays banned regardless of phrasing:
+the $0.25 staged copy and the ~$0.115-$0.124 on-chain reads of the
+deprecated contracts.base_presale contract.
 """
 import re
 from dataclasses import dataclass, field
@@ -45,18 +49,30 @@ _APY_PATTERNS = [
 # facts.yaml) is the ONLY referenceable price. Every earlier figure is
 # legacy/deprecated and stays banned: the $0.25 staged copy and the
 # on-chain reads (~$0.115-$0.124) from the deprecated base contract.
+# Each pattern also excludes a trailing "%" (optionally preceded by
+# whitespace): "0.25%" is a percentage (e.g. the fee schedule "0.25% to
+# 0.03%" in data/llm_composite.md / data/training/faq.json), not a price,
+# and must not be caught here -- a bare number followed by "%" can never be
+# a USD price quote in this bot's copy.
 _BANNED_PRICE_PATTERNS = [
-    re.compile(r"(?<![\d.])\$?0\.25(?!\d)"),
-    re.compile(r"(?<![\d.])\$?0\.115(?!\d)"),
-    re.compile(r"(?<![\d.])\$?0\.124(?!\d)"),
+    re.compile(r"(?<![\d.])\$?0\.25(?!\d)(?!\s*%)"),
+    re.compile(r"(?<![\d.])\$?0\.115(?!\d)(?!\s*%)"),
+    re.compile(r"(?<![\d.])\$?0\.124(?!\d)(?!\s*%)"),
 ]
 
 # Owner ruling 2026-07-30: "presale" is banned vocabulary in user-facing
 # output (legal exposure). The program is a Contribution Program; the
 # terminology is "contribution(s)". Historic rounds are "the 2025 token
-# distribution".
+# distribution". Excludes matches that are part of a URL/hostname/path --
+# e.g. the literal facts.yaml values "presale.ciphex.io"
+# (links.claim_portal_legacy_redirect) and "/api/presale"
+# (links.claim_portal's note) are legitimate, reachable-via-RAG data, not
+# banned prose: skip a match immediately preceded by "/" or "." (path
+# segment / subdomain label) or immediately followed by a "." then a
+# domain-like label (e.g. ".ciphex"). Standalone "presale"/"pre-sale"/
+# "presales"/"Pre-Sale" in prose still bans.
 _BANNED_TERM_PATTERNS = [
-    re.compile(r"(?i)\bpre-?sales?\b"),
+    re.compile(r"(?i)(?<![/.])\bpre-?sales?\b(?!\.[a-z0-9-]+)"),
 ]
 
 _NUMBER_RE = re.compile(r"\d[\d,]*\.?\d*")
