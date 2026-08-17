@@ -3,7 +3,8 @@ seed store WP-5 must answer from — see docs/CONTRACTS.md C4) with a fake
 Redis for KPI-backed commands. This is the "all §2 critical topics answer
 correctly against seeded stores" acceptance line for the command surface.
 """
-from century_core import guardrails
+from century_core import guardrails, response_guard
+from century_core.config import Config
 from century_core.commands.audit import handle_audit
 from century_core.commands.ca import handle_ca
 from century_core.commands.claim import handle_claim
@@ -43,10 +44,91 @@ async def test_price_never_quotes_banned_new_round_figures(stub_stores):
     assert result.ok, result.violations
 
 
-async def test_price_says_terms_not_final(stub_stores):
+async def test_price_quotes_published_current_program_price_from_facts(stub_stores):
+    # round-terms.new_round_price_usd is 0.20 in the real facts.yaml -- the
+    # handler must read it at runtime, not hardcode it.
+    response = await handle_price("", stub_stores)
+    text = _all_text(response)
+    assert "$0.20" in text
+    assert "round-terms.new_round_price_usd" in response.meta.facts_used
+
+
+async def test_price_current_program_price_matches_facts_store_value(stub_stores):
+    # Prove the $0.20 in the response is actually sourced from the facts
+    # store at runtime, not a coincidental hardcoded match.
+    fact = stub_stores.facts.get("round-terms.new_round_price_usd")
+    response = await handle_price("", stub_stores)
+    text = _all_text(response)
+    assert f"${float(fact.value):.2f}" in text
+
+
+async def test_price_says_program_not_open_with_no_start_date(stub_stores):
     response = await handle_price("", stub_stores)
     text = _all_text(response).lower()
-    assert "not been finalized" in text or "not finalized" in text
+    assert "has not opened" in text
+    assert "no start date is currently published" in text
+
+
+async def test_price_makes_no_timing_promise(stub_stores):
+    # Must not claim or imply an imminent/scheduled open.
+    response = await handle_price("", stub_stores)
+    text = _all_text(response).lower()
+    for phrase in ("coming weeks", "coming soon", "opens soon", "will open on", "launching on"):
+        assert phrase not in text
+
+
+async def test_price_uses_contribution_program_vocabulary_not_presale(stub_stores):
+    response = await handle_price("", stub_stores)
+    text = _all_text(response).lower()
+    assert "contribution" in text
+    assert "presale" not in text
+
+
+async def test_price_survives_response_guard(stub_stores):
+    # The rendered response (which now legitimately contains "$0.20") must
+    # not be caught and rewritten into a refusal by the final gate.
+    response = await handle_price("", stub_stores)
+    guarded = response_guard.enforce_response(response)
+    assert guarded.meta.answer_kind != "refusal"
+    text = _all_text(guarded)
+    assert "$0.20" in text
+
+
+class _UnknownPriceFactsStore:
+    """Wraps the real facts store but forces round-terms.new_round_price_usd
+    to look absent, so the handler's is_unknown/missing-fact fallback path
+    is exercised without needing to edit facts.yaml."""
+
+    def __init__(self, delegate):
+        self._delegate = delegate
+
+    def get(self, key):
+        if key == "round-terms.new_round_price_usd":
+            return None
+        return self._delegate.get(key)
+
+    def __contains__(self, key):
+        return key in self._delegate
+
+    def __len__(self):
+        return len(self._delegate)
+
+    def keys(self):
+        return self._delegate.keys()
+
+
+async def test_price_falls_back_to_official_link_when_price_fact_unknown(stub_stores):
+    from dataclasses import replace
+
+    stores = replace(stub_stores, facts=_UnknownPriceFactsStore(stub_stores.facts))
+    response = await handle_price("", stores)
+    text = _all_text(response)
+    assert "round-terms.new_round_price_usd" not in response.meta.facts_used
+    assert "not been published" in text.lower()
+    assert Config.OFFICIAL_SITE_URL in text
+    # Still guard-clean and free of banned figures/vocabulary.
+    result = guardrails.check_text(text)
+    assert result.ok, result.violations
 
 
 # ──────────────────────────────── /ca ────────────────────────────────
@@ -66,6 +148,16 @@ async def test_ca_includes_scam_safety_warning(stub_stores):
     warning_blocks = [b for b in response.blocks if b.type == "warning"]
     assert warning_blocks
     assert "not by itself evidence of a scam" in warning_blocks[0].md
+
+
+async def test_ca_base_label_does_not_tie_to_current_program(stub_stores):
+    # facts.yaml says the Contribution Program's chain is not published --
+    # the Base contract label must not imply it's "the new round"'s chain.
+    response = await handle_ca("", stub_stores)
+    text = _all_text(response)
+    assert "CPX on Base" in text
+    assert "new round" not in text.lower()
+    assert "(new round)" not in text
 
 
 # ─────────────────────────────── /claim ───────────────────────────────
@@ -125,6 +217,13 @@ async def test_stats_excludes_nonsensical_percent_staked(stub_stores):
 
     response = await handle_stats("", stub_stores)
     assert "kpi:claim_api:percent_staked" not in response.meta.kpis_used
+
+
+async def test_stats_heading_uses_token_distribution_not_round(stub_stores):
+    response = await handle_stats("", stub_stores)
+    heading = next(b for b in response.blocks if b.type == "heading")
+    assert heading.text == "Claim Portal Stats (2025 token distribution)"
+    assert "round)" not in heading.text
 
 
 # ─────────────────────────── /publications ───────────────────────────
