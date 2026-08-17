@@ -17,6 +17,10 @@ TELEGRAM_COMMANDS = [
     ("audit", "Security audit status"),
     ("stats", "Claim portal stats"),
     ("publications", "Recent Ciphex publications"),
+    ("contribute", "Contribution Program status"),
+    ("contact", "Contact Ciphex"),
+    ("ecosystem", "Ciphex products overview"),
+    ("supply", "CPX supply & burn figures"),
     ("help", "Show available commands"),
     ("start", "Welcome message"),
 ]

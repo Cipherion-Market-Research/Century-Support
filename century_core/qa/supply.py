@@ -11,12 +11,17 @@ their notes in facts.yaml for the full reconciliation history).
 Handled as its own deterministic path rather than left to the generic
 keyword+LLM Q&A route because this exact on-chain-vs-effective distinction
 is the one topic the WP-5 brief calls out by name as easy to get wrong.
+
+Also triggers on burn phrasing ("burn", "burned", "how many tokens were
+burned") -- Burn Cycle 1 is exactly the on-chain-vs-effective-supply
+distinction this module explains, so a burn question should get the same
+grounded, deterministic answer rather than a free-form LLM one.
 """
 import re
 
 from century_core.models import FactBlock, HeadingBlock, ParagraphBlock, ResponseIR, ResponseMeta
 
-_SUPPLY_TRIGGERS = {"supply", "circulating", "totalsupply", "outstanding"}
+_SUPPLY_TRIGGERS = {"supply", "circulating", "totalsupply", "outstanding", "burned", "burn", "burns"}
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 
 

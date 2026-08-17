@@ -11,7 +11,7 @@ from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, R
 _METRICS = [
     ("cipherions", "Claiming wallets"),
     ("total_contributions", "Total funds raised"),
-    ("total_cpx_presold", "Total CPX presold"),
+    ("total_cpx_presold", "Total CPX distributed"),
     ("total_staked", "Total CPX staked"),
 ]
 

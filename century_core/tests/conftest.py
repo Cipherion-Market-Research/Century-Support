@@ -83,3 +83,55 @@ def stub_llm():
 @pytest.fixture
 def stub_stores(facts, fake_redis, stub_llm):
     return Stores(facts=facts, kpi=KpiReader(fake_redis), llm=stub_llm, rag_conn=None, rag_provider=None)
+
+
+class OverlayFactsStore:
+    """Wraps a real FactsStore and overlays/masks specific keys, so tests
+    can exercise a contract fact key's "present" or "absent" branch without
+    needing to edit the committed facts.yaml -- e.g. simulating a contract
+    key (identity.listing_initiative, round-terms.new_round_max_contribution,
+    etc.) that a parallel agent may add on another branch, or forcing a key
+    that IS present today to look absent/unknown to exercise the fallback
+    path. `overrides[key] = <Fact instance>` injects/replaces a key;
+    `overrides[key] = None` makes `get(key)` return None (absent) regardless
+    of the delegate."""
+
+    def __init__(self, delegate, overrides: Dict[str, object]):
+        self._delegate = delegate
+        self._overrides = overrides
+
+    def get(self, key):
+        if key in self._overrides:
+            return self._overrides[key]
+        return self._delegate.get(key)
+
+    def __contains__(self, key):
+        if key in self._overrides:
+            return self._overrides[key] is not None
+        return key in self._delegate
+
+    def __len__(self):
+        return len(self._delegate)
+
+    def keys(self):
+        return self._delegate.keys()
+
+
+@pytest.fixture
+def make_overlay_stores(stub_stores):
+    """Factory fixture: make_overlay_stores({"identity.listing_initiative": some_fact, ...})
+    returns a Stores whose facts store overlays those keys on top of the
+    real facts.yaml-backed store, everything else (kpi/llm) unchanged."""
+    from dataclasses import replace
+
+    def _make(overrides: Dict[str, object]):
+        return replace(stub_stores, facts=OverlayFactsStore(stub_stores.facts, overrides))
+
+    return _make
+
+
+def make_fact(value, *, verified_on="2026-08-17", source_url="https://ciphex.io/", notes=None):
+    """Build a facts_store.schema.Fact for injection via OverlayFactsStore."""
+    from facts_store import Fact
+
+    return Fact(value=value, verified_on=verified_on, source_url=source_url, notes=notes)
