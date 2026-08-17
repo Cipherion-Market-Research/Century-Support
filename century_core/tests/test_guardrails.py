@@ -248,3 +248,42 @@ def test_enforce_skips_provenance_check_when_no_context_given():
     # only the structural checks run.
     result = guardrails.enforce("The max supply is 1500000000 CPX.")
     assert result.ok
+
+
+# ───────────────────────── refusal/unknown-answer detection ─────────────────────────
+# Go-live incident 2026-08-17: qa/router.py needs to tell an honest "I don't
+# know" non-answer apart from a real grounded answer, so it can strip
+# fact/RAG citations off the former.
+
+
+def test_is_unknown_answer_detects_i_dont_know():
+    assert guardrails.is_unknown_answer("I don't know how to create a poem.")
+    assert guardrails.is_unknown_answer("I do not know the answer to that.")
+    assert guardrails.is_unknown_answer("I don't know the actual token holder number for CPX.")
+
+
+def test_is_unknown_answer_detects_other_refusal_phrasings():
+    assert guardrails.is_unknown_answer("I cannot answer that question.")
+    assert guardrails.is_unknown_answer("I can't help with that.")
+    assert guardrails.is_unknown_answer("I'm not able to answer that.")
+    assert guardrails.is_unknown_answer("I am unable to provide that information.")
+    assert guardrails.is_unknown_answer("Sorry, I don't have that information.")
+    assert guardrails.is_unknown_answer("Unfortunately, I can't confirm that.")
+
+
+def test_is_unknown_answer_case_insensitive():
+    assert guardrails.is_unknown_answer("i don't know.")
+    assert guardrails.is_unknown_answer("I DON'T KNOW.")
+
+
+def test_is_unknown_answer_false_for_grounded_answers():
+    assert not guardrails.is_unknown_answer("CPX is an ERC-20 token deployed on Ethereum mainnet.")
+    assert not guardrails.is_unknown_answer("You can claim your tokens at the official claim portal.")
+    assert not guardrails.is_unknown_answer("")
+
+
+def test_is_unknown_answer_anchored_at_start_not_mid_sentence():
+    # A real answer that merely mentions uncertainty later must not be
+    # swallowed as a refusal -- only checked at the start of the text.
+    text = "You can claim your tokens at the official portal, though I don't know the exact processing time."
+    assert not guardrails.is_unknown_answer(text)

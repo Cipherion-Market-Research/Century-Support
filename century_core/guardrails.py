@@ -67,6 +67,35 @@ _BANNED_TERM_PATTERNS = [
 
 _NUMBER_RE = re.compile(r"\d[\d,]*\.?\d*")
 
+# Go-live incident 2026-08-17: the LLM answering "write me a poem" with
+# "I don't know how to create a poem." is a correct, honest non-answer --
+# but qa/router.py was still attaching fact/RAG citation links to it
+# because hits existed for the *question tokens*, not because they were
+# actually relevant to what the model said. Detecting a refusal-style raw
+# LLM output lets the router strip those citations down to a single
+# official link instead of dressing up a non-answer as a sourced one.
+# Matched at the START of the (stripped) text: a real grounded answer opens
+# with the answer, not a disclaimer, even if it hedges later in the
+# sentence -- keeping this anchored avoids flagging an answer that merely
+# mentions "I don't know" mid-sentence as if it were the whole answer.
+_REFUSAL_PATTERNS = [
+    re.compile(p, re.IGNORECASE)
+    for p in [
+        r"^i\s+don'?t\s+know\b",
+        r"^i\s+do\s+not\s+know\b",
+        r"^i\s+don'?t\s+have\b",
+        r"^i\s+do\s+not\s+have\b",
+        r"^i\s+can'?t\b",
+        r"^i\s+cannot\b",
+        r"^i'?m\s+not\s+able\b",
+        r"^i\s+am\s+not\s+able\b",
+        r"^i'?m\s+unable\b",
+        r"^i\s+am\s+unable\b",
+        r"^sorry,?\s+i\s+(?:don'?t|do\s+not|can'?t|cannot)\b",
+        r"^unfortunately,?\s+i\s+(?:don'?t|do\s+not|can'?t|cannot)\b",
+    ]
+]
+
 
 @dataclass
 class GuardrailResult:
@@ -122,6 +151,18 @@ def check_numeric_provenance(text: str, allowed_numbers: Iterable) -> GuardrailR
         if token not in allowed
     ]
     return GuardrailResult(violations=violations)
+
+
+def is_unknown_answer(text: str) -> bool:
+    """True when `text` (raw LLM output, before any link/citation is
+    attached) is substantially an "I don't know" / refusal-style
+    non-answer, e.g. "I don't know how to create a poem." or "I'm not able
+    to answer that." See qa/router.py: this gates whether fact/RAG
+    citations get attached to the response at all."""
+    stripped = text.strip()
+    if not stripped:
+        return False
+    return any(pattern.search(stripped) for pattern in _REFUSAL_PATTERNS)
 
 
 def enforce(text: str, allowed_numbers: Iterable = ()) -> GuardrailResult:
