@@ -9,7 +9,11 @@ _HELP_TEXT = (
     "`/claim` — token claiming portal\n"
     "`/audit` — security audit status\n"
     "`/stats` — claim portal stats\n"
-    "`/publications` — recent Ciphex publications\n\n"
+    "`/publications` — recent Ciphex publications\n"
+    "`/contribute` — Contribution Program status\n"
+    "`/contact` — Contact Ciphex\n"
+    "`/ecosystem` — Ciphex products overview\n"
+    "`/supply` — CPX supply & burn figures\n\n"
     "You can also ask a question in plain text."
 )
 

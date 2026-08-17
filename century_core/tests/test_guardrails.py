@@ -104,21 +104,70 @@ def test_still_flags_dollar_0_25_alongside_percent_elsewhere():
     assert not result.ok
 
 
+def test_flags_dollar_0_20():
+    # Owner ruling 2026-08-17: CPX has no market price to quote -- $0.20
+    # (the formerly-referenced contribute-page figure) is now banned too.
+    result = guardrails.check_text("CPX is priced at $0.20 per token.")
+    assert not result.ok
+    assert any("price" in v for v in result.violations)
+
+
+def test_flags_bare_0_20():
+    result = guardrails.check_text("0.20 per CPX is the going rate.")
+    assert not result.ok
+
+
+def test_does_not_flag_0_20_percent():
+    result = guardrails.check_text("The fee is 0.20% of the trade.")
+    assert result.ok, result.violations
+
+
+def test_does_not_false_positive_on_70_million_cpx():
+    result = guardrails.check_text("The Contribution Program totals 70,000,000 CPX across three stages.")
+    assert result.ok, result.violations
+
+
+def test_does_not_false_positive_on_dollar_20000():
+    result = guardrails.check_text("The Stage 3 minimum is worth $20,000 at some hypothetical valuation.")
+    assert result.ok, result.violations
+
+
+def test_does_not_false_positive_on_dollar_200():
+    result = guardrails.check_text("The Stage 1 minimum works out to $200.")
+    assert result.ok, result.violations
+
+
+def test_does_not_false_positive_on_a_date():
+    result = guardrails.check_text("The kb_source harvest was taken on 2026-07-20.")
+    assert result.ok, result.violations
+
+
+def test_does_not_false_positive_on_effective_supply_figure():
+    result = guardrails.check_text("Effective supply after Burn Cycle 1 is 1,018,545,702 CPX.")
+    assert result.ok, result.violations
+
+
 # ────────────────────────── banned-term ("presale") ban ──────────────────────────
 
 
-def test_does_not_flag_presale_inside_legacy_redirect_url():
-    # facts.yaml's links.claim_portal_legacy_redirect literal value.
+def test_flags_presale_inside_legacy_redirect_url():
+    # Owner ruling 2026-08-17: "presale" is banned with NO exemptions --
+    # not even inside a URL/hostname. facts.yaml's
+    # links.claim_portal_legacy_redirect literal value must never reach a
+    # user; it is excluded from Q&A search entirely (Config.BLOCKED_FACT_KEYS)
+    # and this ban is the text-level backstop.
     result = guardrails.check_text(
         "The old link https://presale.ciphex.io now redirects to claim.ciphex.io."
     )
-    assert result.ok, result.violations
+    assert not result.ok
+    assert any("terminology" in v for v in result.violations)
 
 
-def test_does_not_flag_presale_inside_api_path():
-    # facts.yaml's links.claim_portal note mentions this literal path.
+def test_flags_presale_inside_api_path():
+    # Owner ruling 2026-08-17: no exemptions, even inside a path segment.
     result = guardrails.check_text("The claim portal exposes a public JSON feed at /api/presale.")
-    assert result.ok, result.violations
+    assert not result.ok
+    assert any("terminology" in v for v in result.violations)
 
 
 def test_flags_standalone_presale_in_prose():

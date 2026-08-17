@@ -10,10 +10,14 @@ from typing import Optional
 from century_core.commands.audit import handle_audit
 from century_core.commands.ca import handle_ca
 from century_core.commands.claim import handle_claim
+from century_core.commands.contact import handle_contact
+from century_core.commands.contribute import handle_contribute
+from century_core.commands.ecosystem import handle_ecosystem
 from century_core.commands.misc import handle_help, handle_start
 from century_core.commands.price import handle_price
 from century_core.commands.publications import handle_publications
 from century_core.commands.stats import handle_stats
+from century_core.commands.supply import handle_supply
 from century_core.models import InboundMessage
 
 _COMMAND_TEXT_RE = re.compile(r"^/(\w+)(?:@\w+)?\s*(.*)$", re.DOTALL)
@@ -25,6 +29,10 @@ HANDLERS = {
     "audit": handle_audit,
     "stats": handle_stats,
     "publications": handle_publications,
+    "contribute": handle_contribute,
+    "contact": handle_contact,
+    "ecosystem": handle_ecosystem,
+    "supply": handle_supply,
     "help": handle_help,
     "start": handle_start,
 }

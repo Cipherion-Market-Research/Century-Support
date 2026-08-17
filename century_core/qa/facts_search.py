@@ -9,6 +9,8 @@ RAG.
 """
 import re
 
+from century_core.config import Config
+
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 
 
@@ -23,6 +25,11 @@ def search_facts(store, query: str, limit: int = 3) -> list[tuple[str, object]]:
 
     scored = []
     for key in store.keys():
+        if key in Config.BLOCKED_FACT_KEYS:
+            # Owner rulings 2026-08-17 -- see Config.BLOCKED_FACT_KEYS: these
+            # keys must never be servable to a user, even when they'd
+            # otherwise score highest for the query (e.g. "presale redirect").
+            continue
         fact = store.get(key)
         if fact is None or fact.is_unknown:
             continue

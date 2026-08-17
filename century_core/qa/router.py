@@ -8,9 +8,11 @@ facts.yaml, not RAG; the RAG corpus is the 12 publications only (WP-4
 scope decision — see pubs_rag/ingest.py).
 """
 from century_core import guardrails, response_guard
+from century_core.commands.price import handle_price
 from century_core.config import Config
 from century_core.models import LinkItem, LinksBlock, ParagraphBlock, ResponseIR, ResponseMeta
 from century_core.qa import facts_search
+from century_core.qa.price import is_price_question
 from century_core.qa.supply import answer_supply_question, is_supply_question
 
 
@@ -26,6 +28,15 @@ async def _rag_search(stores, question: str):
 async def answer_question(question: str, stores) -> ResponseIR:
     if is_supply_question(question):
         return await answer_supply_question(stores)
+
+    # Owner ruling 2026-08-17: price questions ("what's the price of CPX",
+    # "how much does CPX cost") always get the same deterministic /price
+    # response -- CPX has no market price to quote, and this is exactly
+    # the free-form path that could otherwise invent or leak a banned
+    # figure. Checked after is_supply_question so a query like "total
+    # supply" is never misrouted here.
+    if is_price_question(question):
+        return await handle_price("", stores)
 
     fact_hits = facts_search.search_facts(stores.facts, question, limit=3)
     rag_hits = await _rag_search(stores, question)
