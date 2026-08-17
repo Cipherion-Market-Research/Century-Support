@@ -18,7 +18,6 @@ corpus is grandfathered TRUE by an explicit sha256 allowlist (see
 quarantine.py), not by "whatever is already in this table".
 """
 import asyncpg
-from pgvector.asyncpg import register_vector
 
 from pubs_rag.config import Config
 from pubs_rag.quarantine import looks_like_sha256
@@ -65,6 +64,17 @@ CREATE TABLE IF NOT EXISTS chunks (
 async def connect(dsn: str = None) -> asyncpg.Connection:
     conn = await asyncpg.connect(dsn or Config.POSTGRES_DSN)
     await conn.execute("CREATE EXTENSION IF NOT EXISTS vector")
+
+    # Imported here (after the connection attempt), rather than at module
+    # scope, so this module -- and anything that merely imports it, e.g. the
+    # test conftest -- can be collected, and DB-dependent tests can still
+    # skip cleanly on "no Postgres reachable", in an environment without
+    # pgvector installed. The deployed service always has it (see
+    # requirements.txt), so a genuinely missing pgvector still fails loudly
+    # once a real connection is available, just at connect time instead of
+    # import time.
+    from pgvector.asyncpg import register_vector
+
     await register_vector(conn)
     return conn
 

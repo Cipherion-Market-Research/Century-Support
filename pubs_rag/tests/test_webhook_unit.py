@@ -40,7 +40,11 @@ def test_relevant_paths_changed_true_for_pdf_asset():
 
 
 def test_relevant_paths_changed_true_for_index_page():
-    payload = {"commits": [{"added": [], "modified": ["src/ecosystem-publications.html"], "removed": []}]}
+    # src/insights-and-publications.html is the current default in
+    # Config.PUBLICATION_INDEX_PATHS (the site renamed
+    # ecosystem-publications -> insights-and-publications, 2026-07-28; see
+    # pubs_rag/config.py).
+    payload = {"commits": [{"added": [], "modified": ["src/insights-and-publications.html"], "removed": []}]}
     assert relevant_paths_changed(payload) is True
 
 
