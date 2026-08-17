@@ -62,7 +62,8 @@ async def test_price_says_not_listed_tbd(stub_stores):
     assert "TBD" in text
 
 
-async def test_price_mentions_listing_roadmap_default_copy(stub_stores):
+async def test_price_mentions_listing_roadmap_default_copy(make_overlay_stores):
+    stub_stores = make_overlay_stores({"identity.listing_initiative": None})
     response = await handle_price("", stub_stores)
     text = _all_text(response)
     assert "DEX/CEX listing initiative" in text
@@ -102,7 +103,8 @@ async def test_price_uses_contribution_program_vocabulary_not_presale(stub_store
     assert "presale" not in text
 
 
-async def test_price_token_page_link_falls_back_without_fact(stub_stores):
+async def test_price_token_page_link_falls_back_without_fact(make_overlay_stores):
+    stub_stores = make_overlay_stores({"links.token_page": None})
     response = await handle_price("", stub_stores)
     links = [b for b in response.blocks if b.type == "links"][0]
     urls = [item.url for item in links.items]
@@ -145,7 +147,8 @@ async def test_ca_never_mentions_base(stub_stores):
     assert "contracts.cpx_token_base" not in response.meta.facts_used
 
 
-async def test_ca_includes_chain_exclusivity_warning_default_copy(stub_stores):
+async def test_ca_includes_chain_exclusivity_warning_default_copy(make_overlay_stores):
+    stub_stores = make_overlay_stores({"contracts.cpx_chain_exclusivity": None})
     response = await handle_ca("", stub_stores)
     warning_blocks = [b for b in response.blocks if b.type == "warning"]
     assert warning_blocks
@@ -272,9 +275,10 @@ async def test_contribute_lists_stage_structure_and_minimums(stub_stores):
     assert "1,000" in text and "2,000" in text and "3,000" in text
 
 
-async def test_contribute_lists_max_contribution_default_fallback(stub_stores):
+async def test_contribute_lists_max_contribution_default_fallback(make_overlay_stores):
     # round-terms.new_round_max_contribution is a contract key that may not
     # exist in facts.yaml yet -- graceful fallback to the literal copy.
+    stub_stores = make_overlay_stores({"round-terms.new_round_max_contribution": None})
     response = await handle_contribute("", stub_stores)
     text = _all_text(response)
     assert "100,000 CPX" in text
@@ -385,9 +389,10 @@ async def test_ecosystem_lists_all_four_products(stub_stores):
     assert "Ciphex Connect" in text
 
 
-async def test_ecosystem_default_links_fall_back_gracefully(stub_stores):
+async def test_ecosystem_default_links_fall_back_gracefully(make_overlay_stores):
     # None of the four link contract keys exist in facts.yaml yet --
     # every link must still resolve to a sane literal fallback.
+    stub_stores = make_overlay_stores({"links.token_page": None, "links.alpha_ams": None, "links.atlas_page": None, "links.connect_portal": None, "identity.connect_program": None})
     response = await handle_ecosystem("", stub_stores)
     links = [b for b in response.blocks if b.type == "links"][0]
     urls = [item.url for item in links.items]

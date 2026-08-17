@@ -8,6 +8,8 @@ are contract keys that may not exist in facts.yaml yet -- every read below
 goes through the standard stores.facts.get(...) + is_unknown graceful
 fallback so this handler works whether or not they're present.
 """
+import re
+
 from century_core.models import (
     HeadingBlock,
     LinkItem,
@@ -39,7 +41,17 @@ def _format_tier_minimums(values) -> str:
 
 
 def _numeric_cpx(value) -> int:
-    return int(value.get("cpx") if isinstance(value, dict) else value)
+    if isinstance(value, dict):
+        value = value.get("cpx")
+    if isinstance(value, (int, float)):
+        return int(value)
+    # Descriptive fact values (e.g. "100,000 CPX or the equivalent exchange
+    # value of ...") carry a dollar figure that must never render here (owner
+    # ruling D-1) -- extract only the leading CPX amount.
+    match = re.match(r"\s*([\d,]+)(?=\s*CPX\b|\s*$)", str(value))
+    if match is None:
+        raise ValueError(f"no CPX figure in {value!r}")
+    return int(match.group(1).replace(",", ""))
 
 
 async def handle_contribute(args: str, stores) -> ResponseIR:
