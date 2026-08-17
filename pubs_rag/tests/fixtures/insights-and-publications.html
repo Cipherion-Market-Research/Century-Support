@@ -1,10 +1,23 @@
+<!--
+  Hand-maintained fixture, not a raw scrape: reconstructed from the current
+  committed page capture at data/kb_source/pages/insights-and-publications.md
+  (fetched 2026-07-29) plus pubs_rag/config.py's PUBLICATION_INDEX_PATHS
+  comment, which documents the 2026-07-28 restructure
+  (ecosystem-publications -> insights-and-publications). Per site_parser.py's
+  module docstring, the wallet-gated "Quick Read Introductions" / "Full
+  Reports & Overviews" / "System Evaluation Summaries" sections are rendered
+  client-side from GET /api/library after SIWE sign-in and carry no
+  .pdf-preview-card markup in the server-rendered HTML -- so they're
+  represented below as empty, card-less sections. Only "Legacy Contributor
+  Publications" still ships real .pdf-preview-card buttons server-side.
+-->
 <!doctype html>
 <html lang="en" data-motion="minimal">
   <head>
     <meta charset="utf-8" />
-    <title>Ciphex | Ecosystem Publications, Research &amp; Documentation</title>
+    <title>Ciphex | Insights &amp; Publications, Research &amp; Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="canonical" href="https://ciphex.io/ecosystem-publications" />
+    <link rel="canonical" href="https://ciphex.io/insights-and-publications" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
@@ -49,42 +62,44 @@
       <div class="container">
         <div class="pub-doc">
 
-          <!-- ── Ciphex Alpha Network ── -->
-          <div id="ciphex-alpha-network" data-reveal="up">
+          <!-- ── Quick Read Introductions (wallet-gated; SIWE-only, client-rendered from GET /api/library -- no static card markup) ── -->
+          <div id="quick-read-introductions" data-reveal="up">
             <div class="pub-section-header">
               <div class="pub-section-info">
-                <h2 class="pub-section-title">Products, Services, and Utility Development</h2>
+                <h2 class="pub-section-title">Quick Read Introductions</h2>
               </div>
+              <span class="pub-section-badge">Secured</span>
             </div>
-            <div class="pub-grid">
-              <button type="button" class="pdf-preview-card" data-slug="2026q1-optimization-results" data-title="2026 Q1 Phase III Optimization Report Precommercial Testing/Optimization" data-date="April 15, 2026" data-pdf="/assets/documents/2026q1-optimization-results.pdf" aria-label="Open 2026 Q1 Phase III Optimization Report from April 15, 2026">
-                <div class="pdf-preview-thumb"><canvas class="pdf-preview-canvas" aria-hidden="true"></canvas></div>
-                <div class="pdf-preview-body">
-                  <h3 class="pdf-preview-title">2026 Q1 Phase III Optimization Report Precommercial Testing/Optimization</h3>
-                  <div class="pdf-preview-footer">
-                    <time class="pdf-preview-date" datetime="2026-04-15">April 15, 2026</time>
-                    <svg class="pdf-preview-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg>
-                  </div>
-                </div>
-              </button>
-              <button type="button" class="pdf-preview-card" data-slug="fye-2025-ciphex-alpha-test-report-fnl" data-title="FYE2025 Phase II Optimization Report Precommercial Testing/Optimization" data-date="January 16, 2026" data-pdf="/assets/documents/fye-2025-ciphex-alpha-test-report-fnl.pdf" aria-label="Open FYE2025 Phase II Optimization Report from January 16, 2026">
-                <div class="pdf-preview-thumb"><canvas class="pdf-preview-canvas" aria-hidden="true"></canvas></div>
-                <div class="pdf-preview-body">
-                  <h3 class="pdf-preview-title">FYE2025 Phase II Optimization Report Precommercial Testing/Optimization</h3>
-                  <div class="pdf-preview-footer">
-                    <time class="pdf-preview-date" datetime="2026-01-16">January 16, 2026</time>
-                    <svg class="pdf-preview-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg>
-                  </div>
-                </div>
-              </button>
-            </div>
+            <div class="pub-grid" data-gated="true"></div>
           </div>
 
-          <!-- ── Contributor & Member Publications ── -->
-          <div id="contributor-publications" data-reveal="up">
+          <!-- ── Full Reports & Overviews (wallet-gated; same as above) ── -->
+          <div id="full-reports-overviews" data-reveal="up">
             <div class="pub-section-header">
               <div class="pub-section-info">
-                <h2 class="pub-section-title">Contributor &amp; Member Publications</h2>
+                <h2 class="pub-section-title">Full Reports &amp; Overviews</h2>
+              </div>
+              <span class="pub-section-badge">Secured</span>
+            </div>
+            <div class="pub-grid" data-gated="true"></div>
+          </div>
+
+          <!-- ── System Evaluation Summaries (wallet-gated; same as above) ── -->
+          <div id="system-evaluation-summaries" data-reveal="up">
+            <div class="pub-section-header">
+              <div class="pub-section-info">
+                <h2 class="pub-section-title">System Evaluation Summaries</h2>
+              </div>
+              <span class="pub-section-badge">Secured</span>
+            </div>
+            <div class="pub-grid" data-gated="true"></div>
+          </div>
+
+          <!-- ── Legacy Contributor Publications ── -->
+          <div id="legacy-contributor-publications" data-reveal="up">
+            <div class="pub-section-header">
+              <div class="pub-section-info">
+                <h2 class="pub-section-title">Legacy Contributor Publications</h2>
               </div>
             </div>
             <div class="pub-grid">

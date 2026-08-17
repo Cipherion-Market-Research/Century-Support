@@ -7,6 +7,15 @@ FIXTURES = Path(__file__).parent / "fixtures"
 KB_SOURCE = Path(__file__).resolve().parents[2] / "data" / "kb_source"
 INVENTORY = json.loads((KB_SOURCE / "inventory.json").read_text())
 
+# Real page identifiers -- matches Config.PUBLICATION_INDEX_PATHS's stems
+# (see pubs_rag/config.py) and the `listed_on` values inventory.json's
+# harvester actually stamps on each PDF entry today. These have already
+# been renamed once (ecosystem-publications -> insights-and-publications,
+# ecosystem-updates -> internal-updates, 2026-07-28); the fixtures below are
+# named to match.
+PUBLICATIONS_PAGE = "insights-and-publications"
+UPDATES_PAGE = "internal-updates"
+
 _UNGATED_CARD_HTML = """
 <div class="pub-grid">
   <button type="button" class="pdf-preview-card"
@@ -30,23 +39,33 @@ _GATED_TEASER_CARD_HTML = """
 """
 
 
+def _ok_pdf_slugs(listed_on: str) -> set:
+    """Every PDF the pipeline actually intends to ingest for a given page --
+    extraction=="ok" only, since gated/preview entries are never expected to
+    have static card markup (see site_parser.py's module docstring). Not a
+    frozen count: recomputed from whatever inventory.json currently lists."""
+    return {
+        e["slug"]
+        for e in INVENTORY
+        if e["kind"] == "pdf" and e.get("listed_on") == listed_on and e.get("extraction") == "ok"
+    }
+
+
 def test_parses_all_publications_entries():
-    html = (FIXTURES / "ecosystem-publications.html").read_text()
-    entries = parse_publication_index(html, listed_on="ecosystem-publications")
-    expected = {e["slug"] for e in INVENTORY if e.get("listed_on") == "ecosystem-publications"}
-    assert {e["slug"] for e in entries} == expected
+    html = (FIXTURES / "insights-and-publications.html").read_text()
+    entries = parse_publication_index(html, listed_on=PUBLICATIONS_PAGE)
+    assert {e["slug"] for e in entries} == _ok_pdf_slugs(PUBLICATIONS_PAGE)
 
 
 def test_parses_all_updates_entries():
-    html = (FIXTURES / "ecosystem-updates.html").read_text()
-    entries = parse_publication_index(html, listed_on="ecosystem-updates")
-    expected = {e["slug"] for e in INVENTORY if e.get("listed_on") == "ecosystem-updates"}
-    assert {e["slug"] for e in entries} == expected
+    html = (FIXTURES / "internal-updates.html").read_text()
+    entries = parse_publication_index(html, listed_on=UPDATES_PAGE)
+    assert {e["slug"] for e in entries} == _ok_pdf_slugs(UPDATES_PAGE)
 
 
 def test_entry_fields_match_inventory():
-    html = (FIXTURES / "ecosystem-publications.html").read_text()
-    entries = {e["slug"]: e for e in parse_publication_index(html, listed_on="ecosystem-publications")}
+    html = (FIXTURES / "insights-and-publications.html").read_text()
+    entries = {e["slug"]: e for e in parse_publication_index(html, listed_on=PUBLICATIONS_PAGE)}
     inv = {e["slug"]: e for e in INVENTORY if e["kind"] == "pdf"}
 
     entry = entries["algorithmic-austerity"]
@@ -57,20 +76,21 @@ def test_entry_fields_match_inventory():
 
 # --- Corpus policy: ungated documents only (owner decision 2026-08-17, D-3) ---
 # The tests above pin the parser's contract against the two real page
-# fixtures; the tests below pin the new defensive gated-path check without
-# depending on fixture/inventory listed_on naming (which is a separate,
-# pre-existing drift issue out of scope here).
+# fixtures via a live property (matches whatever inventory.json currently
+# says should be ingestible for that page); the tests below pin the
+# defensive gated-path check against the fixtures' exact, known-fixed
+# content -- fine to hardcode, since fixtures don't grow.
 
 
 def test_fixture_entries_unaffected_by_gated_path_check():
     """No regression: the two real index-page fixtures parse to exactly the
     same entries as before the gated-path defensive check was added, since
-    none of their data-pdf values are gated/preview paths."""
-    pub_html = (FIXTURES / "ecosystem-publications.html").read_text()
-    pub_entries = parse_publication_index(pub_html, listed_on="ecosystem-publications")
+    none of their data-pdf values are gated/preview paths. This pins the
+    fixtures' own fixed content, not the live corpus -- the fixture files
+    only change when someone deliberately re-captures them."""
+    pub_html = (FIXTURES / "insights-and-publications.html").read_text()
+    pub_entries = parse_publication_index(pub_html, listed_on=PUBLICATIONS_PAGE)
     assert {e["slug"] for e in pub_entries} == {
-        "2026q1-optimization-results",
-        "fye-2025-ciphex-alpha-test-report-fnl",
         "genius-clarity-acts",
         "smart-contracts-in-commodity-futures-trading",
         "algorithmic-austerity",
@@ -78,9 +98,10 @@ def test_fixture_entries_unaffected_by_gated_path_check():
     }
     assert all(e["pdf_path"].startswith("/assets/documents/") for e in pub_entries)
 
-    updates_html = (FIXTURES / "ecosystem-updates.html").read_text()
-    updates_entries = parse_publication_index(updates_html, listed_on="ecosystem-updates")
+    updates_html = (FIXTURES / "internal-updates.html").read_text()
+    updates_entries = parse_publication_index(updates_html, listed_on=UPDATES_PAGE)
     assert {e["slug"] for e in updates_entries} == {
+        "ecosystem-update-jul25-26",
         "ecosystem-update-may08-26",
         "ecosystem-update-feb27-26",
         "ecosystem-update-feb16-26",
@@ -94,14 +115,14 @@ def test_fixture_entries_unaffected_by_gated_path_check():
 def test_ungated_card_parses_unchanged():
     """A real, publicly-resolvable PDF path is unaffected by the gated-path
     check -- same fields as a plain parse would have produced."""
-    entries = parse_publication_index(_UNGATED_CARD_HTML, listed_on="insights-and-publications")
+    entries = parse_publication_index(_UNGATED_CARD_HTML, listed_on=PUBLICATIONS_PAGE)
     assert entries == [
         {
             "slug": "genius-clarity-acts",
             "title": "The GENIUS and CLARITY Acts",
             "date": "August 22, 2025",
             "pdf_path": "/assets/documents/genius-clarity-acts.pdf",
-            "listed_on": "insights-and-publications",
+            "listed_on": PUBLICATIONS_PAGE,
         }
     ]
 
@@ -114,7 +135,7 @@ def test_gated_preview_pdf_path_is_skipped_and_logged(caplog):
     site change bakes it into static card markup. It is skipped and the
     skip is logged so the drop isn't silent."""
     with caplog.at_level("WARNING", logger="pubs_rag.site_parser"):
-        entries = parse_publication_index(_GATED_TEASER_CARD_HTML, listed_on="insights-and-publications")
+        entries = parse_publication_index(_GATED_TEASER_CARD_HTML, listed_on=PUBLICATIONS_PAGE)
 
     assert entries == []
     assert len(caplog.records) == 1
