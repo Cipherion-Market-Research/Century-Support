@@ -108,6 +108,38 @@ class Config:
         "DRIFT_PARITY_SENTINEL_SLUGS", ("index", "ciphex-token", "insights-and-publications")
     )
 
+    # --- Sitemap discovery (drift_monitor/sitemap.py + sitemap_parity.py) ---
+    # sitemap.xml is a DISCOVERY signal for the site's page universe, not
+    # the tracked-page scope itself -- see sitemap_parity.py's module
+    # docstring for how this combines with the two sets below. The July
+    # 2026 site restructure went unnoticed for three weeks precisely
+    # because nothing compared the hand-maintained page manifest against
+    # this feed.
+    SITEMAP_URL = _env("DRIFT_SITEMAP_URL", "https://ciphex.io/sitemap.xml")
+
+    # Public pages that are deliberately noindexed for SEO -- they never
+    # appear in sitemap.xml by design, but ARE part of the bot's knowledge
+    # scope (confirmed against data/kb_source/inventory.json). Documented
+    # here, rather than inferred, because "absent from the sitemap" is
+    # otherwise indistinguishable from "no longer exists".
+    KNOWN_NOINDEX_SLUGS = frozenset(
+        {
+            "contribute",
+            "general-disclosure",
+            "communications",
+            "cpx-token-utilities",
+            "financing-activities",
+            "significant-risks",
+        }
+    )
+
+    # Sitemap-present sections excluded from bot knowledge per the
+    # 2026-08-18 Bot Parameter Requirements: insights-and-publications IS
+    # in the sitemap but must not be tracked as bot-knowledge content. The
+    # sitemap-parity check still notes its presence (sitemap_excluded_present)
+    # but never treats it as a missing tracked page.
+    EXCLUDED_SLUGS = frozenset({"insights-and-publications"})
+
     # --- HTTP client behavior ---
     HTTP_TIMEOUT_S = _env_float("DRIFT_HTTP_TIMEOUT_S", 20.0)
     RETRY_MAX_ATTEMPTS = _env_int("DRIFT_RETRY_MAX_ATTEMPTS", 4)

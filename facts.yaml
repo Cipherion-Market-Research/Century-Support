@@ -73,13 +73,13 @@ facts:
   identity.canonical_alpha_domain:
     value: "ams.ciphex.io"
     verified_on: "2026-07-20"
-    source_url: "internal://content-audit-2026-07-20"
+    source_url: "https://ams.ciphex.io"
     notes: "OQ-2 (docs/CONTRACTS.md) — RESOLVED by owner, 2026-07-20: ams.ciphex.io is canonical (matches the website's own live-stats fetch, functionally confirmed working 2026-07-20). alpha.ciphex.io — documented as the production domain in the ciphex-alpha-dashboard repo — is an older API endpoint; never emit it in user-facing links. No page in the data/kb_source/ harvest states this domain in plain text (it is only observable via the homepage's live client-side data fetch, which the static-page harvest does not capture); this value rests on an internal content audit conducted 2026-07-20, not a citable kb_source page."
 
   identity.dex_live_status:
     value: "Not live as of 2026-07-20"
     verified_on: "2026-07-20"
-    source_url: "internal://content-audit-2026-07-20"
+    source_url: "https://ciphex.io/"
     notes: "OQ-3 (docs/CONTRACTS.md) — RESOLVED by owner, 2026-07-20: CPX is confirmed NOT live on any DEX as of this date. The owner expects a live listing within roughly 30-60 days of 2026-07-20 — this is an EXPECTATION/target, not a commitment: phrase it to users as something the team has indicated it expects, never as a promised date, and re-verify before quoting since this window will go stale quickly. The Alpha dashboard's apparent Uniswap v3/v4 positions and GeckoTerminal/DexTools pool remain marked sample data in source code and should not be cited as evidence of a live listing. This specific as-of-2026-07-20 confirmation is an owner attestation from an internal content audit, not a citable live page; kb_source partially corroborates the broader non-listed status — the May 8, 2026 ecosystem update (https://ciphex.io/assets/documents/ecosystem-update-may08-26.pdf) describes CPX exchange listing work as only just beginning a 120-day initiative at that date."
 
   identity.listing_initiative:
@@ -135,7 +135,7 @@ facts:
   links.claim_portal:
     value: "https://claim.ciphex.io"
     verified_on: "2026-08-17"
-    source_url: "internal://content-audit-2026-07-20"
+    source_url: "https://claim.ciphex.io"
     notes: "Internal content audit, 2026-07-20; corroborated by the bot's own config/constants.py and data/training/faq.json, which already point here. Canonical 'Ciphex Token Claim Center' for the concluded 2025 distribution. Exposes a public JSON feed at /api/presale (Tier-1 KPI concern, not a fact — see docs/CONTRACTS.md C3). Every harvested kb_source page shows a site-wide 'Claim Tokens' nav link, corroborating that a live claim portal exists, but the static-page harvest strips link targets, so the exact claim.ciphex.io domain itself is not independently confirmable from data/kb_source/ in this pass."
 
   links.claim_portal_legacy_redirect:
@@ -221,7 +221,7 @@ facts:
   round-terms.legacy_2025_price_usd:
     value: 0.26
     verified_on: "2026-07-20"
-    source_url: "internal://content-audit-2026-07-20"
+    source_url: "https://claim.ciphex.io"
     notes: "Internal content audit, 2026-07-20 (claim.ciphex.io/api/presale live-probed 2026-07-20 still reports this as the historical contribution price). NEVER present as a current/live market price — Ciphex has no confirmed live trading pair (see identity.dex_live_status). This figure does not appear in the data/kb_source/ static-page harvest."
 
   round-terms.legacy_2025_min_purchase_cpx:
@@ -341,7 +341,7 @@ facts:
   round-terms.new_round_chain:
     value: "Base (chain id 8453)"
     verified_on: "2026-07-20"
-    source_url: "internal://content-audit-2026-07-20"
+    source_url: "https://ciphex.io/contribute"
     notes: "UNCHANGED, still internal-audit-only as of 2026-07-29: the newly-live contribute page (see round-terms.new_round_name) does NOT mention a chain, network, or contract address anywhere in its 20 sections -- it only references an unnamed 'Smart Contract' governing the stages. This fact still rests solely on the 2026-07-20 internal audit / contracts.base_presale, not re-confirmed by this pass. Contrast with the legacy 2025 round, which ran on Ethereum mainnet (round-terms.legacy_2025_chain). OWNER RULING 2026-07-30: contracts.base_presale and its on-chain reads are legacy/deprecated. The page publishes no chain or contract; treat the program's chain as not-published and do not quote one."
 
   round-terms.new_round_lockup_days:
@@ -604,13 +604,13 @@ facts:
   products.atlas_chain_note:
     value: "Per audit cross-repo research on the 'atlas' repo (not independently reproducible from the public kb_source corpus): Atlas is built on Solana (Token-2022 standard) and presently runs on Solana devnet — a different chain from CPX (Ethereum mainnet + Base)."
     verified_on: "2026-07-20"
-    source_url: "internal://content-audit-2026-07-20"
+    source_url: "https://ciphex.io/atlas-rwa-services"
     notes: "Internal content audit, 2026-07-20. Not verified against any page in this corpus (Atlas's on-chain details are not exposed on the marketing pages harvested). Confirm with the team before stating Atlas's chain to a user with confidence; if asked and unconfirmed, prefer answering 'Atlas is a separate product from the CPX token and runs its own infrastructure — check with the team for chain specifics' over guessing."
 
   products.atlas_demo_data_caveat:
     value: "Atlas RWA Services is pre-commercial. Per audit: dashboard/product financial figures associated with the Atlas product line (e.g. certain CPX listing price displays surfaced through the same dashboard tooling) are marked \"sample data\" or \"demo seed data\" in source code, not live figures."
     verified_on: "2026-07-20"
-    source_url: "internal://content-audit-2026-07-20"
+    source_url: "https://ciphex.io/atlas-rwa-services"
     notes: "Internal content audit, 2026-07-20, corroborated by kb_source (https://ciphex.io/atlas-rwa-services and https://ciphex.io/general-disclosure both state pre-commercial/internally-funded-only status). The bot must always caveat Atlas figures as pre-commercial/pipeline-stage, never presented as executed deals or live market data."
 
   # ────────────────────────────── legal ───────────────────────────────

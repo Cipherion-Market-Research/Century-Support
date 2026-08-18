@@ -47,6 +47,26 @@ class FakeGitHubClient:
         return self.file_contents[path]
 
 
+class FakeSitemapFetcher:
+    """Fixture-backed double for sitemap.SitemapFetcher. `pages_by_url`
+    maps a sitemap URL to the raw bytes fetch_sitemap() should return;
+    `error` (if set) is raised instead, for exercising the
+    unreachable-sitemap path without any real network."""
+
+    def __init__(self, pages_by_url: Optional[dict] = None, error: Optional[Exception] = None):
+        self.pages_by_url = pages_by_url or {}
+        self.error = error
+        self.calls: list = []
+
+    async def fetch_sitemap(self, url: str) -> bytes:
+        self.calls.append(url)
+        if self.error is not None:
+            raise self.error
+        if url not in self.pages_by_url:
+            raise KeyError(f"no fixture content registered for {url!r}")
+        return self.pages_by_url[url]
+
+
 class FakeLiveFetcher:
     """Fixture-backed double for parity_probe.LiveFetcher."""
 

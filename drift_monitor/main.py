@@ -54,6 +54,8 @@ from drift_monitor.parity_probe import HttpLiveFetcher, run_parity_probe, write_
 from drift_monitor.poller import run_poll_cycle
 from drift_monitor.pr_preview import build_pr_preview
 from drift_monitor.report import write_shadow_report
+from drift_monitor.sitemap import HttpSitemapFetcher, SitemapFetchError, fetch_sitemap_slugs
+from drift_monitor.sitemap_parity import check_sitemap_parity, write_sitemap_parity_report
 from drift_monitor.state import FindingsState, PollState
 from facts_store.loader import FactsStore
 
@@ -157,6 +159,62 @@ async def run_parity_probe_once(session: aiohttp.ClientSession) -> list:
     return results
 
 
+async def run_sitemap_parity_once(session: aiohttp.ClientSession) -> list:
+    """Compare the live sitemap.xml against this service's tracked page
+    manifest (see page_manifest.load_watched_pages()) and emit advisory
+    sitemap_new_page / sitemap_removed_page / sitemap_excluded_present
+    findings for a human to act on. Never mutates the page manifest,
+    inventory, or baseline -- propose-only, same posture as content-drift
+    findings.
+
+    Sitemap fetch failures are swallowed here (one warn log) rather than
+    propagated -- an unreachable sitemap must never crash the poller, it
+    just means this cycle's check is skipped (see sitemap.SitemapFetchError).
+    """
+    try:
+        sitemap_slugs = await fetch_sitemap_slugs(HttpSitemapFetcher(session))
+    except SitemapFetchError:
+        logger.warning(
+            "sitemap fetch failed; skipping sitemap-parity check this cycle",
+            extra={"event": "sitemap_fetch_failed"},
+            exc_info=True,
+        )
+        return []
+
+    tracked_slugs = {p.slug for p in load_watched_pages()}
+    all_findings = check_sitemap_parity(sitemap_slugs, tracked_slugs)
+
+    findings_state = FindingsState().load()
+    new_findings = []
+    for finding in all_findings:
+        # Namespaced under "sitemap:" in FindingsState's per-slug dedup
+        # table so this check's findings never collide with a
+        # content-drift PageFinding recorded against the same bare slug.
+        state_key = f"sitemap:{finding.slug}"
+        if findings_state.seen(state_key, finding.fingerprint):
+            logger.info(
+                "duplicate sitemap finding suppressed",
+                extra={"event": "duplicate_suppressed", "slug": finding.slug, "fingerprint": finding.fingerprint},
+            )
+            continue
+        logger.info(
+            finding.detail,
+            extra={"event": finding.kind, "slug": finding.slug, "fingerprint": finding.fingerprint},
+        )
+        findings_state.record(state_key, finding.fingerprint, report_path="(sitemap-parity)", status=finding.kind)
+        new_findings.append(finding)
+
+    if new_findings:
+        report_path = write_sitemap_parity_report(new_findings)
+        logger.info(
+            "sitemap parity report written",
+            extra={"event": "sitemap_parity_report_written", "path": str(report_path)},
+        )
+
+    findings_state.save()
+    return new_findings
+
+
 async def _interruptible_sleep(seconds: int, stop_event: asyncio.Event) -> None:
     try:
         await asyncio.wait_for(stop_event.wait(), timeout=seconds)
@@ -183,6 +241,16 @@ async def parity_probe_loop(session: aiohttp.ClientSession, stop_event: asyncio.
                 await run_parity_probe_once(session)
             except Exception:
                 logger.error("parity probe cycle failed", extra={"event": "parity_cycle_failed"}, exc_info=True)
+            try:
+                await run_sitemap_parity_once(session)
+            except Exception:
+                # run_sitemap_parity_once already swallows a fetch failure
+                # internally (SitemapFetchError -> warn + skip); this is a
+                # last-resort net for anything else so the weekly loop
+                # itself never dies from this step either.
+                logger.error(
+                    "sitemap parity cycle failed", extra={"event": "sitemap_parity_cycle_failed"}, exc_info=True
+                )
         await _interruptible_sleep(Config.PARITY_INTERVAL_S, stop_event)
 
 
