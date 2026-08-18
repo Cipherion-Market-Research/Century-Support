@@ -1,6 +1,7 @@
 """Q&A router: deterministic supply path, facts-only path, RAG path
 (mocked pubs_rag.retrieval.retrieve), and guardrail-triggered fallbacks.
 """
+import pytest
 from dataclasses import dataclass
 
 from century_core.qa.holders import is_holder_question
@@ -529,3 +530,35 @@ async def test_facts_only_question_never_leaks_raw_key_as_link_label(stub_stores
     for block in links_blocks:
         for item in block.items:
             assert "." not in item.label, f"raw-looking fact key leaked as label: {item.label!r}"
+
+
+# --- Listing-intent routing (live test regression, 2026-08-18) -------------
+
+LISTING_QUESTIONS = [
+    "when does ciphex start trading on exchanges",
+    "is CPX listed on an exchange?",
+    "when is the DEX listing",
+    "what CEX will carry CPX",
+    "where can I buy CPX on an exchange",
+]
+
+NOT_LISTING_QUESTIONS = [
+    # Contribution Program vocabulary: "exchange value" without timing intent
+    "what is the exchange value of each token",
+    # supply question must keep winning its earlier route
+    "what is the total supply of CPX",
+]
+
+
+@pytest.mark.parametrize("question", LISTING_QUESTIONS)
+async def test_listing_intent_routes_to_deterministic_price_answer(question, stub_stores):
+    response = await answer_question(question, stub_stores)
+    text = " ".join(getattr(b, "md", getattr(b, "text", "")) for b in response.blocks)
+    assert "not yet listed" in text
+    assert response.meta.answer_kind == "command"
+
+
+@pytest.mark.parametrize("question", NOT_LISTING_QUESTIONS)
+async def test_non_listing_questions_are_not_swallowed(question, stub_stores):
+    from century_core.qa.price import is_listing_question
+    assert not is_listing_question(question)

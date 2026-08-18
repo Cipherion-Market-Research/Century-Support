@@ -23,7 +23,7 @@ from century_core.qa import facts_search
 from century_core.qa.holders import answer_holder_question, is_holder_question
 from century_core.qa.labels import humanize_fact_key
 from century_core.qa.offtopic import is_offtopic_question, offtopic_response
-from century_core.qa.price import is_price_question
+from century_core.qa.price import is_listing_question, is_price_question
 from century_core.qa.supply import answer_supply_question, is_supply_question
 
 # Corpus policy backstop (2026-08-18): no citation link may ever point at
@@ -66,7 +66,7 @@ async def answer_question(question: str, stores) -> ResponseIR:
     # the free-form path that could otherwise invent or leak a banned
     # figure. Checked after is_supply_question so a query like "total
     # supply" is never misrouted here.
-    if is_price_question(question):
+    if is_price_question(question) or is_listing_question(question):
         return await handle_price("", stores)
 
     # Holder-count questions ("how many holders does CPX have") -- checked
