@@ -55,7 +55,13 @@ USER_AGENT = (
 # century_core/config.py's ALLOWED_LINK_PREFIXES comment on
 # links.certik_skynet). Documented pass-on-403, not a silent skip: still
 # attempted and still reported, just not treated as a failure at 403.
-_PASS_ON_403_HOSTS = frozenset({"skynet.certik.com"})
+# etherscan.io / basescan.org joined the list on the first CI run
+# (2026-08-18): their Cloudflare tier 403s requests from datacenter IP
+# ranges (GitHub Actions runners) regardless of User-Agent, while the
+# same URLs return 200 from residential IPs and real browsers -- verified
+# both ways during the 2026-08-18 link audit. A real dead Etherscan link
+# would 404, not 403, so pass-on-403 still catches genuine rot there.
+_PASS_ON_403_HOSTS = frozenset({"skynet.certik.com", "etherscan.io", "basescan.org"})
 
 _URL_RE = re.compile(r"https://\S+")
 
