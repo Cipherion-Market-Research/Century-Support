@@ -58,7 +58,7 @@ async def test_claim_api_renamed_key_flips_only_claim_api_to_degraded(fake_redis
     shape_status = json.loads(await fake_redis.get("kpi:claim_api:__shape"))
     assert shape_status["value"]["status"] == "degraded"
     assert shape_status["value"]["missing_keys"] == ["cipherions"]
-    assert shape_status["source"] == Config.CLAIM_API_URL
+    assert shape_status["source"] == Config.CLAIM_PORTAL_PUBLIC_URL
 
     # Partial data is still served best-effort -- degraded isn't "no data".
     price = json.loads(await fake_redis.get("kpi:claim_api:price"))

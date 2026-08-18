@@ -39,6 +39,11 @@ class Config:
 
     # --- Tier-1 HTTP feeds ---
     CLAIM_API_URL = _env("KPI_SYNC_CLAIM_API_URL", "https://claim.ciphex.io/api/presale")
+    # Human-facing page cited as the KPI envelope's source_url for claim_api
+    # metrics. The raw API endpoint above is what we FETCH; it must never be
+    # what a user is handed as a "Source" link (2026-08-18 link audit) --
+    # mirror the on-chain pollers, which cite Etherscan pages, not RPC URLs.
+    CLAIM_PORTAL_PUBLIC_URL = _env("KPI_SYNC_CLAIM_PORTAL_URL", "https://claim.ciphex.io")
     CLAIM_API_INTERVAL_S = _env_int("KPI_SYNC_CLAIM_API_INTERVAL_S", 15 * 60)
     # WP-7c shape validation: top-level keys captured live from
     # claim.ciphex.io/api/presale on 2026-07-20 (see

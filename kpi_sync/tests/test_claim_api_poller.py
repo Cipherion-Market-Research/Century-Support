@@ -34,7 +34,7 @@ async def test_claim_api_poller_writes_per_field_metrics_with_null_as_of(fake_re
     price = json.loads(await fake_redis.get("kpi:claim_api:price"))
     assert price["value"] == {"ui": "$0.26", "raw": 0.26}
     assert price["as_of"] is None  # upstream provides no timestamp of its own
-    assert price["source"] == "https://claim.ciphex.io/api/presale"
+    assert price["source"] == "https://claim.ciphex.io"  # public portal page, never the raw API endpoint
 
     cipherions = json.loads(await fake_redis.get("kpi:claim_api:cipherions"))
     assert cipherions["value"] == 62

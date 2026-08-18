@@ -25,14 +25,14 @@ class ClaimApiPoller(BasePoller):
         if Config.SHAPE_VALIDATION_ENABLED:
             missing = missing_keys(data, Config.CLAIM_API_EXPECTED_KEYS)
             if missing:
-                await self.report_shape_degraded(missing, source_url=Config.CLAIM_API_URL)
+                await self.report_shape_degraded(missing, source_url=Config.CLAIM_PORTAL_PUBLIC_URL)
         # Upstream returns no timestamp of its own -- as_of is the C3-mandated
         # null, and fetched_at (stamped inside write_kpi) is the only
         # freshness signal consumers get for this source.
         await self.store.write_flat_metrics(
             self.source_key,
             data,
-            source_url=Config.CLAIM_API_URL,
+            source_url=Config.CLAIM_PORTAL_PUBLIC_URL,
             as_of=None,
             ttl_s=Config.DEFAULT_TTL_S,
             stale_after_s=Config.DEFAULT_STALE_AFTER_S,
