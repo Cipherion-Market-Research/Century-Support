@@ -23,3 +23,48 @@ century_core_registry = pytest.importorskip(
 
 def test_command_names_match_century_core_registry():
     assert COMMAND_NAMES == frozenset(century_core_registry.HANDLERS.keys())
+
+
+async def test_serve_startup_syncs_command_menu(monkeypatch):
+    """SYNC_COMMANDS_ON_START (default true) registers the current command
+    list with Telegram on every serve boot, so a deploy that changes
+    TELEGRAM_COMMANDS can never ship a stale menu (live finding,
+    2026-08-18: /publications lingered in the menu after its removal
+    deployed). Webhook registration must NOT happen here."""
+    import asyncio
+    from unittest.mock import AsyncMock, patch
+
+    from telegram_adapter import main as adapter_main
+    from telegram_adapter.config import Config
+
+    calls = {}
+
+    class FakeBot:
+        def __init__(self, token):
+            calls["token"] = token
+        async def __aenter__(self):
+            return self
+        async def __aexit__(self, *a):
+            return False
+        async def set_my_commands(self, commands):
+            calls["commands"] = [(c.command, c.description) for c in commands]
+            raise _StopServe()  # stop before the network server starts
+        async def set_webhook(self, *a, **k):
+            raise AssertionError("serve must never register a webhook")
+
+    class _StopServe(BaseException):
+        # BaseException so the serve loop's failure-tolerant except Exception
+        # around the menu sync cannot swallow it
+        pass
+
+    monkeypatch.setattr(Config, "TELEGRAM_TOKEN", "test-token")
+    monkeypatch.setattr(Config, "CENTURY_CORE_URL", "http://core.test")
+    monkeypatch.setattr(Config, "TELEGRAM_WEBHOOK_SECRET", "s")
+    monkeypatch.setattr(Config, "SYNC_COMMANDS_ON_START", True)
+    with patch.object(adapter_main, "Bot", FakeBot):
+        try:
+            await adapter_main._run_serve()
+        except _StopServe:
+            pass
+    from telegram_adapter.commands import TELEGRAM_COMMANDS
+    assert calls["commands"] == list(TELEGRAM_COMMANDS)

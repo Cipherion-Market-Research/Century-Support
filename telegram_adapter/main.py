@@ -47,6 +47,19 @@ async def _run_serve() -> None:
         )
 
     async with Bot(token=Config.TELEGRAM_TOKEN) as bot:
+        if Config.SYNC_COMMANDS_ON_START:
+            # Menu-only sync -- never touches the webhook registration (that
+            # remains the owner-run set-webhook action). A Telegram API
+            # failure here must not block serving updates.
+            try:
+                await bot.set_my_commands(
+                    [BotCommand(name, description) for name, description in TELEGRAM_COMMANDS]
+                )
+                logger.info(
+                    "command menu synced", extra={"event": "commands_synced", "count": len(TELEGRAM_COMMANDS)}
+                )
+            except Exception:
+                logger.exception("command menu sync failed; serving anyway", extra={"event": "commands_sync_failed"})
         async with aiohttp.ClientSession() as session:
             app = create_webhook_app(bot=bot, session=session)
             runner = web.AppRunner(app)
