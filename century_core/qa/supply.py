@@ -89,10 +89,11 @@ async def answer_supply_question(stores) -> ResponseIR:
 
     blocks.append(
         ParagraphBlock(
-            md="These are two different numbers, not a contradiction: Burn Cycle 1 sent CPX to a "
-            "burn/dead address rather than calling a supply-reducing burn function, so Etherscan's "
-            "raw `totalSupply()` still shows the pre-burn figure. Effective (circulating) supply "
-            "nets out the burn address's balance."
+            md="Both figures are correct. Burn Cycle 1 permanently removed CPX by sending it to "
+            "an inaccessible burn address, so Etherscan's raw `totalSupply()` still includes those "
+            "tokens. Effective supply subtracts the burn address balance and matches Ciphex's "
+            "published fully-diluted supply. (Effective supply is not circulating supply -- a "
+            "portion remains subject to lockup and vesting.)"
         )
     )
 
