@@ -149,6 +149,40 @@ def _filter_links_block(block):
     return block.model_copy(update={"items": kept})
 
 
+# Official subdomains whose /api paths are fetch endpoints, not pages. The
+# prefix allowlist would let them through (they share a host prefix with the
+# public portal), but an API endpoint is what a poller FETCHES, never what a
+# user should be handed as a "Source" link.
+_API_PATH_HOSTS = (
+    "https://claim.ciphex.io",
+    "https://ams.ciphex.io",
+    "https://connect.ciphex.io",
+)
+
+
+def _sanitize_fact_source(block):
+    """FactBlock.source renders as a clickable "Source:" link in the adapter
+    (C2 requires source + as_of visible wherever a fact appears), so it is
+    sanitized -- replaced, never dropped. Non-URL sentinels (internal://...)
+    and non-allowlisted hosts fall back to the official site; API endpoints
+    on official subdomains fall back to that subdomain's public page.
+    (Production audit, 2026-08-18: /claim rendered the internal:// sentinel
+    and /stats rendered the raw claim JSON endpoint as Source links.)"""
+    if block.type != "fact":
+        return block
+    source = block.source
+    for host in _API_PATH_HOSTS:
+        if source.startswith(host + "/api"):
+            logger.warning(
+                "response_guard: fact source is an API endpoint, citing its public page instead url=%r", source
+            )
+            return block.model_copy(update={"source": host})
+    if _url_allowed(source):
+        return block
+    logger.warning("response_guard: replacing non-allowlisted fact source url=%r", source)
+    return block.model_copy(update={"source": Config.OFFICIAL_SITE_URL})
+
+
 def safe_refusal() -> ResponseIR:
     return ResponseIR(
         blocks=[
@@ -178,7 +212,7 @@ def enforce_response(response: ResponseIR) -> ResponseIR:
     # with no links where it previously had citations.
     filtered_blocks = []
     for block in response.blocks:
-        filtered = _filter_links_block(block)
+        filtered = _filter_links_block(_sanitize_fact_source(block))
         if filtered is not None:
             filtered_blocks.append(filtered)
     if filtered_blocks != response.blocks:

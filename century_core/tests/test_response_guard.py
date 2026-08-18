@@ -2,6 +2,7 @@
 2026-08-17) and the existing structural final gate.
 """
 from century_core import response_guard
+from century_core.config import Config
 from century_core.models import (
     FactBlock,
     HeadingBlock,
@@ -251,3 +252,39 @@ def test_enforce_response_keeps_all_allowlisted_links_untouched():
     result = response_guard.enforce_response(response)
     links = next(b for b in result.blocks if b.type == "links")
     assert {item.url for item in links.items} == set(urls)
+
+
+def _fact_response(source: str) -> ResponseIR:
+    return ResponseIR(
+        blocks=[
+            FactBlock(label="Claiming wallets", value="5,231", source=source, as_of="2026-08-18T00:00:00Z"),
+        ],
+        meta=ResponseMeta(answer_kind="command", facts_used=[], kpis_used=["kpi:claim_api:cipherions"]),
+    )
+
+
+def test_fact_source_internal_sentinel_replaced_with_official_site():
+    result = response_guard.enforce_response(_fact_response("internal://content-audit-2026-07-20"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == Config.OFFICIAL_SITE_URL
+
+
+def test_fact_source_api_endpoint_replaced_with_public_page():
+    result = response_guard.enforce_response(_fact_response("https://claim.ciphex.io/api/presale"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == "https://claim.ciphex.io"
+    # the sanitized response also survives the full guard (the raw source
+    # path contains banned vocabulary; the guard must never see it as text)
+    assert result.meta.answer_kind == "command"
+
+
+def test_fact_source_allowlisted_page_passes_through_unchanged():
+    result = response_guard.enforce_response(_fact_response("https://ciphex.io/contribute"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == "https://ciphex.io/contribute"
+
+
+def test_fact_source_non_allowlisted_host_replaced():
+    result = response_guard.enforce_response(_fact_response("https://basescan.org/address/0xE8E53D687b1b806Da21a2D7DA73Ff56a34e07A49"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == Config.OFFICIAL_SITE_URL
