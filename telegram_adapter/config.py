@@ -48,6 +48,15 @@ class Config:
     WEBHOOK_PATH = _env("TELEGRAM_WEBHOOK_PATH", "/telegram/webhook")
 
     # --- Server ---
+    # Sync the Telegram command menu (setMyCommands) on every serve startup.
+    # The menu persists on Telegram's servers as whatever was last
+    # registered, so a deploy that changes TELEGRAM_COMMANDS silently ships
+    # a stale menu until something re-registers it (observed live
+    # 2026-08-18: /publications lingered in the menu after its removal
+    # deployed). Idempotent, so per-boot sync is safe; webhook registration
+    # itself stays a deliberate owner-run action (set-webhook CLI).
+    SYNC_COMMANDS_ON_START = _env("TELEGRAM_SYNC_COMMANDS_ON_START", "true").lower() == "true"
+
     HOST = _env("TELEGRAM_ADAPTER_HOST", "0.0.0.0")
     PORT = _env_int("PORT", _env_int("TELEGRAM_ADAPTER_PORT", 8080))
     LOG_LEVEL = _env("TELEGRAM_ADAPTER_LOG_LEVEL", "INFO")
