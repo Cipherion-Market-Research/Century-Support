@@ -90,7 +90,7 @@ class Config:
     # broadcasts are durably queued here for adapters to consume later) ---
     BROADCAST_QUEUE_KEY = _env("CENTURY_CORE_BROADCAST_QUEUE_KEY", "century:broadcasts")
 
-    # --- Servable-facts exclusion (owner rulings, 2026-08-17) ---
+    # --- Servable-facts exclusion (owner rulings, 2026-08-17; 2026-08-18) ---
     # These keys exist in facts.yaml for historical/scam-verification/audit
     # purposes only and must never be servable to a user, in a command
     # response OR a Q&A search hit: contracts.base_presale and
@@ -99,15 +99,45 @@ class Config:
     # a legitimate deployment); links.claim_portal_legacy_redirect is the
     # old presale.ciphex.io domain ("presale" is banned vocabulary with no
     # exemptions); round-terms.new_round_price_usd is a CPX price figure
-    # (the bot must never output a CPX price -- it is not listed, TBD).
-    # Enforced in qa/facts_search.py.
+    # (the bot must never output a CPX price -- it is not listed, TBD);
+    # links.ecosystem_publications (added 2026-08-18, Bot Parameter
+    # Requirements) is the Insights & Publications section -- excluded from
+    # the bot's knowledge base entirely (see pubs_rag/config.py's
+    # SERVE_INSIGHTS_AND_PUBLICATIONS), so the bot must never reference this
+    # link either, even as a bare "see more" pointer. Enforced in
+    # qa/facts_search.py.
     BLOCKED_FACT_KEYS = frozenset(
         {
             "contracts.base_presale",
             "contracts.cpx_token_base",
             "links.claim_portal_legacy_redirect",
+            "links.ecosystem_publications",
             "round-terms.new_round_price_usd",
         }
+    )
+
+    # --- Link allowlist (production audit, 2026-08-18: fact citations were
+    # rendering the literal string "internal://content-audit-2026-07-20" as
+    # an unclickable citation link, and RAG citations linked two now-404 PDF
+    # URLs). Final structural gate, enforced in response_guard.enforce_
+    # response over every LinkItem in every LinksBlock/ButtonsBlock: a link
+    # whose URL does not start with one of these prefixes is dropped (and
+    # logged) rather than shown to a user. basescan.org and
+    # presale.ciphex.io are deliberately NOT allowed -- Base is never
+    # presented as a legitimate CPX deployment, and "presale" is banned
+    # vocabulary with no exemptions (see BLOCKED_FACT_KEYS above).
+    ALLOWED_LINK_PREFIXES = (
+        "https://ciphex.io/",
+        "https://ciphex.io",
+        "https://claim.ciphex.io",
+        "https://ams.ciphex.io",
+        "https://connect.ciphex.io",
+        "https://t.me/ciphexgroup",
+        "https://x.com/ciphexio",
+        "https://skynet.certik.com/projects/ciphex",
+        "https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E",
+        "https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E",
+        "https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc",
     )
 
     # --- Global maintenance-mode switch (WP-7c rollback ledger) ---

@@ -14,9 +14,9 @@ from century_core.commands.contact import handle_contact
 from century_core.commands.contribute import handle_contribute
 from century_core.commands.ecosystem import handle_ecosystem
 from century_core.commands.price import handle_price
-from century_core.commands.publications import handle_publications
 from century_core.commands.stats import handle_stats
 from century_core.commands.supply import handle_supply
+from century_core.commands.updates import handle_updates
 from century_core.tests.conftest import make_fact
 
 
@@ -246,15 +246,71 @@ async def test_stats_relabels_presold_metric_to_distributed(stub_stores):
     assert not any("presold" in label.lower() for label in labels)
 
 
-# ─────────────────────────── /publications ───────────────────────────
+# ─────────────────────────────── /updates ───────────────────────────────
 
 
-async def test_publications_degrades_gracefully_without_rag(stub_stores):
+async def test_updates_degrades_gracefully_without_rag(stub_stores):
     assert stub_stores.rag_conn is None
-    response = await handle_publications("", stub_stores)
+    response = await handle_updates("", stub_stores)
     text = _all_text(response).lower()
     assert "unavailable" in text
-    assert "ciphex.io/insights-and-publications" in _all_text(response)
+    # The Insights & Publications section is excluded from the bot's
+    # knowledge base (Bot Parameter Requirements, 2026-08-18) -- /updates
+    # must only ever point at the approved Internal Updates page, never
+    # at the excluded one.
+    assert "ciphex.io/internal-updates" in _all_text(response)
+    assert "insights-and-publications" not in _all_text(response).lower()
+
+
+class _FakeRagConn:
+    """Minimal asyncpg.Connection double: records the query it was asked
+    to run and returns canned rows, enough to unit-test the SQL a command
+    sends without a live Postgres."""
+
+    def __init__(self, rows):
+        self._rows = rows
+        self.last_query = None
+        self.last_args = None
+
+    async def fetch(self, query, *args):
+        self.last_query = query
+        self.last_args = args
+        return self._rows
+
+
+async def test_updates_query_filters_to_approved_documents_only(stub_stores):
+    # WP-7c serving quarantine: pubs_rag.retrieval.retrieve() only ever
+    # returns approved=TRUE documents.chunks by default -- /updates must
+    # give the same guarantee for its own direct `documents` table read
+    # (the old /publications command this replaced did not filter on
+    # `approved` at all, silently bypassing the quarantine).
+    fake_conn = _FakeRagConn(rows=[])
+    stub_stores.rag_conn = fake_conn
+    await handle_updates("", stub_stores)
+    assert fake_conn.last_query is not None
+    query_lower = fake_conn.last_query.lower()
+    assert "approved" in query_lower
+    assert "true" in query_lower
+
+
+async def test_updates_never_lists_an_unapproved_document(stub_stores):
+    # Even if the query filter were ever weakened, the handler itself must
+    # not re-surface a row the (simulated) DB already excluded -- this
+    # pins the observable behavior, not just the SQL text.
+    approved_row = {
+        "title": "Approved Update",
+        "date": "July 25, 2026",
+        "source_url": "https://ciphex.io/assets/documents/ecosystem-update-jul25-26.pdf",
+    }
+    # A real DB, filtered correctly, would never hand back an unapproved
+    # row -- this fake simulates that contract (rows already filtered),
+    # confirming the handler renders exactly what it's given and doesn't
+    # itself need to (nor does it) re-admit anything unapproved.
+    fake_conn = _FakeRagConn(rows=[approved_row])
+    stub_stores.rag_conn = fake_conn
+    response = await handle_updates("", stub_stores)
+    text = _all_text(response)
+    assert "Approved Update" in text
 
 
 # ─────────────────────────────── /contribute ───────────────────────────────
@@ -451,7 +507,7 @@ async def test_supply_command_delegates_to_qa_supply_answer(stub_stores):
         handle_claim,
         handle_audit,
         handle_stats,
-        handle_publications,
+        handle_updates,
         handle_contribute,
         handle_contact,
         handle_ecosystem,

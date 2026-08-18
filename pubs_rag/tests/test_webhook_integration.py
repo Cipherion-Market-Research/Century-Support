@@ -70,9 +70,6 @@ async def _make_fake_github_server(updates_html: str) -> TestServer:
         "Ciphex burn cycle test publication content for the simulated webhook push."
     )
 
-    async def serve_publications_html(request):
-        return web.Response(body=(FIXTURES / "insights-and-publications.html").read_bytes())
-
     async def serve_updates_html(request):
         return web.Response(body=updates_html.encode("utf-8"))
 
@@ -88,12 +85,13 @@ async def _make_fake_github_server(updates_html: str) -> TestServer:
         return web.Response(body=body)
 
     # Route registration is driven by the real Config.PUBLICATION_INDEX_PATHS
-    # (not hardcoded page names) so this fake server always matches whatever
-    # index-page paths the code under test will actually request -- the site
-    # has already been renamed once (see config.py's comment) and this must
-    # not need editing on the next rename.
-    publications_path, updates_path = Config.PUBLICATION_INDEX_PATHS
-    app.router.add_get(f"/{owner}/{repo}/{ref}/{publications_path}", serve_publications_html)
+    # (not a hardcoded page name) so this fake server always matches
+    # whatever index-page path(s) the code under test will actually
+    # request. Only src/internal-updates.html is watched -- the Insights &
+    # Publications section is excluded from the bot's knowledge base (Bot
+    # Parameter Requirements, 2026-08-18; see config.py) -- so there is no
+    # publications route to fake here at all.
+    (updates_path,) = Config.PUBLICATION_INDEX_PATHS
     app.router.add_get(f"/{owner}/{repo}/{ref}/{updates_path}", serve_updates_html)
     app.router.add_get(f"/{owner}/{repo}/{ref}/public/assets/documents/{{filename}}", serve_pdf)
 
@@ -107,7 +105,7 @@ def _sign(secret: str, body: bytes) -> str:
 
 
 def _push_payload_adding_new_pdf() -> bytes:
-    _, updates_path = Config.PUBLICATION_INDEX_PATHS
+    (updates_path,) = Config.PUBLICATION_INDEX_PATHS
     payload = {
         "ref": f"refs/heads/{Config.GITHUB_REPO_BRANCH}",
         "commits": [
@@ -257,7 +255,7 @@ async def test_webhook_ignores_non_main_branch_push_with_zero_ingestion(db_conn,
                 "ref": "refs/heads/dev",
                 "commits": [
                     {
-                        "added": [f"public/assets/documents/{NEW_SLUG}.pdf", "src/ecosystem-updates.html"],
+                        "added": [f"public/assets/documents/{NEW_SLUG}.pdf", "src/internal-updates.html"],
                         "modified": [],
                         "removed": [],
                     }

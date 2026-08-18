@@ -2,6 +2,7 @@
 2026-08-17) and the existing structural final gate.
 """
 from century_core import response_guard
+from century_core.config import Config
 from century_core.models import (
     FactBlock,
     HeadingBlock,
@@ -149,3 +150,141 @@ def test_safe_refusal_is_brand_clean():
     response = response_guard.safe_refusal()
     links = next(b for b in response.blocks if b.type == "links")
     assert links.items[0].label == "Ciphex"
+
+
+# ───────────────── enforce_response: link allowlist (2026-08-18) ─────────────────
+#
+# Production audit, 2026-08-18: fact citations were rendering the literal
+# string "internal://content-audit-2026-07-20" as an unclickable citation
+# link, and RAG citations linked two now-404 PDF URLs. Final structural gate:
+# any LinkItem whose url is not on Config.ALLOWED_LINK_PREFIXES is dropped.
+
+
+def test_enforce_response_drops_link_with_non_allowlisted_url():
+    response = ResponseIR(
+        blocks=[
+            LinksBlock(
+                items=[
+                    LinkItem(label="Content audit", url="internal://content-audit-2026-07-20"),
+                    LinkItem(label="Ciphex", url="https://ciphex.io"),
+                ]
+            )
+        ],
+        meta=ResponseMeta(answer_kind="faq", facts_used=[], kpis_used=[]),
+    )
+    result = response_guard.enforce_response(response)
+    links = next(b for b in result.blocks if b.type == "links")
+    urls = {item.url for item in links.items}
+    assert urls == {"https://ciphex.io"}
+
+
+def test_enforce_response_drops_basescan_link():
+    # basescan.org is deliberately NOT allowlisted -- Base is never
+    # presented as a legitimate CPX deployment.
+    response = ResponseIR(
+        blocks=[
+            LinksBlock(
+                items=[
+                    LinkItem(label="Basescan", url="https://basescan.org/token/0xdead"),
+                    LinkItem(label="Ciphex", url="https://ciphex.io"),
+                ]
+            )
+        ],
+        meta=ResponseMeta(answer_kind="faq", facts_used=[], kpis_used=[]),
+    )
+    result = response_guard.enforce_response(response)
+    links = next(b for b in result.blocks if b.type == "links")
+    assert {item.url for item in links.items} == {"https://ciphex.io"}
+
+
+def test_enforce_response_drops_old_presale_domain_link():
+    # presale.ciphex.io is deliberately NOT allowlisted ("presale" is
+    # banned vocabulary with no exemptions -- see BLOCKED_FACT_KEYS's
+    # links.claim_portal_legacy_redirect). Label avoids the banned word
+    # itself so this test isolates the link-allowlist behavior from the
+    # separate text-guardrail check.
+    response = ResponseIR(
+        blocks=[
+            LinksBlock(
+                items=[
+                    LinkItem(label="Old claim portal", url="https://presale.ciphex.io"),
+                    LinkItem(label="Ciphex", url="https://ciphex.io"),
+                ]
+            )
+        ],
+        meta=ResponseMeta(answer_kind="faq", facts_used=[], kpis_used=[]),
+    )
+    result = response_guard.enforce_response(response)
+    links = next(b for b in result.blocks if b.type == "links")
+    assert {item.url for item in links.items} == {"https://ciphex.io"}
+
+
+def test_enforce_response_removes_links_block_left_empty_after_filtering():
+    response = ResponseIR(
+        blocks=[
+            ParagraphBlock(md="Some answer text."),
+            LinksBlock(items=[LinkItem(label="Bad", url="internal://not-a-real-url")]),
+        ],
+        meta=ResponseMeta(answer_kind="faq", facts_used=[], kpis_used=[]),
+    )
+    result = response_guard.enforce_response(response)
+    assert not any(b.type == "links" for b in result.blocks)
+    assert any(b.type == "paragraph" for b in result.blocks)
+
+
+def test_enforce_response_keeps_all_allowlisted_links_untouched():
+    urls = [
+        "https://ciphex.io/contribute",
+        "https://claim.ciphex.io",
+        "https://ams.ciphex.io",
+        "https://connect.ciphex.io",
+        "https://t.me/ciphexgroup",
+        "https://x.com/ciphexio",
+        "https://skynet.certik.com/projects/ciphex",
+        "https://etherscan.io/token/0x18b33687d1c804Dd4ea6c82106e54923c23a652E",
+        "https://etherscan.io/address/0x18b33687d1c804Dd4ea6c82106e54923c23a652E",
+        "https://etherscan.io/address/0x28995579fdf4F1Ea01ba54b6F4f0524cE63Ff1bc",
+    ]
+    response = ResponseIR(
+        blocks=[LinksBlock(items=[LinkItem(label=f"link {i}", url=u) for i, u in enumerate(urls)])],
+        meta=ResponseMeta(answer_kind="faq", facts_used=[], kpis_used=[]),
+    )
+    result = response_guard.enforce_response(response)
+    links = next(b for b in result.blocks if b.type == "links")
+    assert {item.url for item in links.items} == set(urls)
+
+
+def _fact_response(source: str) -> ResponseIR:
+    return ResponseIR(
+        blocks=[
+            FactBlock(label="Claiming wallets", value="5,231", source=source, as_of="2026-08-18T00:00:00Z"),
+        ],
+        meta=ResponseMeta(answer_kind="command", facts_used=[], kpis_used=["kpi:claim_api:cipherions"]),
+    )
+
+
+def test_fact_source_internal_sentinel_replaced_with_official_site():
+    result = response_guard.enforce_response(_fact_response("internal://content-audit-2026-07-20"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == Config.OFFICIAL_SITE_URL
+
+
+def test_fact_source_api_endpoint_replaced_with_public_page():
+    result = response_guard.enforce_response(_fact_response("https://claim.ciphex.io/api/presale"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == "https://claim.ciphex.io"
+    # the sanitized response also survives the full guard (the raw source
+    # path contains banned vocabulary; the guard must never see it as text)
+    assert result.meta.answer_kind == "command"
+
+
+def test_fact_source_allowlisted_page_passes_through_unchanged():
+    result = response_guard.enforce_response(_fact_response("https://ciphex.io/contribute"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == "https://ciphex.io/contribute"
+
+
+def test_fact_source_non_allowlisted_host_replaced():
+    result = response_guard.enforce_response(_fact_response("https://basescan.org/address/0xE8E53D687b1b806Da21a2D7DA73Ff56a34e07A49"))
+    fact = next(b for b in result.blocks if b.type == "fact")
+    assert fact.source == Config.OFFICIAL_SITE_URL

@@ -1,12 +1,20 @@
-"""Q&A routing: facts.yaml keyword match + pubs_rag RAG (publications only)
--> guarded LLM phrasing -> C2 response, with a deterministic escape hatch
-for the supply on-chain-vs-effective question (see supply.py) and a hard
-refusal when nothing relevant is found.
+"""Q&A routing: facts.yaml keyword match + pubs_rag RAG (Internal Updates
+only) -> guarded LLM phrasing -> C2 response, with a deterministic escape
+hatch for the supply on-chain-vs-effective question (see supply.py) and a
+hard refusal when nothing relevant is found.
 
 WP-5 brief item 2: page-level/identity/numeric questions answer from
-facts.yaml, not RAG; the RAG corpus is the 12 publications only (WP-4
-scope decision — see pubs_rag/ingest.py).
+facts.yaml, not RAG. Corpus policy (Bot Parameter Requirements, 2026-08-18):
+the RAG corpus is Internal Updates only -- the Insights & Publications
+section is excluded entirely (see pubs_rag/config.py's
+SERVE_INSIGHTS_AND_PUBLICATIONS). _is_excluded_rag_source below is a
+citation-level backstop against that policy, independent of what's actually
+in the retrieval index (e.g. a document ingested before this policy landed
+and still sitting in Postgres).
 """
+from pathlib import PurePosixPath
+from urllib.parse import urlparse
+
 from century_core import guardrails, response_guard
 from century_core.commands.price import handle_price
 from century_core.config import Config
@@ -17,6 +25,26 @@ from century_core.qa.labels import humanize_fact_key
 from century_core.qa.offtopic import is_offtopic_question, offtopic_response
 from century_core.qa.price import is_price_question
 from century_core.qa.supply import answer_supply_question, is_supply_question
+
+# Corpus policy backstop (2026-08-18): no citation link may ever point at
+# the excluded Insights & Publications section, however it got into
+# rag_hits. Two shapes: the page itself, or one of its PDF assets under
+# /assets/documents/ -- identified by NOT matching the internal-updates
+# "ecosystem-update-*" slug naming convention (the only approved RAG
+# source; see pubs_rag/webhook.py's source_url construction).
+_PUBLICATIONS_PATH_MARKERS = ("/insights-and-publications", "/ecosystem-publications")
+_APPROVED_ASSET_SLUG_PREFIX = "ecosystem-update-"
+
+
+def _is_excluded_rag_source(url: str) -> bool:
+    path = urlparse(url).path
+    if any(marker in path for marker in _PUBLICATIONS_PATH_MARKERS):
+        return True
+    if path.startswith("/assets/documents/"):
+        slug = PurePosixPath(path).stem
+        if not slug.startswith(_APPROVED_ASSET_SLUG_PREFIX):
+            return True
+    return False
 
 
 async def _rag_search(stores, question: str):
@@ -69,15 +97,24 @@ async def answer_question(question: str, stores) -> ResponseIR:
     for key, fact in fact_hits:
         context_parts.append(f"[{key}] {fact.value} (verified {fact.verified_on}, source {fact.source_url})")
         facts_used.append(key)
-        fact_links.append(LinkItem(label=humanize_fact_key(key), url=fact.source_url))
+        # Never link fact.source_url verbatim (production audit,
+        # 2026-08-18): many facts.yaml source_url values are internal
+        # provenance notes, not user-facing links -- the literal string
+        # "internal://content-audit-2026-07-20" was rendering as an
+        # unclickable citation. Only cite it when it's a real, allowlisted
+        # public URL; otherwise the fact still informs the LLM's context
+        # above, it's just never turned into a link.
+        if fact.source_url.startswith(Config.ALLOWED_LINK_PREFIXES):
+            fact_links.append(LinkItem(label=humanize_fact_key(key), url=fact.source_url))
 
     seen_rag_urls = set()
     for hit in rag_hits:
         context_parts.append(f"[{hit.slug}] {hit.content} (source {hit.source_url}, {hit.date})")
         # retrieve() returns top-K CHUNKS, not top-K distinct documents --
         # dedupe so one publication with several matching chunks doesn't
-        # show up as 3 identical citations.
-        if hit.source_url not in seen_rag_urls:
+        # show up as 3 identical citations. Never cite an excluded
+        # Insights & Publications source (see _is_excluded_rag_source).
+        if hit.source_url not in seen_rag_urls and not _is_excluded_rag_source(hit.source_url):
             rag_links.append(LinkItem(label=hit.title, url=hit.source_url))
             seen_rag_urls.add(hit.source_url)
 

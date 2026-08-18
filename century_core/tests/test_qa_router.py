@@ -121,6 +121,32 @@ async def test_facts_only_question_answers_kind_faq(stub_stores):
         assert response.meta.facts_used
 
 
+async def test_fact_citation_with_internal_source_url_is_never_linked(stub_stores, monkeypatch):
+    # Production audit, 2026-08-18: several facts.yaml entries carry an
+    # `internal://...` source_url (provenance notes, never meant to be
+    # user-facing) -- qa/router.py must never turn that into a citation
+    # link, even though the fact's VALUE still informs the LLM's context
+    # (see Config.ALLOWED_LINK_PREFIXES).
+    from century_core.qa import facts_search as facts_search_module
+    from century_core.tests.conftest import make_fact
+
+    internal_fact = make_fact(
+        "Some internal-only provenance value",
+        source_url="internal://content-audit-2026-07-20",
+    )
+
+    def fake_search_facts(store, question, limit=3):
+        return [("test.internal_source_fact", internal_fact)]
+
+    monkeypatch.setattr(facts_search_module, "search_facts", fake_search_facts)
+
+    response = await answer_question("tell me something", stub_stores)
+
+    assert "test.internal_source_fact" in response.meta.facts_used
+    link_urls = [item.url for b in response.blocks if b.type == "links" for item in b.items]
+    assert not any(url.startswith("internal://") for url in link_urls)
+
+
 async def test_unanswerable_question_refuses_with_official_link(stub_stores):
     response = await answer_question("xyzzy plugh unrelated nonsense query", stub_stores)
     assert response.meta.answer_kind == "refusal"
@@ -143,14 +169,19 @@ class _FakeChunk:
 
 
 async def test_rag_hit_produces_rag_answer_kind(stub_stores, monkeypatch):
+    # source_url/slug use the "ecosystem-update-*" naming convention -- the
+    # only approved RAG source per the Bot Parameter Requirements
+    # (2026-08-18; corpus = Internal Updates only, see qa/router.py's
+    # _is_excluded_rag_source). A legacy publications-style slug like
+    # "algorithmic-austerity" would be dropped from citations.
     async def fake_retrieve(conn, provider, query, top_k=4):
         return [
             _FakeChunk(
                 content="Tiered activation reduces CPX emissions via self-optimizing contract logic.",
                 title="Self-Optimizing Smart Contracts",
                 date="January 28, 2025",
-                source_url="https://ciphex.io/assets/documents/algorithmic-austerity.pdf",
-                slug="algorithmic-austerity",
+                source_url="https://ciphex.io/assets/documents/ecosystem-update-jan28-25.pdf",
+                slug="ecosystem-update-jan28-25",
                 kind="pdf",
                 score=0.9,
             )
@@ -167,7 +198,7 @@ async def test_rag_hit_produces_rag_answer_kind(stub_stores, monkeypatch):
     response = await answer_question("tell me about the self-optimizing smart contracts paper", stub_stores)
     assert response.meta.answer_kind == "rag"
     links = [b for b in response.blocks if b.type == "links"][0]
-    assert any("algorithmic-austerity" in item.url for item in links.items)
+    assert any("ecosystem-update-jan28-25" in item.url for item in links.items)
 
 
 async def test_rag_hits_from_same_document_are_deduped_in_citations(stub_stores, monkeypatch):
@@ -177,8 +208,8 @@ async def test_rag_hits_from_same_document_are_deduped_in_citations(stub_stores,
                 content=f"chunk {i} about self-optimizing contract logic",
                 title="Self-Optimizing Smart Contracts",
                 date="January 28, 2025",
-                source_url="https://ciphex.io/assets/documents/algorithmic-austerity.pdf",
-                slug="algorithmic-austerity",
+                source_url="https://ciphex.io/assets/documents/ecosystem-update-jan28-25.pdf",
+                slug="ecosystem-update-jan28-25",
                 kind="pdf",
                 score=0.9 - i * 0.01,
             )
@@ -192,8 +223,61 @@ async def test_rag_hits_from_same_document_are_deduped_in_citations(stub_stores,
     # Avoids "burn"/"supply" wording -- see test_rag_hit_produces_rag_answer_kind.
     response = await answer_question("self-optimizing smart contract mechanics", stub_stores)
     links = [b for b in response.blocks if b.type == "links"][0]
-    matching = [item for item in links.items if "algorithmic-austerity" in item.url]
+    matching = [item for item in links.items if "ecosystem-update-jan28-25" in item.url]
     assert len(matching) == 1  # not 3 identical citations for one document
+
+
+async def test_rag_hit_from_excluded_publications_page_is_never_cited(stub_stores, monkeypatch):
+    # Corpus policy backstop (Bot Parameter Requirements, 2026-08-18): even
+    # if a stale RAG hit somehow still carries an Insights & Publications
+    # source (e.g. a document ingested before the policy landed, still
+    # sitting in Postgres), it must never appear as a citation link -- see
+    # qa/router.py's _is_excluded_rag_source.
+    async def fake_retrieve(conn, provider, query, top_k=4):
+        return [
+            _FakeChunk(
+                content="Burn cycle mechanics from a legacy publications-era document.",
+                title="Algorithmic Austerity",
+                date="January 28, 2025",
+                source_url="https://ciphex.io/assets/documents/algorithmic-austerity.pdf",
+                slug="algorithmic-austerity",
+                kind="pdf",
+                score=0.9,
+            )
+        ]
+
+    monkeypatch.setattr("pubs_rag.retrieval.retrieve", fake_retrieve)
+    stub_stores.rag_conn = object()
+    stub_stores.rag_provider = object()
+
+    response = await answer_question("tell me about the algorithmic austerity paper", stub_stores)
+    link_urls = [item.url for b in response.blocks if b.type == "links" for item in b.items]
+    assert not any("algorithmic-austerity" in url for url in link_urls)
+
+
+async def test_rag_hit_from_excluded_publications_page_url_is_never_cited(stub_stores, monkeypatch):
+    # Same policy, exercised via the page URL shape rather than the PDF
+    # asset shape.
+    async def fake_retrieve(conn, provider, query, top_k=4):
+        return [
+            _FakeChunk(
+                content="A chunk whose source is the excluded page itself.",
+                title="Insights & Publications",
+                date="January 1, 2026",
+                source_url="https://ciphex.io/insights-and-publications",
+                slug="insights-and-publications",
+                kind="pdf",
+                score=0.9,
+            )
+        ]
+
+    monkeypatch.setattr("pubs_rag.retrieval.retrieve", fake_retrieve)
+    stub_stores.rag_conn = object()
+    stub_stores.rag_provider = object()
+
+    response = await answer_question("tell me about the ciphex publications page", stub_stores)
+    link_urls = [item.url for b in response.blocks if b.type == "links" for item in b.items]
+    assert not any("insights-and-publications" in url for url in link_urls)
 
 
 async def test_rag_hits_below_min_score_are_dropped(stub_stores, monkeypatch):

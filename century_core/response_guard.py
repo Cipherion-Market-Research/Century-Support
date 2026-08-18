@@ -8,11 +8,14 @@ incidental digits in link labels (e.g. a fact key like
 "legacy_2025_vesting_months"), so that check runs in qa/router.py directly
 against the raw LLM output before this gate ever sees it.
 """
+import logging
 import re
 
 from century_core import guardrails
 from century_core.config import Config
 from century_core.models import LinkItem, LinksBlock, ResponseIR, ResponseMeta, WarningBlock
+
+logger = logging.getLogger(__name__)
 
 # Go-live incident 2026-08-17: a RAG chunk pulled from an older PDF echoed
 # the brand's pre-2026-07-29 spelling ("CipheX Alpha Network") straight
@@ -119,6 +122,67 @@ def _extract_text(response: ResponseIR) -> str:
     return "\n".join(parts)
 
 
+def _url_allowed(url: str) -> bool:
+    return url.startswith(Config.ALLOWED_LINK_PREFIXES)
+
+
+def _filter_links_block(block):
+    """Drop any LinkItem whose url isn't on the allowlist (production
+    audit, 2026-08-18 -- see Config.ALLOWED_LINK_PREFIXES). Returns the
+    filtered block, or None if filtering left it with zero items (an empty
+    LinksBlock/ButtonsBlock is removed from the response entirely rather
+    than rendered as a heading with nothing under it)."""
+    if block.type not in ("links", "buttons"):
+        return block
+
+    kept = []
+    for item in block.items:
+        if _url_allowed(item.url):
+            kept.append(item)
+        else:
+            logger.warning("response_guard: dropping non-allowlisted link url=%r label=%r", item.url, item.label)
+
+    if not kept:
+        return None
+    if len(kept) == len(block.items):
+        return block
+    return block.model_copy(update={"items": kept})
+
+
+# Official subdomains whose /api paths are fetch endpoints, not pages. The
+# prefix allowlist would let them through (they share a host prefix with the
+# public portal), but an API endpoint is what a poller FETCHES, never what a
+# user should be handed as a "Source" link.
+_API_PATH_HOSTS = (
+    "https://claim.ciphex.io",
+    "https://ams.ciphex.io",
+    "https://connect.ciphex.io",
+)
+
+
+def _sanitize_fact_source(block):
+    """FactBlock.source renders as a clickable "Source:" link in the adapter
+    (C2 requires source + as_of visible wherever a fact appears), so it is
+    sanitized -- replaced, never dropped. Non-URL sentinels (internal://...)
+    and non-allowlisted hosts fall back to the official site; API endpoints
+    on official subdomains fall back to that subdomain's public page.
+    (Production audit, 2026-08-18: /claim rendered the internal:// sentinel
+    and /stats rendered the raw claim JSON endpoint as Source links.)"""
+    if block.type != "fact":
+        return block
+    source = block.source
+    for host in _API_PATH_HOSTS:
+        if source.startswith(host + "/api"):
+            logger.warning(
+                "response_guard: fact source is an API endpoint, citing its public page instead url=%r", source
+            )
+            return block.model_copy(update={"source": host})
+    if _url_allowed(source):
+        return block
+    logger.warning("response_guard: replacing non-allowlisted fact source url=%r", source)
+    return block.model_copy(update={"source": Config.OFFICIAL_SITE_URL})
+
+
 def safe_refusal() -> ResponseIR:
     return ResponseIR(
         blocks=[
@@ -137,4 +201,21 @@ def enforce_response(response: ResponseIR) -> ResponseIR:
     result = guardrails.check_text(text)
     if not result.ok:
         return safe_refusal()
+
+    # Final structural pass, applied after the text-guardrail check above so
+    # a refusal never depends on link content: drop any LinkItem whose url
+    # isn't on Config.ALLOWED_LINK_PREFIXES (production audit, 2026-08-18 --
+    # a fact citation rendering the literal "internal://..." source_url as
+    # an unclickable link, and RAG citations linking now-404 PDF urls). A
+    # LinksBlock/ButtonsBlock left with zero items after filtering is
+    # dropped from the response entirely -- it's fine for a response to end
+    # with no links where it previously had citations.
+    filtered_blocks = []
+    for block in response.blocks:
+        filtered = _filter_links_block(_sanitize_fact_source(block))
+        if filtered is not None:
+            filtered_blocks.append(filtered)
+    if filtered_blocks != response.blocks:
+        response = response.model_copy(update={"blocks": filtered_blocks})
+
     return response

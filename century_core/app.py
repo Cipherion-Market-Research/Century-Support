@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 async def _build_rag():
     """Best-effort: publications RAG is a real dependency (Postgres +
     embeddings API) that may not be reachable in every deployment stage.
-    Q&A and /publications degrade gracefully (facts.yaml-only answers,
+    Q&A and /updates degrade gracefully (facts.yaml-only answers,
     "index unavailable" warning) rather than the whole service failing to
     start when it's down."""
     try:
