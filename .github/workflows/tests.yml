@@ -95,3 +95,29 @@ jobs:
 
       - name: Run tests
         run: pytest ${{ matrix.test-path }} -q
+
+  check-links:
+    name: check-links
+    runs-on: ubuntu-latest
+    # Standalone quick job (production audit, 2026-08-18): every URL in
+    # century_core's link allowlist plus every https:// URL in facts.yaml
+    # values must actually resolve. No service deps beyond century_core's
+    # own requirements-dev.txt (stdlib urllib only -- see
+    # scripts/check_links.py) and facts_store, which century_core already
+    # depends on.
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.7"
+          cache: pip
+          cache-dependency-path: |
+            century_core/requirements.txt
+            century_core/requirements-dev.txt
+
+      - name: Install dependencies
+        run: pip install -r century_core/requirements-dev.txt
+
+      - name: Check links
+        run: python scripts/check_links.py

@@ -16,7 +16,7 @@ TELEGRAM_COMMANDS = [
     ("claim", "Token claiming portal"),
     ("audit", "Security audit status"),
     ("stats", "Claim portal stats"),
-    ("publications", "Recent Ciphex publications"),
+    ("updates", "Ciphex announcements & updates"),
     ("contribute", "Contribution Program status"),
     ("contact", "Contact Ciphex"),
     ("ecosystem", "Ciphex products overview"),

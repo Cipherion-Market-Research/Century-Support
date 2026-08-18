@@ -40,12 +40,22 @@ def test_relevant_paths_changed_true_for_pdf_asset():
 
 
 def test_relevant_paths_changed_true_for_index_page():
-    # src/insights-and-publications.html is the current default in
-    # Config.PUBLICATION_INDEX_PATHS (the site renamed
-    # ecosystem-publications -> insights-and-publications, 2026-07-28; see
-    # pubs_rag/config.py).
-    payload = {"commits": [{"added": [], "modified": ["src/insights-and-publications.html"], "removed": []}]}
+    # src/internal-updates.html is the only page in
+    # Config.PUBLICATION_INDEX_PATHS: the Insights & Publications section
+    # is excluded from the bot's knowledge base per the Bot Parameter
+    # Requirements (2026-08-18; see pubs_rag/config.py), so
+    # src/insights-and-publications.html is deliberately not watched here.
+    payload = {"commits": [{"added": [], "modified": ["src/internal-updates.html"], "removed": []}]}
     assert relevant_paths_changed(payload) is True
+
+
+def test_relevant_paths_changed_false_for_excluded_insights_publications_page():
+    # Even if this page is ever pushed to, it must not trigger a refresh --
+    # it's not in Config.PUBLICATION_INDEX_PATHS.
+    payload = {
+        "commits": [{"added": [], "modified": ["src/insights-and-publications.html"], "removed": []}]
+    }
+    assert relevant_paths_changed(payload) is False
 
 
 def test_relevant_paths_changed_false_for_unrelated_file():

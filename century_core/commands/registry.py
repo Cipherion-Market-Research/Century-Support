@@ -15,9 +15,9 @@ from century_core.commands.contribute import handle_contribute
 from century_core.commands.ecosystem import handle_ecosystem
 from century_core.commands.misc import handle_help, handle_start
 from century_core.commands.price import handle_price
-from century_core.commands.publications import handle_publications
 from century_core.commands.stats import handle_stats
 from century_core.commands.supply import handle_supply
+from century_core.commands.updates import handle_updates
 from century_core.models import InboundMessage
 
 _COMMAND_TEXT_RE = re.compile(r"^/(\w+)(?:@\w+)?\s*(.*)$", re.DOTALL)
@@ -28,7 +28,7 @@ HANDLERS = {
     "claim": handle_claim,
     "audit": handle_audit,
     "stats": handle_stats,
-    "publications": handle_publications,
+    "updates": handle_updates,
     "contribute": handle_contribute,
     "contact": handle_contact,
     "ecosystem": handle_ecosystem,

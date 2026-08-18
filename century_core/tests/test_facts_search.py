@@ -13,6 +13,7 @@ def test_blocked_keys_are_defined_and_nonempty():
         "contracts.base_presale",
         "contracts.cpx_token_base",
         "links.claim_portal_legacy_redirect",
+        "links.ecosystem_publications",
         "round-terms.new_round_price_usd",
     }
 
@@ -34,6 +35,15 @@ def test_new_round_price_never_surfaces_for_price_query(facts):
     results = search_facts(facts, "price of the new round", limit=10)
     keys = {key for key, _ in results}
     assert "round-terms.new_round_price_usd" not in keys
+
+
+def test_ecosystem_publications_never_surfaces_for_publications_query(facts):
+    # Bot Parameter Requirements (2026-08-18): the Insights & Publications
+    # section is excluded from the bot's knowledge base -- this link must
+    # never be servable, even for a query that names it directly.
+    results = search_facts(facts, "ciphex insights and publications reports", limit=10)
+    keys = {key for key, _ in results}
+    assert "links.ecosystem_publications" not in keys
 
 
 def test_search_still_returns_other_relevant_facts_for_price_query(facts):

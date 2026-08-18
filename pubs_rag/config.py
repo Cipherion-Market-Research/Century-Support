@@ -61,20 +61,27 @@ class Config:
     # Never logged -- only its presence/absence is (see webhook.py, main.py).
     GITHUB_TOKEN = _env("PUBS_RAG_GITHUB_TOKEN", "")
 
-    # The two publication index pages (source, not the built site — see
-    # site_parser.py for why: they're server-rendered multi-page-app entry
-    # HTML with data-slug/data-title/data-date/data-pdf attributes baked in
-    # at build time, so a GitHub raw fetch gets the same metadata a headless
-    # browser would get from the live site, without needing one).
-    # Overridable because these pages have already been renamed once on the
-    # website repo (ecosystem-publications -> insights-and-publications,
-    # ecosystem-updates -> internal-updates, 2026-07-28); the next rename
-    # should be an env change, not a code change.
+    # The publication index page(s) to fetch and parse (source, not the
+    # built site — see site_parser.py for why: they're server-rendered
+    # multi-page-app entry HTML with data-slug/data-title/data-date/data-pdf
+    # attributes baked in at build time, so a GitHub raw fetch gets the same
+    # metadata a headless browser would get from the live site, without
+    # needing one).
+    #
+    # Per the approved "Telegram & GitHub Bot Parameter Requirements"
+    # (2026-08-18): the only approved knowledge sources are (a) the main
+    # website crawl and (b) Internal Updates. The Insights & Publications
+    # section (src/insights-and-publications.html) is strictly excluded --
+    # see SERVE_INSIGHTS_AND_PUBLICATIONS below -- so it is deliberately
+    # NOT listed here; only src/internal-updates.html is fetched/parsed.
+    # Overridable because this page has already been renamed once on the
+    # website repo (ecosystem-updates -> internal-updates, 2026-07-28); the
+    # next rename should be an env change, not a code change.
     PUBLICATION_INDEX_PATHS = tuple(
         p.strip()
         for p in _env(
             "PUBS_RAG_PUBLICATION_INDEX_PATHS",
-            "src/insights-and-publications.html,src/internal-updates.html",
+            "src/internal-updates.html",
         ).split(",")
         if p.strip()
     )
@@ -84,24 +91,33 @@ class Config:
     # --- HTTP client ---
     HTTP_TIMEOUT_S = _env_int("PUBS_RAG_HTTP_TIMEOUT_S", 20)
 
-    # --- Corpus policy: ungated documents only (owner decision, 2026-08-17, D-3) ---
-    # ciphex.io's insights-and-publications page is a database-backed,
-    # wallet-gated (SIWE) document registry: most publications are fetched
-    # client-side from an authenticated API (GET /api/library) after wallet
-    # sign-in and are never present in the server-rendered HTML this service
-    # reads. Only a small "Legacy Contributor Publications" set still ships
-    # as static, server-rendered `.pdf-preview-card` markup with a publicly
-    # resolvable PDF asset path -- that markup is all site_parser.py ever
-    # sees, so today it structurally cannot select a gated entry.
+    # --- Corpus policy (owner decision, Bot Parameter Requirements, 2026-08-18) ---
+    # Per the approved "Telegram & GitHub Bot Parameter Requirements", the
+    # bot's approved knowledge sources are ONLY (a) the main website crawl
+    # and (b) Internal Updates (announcements & official press releases,
+    # the ecosystem-update-* documents on ciphex.io/internal-updates).
     #
-    # Policy (explicit, not a parser accident): THE RAG CORPUS SERVES
-    # UNGATED DOCUMENTS ONLY. Gated/wallet-restricted publications must
-    # never be ingested for serving, however they might appear in future
-    # site markup (e.g. a teaser/preview asset baked into a data-pdf
-    # attribute instead of the full public PDF). site_parser.py enforces
-    # this with a defensive public-PDF-path check gated on this flag; it is
-    # not read anywhere else, and exists as the single source of truth for
-    # the policy if enforcement ever needs to move.
+    # THE ENTIRE INSIGHTS & PUBLICATIONS SECTION IS EXCLUDED. This
+    # supersedes the earlier "ungated-only" policy (2026-08-17, D-3), which
+    # allowed the small set of public "Legacy Contributor Publications" PDFs
+    # through: those legacy publications are now OUT too, regardless of
+    # gating status. Nothing listed on ciphex.io/insights-and-publications
+    # may be indexed, retrieved, referenced, quoted, or summarized by the
+    # bot. SERVE_INSIGHTS_AND_PUBLICATIONS gates this at the page/section
+    # level in site_parser.py: with the insights-and-publications page
+    # already removed from PUBLICATION_INDEX_PATHS above, this is
+    # belt-and-suspenders in case that index path ever reappears (e.g. an
+    # env override, or a future code change that re-adds it).
+    SERVE_INSIGHTS_AND_PUBLICATIONS = _env_bool("PUBS_RAG_SERVE_INSIGHTS_AND_PUBLICATIONS", False)
+
+    # Independent, narrower defense: even for pages that ARE approved
+    # sources, never ingest a document whose PDF path looks like a gated
+    # teaser/preview asset rather than the real, publicly-resolvable PDF
+    # (see site_parser._is_public_pdf_path). Originally written for
+    # insights-and-publications' wallet-gated (SIWE) document registry
+    # (GET /api/library after wallet sign-in, never present in the
+    # server-rendered HTML this service reads); kept as a general safeguard
+    # now that that page is excluded outright by the flag above.
     SERVE_GATED_DOCUMENTS = _env_bool("PUBS_RAG_SERVE_GATED_DOCUMENTS", False)
 
     # --- Serving quarantine (WP-7c) ---
