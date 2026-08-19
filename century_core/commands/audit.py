@@ -1,6 +1,7 @@
 """/audit -- CertiK Skynet audit status. Link only, never scrape or
 re-derive a score (tokenomics.audit_status's note: CertiK Skynet 403s
 plain HTTP clients and the site's own display is a hardcoded fallback)."""
+from century_core.commands._related import related_footer
 from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, ResponseIR, ResponseMeta
 
 
@@ -28,6 +29,7 @@ async def handle_audit(args: str, stores) -> ResponseIR:
         facts_used.append("links.certik_skynet")
 
     blocks.append(LinksBlock(items=[LinkItem(label="CertiK Skynet", url=link_url)]))
+    blocks.append(related_footer(("ca", "contract addresses")))
 
     return ResponseIR(
         blocks=blocks,

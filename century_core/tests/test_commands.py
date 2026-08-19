@@ -518,3 +518,39 @@ async def test_every_command_response_passes_guard(handler, stub_stores):
     response = await handler("", stub_stores)
     result = guardrails.check_text(_all_text(response))
     assert result.ok, (handler.__name__, result.violations)
+
+
+# ────────────────── related-commands footer (UX item 4, 2026-08-19) ──────────────────
+
+
+@pytest.mark.parametrize(
+    "handler, expected_footer",
+    [
+        (handle_claim, "Related: /stats — claim statistics · /ca — contract addresses"),
+        (handle_ca, "Related: /price — price info · /supply — supply & burn · /audit — security audit"),
+        (handle_price, "Related: /contribute — Contribution Program · /supply — supply & burn"),
+        (handle_supply, "Related: /price — price info · /stats — claim statistics"),
+        (handle_stats, "Related: /claim — claiming portal · /supply — supply & burn"),
+        (handle_contribute, "Related: /claim — claiming portal · /price — price info"),
+        (handle_ecosystem, "Related: /updates — announcements · /contact — contact Ciphex"),
+        (handle_audit, "Related: /ca — contract addresses"),
+        (handle_contact, "Related: /help — all commands"),
+    ],
+)
+async def test_command_appends_related_footer(handler, expected_footer, stub_stores):
+    response = await handler("", stub_stores)
+    paragraph_blocks = [b for b in response.blocks if b.type == "paragraph"]
+    assert paragraph_blocks, f"{handler.__name__} has no paragraph blocks to hold a footer"
+    assert paragraph_blocks[-1].md == expected_footer
+    # The footer must be the last block in the response.
+    assert response.blocks[-1].type == "paragraph"
+    assert response.blocks[-1].md == expected_footer
+
+
+async def test_related_footer_survives_response_guard(stub_stores):
+    # The response guard's text-guardrail scan must never flag the footer
+    # copy itself (plain command names/descriptions, no banned terms).
+    response = await handle_claim("", stub_stores)
+    guarded = response_guard.enforce_response(response)
+    assert guarded.meta.answer_kind != "refusal"
+    assert guarded.blocks[-1].md == "Related: /stats — claim statistics · /ca — contract addresses"

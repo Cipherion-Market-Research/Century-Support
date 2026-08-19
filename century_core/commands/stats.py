@@ -6,6 +6,7 @@ percentage; `contract` is a different-scale, contract-wide total, not a
 per-user stat). Stale KPIs are never quoted (C3): a stale metric is
 dropped from the response entirely rather than shown as if fresh.
 """
+from century_core.commands._related import related_footer
 from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, ResponseIR, ResponseMeta, WarningBlock
 
 _METRICS = [
@@ -51,6 +52,7 @@ async def handle_stats(args: str, stores) -> ResponseIR:
     portal = stores.facts.get("links.claim_portal")
     link_url = str(portal.value) if portal is not None and not portal.is_unknown else "https://ciphex.io"
     blocks.append(LinksBlock(items=[LinkItem(label="Claim portal", url=link_url)]))
+    blocks.append(related_footer(("claim", "claiming portal"), ("supply", "supply & burn")))
 
     return ResponseIR(
         blocks=blocks,

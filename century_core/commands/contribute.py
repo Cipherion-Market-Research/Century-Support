@@ -10,6 +10,7 @@ fallback so this handler works whether or not they're present.
 """
 import re
 
+from century_core.commands._related import related_footer
 from century_core.models import (
     HeadingBlock,
     LinkItem,
@@ -118,6 +119,7 @@ async def handle_contribute(args: str, stores) -> ResponseIR:
             md="See the full terms and eligibility (some jurisdictions are restricted) at the link below."
         ),
         LinksBlock(items=[LinkItem(label="Contribution Program", url=_CONTRIBUTE_URL)]),
+        related_footer(("claim", "claiming portal"), ("price", "price info")),
     ]
 
     return ResponseIR(

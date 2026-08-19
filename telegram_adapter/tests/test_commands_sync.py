@@ -13,7 +13,7 @@ requirements are installed.
 """
 import pytest
 
-from telegram_adapter.commands import COMMAND_NAMES
+from telegram_adapter.commands import COMMAND_NAMES, TELEGRAM_COMMANDS
 
 century_core_registry = pytest.importorskip(
     "century_core.commands.registry",
@@ -23,6 +23,15 @@ century_core_registry = pytest.importorskip(
 
 def test_command_names_match_century_core_registry():
     assert COMMAND_NAMES == frozenset(century_core_registry.HANDLERS.keys())
+
+
+def test_command_order_matches_century_core_registry():
+    # Telegram renders /help and the command menu in registration order --
+    # a bare set-equality check (above) can't catch the two lists silently
+    # drifting into different groupings/orderings, so pin sequence too.
+    adapter_order = [name for name, _ in TELEGRAM_COMMANDS]
+    registry_order = list(century_core_registry.HANDLERS.keys())
+    assert adapter_order == registry_order
 
 
 async def test_serve_startup_syncs_command_menu(monkeypatch):
