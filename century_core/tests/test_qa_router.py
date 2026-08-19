@@ -5,9 +5,11 @@ import pytest
 from dataclasses import dataclass
 
 from century_core.qa.holders import is_holder_question
+from century_core.qa.intro import is_intro_question
 from century_core.qa.labels import humanize_fact_key
+from century_core.qa.language import is_non_english_question
 from century_core.qa.offtopic import is_offtopic_question
-from century_core.qa.price import is_price_question
+from century_core.qa.price import is_buy_question, is_price_question
 from century_core.qa.router import answer_question
 from century_core.qa.supply import is_supply_question
 
@@ -562,3 +564,153 @@ async def test_listing_intent_routes_to_deterministic_price_answer(question, stu
 async def test_non_listing_questions_are_not_swallowed(question, stub_stores):
     from century_core.qa.price import is_listing_question
     assert not is_listing_question(question)
+
+
+# ───────────────────────── non-English input gate (live tester feedback, 2026-08-19) ─────────────────────────
+# A Mandarin message got a confused English reply -- see qa/language.py.
+# Checked FIRST in the router, before offtopic.
+
+NON_ENGLISH_QUESTIONS = [
+    "你好,我想问一下CPX代币是什么",  # Mandarin
+    "Привет, объясните мне про CPX",  # Cyrillic
+    "مرحبا، ما هو رمز CPX؟",  # Arabic
+]
+
+ENGLISH_PASSTHROUGH_QUESTIONS = [
+    "How do I claim my tokens? 🎉",  # English + one emoji
+    "What is the contract address 0x18b33687d1c804Dd4ea6c82106e54923c23a652E?",  # hex digits
+    "¿cómo?",  # Latin-script non-English -- known limitation, explicitly out of scope
+]
+
+
+@pytest.mark.parametrize("question", NON_ENGLISH_QUESTIONS)
+def test_is_non_english_question_triggers_on_non_latin_script(question):
+    assert is_non_english_question(question)
+
+
+@pytest.mark.parametrize("question", ENGLISH_PASSTHROUGH_QUESTIONS)
+def test_is_non_english_question_does_not_trigger_on_latin_script(question):
+    assert not is_non_english_question(question)
+
+
+@pytest.mark.parametrize("question", NON_ENGLISH_QUESTIONS)
+async def test_non_english_question_gets_deterministic_english_only_reply(question, stub_stores):
+    response = await answer_question(question, stub_stores)
+    assert response.meta.answer_kind == "refusal"
+    assert response.meta.facts_used == []
+    paragraphs = [b for b in response.blocks if b.type == "paragraph"]
+    assert paragraphs and "English only" in paragraphs[0].md
+    links_blocks = [b for b in response.blocks if b.type == "links"]
+    assert len(links_blocks) == 1
+    assert links_blocks[0].items[0].url == "https://ciphex.io"
+
+
+async def test_non_english_gate_checked_before_offtopic_and_facts(stub_stores):
+    # A non-English message must never reach facts search or the LLM, and
+    # must win over anything else (there's no meaningful offtopic/greeting
+    # classification of non-Latin-script text).
+    response = await answer_question("你好,我想问一下CPX代币是什么", stub_stores)
+    assert response.meta.answer_kind == "refusal"
+
+
+# ───────────────────────── buy-intent routing (live tester feedback, 2026-08-19) ─────────────────────────
+# "How do I buy CPX" fell through to RAG and served a 2025-era update's
+# stale claim ("initial DEX listing is targeted for September 2025") -- the
+# worst answer surfaced in that test pass. See qa/price.py's
+# is_buy_question.
+
+BUY_QUESTIONS = [
+    "How do I buy CPX",
+    "how can I purchase CPX tokens",
+    "I want to invest in ciphex",
+    "where do I acquire the CPX coin",
+]
+
+NOT_BUY_QUESTIONS = [
+    # buy-verb token present, but no CPX/token word -- must not be swallowed
+    "when will contributors buy in",
+    # CPX/token word present, but no buy-verb -- supply/holder/stats questions unaffected
+    "how many tokens are there",
+    "what is the total supply of CPX?",
+    "how many holders does CPX have",
+    "how many tokens were burned",
+]
+
+
+@pytest.mark.parametrize("question", BUY_QUESTIONS)
+def test_is_buy_question_triggers_on_buy_verb_and_token_word(question):
+    assert is_buy_question(question)
+
+
+@pytest.mark.parametrize("question", NOT_BUY_QUESTIONS)
+def test_is_buy_question_conservative_does_not_swallow_unrelated_questions(question):
+    assert not is_buy_question(question)
+
+
+async def test_buy_question_routes_to_deterministic_price_answer(stub_stores):
+    # Exact transcript regression case.
+    response = await answer_question("How do I buy CPX", stub_stores)
+    assert response.meta.answer_kind == "command"
+    heading = next(b for b in response.blocks if b.type == "heading")
+    assert heading.text == "CPX Price"
+    text = " ".join(getattr(b, "md", getattr(b, "text", "")) for b in response.blocks)
+    assert "not yet listed" in text
+
+
+async def test_supply_holder_stats_questions_unaffected_by_buy_intent_route(stub_stores):
+    response = await answer_question("what is the total supply of CPX?", stub_stores)
+    fact_blocks = [b for b in response.blocks if b.type == "fact"]
+    labels = {b.label for b in fact_blocks}
+    assert "On-chain totalSupply() (Ethereum)" in labels
+
+    response = await answer_question("how many holders does CPX have", stub_stores)
+    assert response.meta.answer_kind == "faq"
+    links_blocks = [b for b in response.blocks if b.type == "links"]
+    assert any("etherscan.io" in item.url for item in links_blocks[0].items)
+
+
+# ───────────────────────── intro-intent routing (live tester feedback, 2026-08-19) ─────────────────────────
+# "what is cipex", "what is CPHEX", "Tell me a little bit about what CipheX
+# is", "I want to understand Ciphex and the CPX token" all went to RAG and
+# produced unapproved paraphrases citing old PDFs. See qa/intro.py; routes
+# to century_core.commands.ecosystem.handle_ecosystem.
+
+INTRO_QUESTIONS = [
+    "what is cipex",
+    "what is CPHEX",
+    "Tell me a little bit about what CipheX is",
+    "I want to understand Ciphex and the CPX token",
+]
+
+NOT_INTRO_QUESTIONS = [
+    "what is the total supply",
+    "what is the contract address",
+    "what is the exchange value",
+]
+
+
+@pytest.mark.parametrize("question", INTRO_QUESTIONS)
+def test_is_intro_question_triggers_on_transcript_phrasings(question):
+    assert is_intro_question(question)
+
+
+@pytest.mark.parametrize("question", NOT_INTRO_QUESTIONS)
+def test_is_intro_question_conservative_does_not_swallow_unrelated_questions(question):
+    assert not is_intro_question(question)
+
+
+@pytest.mark.parametrize("question", INTRO_QUESTIONS)
+async def test_intro_question_routes_to_deterministic_ecosystem_overview(question, stub_stores):
+    response = await answer_question(question, stub_stores)
+    assert response.meta.answer_kind == "command"
+    heading = next(b for b in response.blocks if b.type == "heading")
+    assert heading.text == "The Ciphex Ecosystem"
+
+
+async def test_total_supply_question_still_wins_over_intro_route(stub_stores):
+    # "what is the total supply" must stay on the supply route, checked
+    # before intro in the router.
+    response = await answer_question("what is the total supply of CPX", stub_stores)
+    fact_blocks = [b for b in response.blocks if b.type == "fact"]
+    labels = {b.label for b in fact_blocks}
+    assert "On-chain totalSupply() (Ethereum)" in labels
