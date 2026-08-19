@@ -54,3 +54,26 @@ def is_listing_question(query: str) -> bool:
     if tokens & _LISTING_TOKENS:
         return True
     return bool(tokens & _EXCHANGE_TOKENS) and bool(tokens & _TIMING_TOKENS)
+
+
+# --- Buy-intent questions route to the same deterministic answer ----------
+#
+# "How do I buy CPX" (live tester feedback, 2026-08-19) fell through to RAG
+# and served a 2025-era update's stale claim ("initial DEX listing is
+# targeted for September 2025") -- the worst answer surfaced in that test
+# pass. The deterministic /price response already states CPX is not yet
+# listed, the Contribution Program has not opened, and the expected
+# announcement window, with official links -- exactly the correct answer to
+# "how do I buy" today, so buy-intent routes there too.
+#
+# Conservative by the same rule as is_price_question/is_listing_question:
+# a buy-verb token alone is not enough (e.g. "when will contributors buy
+# in" has no CPX/token word), and a token-word alone is not enough (e.g.
+# "how many tokens were burned" has no buy-verb) -- both sets must be hit.
+_BUY_TRIGGERS = {"buy", "buying", "purchase", "purchasing", "acquire", "invest", "investing"}
+_TOKEN_WORDS = {"cpx", "ciphex", "token", "tokens", "coin"}
+
+
+def is_buy_question(query: str) -> bool:
+    tokens = set(_TOKEN_RE.findall(query.lower()))
+    return bool(tokens & _BUY_TRIGGERS) and bool(tokens & _TOKEN_WORDS)

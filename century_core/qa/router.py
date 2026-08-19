@@ -16,14 +16,17 @@ from pathlib import PurePosixPath
 from urllib.parse import urlparse
 
 from century_core import guardrails, response_guard
+from century_core.commands.ecosystem import handle_ecosystem
 from century_core.commands.price import handle_price
 from century_core.config import Config
 from century_core.models import LinkItem, LinksBlock, ParagraphBlock, ResponseIR, ResponseMeta
 from century_core.qa import facts_search
 from century_core.qa.holders import answer_holder_question, is_holder_question
+from century_core.qa.intro import is_intro_question
 from century_core.qa.labels import humanize_fact_key
+from century_core.qa.language import is_non_english_question, non_english_response
 from century_core.qa.offtopic import is_offtopic_question, offtopic_response
-from century_core.qa.price import is_listing_question, is_price_question
+from century_core.qa.price import is_buy_question, is_listing_question, is_price_question
 from century_core.qa.supply import answer_supply_question, is_supply_question
 
 # Corpus policy backstop (2026-08-18): no citation link may ever point at
@@ -57,6 +60,20 @@ async def _rag_search(stores, question: str):
 
 
 async def answer_question(question: str, stores) -> ResponseIR:
+    # Non-English input gate (live tester feedback, 2026-08-19): a Mandarin
+    # message got a confused English reply -- the facts+RAG+LLM path (and
+    # every deterministic route below) has no way to handle a non-English
+    # question, so this is checked FIRST, before even offtopic. See
+    # qa/language.py.
+    if is_non_english_question(question):
+        return response_guard.enforce_response(non_english_response())
+
+    # Greetings/smalltalk/off-topic short-circuit (go-live incident
+    # 2026-08-17): "write me a poem" must never reach facts search or the
+    # LLM at all -- see qa/offtopic.py.
+    if is_offtopic_question(question):
+        return response_guard.enforce_response(offtopic_response())
+
     if is_supply_question(question):
         return await answer_supply_question(stores)
 
@@ -65,8 +82,12 @@ async def answer_question(question: str, stores) -> ResponseIR:
     # response -- CPX has no market price to quote, and this is exactly
     # the free-form path that could otherwise invent or leak a banned
     # figure. Checked after is_supply_question so a query like "total
-    # supply" is never misrouted here.
-    if is_price_question(question) or is_listing_question(question):
+    # supply" is never misrouted here. Listing intent ("when does ciphex
+    # start trading on exchanges") and buy intent ("how do I buy CPX" --
+    # live tester feedback, 2026-08-19: this fell through to RAG and served
+    # a 2025-era update's stale listing claim, the worst answer surfaced in
+    # that test pass) get the same deterministic answer -- see qa/price.py.
+    if is_price_question(question) or is_listing_question(question) or is_buy_question(question):
         return await handle_price("", stores)
 
     # Holder-count questions ("how many holders does CPX have") -- checked
@@ -77,11 +98,14 @@ async def answer_question(question: str, stores) -> ResponseIR:
     if is_holder_question(question):
         return response_guard.enforce_response(await answer_holder_question(stores))
 
-    # Greetings/smalltalk/off-topic short-circuit (go-live incident
-    # 2026-08-17): "write me a poem" must never reach facts search or the
-    # LLM at all -- see qa/offtopic.py.
-    if is_offtopic_question(question):
-        return response_guard.enforce_response(offtopic_response())
+    # Intro-intent questions ("what is cipex", "tell me about CipheX" --
+    # live tester feedback, 2026-08-19) route to the existing deterministic
+    # ecosystem overview instead of RAG, which had been producing unapproved
+    # paraphrases citing old PDFs. Checked after supply/price/listing/buy/
+    # holders so a more specific route always wins on overlap (e.g. "what is
+    # the total supply" stays a supply question) -- see qa/intro.py.
+    if is_intro_question(question):
+        return response_guard.enforce_response(await handle_ecosystem("", stores))
 
     fact_hits = facts_search.search_facts(stores.facts, question, limit=3)
     rag_hits = await _rag_search(stores, question)
