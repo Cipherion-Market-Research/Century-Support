@@ -313,6 +313,101 @@ async def test_updates_never_lists_an_unapproved_document(stub_stores):
     assert "Approved Update" in text
 
 
+async def test_updates_entry_shows_title_date_and_specific_pdf_link(stub_stores):
+    # Tester feedback (2026-08-19): each listed entry must show its title,
+    # its date, and a link to that specific document's PDF.
+    row = {
+        "title": "Enhanced Site Launch for Ecosystem Commercial Readiness",
+        "date": "July 25, 2026",
+        "source_url": "https://ciphex.io/assets/documents/ecosystem-update-jul25-26.pdf",
+    }
+    stub_stores.rag_conn = _FakeRagConn(rows=[row])
+    response = await handle_updates("", stub_stores)
+
+    links_blocks = [b for b in response.blocks if b.type == "links"]
+    all_items = [item for block in links_blocks for item in block.items]
+
+    entry_item = next((i for i in all_items if row["source_url"] == i.url), None)
+    assert entry_item is not None, "expected an entry linking directly to this document's PDF"
+    assert row["title"] in entry_item.label
+    assert row["date"] in entry_item.label
+
+
+async def test_updates_keeps_all_updates_link_block(stub_stores):
+    row = {
+        "title": "Enhanced Site Launch for Ecosystem Commercial Readiness",
+        "date": "July 25, 2026",
+        "source_url": "https://ciphex.io/assets/documents/ecosystem-update-jul25-26.pdf",
+    }
+    stub_stores.rag_conn = _FakeRagConn(rows=[row])
+    response = await handle_updates("", stub_stores)
+
+    links_blocks = [b for b in response.blocks if b.type == "links"]
+    all_items = [item for block in links_blocks for item in block.items]
+    all_updates_item = next((i for i in all_items if i.url == "https://ciphex.io/internal-updates"), None)
+    assert all_updates_item is not None
+    assert all_updates_item.label == "All updates"
+
+
+async def test_updates_footer_links_to_ecosystem_and_contribute(stub_stores):
+    response = await handle_updates("", stub_stores)
+    last_block = response.blocks[-1]
+    assert last_block.type == "paragraph"
+    assert last_block.md == "Related: /ecosystem — products overview · /contribute — Contribution Program"
+
+
+async def test_updates_excludes_document_dated_before_the_recency_cutoff(stub_stores):
+    # Positioning-freshness policy, owner feedback 2026-08-19: default
+    # cutoff is 2026-05-01 -- an approved row dated before it must never be
+    # listed, same guarantee pubs_rag.retrieval.retrieve() enforces.
+    stale_row = {
+        "title": "New Crypto Regulations, Lockups, Vesting & Token Claiming",
+        "date": "July 22, 2025",
+        "source_url": "https://ciphex.io/assets/documents/ecosystem-update-jul22-25.pdf",
+    }
+    fresh_row = {
+        "title": "Enhanced Site Launch for Ecosystem Commercial Readiness",
+        "date": "July 25, 2026",
+        "source_url": "https://ciphex.io/assets/documents/ecosystem-update-jul25-26.pdf",
+    }
+    stub_stores.rag_conn = _FakeRagConn(rows=[fresh_row, stale_row])
+    response = await handle_updates("", stub_stores)
+    text = _all_text(response)
+
+    assert fresh_row["title"] in text
+    assert stale_row["title"] not in text
+
+
+async def test_updates_null_date_row_excluded_and_logged(stub_stores, caplog):
+    row = {
+        "title": "Undated Update",
+        "date": None,
+        "source_url": "https://ciphex.io/assets/documents/undated-update.pdf",
+    }
+    stub_stores.rag_conn = _FakeRagConn(rows=[row])
+
+    with caplog.at_level("WARNING", logger="century_core.commands.updates"):
+        response = await handle_updates("", stub_stores)
+
+    assert "Undated Update" not in _all_text(response)
+    assert len(caplog.records) == 1
+    assert "Undated Update" in caplog.records[0].getMessage()
+
+
+async def test_updates_cutoff_disabled_serves_pre_cutoff_document(stub_stores, monkeypatch):
+    from century_core.commands import updates as updates_module
+
+    monkeypatch.setattr(updates_module, "_SERVE_DOCS_SINCE", "")
+    stale_row = {
+        "title": "New Crypto Regulations, Lockups, Vesting & Token Claiming",
+        "date": "July 22, 2025",
+        "source_url": "https://ciphex.io/assets/documents/ecosystem-update-jul22-25.pdf",
+    }
+    stub_stores.rag_conn = _FakeRagConn(rows=[stale_row])
+    response = await handle_updates("", stub_stores)
+    assert stale_row["title"] in _all_text(response)
+
+
 # ─────────────────────────────── /contribute ───────────────────────────────
 
 
