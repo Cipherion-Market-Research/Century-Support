@@ -2,6 +2,7 @@
 token on Ethereum mainnet ONLY. Base is never presented as a legitimate
 CPX deployment -- contracts.cpx_token_base is excluded from this handler
 entirely (and from Q&A search results, see Config.BLOCKED_FACT_KEYS)."""
+from century_core.commands._related import related_footer
 from century_core.config import Config
 from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, ResponseIR, ResponseMeta, WarningBlock
 
@@ -40,6 +41,13 @@ async def handle_ca(args: str, stores) -> ResponseIR:
         blocks.append(WarningBlock(md=exclusivity_text))
 
     blocks.append(LinksBlock(items=[LinkItem(label="Ciphex", url=Config.OFFICIAL_SITE_URL)]))
+    blocks.append(
+        related_footer(
+            ("price", "price info"),
+            ("supply", "supply & burn"),
+            ("audit", "security audit"),
+        )
+    )
 
     return ResponseIR(
         blocks=blocks,

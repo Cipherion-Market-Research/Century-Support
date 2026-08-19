@@ -1,4 +1,5 @@
 """/contact -- how to reach Ciphex."""
+from century_core.commands._related import related_footer
 from century_core.models import (
     FactBlock,
     HeadingBlock,
@@ -82,6 +83,7 @@ async def handle_contact(args: str, stores) -> ResponseIR:
             ]
         )
     )
+    blocks.append(related_footer(("help", "all commands")))
 
     return ResponseIR(
         blocks=blocks,

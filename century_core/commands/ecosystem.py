@@ -3,6 +3,7 @@ links.connect_portal, links.alpha_ams, and links.atlas_page are contract
 keys that may not exist in facts.yaml yet -- every read below goes through
 the standard stores.facts.get(...) + is_unknown graceful fallback.
 """
+from century_core.commands._related import related_footer
 from century_core.models import (
     HeadingBlock,
     LinkItem,
@@ -77,6 +78,7 @@ async def handle_ecosystem(args: str, stores) -> ResponseIR:
                 LinkItem(label="Ciphex Connect", url=connect_portal_url),
             ]
         ),
+        related_footer(("updates", "announcements"), ("contact", "contact Ciphex")),
     ]
 
     return ResponseIR(

@@ -10,6 +10,7 @@ listed; the roadmap includes a DEX/CEX listing initiative for later in
 (see /contribute) has separately not opened and carries no dollar figures
 of its own.
 """
+from century_core.commands._related import related_footer
 from century_core.config import Config
 from century_core.models import HeadingBlock, LinkItem, LinksBlock, ParagraphBlock, ResponseIR, ResponseMeta
 
@@ -53,6 +54,7 @@ async def handle_price(args: str, stores) -> ResponseIR:
                 LinkItem(label="CPX Token", url=token_page_url),
             ]
         ),
+        related_footer(("contribute", "Contribution Program"), ("supply", "supply & burn")),
     ]
 
     return ResponseIR(

@@ -3,18 +3,25 @@ from century_core.config import Config
 from century_core.models import HeadingBlock, LinkItem, LinksBlock, ParagraphBlock, ResponseIR, ResponseMeta
 
 _HELP_TEXT = (
-    "**Available commands:**\n"
+    "**Available commands:**\n\n"
+    "**Token & Market:**\n"
     "`/price` — CPX price info\n"
     "`/ca` — contract addresses\n"
+    "`/supply` — CPX supply & burn figures\n"
+    "`/stats` — claim portal stats\n\n"
+    "**Claiming & Participation:**\n"
     "`/claim` — token claiming portal\n"
-    "`/audit` — security audit status\n"
-    "`/stats` — claim portal stats\n"
-    "`/updates` — Ciphex announcements & updates\n"
-    "`/contribute` — Contribution Program status\n"
-    "`/contact` — Contact Ciphex\n"
+    "`/contribute` — Contribution Program status\n\n"
+    "**Project Info:**\n"
     "`/ecosystem` — Ciphex products overview\n"
-    "`/supply` — CPX supply & burn figures\n\n"
-    "You can also ask a question in plain text."
+    "`/audit` — security audit status\n"
+    "`/updates` — Ciphex announcements & updates\n\n"
+    "**Support:**\n"
+    "`/contact` — Contact Ciphex\n"
+    "`/help` — show available commands\n"
+    "`/start` — welcome message\n\n"
+    "You can also just ask a question — try: \"How do I claim my tokens?\", \"What is CPX?\", "
+    "or \"When will CPX be listed?\""
 )
 
 
@@ -36,6 +43,10 @@ async def handle_start(args: str, stores) -> ResponseIR:
                 md="I'm Century, the official Ciphex (CPX) support assistant. Ask me a question "
                 "or use `/help` to see available commands.\n\n"
                 "⚠️ Ciphex will never DM you first, and will never ask for your wallet seed phrase."
+            ),
+            ParagraphBlock(
+                md='What can I help with? Try: "How do I claim my tokens?" or "What is CPX?" — '
+                "or `/help` for all commands."
             ),
             LinksBlock(items=[LinkItem(label="Ciphex", url=Config.OFFICIAL_SITE_URL)]),
         ],

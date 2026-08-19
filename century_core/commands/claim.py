@@ -1,4 +1,5 @@
 """/claim -- token claiming portal."""
+from century_core.commands._related import related_footer
 from century_core.models import FactBlock, HeadingBlock, LinkItem, LinksBlock, ResponseIR, ResponseMeta, WarningBlock
 
 
@@ -29,6 +30,7 @@ async def handle_claim(args: str, stores) -> ResponseIR:
         )
     )
     blocks.append(LinksBlock(items=[LinkItem(label="Claim portal", url=link_url)]))
+    blocks.append(related_footer(("stats", "claim statistics"), ("ca", "contract addresses")))
 
     return ResponseIR(
         blocks=blocks,
