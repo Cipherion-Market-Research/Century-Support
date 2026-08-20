@@ -39,7 +39,12 @@ async def test_full_corpus_ingest_is_idempotent(db_conn, provider):
     assert chunk_count_after_second == chunk_count_after_first  # zero duplicates
 
 
-async def test_query_burn_cycle_returns_tokenomics_publication_with_citation(db_conn, provider):
+async def test_query_burn_cycle_returns_tokenomics_publication_with_citation(db_conn, provider, monkeypatch):
+    # This test targets citation shape, not the serving recency cutoff --
+    # the seeded doc it expects (algorithmic-austerity, "January 28, 2025")
+    # predates the default 2026-05-01 cutoff, so disable it here to keep
+    # the assertion about what it's actually testing.
+    monkeypatch.setattr(Config, "SERVE_DOCS_SINCE", "")
     await ingest.ingest_inventory(db_conn, provider, str(KB_SOURCE))
 
     results = await retrieve(db_conn, provider, "burn cycle", top_k=3)

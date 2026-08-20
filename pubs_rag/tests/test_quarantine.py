@@ -30,7 +30,7 @@ def test_grandfather_list_is_the_seeded_corpus_not_arbitrary():
     assert not is_grandfathered("0" * 64)
 
 
-async def test_grandfathered_corpus_docs_are_served_by_default(db_conn, provider):
+async def test_grandfathered_corpus_docs_are_served_by_default(db_conn, provider, monkeypatch):
     """Not a frozen count: the corpus grows forever (new PDFs land via the
     webhook, un-grandfathered by construction -- see quarantine.py's module
     docstring). What must hold regardless of corpus size is that every
@@ -39,6 +39,11 @@ async def test_grandfathered_corpus_docs_are_served_by_default(db_conn, provider
     grandfathered sha256 whose original doc has since left the corpus
     (renamed/removed) is simply not ingested at all -- nothing to assert
     about it here."""
+    # This test is about the approval/quarantine gate, not the (separate)
+    # serving recency cutoff -- disable the cutoff so the seeded corpus's
+    # real dates (some pre-2026-05-01, e.g. algorithmic-austerity) don't
+    # interfere with what's actually under test here.
+    monkeypatch.setattr(Config, "SERVE_DOCS_SINCE", "")
     await ingest.ingest_inventory(db_conn, provider, str(KB_SOURCE))
 
     inventory = json.loads((KB_SOURCE / "inventory.json").read_text())
@@ -89,7 +94,11 @@ async def test_new_document_invisible_until_approved(db_conn, provider):
     assert any(r.slug == "brand-new-pub" for r in results_after_approval)
 
 
-async def test_approved_doc_revoked_becomes_invisible(db_conn, provider):
+async def test_approved_doc_revoked_becomes_invisible(db_conn, provider, monkeypatch):
+    # This test's doc has date=None -- under the default recency cutoff it
+    # would never be retrievable regardless of approval state, which isn't
+    # what this test (approval revocation) is about. Disable the cutoff.
+    monkeypatch.setattr(Config, "SERVE_DOCS_SINCE", "")
     doc = {
         "sha256": "2" * 64,
         "kind": "pdf",
@@ -115,10 +124,14 @@ async def test_approved_doc_revoked_becomes_invisible(db_conn, provider):
     )
 
 
-async def test_superseded_document_chunks_absent_from_retrieval_results(db_conn, provider):
+async def test_superseded_document_chunks_absent_from_retrieval_results(db_conn, provider, monkeypatch):
     """Distinct from the existing idempotency test's DB-level chunk check:
     this asserts the superseded doc's content is unreachable through the
     actual retrieve() path a caller uses, not just absent from the table."""
+    # Test doc is dated "January 1, 2026", before the default recency
+    # cutoff -- disable it here since this test is about supersession, not
+    # freshness.
+    monkeypatch.setattr(Config, "SERVE_DOCS_SINCE", "")
     doc_v1 = {
         "sha256": "3" * 64,
         "kind": "pdf",
@@ -163,6 +176,10 @@ async def test_superseded_document_chunks_absent_from_retrieval_results(db_conn,
 
 async def test_quarantine_disabled_flag_serves_everything_regardless_of_approval(db_conn, provider, monkeypatch):
     monkeypatch.setattr(Config, "QUARANTINE_ENABLED", False)
+    # Unrelated to this test's concern (approval), and the doc below has
+    # date=None -- disable the (separate) recency cutoff too so it doesn't
+    # interfere.
+    monkeypatch.setattr(Config, "SERVE_DOCS_SINCE", "")
     doc = {
         "sha256": "5" * 64,
         "kind": "pdf",

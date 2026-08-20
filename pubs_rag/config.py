@@ -128,6 +128,33 @@ class Config:
     # kpi_sync's KPI_SYNC_ABACUS_ENABLED-style on/off pattern.
     QUARANTINE_ENABLED = _env_bool("PUBS_RAG_QUARANTINE_ENABLED", True)
 
+    # --- Serving recency cutoff (positioning-freshness policy, owner
+    # feedback 2026-08-19) ---
+    # Live testers (2026-08-19) caught the bot serving superseded
+    # statements from 2025-era internal-update PDFs (e.g. "initial DEX
+    # listing is targeted for September 2025") as if they were current,
+    # citing the stale 2025 document as the source. The brand's rebrand /
+    # updated positioning landed mid-2026, so documents published before
+    # that cutoff carry outdated positioning and must not be retrieved,
+    # cited, or listed -- REGARDLESS of `approved` state. This is a
+    # SEPARATE gate from the WP-7c quarantine above: `approved` is the
+    # human-review gate (has anyone signed off on this document being
+    # servable at all); SERVE_DOCS_SINCE is a freshness gate (even a
+    # reviewed, approved document is too old to reflect current
+    # positioning). Both must pass for a document to serve.
+    #
+    # ISO date string (YYYY-MM-DD). A document whose `date` is on or after
+    # this cutoff is eligible; before it, excluded. Empty string disables
+    # the cutoff entirely (serves regardless of date) -- same on/off
+    # convention as QUARANTINE_ENABLED above.
+    #
+    # The owner tunes this boundary via env, no code change needed -- but
+    # note this is read at MODULE IMPORT TIME (like every other Config
+    # value in this file, via the `_env`/`_env_bool` helpers above), not
+    # per-request: a changed env var takes effect on the next process
+    # start/redeploy, not live against an already-running process.
+    SERVE_DOCS_SINCE = _env("PUBS_RAG_SERVE_DOCS_SINCE", "2026-05-01")
+
     # --- Health / webhook server ---
     HEALTH_HOST = _env("PUBS_RAG_HEALTH_HOST", "0.0.0.0")
     HEALTH_PORT = _env_int("PORT", _env_int("PUBS_RAG_HEALTH_PORT", 8081))
