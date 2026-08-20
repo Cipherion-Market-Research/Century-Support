@@ -30,7 +30,7 @@ async def handle_claim(args: str, stores) -> ResponseIR:
         )
     )
     blocks.append(LinksBlock(items=[LinkItem(label="Claim portal", url=link_url)]))
-    blocks.append(related_footer(("stats", "claim statistics"), ("ca", "contract addresses")))
+    blocks.append(related_footer(("ca", "contract addresses")))
 
     return ResponseIR(
         blocks=blocks,

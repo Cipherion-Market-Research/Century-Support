@@ -8,7 +8,7 @@ _HELP_TEXT = (
     "`/price` — CPX price info\n"
     "`/ca` — contract addresses\n"
     "`/supply` — CPX supply & burn figures\n"
-    "`/stats` — claim portal stats\n\n"
+    "\n"
     "**Claiming & Participation:**\n"
     "`/claim` — token claiming portal\n"
     "`/contribute` — Contribution Program status\n\n"

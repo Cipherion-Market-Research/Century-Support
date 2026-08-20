@@ -15,7 +15,6 @@ from century_core.commands.contribute import handle_contribute
 from century_core.commands.ecosystem import handle_ecosystem
 from century_core.commands.misc import handle_help, handle_start
 from century_core.commands.price import handle_price
-from century_core.commands.stats import handle_stats
 from century_core.commands.supply import handle_supply
 from century_core.commands.updates import handle_updates
 from century_core.models import InboundMessage
@@ -26,7 +25,6 @@ HANDLERS = {
     "price": handle_price,
     "ca": handle_ca,
     "supply": handle_supply,
-    "stats": handle_stats,
     "claim": handle_claim,
     "contribute": handle_contribute,
     "ecosystem": handle_ecosystem,
