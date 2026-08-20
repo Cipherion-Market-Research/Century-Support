@@ -14,7 +14,6 @@ from century_core.commands.contact import handle_contact
 from century_core.commands.contribute import handle_contribute
 from century_core.commands.ecosystem import handle_ecosystem
 from century_core.commands.price import handle_price
-from century_core.commands.stats import handle_stats
 from century_core.commands.supply import handle_supply
 from century_core.commands.updates import handle_updates
 from century_core.tests.conftest import make_fact
@@ -192,58 +191,6 @@ async def test_audit_links_certik_skynet(stub_stores):
     text = _all_text(response)
     assert "skynet.certik.com" in text
 
-
-# ─────────────────────────────── /stats ───────────────────────────────
-
-
-async def test_stats_reports_fresh_kpis_with_as_of(stub_stores):
-    stub_stores.kpi.redis.seed_kpi("claim_api", "cipherions", 62)
-    stub_stores.kpi.redis.seed_kpi("claim_api", "total_contributions", {"ui": "$1.82M", "raw": 1818927.09})
-
-    response = await handle_stats("", stub_stores)
-    fact_blocks = [b for b in response.blocks if b.type == "fact"]
-    assert len(fact_blocks) == 2
-    for block in fact_blocks:
-        assert block.as_of  # every number carries an as-of, per C3/C2
-    assert "kpi:claim_api:cipherions" in response.meta.kpis_used
-
-
-async def test_stats_omits_stale_kpis_instead_of_quoting_them(stub_stores):
-    stub_stores.kpi.redis.seed_kpi(
-        "claim_api", "cipherions", 62, fetched_at="2020-01-01T00:00:00Z", stale_after_s=1800
-    )
-    response = await handle_stats("", stub_stores)
-    fact_blocks = [b for b in response.blocks if b.type == "fact"]
-    assert fact_blocks == []
-    assert response.meta.kpis_used == []
-    warning_blocks = [b for b in response.blocks if b.type == "warning"]
-    assert warning_blocks  # says stats are unavailable rather than showing stale numbers
-
-
-async def test_stats_excludes_nonsensical_percent_staked(stub_stores):
-    stub_stores.kpi.redis.seed_kpi("claim_api", "percent_staked", {"ui": "105.41", "raw": 105.41})
-    stub_stores.kpi.redis.seed_kpi("claim_api", "cipherions", 62)
-
-    response = await handle_stats("", stub_stores)
-    assert "kpi:claim_api:percent_staked" not in response.meta.kpis_used
-
-
-async def test_stats_heading_uses_token_distribution_not_round(stub_stores):
-    response = await handle_stats("", stub_stores)
-    heading = next(b for b in response.blocks if b.type == "heading")
-    assert heading.text == "Claim Portal Stats (2025 token distribution)"
-    assert "round)" not in heading.text
-
-
-async def test_stats_relabels_presold_metric_to_distributed(stub_stores):
-    # "Total CPX presold" -> "Total CPX distributed" ("presold"/"presale"
-    # vocabulary is banned).
-    stub_stores.kpi.redis.seed_kpi("claim_api", "total_cpx_presold", {"ui": "500,000,000", "raw": 500000000})
-    response = await handle_stats("", stub_stores)
-    fact_blocks = [b for b in response.blocks if b.type == "fact"]
-    labels = {b.label for b in fact_blocks}
-    assert "Total CPX distributed" in labels
-    assert not any("presold" in label.lower() for label in labels)
 
 
 # ─────────────────────────────── /updates ───────────────────────────────
@@ -506,7 +453,6 @@ async def test_supply_command_delegates_to_qa_supply_answer(stub_stores):
         handle_ca,
         handle_claim,
         handle_audit,
-        handle_stats,
         handle_updates,
         handle_contribute,
         handle_contact,
@@ -526,12 +472,11 @@ async def test_every_command_response_passes_guard(handler, stub_stores):
 @pytest.mark.parametrize(
     "handler, expected_footer",
     [
-        (handle_claim, "Related: /stats — claim statistics · /ca — contract addresses"),
+        (handle_claim, "Related: /ca — contract addresses"),
         (handle_ca, "Related: /price — price info · /supply — supply & burn · /audit — security audit"),
         (handle_price, "Related: /contribute — Contribution Program · /supply — supply & burn"),
-        (handle_supply, "Related: /price — price info · /stats — claim statistics"),
-        (handle_stats, "Related: /claim — claiming portal · /supply — supply & burn"),
-        (handle_contribute, "Related: /claim — claiming portal · /price — price info"),
+        (handle_supply, "Related: /price — price info · /ca — contract addresses"),
+                (handle_contribute, "Related: /claim — claiming portal · /price — price info"),
         (handle_ecosystem, "Related: /updates — announcements · /contact — contact Ciphex"),
         (handle_audit, "Related: /ca — contract addresses"),
         (handle_contact, "Related: /help — all commands"),
@@ -553,4 +498,4 @@ async def test_related_footer_survives_response_guard(stub_stores):
     response = await handle_claim("", stub_stores)
     guarded = response_guard.enforce_response(response)
     assert guarded.meta.answer_kind != "refusal"
-    assert guarded.blocks[-1].md == "Related: /stats — claim statistics · /ca — contract addresses"
+    assert guarded.blocks[-1].md == "Related: /ca — contract addresses"

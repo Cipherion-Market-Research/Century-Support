@@ -51,7 +51,7 @@ async def test_help_groups_contain_the_right_commands():
 
     text = misc._HELP_TEXT
     groups = {
-        "Token & Market": ["/price", "/ca", "/supply", "/stats"],
+        "Token & Market": ["/price", "/ca", "/supply"],
         "Claiming & Participation": ["/claim", "/contribute"],
         "Project Info": ["/ecosystem", "/audit", "/updates"],
         "Support": ["/contact", "/help", "/start"],

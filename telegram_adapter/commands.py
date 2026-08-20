@@ -14,7 +14,6 @@ TELEGRAM_COMMANDS = [
     ("price", "CPX price info"),
     ("ca", "Contract addresses"),
     ("supply", "CPX supply & burn figures"),
-    ("stats", "Claim portal stats"),
     ("claim", "Token claiming portal"),
     ("contribute", "Contribution Program status"),
     ("ecosystem", "Ciphex products overview"),

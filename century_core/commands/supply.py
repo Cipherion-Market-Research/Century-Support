@@ -14,5 +14,5 @@ async def handle_supply(args: str, stores) -> ResponseIR:
     # footer is appended here, in the /supply wrapper, rather than in that
     # shared module, so it only ever shows up on the /supply command
     # response, never on a plain-text supply/burn question's answer.
-    footer = related_footer(("price", "price info"), ("stats", "claim statistics"))
+    footer = related_footer(("price", "price info"), ("ca", "contract addresses"))
     return response.model_copy(update={"blocks": [*response.blocks, footer]})
