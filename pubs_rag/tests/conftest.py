@@ -17,7 +17,9 @@ async def db_conn():
         return
 
     await db.init_schema(conn)
-    await conn.execute("TRUNCATE chunks, documents RESTART IDENTITY CASCADE")
+    await conn.execute(
+        "TRUNCATE chunks, documents, page_chunks, site_pages RESTART IDENTITY CASCADE"
+    )
     try:
         yield conn
     finally:
