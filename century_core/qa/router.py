@@ -59,6 +59,75 @@ async def _rag_search(stores, question: str):
     return [h for h in hits if h.score >= Config.RAG_MIN_SCORE]
 
 
+# Era-framing for legacy facts (live tester feedback, 2026-08-26): "how many
+# months will contributions be permitted?" -> "12 months" -- the LLM
+# presented round-terms.legacy_2025_vesting_months (the concluded 2025
+# round) as if it described the current Contribution Program. Any fact
+# whose key contains "legacy_2025" gets its context line prefixed with an
+# explicit era marker so the LLM can never mistake it for current-program
+# information, regardless of how the LLM chooses to phrase its answer.
+_LEGACY_2025_ERA_MARKER = "[LEGACY 2025 ROUND — CONCLUDED; not the current Contribution Program] "
+
+
+def _fact_context_line(key: str, fact) -> str:
+    line = f"[{key}] {fact.value} (verified {fact.verified_on}, source {fact.source_url})"
+    if "legacy_2025" in key:
+        line = _LEGACY_2025_ERA_MARKER + line
+    return line
+
+
+def build_context(fact_hits, rag_hits):
+    """Compose the LLM context string, the facts_used list, and the
+    deduped citation link list from fact/RAG hits. Split out from
+    answer_question for direct unit testing (era-framing regression) --
+    see _fact_context_line above and the link-dedup note below."""
+    context_parts = []
+    facts_used = []
+    fact_links = []
+    rag_links = []
+
+    for key, fact in fact_hits:
+        context_parts.append(_fact_context_line(key, fact))
+        facts_used.append(key)
+        # Never link fact.source_url verbatim (production audit,
+        # 2026-08-18): many facts.yaml source_url values are internal
+        # provenance notes, not user-facing links -- the literal string
+        # "internal://content-audit-2026-07-20" was rendering as an
+        # unclickable citation. Only cite it when it's a real, allowlisted
+        # public URL; otherwise the fact still informs the LLM's context
+        # above, it's just never turned into a link.
+        if fact.source_url.startswith(Config.ALLOWED_LINK_PREFIXES):
+            fact_links.append(LinkItem(label=humanize_fact_key(key), url=fact.source_url))
+
+    seen_rag_urls = set()
+    for hit in rag_hits:
+        context_parts.append(f"[{hit.slug}] {hit.content} (source {hit.source_url}, {hit.date})")
+        # retrieve() returns top-K CHUNKS, not top-K distinct documents --
+        # dedupe so one publication with several matching chunks doesn't
+        # show up as 3 identical citations. Never cite an excluded
+        # Insights & Publications source (see _is_excluded_rag_source).
+        if hit.source_url not in seen_rag_urls and not _is_excluded_rag_source(hit.source_url):
+            rag_links.append(LinkItem(label=hit.title, url=hit.source_url))
+            seen_rag_urls.add(hit.source_url)
+
+    # RAG links first: when rag_hits exist, answer_kind is "rag" (RAG is the
+    # primary source) -- its citation must never be crowded out of the
+    # truncated link list by fact links appended after it. Deduped by URL
+    # across the COMBINED list (live tester feedback, 2026-08-26: the same
+    # URL showed up twice -- e.g. a fact link and a RAG link both pointing
+    # at the same page -- because each list was only deduped internally,
+    # never against each other) before any truncation happens downstream.
+    link_items = []
+    seen_urls = set()
+    for item in rag_links + fact_links:
+        if item.url not in seen_urls:
+            link_items.append(item)
+            seen_urls.add(item.url)
+
+    context = "\n\n".join(context_parts)
+    return context, facts_used, link_items
+
+
 async def answer_question(question: str, stores) -> ResponseIR:
     # Non-English input gate (live tester feedback, 2026-08-19): a Mandarin
     # message got a confused English reply -- the facts+RAG+LLM path (and
@@ -75,7 +144,7 @@ async def answer_question(question: str, stores) -> ResponseIR:
         return response_guard.enforce_response(offtopic_response())
 
     if is_supply_question(question):
-        return await answer_supply_question(stores)
+        return await answer_supply_question(stores, question)
 
     # Owner ruling 2026-08-17: price questions ("what's the price of CPX",
     # "how much does CPX cost") always get the same deterministic /price
@@ -113,41 +182,7 @@ async def answer_question(question: str, stores) -> ResponseIR:
     if not fact_hits and not rag_hits:
         return response_guard.safe_refusal()
 
-    context_parts = []
-    facts_used = []
-    fact_links = []
-    rag_links = []
-
-    for key, fact in fact_hits:
-        context_parts.append(f"[{key}] {fact.value} (verified {fact.verified_on}, source {fact.source_url})")
-        facts_used.append(key)
-        # Never link fact.source_url verbatim (production audit,
-        # 2026-08-18): many facts.yaml source_url values are internal
-        # provenance notes, not user-facing links -- the literal string
-        # "internal://content-audit-2026-07-20" was rendering as an
-        # unclickable citation. Only cite it when it's a real, allowlisted
-        # public URL; otherwise the fact still informs the LLM's context
-        # above, it's just never turned into a link.
-        if fact.source_url.startswith(Config.ALLOWED_LINK_PREFIXES):
-            fact_links.append(LinkItem(label=humanize_fact_key(key), url=fact.source_url))
-
-    seen_rag_urls = set()
-    for hit in rag_hits:
-        context_parts.append(f"[{hit.slug}] {hit.content} (source {hit.source_url}, {hit.date})")
-        # retrieve() returns top-K CHUNKS, not top-K distinct documents --
-        # dedupe so one publication with several matching chunks doesn't
-        # show up as 3 identical citations. Never cite an excluded
-        # Insights & Publications source (see _is_excluded_rag_source).
-        if hit.source_url not in seen_rag_urls and not _is_excluded_rag_source(hit.source_url):
-            rag_links.append(LinkItem(label=hit.title, url=hit.source_url))
-            seen_rag_urls.add(hit.source_url)
-
-    # RAG links first: when rag_hits exist, answer_kind is "rag" (RAG is the
-    # primary source) -- its citation must never be crowded out of the
-    # truncated link list by fact links appended after it.
-    link_items = rag_links + fact_links
-
-    context = "\n\n".join(context_parts)
+    context, facts_used, link_items = build_context(fact_hits, rag_hits)
     # Everything the LLM is allowed to state a number about is whatever's
     # literally in the context handed to it -- not link labels (fact keys
     # like "legacy_2025_vesting_months" embed digits that are naming

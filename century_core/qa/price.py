@@ -14,7 +14,15 @@ qa/router.py so a query like "total supply" is never misrouted here.
 """
 import re
 
-_PRICE_TRIGGERS = {"price", "priced", "pricing", "cost", "costs", "worth"}
+# "value"/"valuation" added (live tester feedback, 2026-08-26: "what is the
+# value of CPX?" x2 fell through to RAG/LLM instead of the deterministic
+# /price answer). Conservative in the same word-boundary-token way as the
+# rest of this module -- see is_listing_question below for the specific
+# interaction check against Contribution Program vocabulary ("the exchange
+# value of each token"), which has neither a price trigger token match here
+# (this set only gates is_price_question) nor a timing token, so it is
+# unaffected by this addition.
+_PRICE_TRIGGERS = {"price", "priced", "pricing", "cost", "costs", "worth", "value", "valuation"}
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 _HOW_MUCH_IS_RE = re.compile(r"\bhow much is\b")
 
@@ -35,23 +43,38 @@ def is_price_question(query: str) -> bool:
 # deterministic /price response already states listing status and the
 # expected announcement window, so listing intent routes there too.
 #
-# Conservative by the same rules as is_price_question: "listing"/"listed"/
-# "dex"/"cex" are inherently listing-topic tokens; the broader
-# "exchange(s)" only counts when paired with a timing/trading token, so
-# "the exchange value of each token" (Contribution Program vocabulary)
-# never routes here.
-_LISTING_TOKENS = {"listing", "listed", "dex", "cex"}
+# Conservative by the same rules as is_price_question: "listing"/"listed"
+# stay sufficient alone (unambiguously listing-topic). Bare "dex"/"cex" are
+# NOT standalone triggers -- live tester feedback, 2026-08-26: "can I do
+# autonomous portfolio management on the DEX?" / "...on the CEX?" (flat
+# wrong x2) routed here purely off the bare token, with no listing/timing
+# intent at all. dex/cex now require a timing/trading token alongside them,
+# same conservative pairing as the "exchange(s)" rule below (which already
+# keeps "the exchange value of each token" -- Contribution Program
+# vocabulary -- from routing here).
+_STANDALONE_LISTING_TOKENS = {"listing", "listed"}
+_DEX_CEX_TOKENS = {"dex", "cex"}
 _EXCHANGE_TOKENS = {"exchange", "exchanges"}
 _TIMING_TOKENS = {
-    "when", "date", "start", "starts", "started", "starting",
+    "when", "date", "start", "starts", "started", "starting", "will",
     "launch", "launched", "launching", "live", "soon",
     "trade", "trading", "tradable", "buy", "sell",
+    # "available"/"availability" (live tester feedback, 2026-08-26: "where
+    # will CPX be available?" and similar phrasings) -- deliberately added
+    # as a *timing* token, paired below, not a standalone listing token:
+    # "available" alone is too generic a word (e.g. "is a demo available")
+    # to be a safe standalone trigger. Checked against Contribution Program
+    # vocabulary: "the exchange value of each token" has no timing token at
+    # all (neither "available" nor any other), so it still does not route.
+    "available", "availability",
 }
 
 
 def is_listing_question(query: str) -> bool:
     tokens = set(_TOKEN_RE.findall(query.lower()))
-    if tokens & _LISTING_TOKENS:
+    if tokens & _STANDALONE_LISTING_TOKENS:
+        return True
+    if (tokens & _DEX_CEX_TOKENS) and (tokens & _TIMING_TOKENS):
         return True
     return bool(tokens & _EXCHANGE_TOKENS) and bool(tokens & _TIMING_TOKENS)
 
