@@ -70,6 +70,20 @@ def test_repo_facts_yaml_only_one_unknown_remains():
     assert unknown_keys == {"round-terms.new_round_lockup_interest"}
 
 
+def test_repo_facts_yaml_token_standard_is_ethereum_only():
+    """QA sprint 1 (live tester analysis, 2026-08-26): tokenomics.token_standard
+    used to say CPX was "currently deployed on Ethereum mainnet and, for the
+    new round, Base" -- contradicting the owner's 2026-08-17 ruling that CPX
+    is an ERC-20 token on Ethereum mainnet ONLY (see
+    contracts.cpx_chain_exclusivity). The corrected value must never mention
+    Base as a live/current deployment."""
+    facts_file = load_facts_file(DEFAULT_FACTS_PATH)
+    fact = facts_file.facts["tokenomics.token_standard"]
+    assert not fact.is_unknown
+    assert "ethereum" in fact.value.lower()
+    assert "base" not in fact.value.lower()
+
+
 def test_repo_facts_yaml_distinguishes_onchain_from_fd_supply():
     """Guard against the on-chain-vs-FD-supply confusion flagged in review:
     the two figures must never collapse to the same value, but must be

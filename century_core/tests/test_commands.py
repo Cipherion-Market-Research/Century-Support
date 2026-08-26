@@ -527,6 +527,34 @@ async def test_ecosystem_atlas_text_mentions_pre_commercial_and_contact(stub_sto
     assert "/contact" in text
 
 
+# ────── Connect name deduplication (live tester feedback, 2026-08-26) ──────
+# Rendered "Ciphex Connect™ & Momentum Rewards™ — Ciphex Connect™ & Momentum
+# Rewards™ — a community participation/loyalty program at connect.ciphex.io."
+# because identity.connect_program's real facts.yaml value already opens
+# with the program name, and the render unconditionally prepended a second
+# bolded copy of it. See commands/ecosystem.py's _strip_connect_title_prefix.
+
+
+async def test_ecosystem_connect_name_not_duplicated_with_real_facts_yaml_value(stub_stores):
+    response = await handle_ecosystem("", stub_stores)
+    text = _all_text(response)
+    assert "Ciphex Connect™ & Momentum Rewards™ — Ciphex Connect™ & Momentum Rewards™" not in text
+    assert text.count("Ciphex Connect™ & Momentum Rewards™") == 1
+
+
+async def test_ecosystem_connect_name_still_prepended_once_for_fact_without_name(make_overlay_stores):
+    # A fact value that does NOT already open with the program name (like
+    # the default fallback sentence) must still get the bolded name
+    # prepended exactly once.
+    stores = make_overlay_stores(
+        {"identity.connect_program": make_fact("a points-based loyalty and rewards program for CPX holders.")}
+    )
+    response = await handle_ecosystem("", stores)
+    text = _all_text(response)
+    assert "**Ciphex Connect™ & Momentum Rewards™** — a points-based loyalty and rewards program" in text
+    assert text.count("Ciphex Connect™ & Momentum Rewards™") == 1
+
+
 # ────────────────────────────────── /supply ──────────────────────────────────
 
 

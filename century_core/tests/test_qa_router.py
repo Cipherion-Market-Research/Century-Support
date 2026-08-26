@@ -9,8 +9,9 @@ from century_core.qa.intro import is_intro_question
 from century_core.qa.labels import humanize_fact_key
 from century_core.qa.language import is_non_english_question
 from century_core.qa.offtopic import is_offtopic_question
-from century_core.qa.price import is_buy_question, is_price_question
-from century_core.qa.router import answer_question
+from century_core.qa.price import is_buy_question, is_listing_question, is_price_question
+from century_core.qa.router import answer_question, build_context
+from century_core.tests.conftest import make_fact
 from century_core.qa.supply import is_supply_question
 
 
@@ -27,6 +28,51 @@ def test_is_supply_question_triggers_on_burn_phrasing():
     assert is_supply_question("how many tokens were burned?")
     assert is_supply_question("tell me about the burn")
     assert is_supply_question("what got burned in Burn Cycle 1?")
+
+
+# ─────────────── supply: mint/creation synonyms (live tester feedback, 2026-08-26) ───────────────
+# "will there be additional CPX tokens created?" missed the supply route
+# entirely. See qa/supply.py's _SUPPLY_TRIGGERS.
+
+
+def test_is_supply_question_triggers_on_mint_creation_synonyms():
+    assert is_supply_question("will there be additional CPX tokens created?")
+    assert is_supply_question("can more CPX be minted?")
+    assert is_supply_question("is CPX still being minted")
+    assert is_supply_question("what is the minting schedule")
+
+
+async def test_mint_creation_question_routes_to_deterministic_supply_path(stub_stores):
+    # Exact transcript regression case.
+    response = await answer_question("will there be additional CPX tokens created?", stub_stores)
+    fact_blocks = [b for b in response.blocks if b.type == "fact"]
+    labels = {b.label for b in fact_blocks}
+    assert "On-chain totalSupply() (Ethereum)" in labels
+    assert "Effective supply (post Burn Cycle 1)" in labels
+
+
+# ─────────── supply: qualitative "type/model/kind" framing (live tester feedback, 2026-08-26) ───────────
+# "what type of supply model does CPX use?" previously answered with
+# numbers only, never naming the model. See qa/supply.py's
+# _is_qualitative_supply_question.
+
+
+async def test_qualitative_supply_question_prepends_model_sentence(stub_stores):
+    response = await answer_question("what type of supply model does CPX use?", stub_stores)
+    paragraphs = [b for b in response.blocks if b.type == "paragraph"]
+    assert any(
+        "fixed-maximum, deflationary supply model with scheduled burn cycles" in p.md for p in paragraphs
+    )
+    # The numbers still follow -- this is additive, not a replacement.
+    fact_blocks = [b for b in response.blocks if b.type == "fact"]
+    labels = {b.label for b in fact_blocks}
+    assert "On-chain totalSupply() (Ethereum)" in labels
+
+
+async def test_plain_supply_question_has_no_qualitative_sentence(stub_stores):
+    response = await answer_question("what is the total supply of CPX?", stub_stores)
+    paragraphs = [b for b in response.blocks if b.type == "paragraph"]
+    assert not any("fixed-maximum, deflationary supply model" in p.md for p in paragraphs)
 
 
 async def test_burn_question_routes_to_deterministic_supply_path(stub_stores):
@@ -56,6 +102,33 @@ def test_is_price_question_conservative_does_not_swallow_supply_questions():
 def test_is_price_question_conservative_does_not_swallow_unrelated_questions():
     assert not is_price_question("where can I claim my tokens?")
     assert not is_price_question("what chain is CPX on?")
+
+
+# ───────── price: "value"/"valuation" triggers (live tester feedback, 2026-08-26) ─────────
+# "what is the value of CPX?" fell through to RAG/LLM x2. See qa/price.py's
+# _PRICE_TRIGGERS.
+
+
+def test_is_price_question_triggers_on_value_valuation():
+    assert is_price_question("what is the value of CPX?")
+    assert is_price_question("what is the valuation of CPX?")
+
+
+async def test_value_question_routes_to_deterministic_price_command(stub_stores):
+    # Exact transcript regression case.
+    response = await answer_question("what is the value of CPX?", stub_stores)
+    assert response.meta.answer_kind == "command"
+    heading = next(b for b in response.blocks if b.type == "heading")
+    assert heading.text == "CPX Price"
+
+
+def test_is_listing_question_still_conservative_against_contribution_vocabulary_with_value_trigger():
+    # "value" is now a price trigger, but is_listing_question's own
+    # exchange+timing pairing is unaffected by that -- the Contribution
+    # Program's "exchange value of each token" phrasing has no timing token
+    # at all (not even the newly-added "available"), so it still doesn't
+    # route via is_listing_question.
+    assert not is_listing_question("what is the exchange value of each token")
 
 
 async def test_price_question_routes_to_deterministic_price_command(stub_stores):
@@ -566,6 +639,62 @@ async def test_non_listing_questions_are_not_swallowed(question, stub_stores):
     assert not is_listing_question(question)
 
 
+# --- DEX/CEX hijack fix (live tester feedback, 2026-08-26) -----------------
+# "can I do autonomous portfolio management on the DEX?" / "...on the CEX?"
+# routed to the price/listing answer purely off the bare "dex"/"cex" token
+# -- flat wrong x2, no listing/timing intent at all. See qa/price.py:
+# is_listing_question now requires a timing/trading token alongside a bare
+# "dex"/"cex" ("listed"/"listing" stay sufficient alone).
+
+CAPABILITY_QUESTIONS_MENTIONING_DEX_CEX = [
+    "can I do autonomous portfolio management on the DEX?",
+    "can I do autonomous portfolio management on the CEX?",
+]
+
+
+@pytest.mark.parametrize("question", CAPABILITY_QUESTIONS_MENTIONING_DEX_CEX)
+def test_bare_dex_cex_no_longer_sufficient_for_listing_question(question):
+    assert not is_listing_question(question)
+
+
+@pytest.mark.parametrize("question", CAPABILITY_QUESTIONS_MENTIONING_DEX_CEX)
+async def test_capability_questions_mentioning_dex_cex_no_longer_route_to_price(question, stub_stores):
+    response = await answer_question(question, stub_stores)
+    assert response.meta.answer_kind != "command"
+
+
+def test_listing_verb_alone_still_sufficient_for_dex_cex():
+    # "listed"/"listing" remain standalone-sufficient triggers even when
+    # paired with dex/cex -- this is an existing LISTING_QUESTIONS case
+    # ("when is the DEX listing") re-asserted directly against the
+    # tightened detector.
+    assert is_listing_question("when is the DEX listing")
+
+
+def test_dex_cex_with_timing_token_still_routes():
+    assert is_listing_question("will CPX be listed on a DEX soon")
+    assert is_listing_question("when will CPX trade on a CEX")
+
+
+# --- "available"/"availability" timing-token coverage (live tester feedback, 2026-08-26) ---
+# "where will CPX be available?" (also see guardrails.py's forward-listing-
+# promise ban for the same tester quote). Deliberately conservative: added
+# as a *timing* token (paired with "exchange(s)"), not a standalone listing
+# token -- see qa/price.py's _TIMING_TOKENS comment for why.
+
+
+def test_available_timing_token_pairs_with_exchange():
+    assert is_listing_question("will CPX be available on an exchange?")
+    assert is_listing_question("is CPX available on any exchange yet?")
+
+
+def test_bare_available_alone_is_not_sufficient_for_listing_question():
+    # No exchange/dex/cex/listing token present -- deliberately conservative,
+    # same reasoning as every other trigger in this module (a bare word like
+    # "available" is too generic to be a safe standalone trigger).
+    assert not is_listing_question("where will CPX be available?")
+
+
 # ───────────────────────── non-English input gate (live tester feedback, 2026-08-19) ─────────────────────────
 # A Mandarin message got a confused English reply -- see qa/language.py.
 # Checked FIRST in the router, before offtopic.
@@ -714,3 +843,123 @@ async def test_total_supply_question_still_wins_over_intro_route(stub_stores):
     fact_blocks = [b for b in response.blocks if b.type == "fact"]
     labels = {b.label for b in fact_blocks}
     assert "On-chain totalSupply() (Ethereum)" in labels
+
+
+# ───────────── intro over-capture fix (live tester feedback, 2026-08-26) ─────────────
+# "what is Ciphex Alpha?" (should hit products.ciphex_alpha_description via
+# facts search), "what is ciphex's relationship with CertiK/Kevin O'Brien/
+# Steve Martin" (possessive), and "tell me about ciphex connect" all got the
+# canned ecosystem block instead of their more specific answer. See
+# qa/intro.py's _TERMINAL_SUFFIX.
+
+OVER_CAPTURE_QUESTIONS = [
+    "what is Ciphex Alpha?",
+    "what is ciphex's relationship with CertiK/Kevin O'Brien/Steve Martin",
+    "tell me about ciphex connect",
+]
+
+
+@pytest.mark.parametrize("question", OVER_CAPTURE_QUESTIONS)
+def test_is_intro_question_no_longer_over_captures_transcript_phrasings(question):
+    assert not is_intro_question(question)
+
+
+async def test_ciphex_alpha_question_answers_from_facts_not_intro(stub_stores):
+    # Scope: is_intro_question must not swallow this question (see
+    # test_is_intro_question_no_longer_over_captures_transcript_phrasings
+    # above) -- it must fall through to the ordinary facts-search/RAG path
+    # rather than the canned ecosystem block. Ranking of facts_search's
+    # top-3 for this exact phrasing is a separate, pre-existing concern
+    # (naive keyword-overlap scoring, unrelated to intro-detection) --
+    # covered separately below via facts_search directly.
+    response = await answer_question("what is Ciphex Alpha?", stub_stores)
+    assert response.meta.answer_kind != "command"
+
+
+def test_ciphex_alpha_description_is_discoverable_via_facts_search(stub_stores):
+    from century_core.qa import facts_search
+
+    hits = facts_search.search_facts(stub_stores.facts, "what is Ciphex Alpha?", limit=10)
+    assert any(key == "products.ciphex_alpha_description" for key, _ in hits)
+
+
+@pytest.mark.parametrize("question", INTRO_QUESTIONS)
+def test_intro_regressions_still_trigger_after_terminal_word_tightening(question):
+    # Existing passing regressions ("what is cipex", "tell me a little bit
+    # about what CipheX is", "I want to understand Ciphex and the CPX
+    # token", "what is CPHEX") must all still match after tightening the
+    # "what is <brand>" / "tell me about <brand>" patterns to require the
+    # brand be the terminal content word.
+    assert is_intro_question(question)
+
+
+# ───────────────────── era-framing for legacy facts (item 3, live tester feedback, 2026-08-26) ─────────────────────
+# "how many months will contributions be permitted?" -> "12 months" -- the
+# LLM presented round-terms.legacy_2025_vesting_months (the concluded 2025
+# round) as if it described the current Contribution Program. See
+# qa/router.py's build_context / _fact_context_line.
+
+
+def test_build_context_prefixes_legacy_2025_facts_with_era_marker():
+    legacy_fact = make_fact(12, source_url="https://ciphex.io/assets/documents/ecosystem-update-jul22-25.pdf")
+    # Exact transcript regression question, paired directly with the legacy
+    # fact it was mis-answered from.
+    context, facts_used, _ = build_context(
+        fact_hits=[("round-terms.legacy_2025_vesting_months", legacy_fact)],
+        rag_hits=[],
+    )
+    assert "[LEGACY 2025 ROUND — CONCLUDED; not the current Contribution Program]" in context
+    assert "round-terms.legacy_2025_vesting_months" in facts_used
+
+
+def test_build_context_does_not_mark_non_legacy_facts():
+    current_fact = make_fact(1500000000, source_url="https://ciphex.io/ciphex-token")
+    context, _, _ = build_context(
+        fact_hits=[("tokenomics.max_supply", current_fact)],
+        rag_hits=[],
+    )
+    assert "LEGACY 2025 ROUND" not in context
+
+
+# ───────────────────── link dedup across facts+RAG (item 8, live tester feedback, 2026-08-26) ─────────────────────
+# rag_links and fact_links were each deduped internally but not against
+# each other -- testers saw the same URL twice when a fact link and a RAG
+# link happened to point at the same page. See qa/router.py's build_context.
+
+
+def test_build_context_dedupes_links_across_facts_and_rag_by_url():
+    shared_url = "https://ciphex.io/ciphex-token"
+    fact = make_fact("ERC-20, deployed on Ethereum mainnet only", source_url=shared_url)
+    rag_hit = _FakeChunk(
+        content="CPX is an ERC-20 token.",
+        title="CPX Token",
+        date="August 26, 2026",
+        source_url=shared_url,
+        slug="ecosystem-update-aug26-26",
+        kind="pdf",
+        score=0.9,
+    )
+    _, _, link_items = build_context(
+        fact_hits=[("tokenomics.token_standard", fact)],
+        rag_hits=[rag_hit],
+    )
+    urls = [item.url for item in link_items]
+    assert urls.count(shared_url) == 1
+
+
+def test_build_context_keeps_distinct_urls_and_preserves_rag_first_order():
+    fact = make_fact("value", source_url="https://ciphex.io/ciphex-token")
+    rag_hit = _FakeChunk(
+        content="content",
+        title="RAG Title",
+        date="August 26, 2026",
+        source_url="https://ciphex.io/assets/documents/ecosystem-update-aug26-26.pdf",
+        slug="ecosystem-update-aug26-26",
+        kind="pdf",
+        score=0.9,
+    )
+    _, _, link_items = build_context(
+        fact_hits=[("tokenomics.token_standard", fact)],
+        rag_hits=[rag_hit],
+    )
+    assert [item.url for item in link_items] == [rag_hit.source_url, fact.source_url]

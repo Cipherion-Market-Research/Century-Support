@@ -16,13 +16,35 @@ Also triggers on burn phrasing ("burn", "burned", "how many tokens were
 burned") -- Burn Cycle 1 is exactly the on-chain-vs-effective-supply
 distinction this module explains, so a burn question should get the same
 grounded, deterministic answer rather than a free-form LLM one.
+
+Also triggers on mint/creation phrasing (live tester feedback, 2026-08-26:
+"will there be additional CPX tokens created?" missed this route entirely)
+-- "will more CPX ever be minted/created" is exactly the same
+fixed-max-supply fact this module already states in its closing paragraph,
+so mint/create phrasing routes here too. Checked first in qa/router.py
+(before price/listing/buy/holders/intro), same as the rest of this trigger
+set.
 """
 import re
 
 from century_core.models import FactBlock, HeadingBlock, ParagraphBlock, ResponseIR, ResponseMeta
 
-_SUPPLY_TRIGGERS = {"supply", "circulating", "totalsupply", "outstanding", "burned", "burn", "burns"}
+_SUPPLY_TRIGGERS = {
+    "supply", "circulating", "totalsupply", "outstanding",
+    "burned", "burn", "burns",
+    "mint", "minted", "minting", "created", "additional",
+}
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
+
+# Qualitative "what type/model/kind of supply" framing (live tester
+# feedback, 2026-08-26: "what type of supply model does CPX use?" answered
+# with numbers only, never actually naming the model). When the question
+# itself asks about the type/model/kind, prepend one descriptive sentence
+# ahead of the numeric FactBlocks -- the numbers still follow unchanged.
+_QUALITATIVE_TRIGGERS = {"type", "model", "kind"}
+_QUALITATIVE_SENTENCE = (
+    "CPX uses a fixed-maximum, deflationary supply model with scheduled burn cycles."
+)
 
 
 def is_supply_question(query: str) -> bool:
@@ -30,14 +52,22 @@ def is_supply_question(query: str) -> bool:
     return bool(tokens & _SUPPLY_TRIGGERS)
 
 
+def _is_qualitative_supply_question(query: str) -> bool:
+    tokens = set(_TOKEN_RE.findall(query.lower()))
+    return bool(tokens & _QUALITATIVE_TRIGGERS)
+
+
 def _numeric(value) -> float:
     return value.get("cpx") if isinstance(value, dict) else value
 
 
-async def answer_supply_question(stores) -> ResponseIR:
+async def answer_supply_question(stores, question: str = "") -> ResponseIR:
     kpis_used = []
     facts_used = []
     blocks = [HeadingBlock(text="CPX Supply")]
+
+    if _is_qualitative_supply_question(question):
+        blocks.append(ParagraphBlock(md=_QUALITATIVE_SENTENCE))
 
     total_supply = await stores.kpi.read("onchain_eth", "total_supply")
     if total_supply is not None and not total_supply.stale:
