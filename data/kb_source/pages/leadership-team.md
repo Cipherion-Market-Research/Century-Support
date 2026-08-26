@@ -1,55 +1,17 @@
 <!--
 source_url: https://ciphex.io/leadership-team
-fetched: 2026-07-29
+fetched: 2026-08-26
 page_title: Ciphex | Leadership Team & Expert Contributors
-kind: live page copy
+kind: site page copy (harvested via git show, scripts/harvest_pages.py)
 -->
 
 # Ciphex | Leadership Team & Expert Contributors
 
-Skip to main content
-
-Ecosystem
-
-Leadership Team
-
-Insights
-
-Community
-
-Connect
-
-Disconnect
-
-CPX
-
-Ecosystem token & liquidity coordination layer
-
-Ciphex Alpha
-
-Professional investing made simple
-
-Atlas
-
-Asset origination & global distribution
-
-Internal Updates
-
-Internal Updates & Announcements
-
-Insights & Publications
-
-Internal Systems, Product, Ecosystem and Contributor Publications.
-
 Ciphex Leadership Team
 
-Ciphex is Built on Decades of Real-World
+Ciphex is Built on Decades of Real World Capital Markets and Technology Expertise
 
-Capital Markets and Technology Expertise
-
-100
-
-+
+100+
 
 More than 100 years of combined professional expertise.
 
@@ -85,320 +47,184 @@ Blockchain Infrastructure Development
 
 Leadership
 
-A proven track record in Finance,
-
-Innovation, and Execution.
-
-Co-founders and expert contributors who built the intelligence,
-
-framework, and governance.
-
-Co-founding Members
-
-Matt James
-
-Co-Founding Member
-
-25 Years Systems Architecture
-
-20 Years Software/Mobile Dev.
-
-10 Years Crypto Markets Trading
-
-Christina Marie
-
-Co-Founding Member
-
-15 Years Business Development
-
-15 Years Product Commercialization
-
-5 Years Asset Management
-
-Savanah Bree
-
-Co-Founding Member
-
-15 Years Image & Brand Marketing
-
-10 Years Market Development
-
-5 Years Early-Stage Ventures
-
-Justin Kirkwood
-
-Co-Founding Member
-
-25 Years Front End/UX Developer
-
-20 Years Systems Architecture
-
-8 Years Crypto Markets Trading
-
-Chris Carsley
-
-Co-Founding Member
-
-30 Years Asset Management
-
-25 Years Futures & Arbitrage
-
-20 Years Alternative Investments
-
-Anthony SA
-
-(Art Jay)
-
-Co-Founding Member
-
-25 Years Capital Markets
-
-20 Years Capital Formation
-
-15 Years Corp. Restructuring
-
-Co-Founding and Expert Contributors
-
-Kelly Hill
-
-Co-Founding Contributor
-
-30 Years Commodities & Futures
-
-25 Years Asymmetric Strategies
-
-20 Years Asset Management
-
-Michael Corbett
-
-Co-Founding Contributor
-
-30 Years Project Management
-
-25 Years Efficiency Management
-
-20 Years Change Management
-
-Lynne Hamilton
-
-Co-Founding Contributor
-
-25 Years Intl. Gov Relations
-
-20 Years Corporate Public Relations
-
-20 Years Crisis Management
-
-Stephan M. Houser
-
-Co-Founding Contributor
-
-15 Years Software Architecture
-
-15 Years Tech. Exec. Management
-
-10 Years Startups & Ventures
-
-Expert Contributors
-
-Wouter du Preez
-
-Expert Contributor
-
-30 Years Investment Banking
-
-20 Years RWA Management
-
-25 Years Structured Finance
-
-Michael Loberg
-
-Expert Contributor
-
-30 Years Global Banking & Trusts
-
-25 Years Corporate & Finance Litigation
-
-25 Years Corporate Structuring
-
-Paul Bolger
-
-Expert Contributor
-
-30 Years Securities and M&A
-
-25 Years Corporate Finance
-
-25 Years Corporate Structuring
+A proven track record in Finance, Innovation, and Execution.
 
 Kevin O’Brien
 
-Expert Contributor
+Ecosystem
 
-17 Years International Markets
+Digital Markets Expansion
 
-8 Years Crypto Venture Capital
+17 YRS. Crypto & Digital Asset Markets
 
-8 Years Crypto GTM Markets
+10 YRS. Crypto Venture Capital
 
-One Capital Ecosystem Shaping the Future of
+10 YRS. Crypto GTM & Expansion
 
-Intelligent Digital Capital Markets
-
-Stay connected
-
-Ecosystem updates
-
-as they happen.
-
-Feature Updates
-
-System Publications
-
-Announcements
-
-Email
-
-Subscribe →
-
-No spam · Unsubscribe anytime
-
-You’re subscribed — intelligence, not noise.
-
-Contribute to the Growth of our
-
-Ecosystem.
-
-Contribute
-
-→
-
-Disclosures
-
-General Disclosure
-
-Communications
-
-CPX Tokens & Utility
-
-Financing Activities
-
-Significant Risks
+Christina Marie
 
 Ecosystem
 
-Ciphex Alpha
+Strategic Market Partnerships
 
-Atlas RWA Services
+18 YRS. Business Development
 
-Insights & Publications
+16 YRS. Strategic Partnerships
 
-Internal Updates
+10 YRS. Portfolio Management
 
-Leadership Team
+Savanah Bree
 
-Resources
+Ecosystem
 
-CertiK Skynet Audit
+Media & Social Engagement
 
-GitHub Repository
+16 YRS. Brand Development
 
-Token Claim Center
+14 YRS. Media & Social Marketing
 
-Contact Ciphex
+8 YRS. Early Stage GTM
 
-Follow Us
+Justin Kirkwood
 
-X (Twitter)
+Ecosystem
 
-Telegram
+Technology & Design Architect
 
-Important Notice to Site Visitors
+25 YRS. Systems Interface Architect
 
-Any information presented on this website, including without
+20 YRS. Enterprise Workflow Architect
 
-limitation commercial or technical descriptions, illustrations,
+10 YRS. Digital Markets & Blockchain
 
-publications, or other materials relating to the products, services,
+Matt Francis
 
-or ecosystem of the Ciphex Capital Ecosystem (or
+Ecosystem
 
-“Ciphex”), is provided solely for informational purposes
+Product & Systems Engineering
 
-and is protected by applicable copyright and intellectual property
+25 YRS. Systems Engineering
 
-laws (or collectively, the “Ciphex Content”). The Ciphex
+20 YRS. SAAS & Mobile Development
 
-Content should not be relied upon for decision-making purposes or
+10 YRS. Digital Assets & Blockchain
 
-construed as an offer to sell, a solicitation to buy, or a
+Arthur Jay
 
-recommendation, endorsement, or invitation to participate in any
+Ecosystem
 
-digital assets, tokens, financial instruments, ecosystem
+Digital Markets Development
 
-initiatives, community engagement activities, token utility
+25 YRS. Capital Markets & Risk
 
-features, or tokenized real-world assets associated with Ciphex, its
+20 YRS. SPVs & Structured Finance
 
-products, or its services in any jurisdiction where such
+15 YRS. Divestitures & Restructuring
 
-participation is restricted or prohibited under applicable law.
+Kelly Hill
 
-Subject to applicable law and regulations, Ciphex reserves the right
+Ecosystem
 
-to modify, update, remove, or discontinue any Ciphex Content without
+Capital Markets Development
 
-notification. Viewers are solely responsible for conducting their
+30 YRS. Commodities & Futures
 
-own independent due diligence and consulting their own professional
+25 YRS. Asymmetric Market Strategies
 
-advisers regarding any contemplated participation.
+20 YRS. Asset Management
 
-Ciphex Content may include forward-looking statements identified by
+Chris Carsley
 
-words such as “anticipate,” “expect,”
+Ecosystem
 
-“intend,” “plan,” “foresee,”
+North American RWA Markets
 
-“foreseeable,” “seek,” “pursue,”
+30 YRS. Fund Management
 
-or similar expressions indicating future events. These statements
+25 YRS. Futures & Arbitrage
 
-are subject to significant risks and uncertainties that may cause
+20 YRS. Alternative Investments
 
-actual results to differ materially from those expressed or implied
+Wouter du Preez
 
-and are not guarantees of future performance, outcomes, or
+Contributor
 
-availability. Ciphex undertakes no obligation to update, revise,
+International RWA Markets
 
-supplement, or otherwise clarify any forward-looking statements. Any
+30 YRS. Investment Banking
 
-statements, representations, or materials not issued directly by
+25 YRS. Structured Finance
 
-Ciphex, Cipherion Capital SA, or their authorized representatives
+20 YRS. Asset Management
 
-are unauthorized and expressly disclaimed. References to third-party
+Michael Corbett
 
-market research, data, platforms, or services are based on publicly
+Contributor
 
-available information and are included solely for contextual
+Special Projects Development
 
-reference. No third party has reviewed, approved, endorsed, or
+30 YRS. Enterprise Project Management
 
-assumed responsibility for the Ciphex Content. Past performance
+25 YRS. Efficiency & Change Management
 
-should not be interpreted as an expectation of, or guarantee of,
+20 YRS. Reorganization & Risk Alignment
 
-future results.
+Lynne Hamilton
 
-Copyright © 2026 Ciphex Capital Ecosystem
+Contributor
 
-Terms of Use
+Public & Government Relations
 
-Privacy Policy
+25 YRS. Government & Trade Relations
 
-Contact Ciphex
+20 YRS. Corporate Public Relations
 
-Powered by Cipherion
+20 YRS. Crisis & CRM Strategies
+
+Michael Loberg
+
+Contributor
+
+Global Banking & Finance
+
+30 YRS. Global Banking & Trusts
+
+30 YRS. Corp. & Finance Litigation
+
+25 YRS. Corp. Formation Structuring
+
+Paul Bolger
+
+Contributor
+
+North American Finance, M&A
+
+30 YRS. Corp. Structuring, M&A
+
+25 YRS. Capital Formation & IPOs
+
+25 YRS. Corporate Restructuring
+
+Michael Stephens
+
+Contributor
+
+North American Finance, M&A
+
+30 YRS. Corp. Structuring, M&A
+
+25 YRS. Capital Formation & IPOs
+
+15 YRS. FinTech & Startup Ventures
+
+Stephan Houser
+
+Contributor
+
+Systems Architecture
+
+15 YRS. Software Architecture
+
+15 YRS. Technology Management
+
+10 YRS. Early Stage Ventures
