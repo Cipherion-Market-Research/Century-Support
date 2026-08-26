@@ -54,7 +54,7 @@ _NAME_RE = re.compile(r"^[A-Za-z][A-Za-z.'’\-]*(?:\s+[A-Za-z][A-Za-z.'’\-]*)
 # picked up automatically.
 _YEARS_SUMMARY_RE = re.compile(r"\b\d+\+?\s+years?\s+of\s+combined\b.*", re.IGNORECASE)
 
-_INTENT_WORDS = ("who", "about", "tell", "background", "experience", "bio")
+_INTENT_WORDS = ("who", "about", "tell", "background", "experience", "bio", "relationship", "relation", "involvement", "role")
 _TEAM_PHRASES = ("leadership team", "the team", "ciphex team", "the leadership")
 
 

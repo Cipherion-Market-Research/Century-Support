@@ -689,11 +689,14 @@ def test_available_timing_token_pairs_with_exchange():
     assert is_listing_question("is CPX available on any exchange yet?")
 
 
-def test_bare_available_alone_is_not_sufficient_for_listing_question():
-    # No exchange/dex/cex/listing token present -- deliberately conservative,
-    # same reasoning as every other trigger in this module (a bare word like
-    # "available" is too generic to be a safe standalone trigger).
-    assert not is_listing_question("where will CPX be available?")
+def test_available_requires_a_brand_token_to_route():
+    # "available" paired with a CPX/token word IS listing intent (the P0
+    # tester question "where will CPX be available?" must route to the
+    # deterministic answer -- acceptance-battery ruling, 2026-08-26), but
+    # bare availability of anything else stays conservative.
+    assert is_listing_question("where will CPX be available?")
+    assert not is_listing_question("where is the demo available?")
+    assert not is_listing_question("is the claim portal available?")
 
 
 # ───────────────────────── non-English input gate (live tester feedback, 2026-08-19) ─────────────────────────
@@ -1124,3 +1127,48 @@ async def test_token_vs_system_question_built_context_contains_note(stub_stores)
     paragraphs = [b for b in response.blocks if b.type == "paragraph"]
     assert paragraphs
     assert "NOTE: CPX is the ecosystem token; Ciphex Alpha is the autonomous system" in paragraphs[0].md
+
+
+# --- Acceptance-battery regressions (integration pass, 2026-08-26) ----------
+
+@pytest.mark.parametrize("question", [
+    "Will ciphex be able to provide autonomous portfolio management on DEX?",
+    "Will CPX be able to provide autonomous portfolio management on DEX?",
+])
+async def test_dex_capability_questions_with_will_are_not_hijacked(question):
+    from century_core.qa.price import is_listing_question
+    assert not is_listing_question(question)
+
+
+async def test_cpx_availability_question_routes_to_listing(stub_stores):
+    response = await answer_question("where will CPX be available?", stub_stores)
+    text = " ".join(getattr(b, "md", getattr(b, "text", "")) for b in response.blocks)
+    assert response.meta.answer_kind == "command"
+    assert "not yet listed" in text
+
+
+def test_cex_carry_phrasing_still_routes():
+    from century_core.qa.price import is_listing_question
+    assert is_listing_question("what CEX will carry CPX")
+    assert not is_listing_question("is a demo available")
+
+
+@pytest.mark.parametrize("question", [
+    "what is ciphex's relationship with Kevin O'Brien?",
+    "what is CPX's relationship with Kevin O'Brien?",
+    "what is Kevin O'Brien's role?",
+])
+async def test_relationship_questions_about_roster_names_answer_from_roster(question, stub_stores):
+    response = await answer_question(question, stub_stores)
+    text = " ".join(getattr(b, "md", getattr(b, "text", "")) for b in response.blocks)
+    # the harvested page renders the typographic apostrophe (O’Brien);
+    # assert on the apostrophe-free halves so the test is typography-proof
+    assert "Kevin O" in text and "Brien" in text
+    assert response.meta.answer_kind != "refusal"
+
+
+async def test_relationship_question_about_non_roster_entity_passes_through(stub_stores):
+    # CertiK is not a person on the leadership roster -- must keep flowing
+    # to facts search (links.certik_skynet grounds it), never the roster.
+    from century_core.qa.pages_roster import is_person_question
+    assert not is_person_question("what is ciphex's relationship with CertiK?")
