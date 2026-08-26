@@ -4,6 +4,7 @@
 import pytest
 from dataclasses import dataclass
 
+from century_core.qa.contribution import is_contribution_question
 from century_core.qa.holders import is_holder_question
 from century_core.qa.intro import is_intro_question
 from century_core.qa.labels import humanize_fact_key
@@ -211,10 +212,10 @@ async def test_fact_citation_with_internal_source_url_is_never_linked(stub_store
         source_url="internal://content-audit-2026-07-20",
     )
 
-    def fake_search_facts(store, question, limit=3):
-        return [("test.internal_source_fact", internal_fact)]
+    def fake_search_facts_scored(store, question, limit=3):
+        return [(1.0, "test.internal_source_fact", internal_fact)]
 
-    monkeypatch.setattr(facts_search_module, "search_facts", fake_search_facts)
+    monkeypatch.setattr(facts_search_module, "search_facts_scored", fake_search_facts_scored)
 
     response = await answer_question("tell me something", stub_stores)
 
@@ -963,3 +964,163 @@ def test_build_context_keeps_distinct_urls_and_preserves_rag_first_order():
         rag_hits=[rag_hit],
     )
     assert [item.url for item in link_items] == [rag_hit.source_url, fact.source_url]
+
+
+# ───────────────────── contribution-intent deterministic route (item 1, Sprint 2, live tester feedback, 2026-08-26) ─────────────────────
+# Five near-identical-intent questions got one good answer, three
+# refusals, and one flat-wrong answer from facts_search + LLM ranking. See
+# qa/contribution.py; routes to century_core.commands.contribute.handle_contribute.
+
+CONTRIBUTION_QUESTIONS = [
+    "when can I contribute?",
+    "how long will the contribution program run?",
+    "how many months will contributions be permitted?",
+    "when does the contribution program start?",
+    "how do I participate in the contribution program?",
+    # "minimum" tuning (live tester feedback, 2026-08-26): answered well by
+    # facts_search today, but routed here too since the deterministic
+    # /contribute response states the exact tier minimums in the same
+    # breath as the rest of the program terms.
+    "what is the minimum contribution?",
+]
+
+
+@pytest.mark.parametrize("question", CONTRIBUTION_QUESTIONS)
+def test_is_contribution_question_triggers_on_tester_phrasings(question):
+    assert is_contribution_question(question)
+
+
+@pytest.mark.parametrize("question", CONTRIBUTION_QUESTIONS)
+async def test_contribution_question_routes_to_deterministic_contribute_command(question, stub_stores):
+    response = await answer_question(question, stub_stores)
+    assert response.meta.answer_kind == "command"
+    heading = next(b for b in response.blocks if b.type == "heading")
+    assert heading.text == "Ciphex Contribution Program (Phase I)"
+
+
+async def test_minimum_contribution_question_response_contains_tier_minimums(stub_stores):
+    # "what is the minimum contribution?" must state the actual tier
+    # minimums (Early/Growth/Final), not just a generic status message.
+    response = await answer_question("what is the minimum contribution?", stub_stores)
+    text = " ".join(getattr(b, "md", getattr(b, "text", "")) for b in response.blocks)
+    assert "1,000" in text
+    assert "2,000" in text
+    assert "3,000" in text
+
+
+def test_is_contribution_question_conservative_does_not_swallow_buy_intent():
+    assert not is_contribution_question("how do I buy CPX")
+
+
+async def test_buy_intent_still_wins_over_contribution_route(stub_stores):
+    # Buy-intent questions keep their existing deterministic /price route
+    # -- checked before the contribution route in qa/router.py -- even
+    # where a phrasing could plausibly overlap contribution vocabulary.
+    response = await answer_question("how do I buy CPX", stub_stores)
+    assert response.meta.answer_kind == "command"
+    heading = next(b for b in response.blocks if b.type == "heading")
+    assert heading.text == "CPX Price"
+
+
+def test_is_contribution_question_conservative_does_not_swallow_unrelated_questions():
+    assert not is_contribution_question("what is the total supply of CPX?")
+    assert not is_contribution_question("where can I claim my tokens?")
+    assert not is_contribution_question("what is the price of CPX?")
+
+
+# ───────────────────── link relevance (item 3, Sprint 2, live tester feedback, 2026-08-26) ─────────────────────
+# An irrelevant atlas-rwa-services link rode along on leadership questions,
+# and an irrelevant financing-activities link rode along on a risk-
+# management question -- both coincidental tie-matches that placed in the
+# top-`limit` fact_hits despite scoring far below the fact that actually
+# answers the question. See qa/router.py's linkable_fact_keys /
+# _LINK_RELEVANCE_RATIO.
+
+
+async def test_leadership_question_never_links_the_atlas_page(stub_stores):
+    response = await answer_question("who is the CPX management team?", stub_stores)
+    links_blocks = [b for b in response.blocks if b.type == "links"]
+    for block in links_blocks:
+        assert not any("atlas-rwa-services" in item.url for item in block.items)
+
+
+async def test_risk_management_question_never_links_financing_activities(stub_stores):
+    response = await answer_question("dynamic risk management", stub_stores)
+    links_blocks = [b for b in response.blocks if b.type == "links"]
+    for block in links_blocks:
+        assert not any("financing-activities" in item.url for item in block.items)
+
+
+def test_build_context_omits_link_for_fact_hit_outside_linkable_set():
+    fact_a = make_fact("Value A", source_url="https://ciphex.io/a")
+    fact_b = make_fact("Value B", source_url="https://ciphex.io/b")
+    context, facts_used, link_items = build_context(
+        fact_hits=[("test.a", fact_a), ("test.b", fact_b)],
+        rag_hits=[],
+        linkable_fact_keys={"test.a"},
+    )
+    # Both facts still enter context (grounding), regardless of link cap.
+    assert facts_used == ["test.a", "test.b"]
+    assert "[test.a]" in context
+    assert "[test.b]" in context
+    assert [item.url for item in link_items] == ["https://ciphex.io/a"]
+
+
+def test_build_context_linkable_fact_keys_none_means_no_filtering():
+    # Default (no threshold computed) preserves prior behavior: every
+    # fact_hit is linkable.
+    fact_a = make_fact("Value A", source_url="https://ciphex.io/a")
+    context, _, link_items = build_context(fact_hits=[("test.a", fact_a)], rag_hits=[])
+    assert [item.url for item in link_items] == ["https://ciphex.io/a"]
+
+
+# ───────────────────── token-vs-system disambiguation (item 4, Sprint 2, live tester feedback, 2026-08-26) ─────────────────────
+# "can the CPX token do autonomous trading?" (x2) got answers implying the
+# CPX token itself trades. See qa/router.py's _TOKEN_VS_SYSTEM_NOTE.
+
+
+def test_build_context_prepends_token_vs_system_note_when_alpha_fact_and_token_query_cooccur():
+    alpha_fact = make_fact(
+        "Ciphex Alpha is an autonomous market-intelligence and portfolio-management system.",
+        source_url="https://ciphex.io/ciphex-alpha",
+    )
+    context, _, _ = build_context(
+        fact_hits=[("products.ciphex_alpha_description", alpha_fact)],
+        rag_hits=[],
+        query="can the CPX token do autonomous trading?",
+    )
+    assert (
+        "[NOTE: CPX is the ecosystem token; Ciphex Alpha is the autonomous system "
+        "— do not attribute Alpha's capabilities to the token itself]" in context
+    )
+
+
+def test_build_context_omits_token_vs_system_note_without_token_word():
+    alpha_fact = make_fact("Ciphex Alpha description.", source_url="https://ciphex.io/ciphex-alpha")
+    context, _, _ = build_context(
+        fact_hits=[("products.ciphex_alpha_description", alpha_fact)],
+        rag_hits=[],
+        query="what is Ciphex Alpha?",
+    )
+    assert "NOTE: CPX is the ecosystem token" not in context
+
+
+def test_build_context_omits_token_vs_system_note_without_alpha_fact():
+    other_fact = make_fact("Some other value.", source_url="https://ciphex.io/x")
+    context, _, _ = build_context(
+        fact_hits=[("some.other_key", other_fact)],
+        rag_hits=[],
+        query="what can the CPX token do?",
+    )
+    assert "NOTE: CPX is the ecosystem token" not in context
+
+
+async def test_token_vs_system_question_built_context_contains_note(stub_stores):
+    # Exact transcript regression: the built LLM context for this question
+    # must contain the disambiguation note. StubLLMProvider echoes its
+    # context back verbatim (see conftest/llm.py), so it's directly
+    # observable on the response's first paragraph.
+    response = await answer_question("can the CPX token do autonomous trading?", stub_stores)
+    paragraphs = [b for b in response.blocks if b.type == "paragraph"]
+    assert paragraphs
+    assert "NOTE: CPX is the ecosystem token; Ciphex Alpha is the autonomous system" in paragraphs[0].md
