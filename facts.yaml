@@ -431,10 +431,10 @@ facts:
     notes: "kb_source. Displayed as 'Total Deflationary Supply — 1.5 Billion'. Fixed/maximum supply; will never increase (per data/training/faq.json, uncontested by the audit)."
 
   tokenomics.token_standard:
-    value: "ERC-20 (chain-agnostic deployment per site copy); currently deployed on Ethereum mainnet and, for the new round, Base"
-    verified_on: "2026-07-20"
+    value: "ERC-20, deployed on Ethereum mainnet only"
+    verified_on: "2026-08-26"
     source_url: "https://ciphex.io/ciphex-token"
-    notes: "kb_source."
+    notes: "CORRECTED 2026-08-26 (QA sprint 1, live tester analysis): the prior value (\"currently deployed on Ethereum mainnet and, for the new round, Base\") contradicted the owner's 2026-08-17 ruling recorded on contracts.cpx_chain_exclusivity -- CPX is an ERC-20 token on Ethereum mainnet ONLY; the Base deployment referenced there was an abandoned staging round (see contracts.cpx_token_base, contracts.base_presale, both DEPRECATED and never a legitimate CPX deployment). kb_source for the ERC-20 standard and Ethereum mainnet deployment: the token page's stats strip shows 'ERC-20 · Chain-agnostic deployment' -- this describes the standard's technical design posture (ERC-20 is deployable on any EVM chain), not a claim of multiple live deployments, per contracts.cpx_chain_exclusivity's note."
 
   tokenomics.utility_layers:
     value:
