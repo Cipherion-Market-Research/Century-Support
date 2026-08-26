@@ -191,6 +191,72 @@ def test_flags_capitalized_pre_sale():
     assert not result.ok
 
 
+# ────────────────── forward listing-promise ban (P0, 2026-08-26) ──────────────────
+# Live tester: "where will CPX be available?" got "CPX will be available
+# across both decentralized and centralized exchanges..." from the LLM path
+# -- a future listing asserted as settled fact. See guardrails.py's
+# _FORWARD_LISTING_PROMISE_PATTERNS.
+
+
+def test_flags_forward_listing_promise_tester_transcript():
+    result = guardrails.check_text(
+        "CPX will be available across both decentralized and centralized exchanges."
+    )
+    assert not result.ok
+    assert any("forward listing promise" in v for v in result.violations)
+
+
+def test_flags_forward_listing_promise_is_going_to_be_variant():
+    result = guardrails.check_text("CPX is going to be trading on major exchanges soon.")
+    assert not result.ok
+    assert any("forward listing promise" in v for v in result.violations)
+
+
+def test_flags_forward_listing_promise_will_become_variant():
+    result = guardrails.check_text("CPX will become listed on a DEX shortly.")
+    assert not result.ok
+    assert any("forward listing promise" in v for v in result.violations)
+
+
+def test_flags_forward_listing_promise_will_be_listed_on_cex():
+    result = guardrails.check_text("CPX will be listed on a CEX next quarter.")
+    assert not result.ok
+    assert any("forward listing promise" in v for v in result.violations)
+
+
+def test_does_not_flag_not_yet_available_negative():
+    result = guardrails.check_text("CPX is not yet available on any exchange.")
+    assert result.ok
+
+
+def test_does_not_flag_listing_announcement_expected_negative():
+    result = guardrails.check_text(
+        "A listing announcement is expected in Q3/Q4 2026, but CPX is not yet listed."
+    )
+    assert result.ok
+
+
+def test_does_not_flag_forward_promise_across_sentence_boundary():
+    # "will be available" is in one sentence, "exchanges" only shows up in
+    # the NEXT sentence -- must not be stitched together into one
+    # forward-listing-promise claim.
+    result = guardrails.check_text(
+        "CPX will be available soon. It may eventually reach exchanges."
+    )
+    assert result.ok
+
+
+def test_price_command_deterministic_copy_passes_forward_listing_guard():
+    from century_core.commands.price import _DEFAULT_LISTING_SENTENCE
+
+    result = guardrails.check_text(
+        "CPX is not yet listed on an exchange — there is no market price to quote (TBD). "
+        f"{_DEFAULT_LISTING_SENTENCE} Once CPX is listed, live pricing will be connected here "
+        "from a market data feed."
+    )
+    assert result.ok
+
+
 # ───────────────────────── numeric provenance ─────────────────────────
 
 

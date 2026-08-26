@@ -54,6 +54,34 @@ _BANNED_PRICE_PATTERNS = [
     re.compile(r"(?<![\d.])\$?0\.20(?!\d)(?!\s*%)"),
 ]
 
+# P0 (live tester feedback, 2026-08-26): "where will CPX be available?" got
+# "CPX will be available across both decentralized and centralized
+# exchanges..." from the LLM path -- a future listing asserted as settled
+# fact. Owner-approved phrasing is expectation-only (see
+# identity.listing_initiative: "a listing announcement is expected Q3/Q4
+# 2026"), never a flat promise. This backstops the LLM path structurally,
+# the same way the price-figure ban does: a future-tense commitment verb
+# ("will be"/"is going to be"/"will become") within the same sentence as an
+# availability/trading word, itself within the same sentence as an
+# exchange-type word, is banned regardless of how it got composed.
+#
+# Deliberately conservative: `[^.!?]` keeps both gaps inside one sentence
+# (never crosses a sentence boundary), and the trigger set requires an
+# actual future-commitment verb phrase -- "is not yet available on any
+# exchange" has no "will be"/"is going to be"/"will become", and "a listing
+# announcement is expected" has neither the commitment verb nor an
+# availability/trading word, so neither matches.
+_FORWARD_LISTING_PROMISE_PATTERNS = [
+    re.compile(
+        r"\b(?:will\s+be|is\s+going\s+to\s+be|will\s+become)\b"
+        r"[^.!?]{0,60}?"
+        r"\b(?:available|listed|tradable|trading)\b"
+        r"[^.!?]{0,60}?"
+        r"\b(?:exchanges?|dex|cex)\b",
+        re.IGNORECASE,
+    ),
+]
+
 # Owner ruling 2026-07-30 (reaffirmed 2026-08-17): "presale" is banned
 # vocabulary in user-facing output (legal exposure), with NO exemptions --
 # not even inside a URL/hostname/path. The program is a Contribution
@@ -122,6 +150,9 @@ def check_text(text: str) -> GuardrailResult:
     for pattern in _BANNED_TERM_PATTERNS:
         if pattern.search(text):
             violations.append(f"banned terminology matched {pattern.pattern!r}")
+    for pattern in _FORWARD_LISTING_PROMISE_PATTERNS:
+        if pattern.search(text):
+            violations.append(f"forward listing promise matched {pattern.pattern!r}")
     return GuardrailResult(violations=violations)
 
 
