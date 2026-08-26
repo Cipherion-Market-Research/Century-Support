@@ -110,6 +110,22 @@ def git_fetch(repo_path: str, remote: str = "origin") -> None:
         raise GitShowError(f"git fetch {remote} failed in {repo_path!r}: {result.stderr.strip()}")
 
 
+def resolve_ref(repo_path: str, ref: str) -> str:
+    """Resolve `ref` (e.g. "origin/main") to its full commit sha, for
+    provenance -- recorded per-entry in inventory.json as "source_ref" and
+    propagated into pubs_rag's site_pages.source_ref (see pubs_rag/db.py)
+    so a servable page chunk can always be traced back to the exact
+    ciphex-website commit it was harvested from."""
+    result = subprocess.run(
+        ["git", "-C", repo_path, "rev-parse", ref],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        raise GitShowError(f"git rev-parse {ref} failed in {repo_path!r}: {result.stderr.strip()}")
+    return result.stdout.strip()
+
+
 def read_repo_file(repo_path: str, ref: str, repo_relative_path: str) -> str:
     """`git show <ref>:<path>` -- reads the committed blob directly, never
     the working tree (which may be stale/mid-edit/ahead of the ref)."""
@@ -422,6 +438,12 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     print(f"harvest scope ({len(slugs)} pages): {', '.join(slugs)}")
 
+    try:
+        source_ref = resolve_ref(args.repo_path, args.ref)
+    except GitShowError as e:
+        print(f"warning: could not resolve {args.ref!r} to a commit sha ({e}); recording the ref string as-is")
+        source_ref = args.ref
+
     fetched_date = args.fetched_date or date.today().isoformat()
     out_dir = Path(args.out_dir)
     inventory_path = Path(args.inventory)
@@ -472,6 +494,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             "extraction": "ok",
             "words": result.words,
             "harvested_at": fetched_date,
+            "source_ref": source_ref,
         }
         inventory = upsert_inventory_entry(inventory, entry)
 
