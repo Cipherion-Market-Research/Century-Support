@@ -12,15 +12,18 @@ citation-level backstop against that policy, independent of what's actually
 in the retrieval index (e.g. a document ingested before this policy landed
 and still sitting in Postgres).
 """
+import re
 from pathlib import PurePosixPath
 from urllib.parse import urlparse
 
 from century_core import guardrails, response_guard
+from century_core.commands.contribute import handle_contribute
 from century_core.commands.ecosystem import handle_ecosystem
 from century_core.commands.price import handle_price
 from century_core.config import Config
 from century_core.models import LinkItem, LinksBlock, ParagraphBlock, ResponseIR, ResponseMeta
 from century_core.qa import facts_search
+from century_core.qa.contribution import is_contribution_question
 from century_core.qa.holders import answer_holder_question, is_holder_question
 from century_core.qa.intro import is_intro_question
 from century_core.qa.labels import humanize_fact_key
@@ -78,6 +81,38 @@ async def _rag_search(stores, question: str):
 # information, regardless of how the LLM chooses to phrase its answer.
 _LEGACY_2025_ERA_MARKER = "[LEGACY 2025 ROUND — CONCLUDED; not the current Contribution Program] "
 
+# Item 4 (token-vs-system disambiguation, live tester feedback, 2026-08-26):
+# "can the CPX token do autonomous trading?" (x2) got answers implying the
+# CPX token itself trades, because the only grounding fact was
+# products.ciphex_alpha_description (the autonomous Alpha system), with
+# nothing in context to distinguish "the token" from "the system that
+# happens to also be described nearby". When a token/cpx-worded query is
+# grounded in that fact, prepend an explicit instruction line so the LLM
+# cannot conflate them -- see facts_search.py's "token"/"tokens" -> "stack"
+# alias, which pulls identity.product_stack (CPX Token vs Ciphex Alpha as
+# separate line items) into the same fact_hits alongside it.
+_TOKEN_WORD_TOKENS = {"token", "tokens", "cpx"}
+_ALPHA_DESCRIPTION_KEY = "products.ciphex_alpha_description"
+_DISAMBIG_TOKEN_RE = re.compile(r"[a-z0-9]+")
+_TOKEN_VS_SYSTEM_NOTE = (
+    "[NOTE: CPX is the ecosystem token; Ciphex Alpha is the autonomous system "
+    "— do not attribute Alpha's capabilities to the token itself]"
+)
+
+# Item 3 (link relevance, live tester feedback, 2026-08-26): every fact_hit
+# facts_search returns already enters the LLM's context (see the loop
+# below) -- there's no "did this fact's line actually reach the LLM"
+# distinction to gate on. What tester transcripts actually showed was
+# coincidental TIE matches riding along as citation links purely because
+# they placed in the top-`limit` (e.g. atlas-rwa-services on "who is the
+# CPX management team?", financing-activities on "dynamic risk
+# management") despite scoring far below the fact that actually answers
+# the question. A fact still informs the LLM's context regardless of its
+# score (more grounding rarely hurts), but only earns a citation LINK --
+# which readers read as an endorsement of relevance -- when it scores at
+# least this fraction of the top-scoring fact_hit's score.
+_LINK_RELEVANCE_RATIO = 0.5
+
 
 def _fact_context_line(key: str, fact) -> str:
     line = f"[{key}] {fact.value} (verified {fact.verified_on}, source {fact.source_url})"
@@ -86,7 +121,7 @@ def _fact_context_line(key: str, fact) -> str:
     return line
 
 
-def build_context(fact_hits, rag_hits, page_hits=()):
+def build_context(fact_hits, rag_hits, page_hits=(), *, linkable_fact_keys=None, query=""):
     """Compose the LLM context string, the facts_used list, and the
     deduped citation link list from fact/RAG/pages hits. Split out from
     answer_question for direct unit testing (era-framing regression) --
@@ -94,7 +129,19 @@ def build_context(fact_hits, rag_hits, page_hits=()):
 
     page_hits defaults to () so existing callers built before the Sprint 3
     pages corpus (era-framing tests calling build_context(fact_hits,
-    rag_hits) directly) keep working unchanged."""
+    rag_hits) directly) keep working unchanged.
+
+    `linkable_fact_keys`: optional set of fact keys allowed to produce a
+    citation link (item 3 -- see _LINK_RELEVANCE_RATIO above); every
+    fact_hit still becomes a context line regardless. None (the default)
+    means "no filtering", i.e. every fact_hit is linkable -- existing
+    callers that don't compute a relevance threshold keep today's
+    behavior.
+
+    `query`: the original question text, used only for item 4's
+    token-vs-system disambiguation note (see _TOKEN_VS_SYSTEM_NOTE above).
+    Defaults to "" (no note) so existing callers are unaffected.
+    """
     context_parts = []
     facts_used = []
     fact_links = []
@@ -103,9 +150,14 @@ def build_context(fact_hits, rag_hits, page_hits=()):
     page_links = []
     # ═══════ END pages-corpus hook ═══════
 
+    query_tokens = set(_DISAMBIG_TOKEN_RE.findall(query.lower()))
+    query_has_token_word = bool(query_tokens & _TOKEN_WORD_TOKENS)
+
     for key, fact in fact_hits:
         context_parts.append(_fact_context_line(key, fact))
         facts_used.append(key)
+        if key == _ALPHA_DESCRIPTION_KEY and query_has_token_word:
+            context_parts.insert(0, _TOKEN_VS_SYSTEM_NOTE)
         # Never link fact.source_url verbatim (production audit,
         # 2026-08-18): many facts.yaml source_url values are internal
         # provenance notes, not user-facing links -- the literal string
@@ -113,6 +165,8 @@ def build_context(fact_hits, rag_hits, page_hits=()):
         # unclickable citation. Only cite it when it's a real, allowlisted
         # public URL; otherwise the fact still informs the LLM's context
         # above, it's just never turned into a link.
+        if linkable_fact_keys is not None and key not in linkable_fact_keys:
+            continue
         if fact.source_url.startswith(Config.ALLOWED_LINK_PREFIXES):
             fact_links.append(LinkItem(label=humanize_fact_key(key), url=fact.source_url))
 
@@ -192,6 +246,17 @@ async def answer_question(question: str, stores) -> ResponseIR:
     if is_price_question(question) or is_listing_question(question) or is_buy_question(question):
         return await handle_price("", stores)
 
+    # Contribution-program-intent questions ("when can I contribute?", "how
+    # long will the contribution program run?" -- live tester feedback,
+    # 2026-08-26): five near-identical-intent questions got one good
+    # answer, three refusals, and one flat-wrong answer from facts_search +
+    # LLM ranking. Checked after price/listing/buy (a buy-intent question
+    # like "how do I buy CPX" keeps its existing /price route even where it
+    # overlaps contribution vocabulary) and before holders -- see
+    # qa/contribution.py.
+    if is_contribution_question(question):
+        return await handle_contribute("", stores)
+
     # Holder-count questions ("how many holders does CPX have") -- checked
     # after is_price_question/is_supply_question (same reasoning: a query
     # like "total supply" must never be misrouted here), before facts
@@ -220,7 +285,8 @@ async def answer_question(question: str, stores) -> ResponseIR:
         return response_guard.enforce_response(answer_person_question(question))
     # ═══════ END pages-corpus hook ═══════
 
-    fact_hits = facts_search.search_facts(stores.facts, question, limit=3)
+    scored_fact_hits = facts_search.search_facts_scored(stores.facts, question, limit=3)
+    fact_hits = [(key, fact) for _, key, fact in scored_fact_hits]
     rag_hits = await _rag_search(stores, question)
     # ═══════ BEGIN pages-corpus hook (Sprint 3) ═══════
     # Pages corpus retrieval (top 3, min-score reuse RAG_MIN_SCORE -- see
@@ -232,7 +298,18 @@ async def answer_question(question: str, stores) -> ResponseIR:
     if not fact_hits and not rag_hits and not page_hits:
         return response_guard.safe_refusal()
 
-    context, facts_used, link_items = build_context(fact_hits, rag_hits, page_hits)
+    # Item 3 (link relevance): a fact_hit only earns a citation link if it
+    # scores within _LINK_RELEVANCE_RATIO of the top-scoring fact_hit --
+    # see build_context's linkable_fact_keys docstring above. scored_fact_hits
+    # is non-empty and sorted highest-first whenever fact_hits is non-empty.
+    top_score = scored_fact_hits[0][0] if scored_fact_hits else 0.0
+    linkable_fact_keys = {
+        key for score, key, _ in scored_fact_hits if top_score > 0 and score >= _LINK_RELEVANCE_RATIO * top_score
+    }
+
+    context, facts_used, link_items = build_context(
+        fact_hits, rag_hits, page_hits, linkable_fact_keys=linkable_fact_keys, query=question
+    )
     # Everything the LLM is allowed to state a number about is whatever's
     # literally in the context handed to it -- not link labels (fact keys
     # like "legacy_2025_vesting_months" embed digits that are naming
