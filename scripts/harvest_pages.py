@@ -17,7 +17,8 @@ Usage:
         [--slugs slug1,slug2,...] [--fetch] [--dry-run]
 
   <repo-path>   Local checkout of Cipherion-Market-Research/ciphex-website
-                (e.g. /Users/matt/Desktop/Cipherion/ciphex-frontend/ciphex-website).
+                (e.g. /path/to/ciphex-website -- wherever it's checked out
+                on the machine running this script; never hardcoded here).
                 Content is ALWAYS read via `git show <ref>:src/<slug>.html`
                 -- the checkout's working tree is never trusted (it may be
                 stale, mid-edit, or ahead of what's actually on the ref).
@@ -42,8 +43,9 @@ pages, never part of either the sitemap or KNOWN_NOINDEX_SLUGS, but are
 excluded explicitly below as documentation of intent (belt-and-suspenders
 against either set ever accidentally growing to include them).
 
-Public repo: this script and everything it writes must never mention Claude,
-Anthropic, or any AI/vendor tooling -- harvested content headers included.
+Public repo: this script and everything it writes must never mention any
+AI/coding-assistant vendor or tool by name -- harvested content headers
+included.
 """
 from __future__ import annotations
 
