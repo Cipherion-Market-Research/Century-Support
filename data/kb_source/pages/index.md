@@ -1,141 +1,67 @@
 <!--
 source_url: https://ciphex.io/
-fetched: 2026-07-29
-page_title: Ciphex | One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets
-kind: live page copy
+fetched: 2026-08-26
+page_title: Ciphex | Shaping the Future of Intelligent Digital Capital Markets
+kind: site page copy (harvested via git show, scripts/harvest_pages.py)
 -->
 
-# Ciphex | One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets
-
-Skip to main content
-
-Ecosystem
-
-Leadership Team
-
-Insights
-
-Community
-
-Connect
-
-Disconnect
-
-CPX
-
-Ecosystem token & liquidity coordination layer
-
-Ciphex Alpha
-
-Professional investing made simple
-
-Atlas
-
-Asset origination & global distribution
-
-Internal Updates
-
-Internal Updates & Announcements
-
-Insights & Publications
-
-Internal Systems, Product, Ecosystem and Contributor Publications.
+# Ciphex | Shaping the Future of Intelligent Digital Capital Markets
 
 Ciphex Capital Ecosystem
 
-One Capital Ecosystem Shaping the Future of
+One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets
 
-Intelligent Digital Capital Markets
-
-Ciphex
-
-Capital Ecosystem
+Ciphex Capital Ecosystem
 
 The Ciphex Capital Ecosystem (“Ciphex”) is a unified economic ecosystem focused on emerging enterprise tokenization and autonomous market systems, reducing complexity and improving efficiency across capital formation, commercialization, and market participation as these markets evolve into intelligent digital capital markets.
 
 Ciphex Capital Ecosystem
 
-01
+01 CPX Token Ecosystem Utility
 
-CPX Token
+02 Ciphex Alpha Autonomous Market Systems
 
-Ecosystem Utility
-
-02
-
-Ciphex Alpha
-
-Autonomous Market Systems
-
-03
-
-Atlas RWA Services
-
-Enterprise Tokenization
+03 Atlas RWA Services Enterprise Tokenization
 
 ERC-20 · Ecosystem Token
 
-The CPX Token is your access to
-
-diversified opportunities across
-
-evolving global markets.
+The CPX Token is your access to diversified opportunities across evolving global markets.
 
 Designed for a New Digital Era of Financial Participation
 
-Phase 3 pre-commercial performance
-
-Live data temporarily unavailable
-
 Ciphex Alpha · Total RA Return
 
-—
+—%
 
-%
-
-—
-
-24H
+— 24H
 
 Risk Adjusted (SI) Y2025
 
 Ciphex Alpha · SI - Confidence Accuracy
 
-—
+—%
 
-%
-
-—
-
-24H
+— 24H
 
 5,800+ assets every 24H
 
 Ciphex Alpha · SI P/L Success Rate
 
-—
+—%
 
-%
-
-—
-
-24H
+— 24H
 
 Return on Risk Capital (RORC)
 
 Ciphex Alpha · Market Data Points
 
-50
-
-B
+50B
 
 YTD Compounding Collection
 
 Atlas RWA Target Initial Projects
 
-$500
-
-M
+$500M
 
 Projects in Review
 
@@ -143,13 +69,9 @@ Ciphex Alpha and Atlas RWA (Real World Asset) Services are currently in pre-comm
 
 Global reach
 
-Ciphex is Positioned for the
+Ciphex is Positioned for the Evolution of Intelligent Digital Capital Markets
 
-Evolution of Intelligent Digital Capital Markets
-
-Transformation of
-
-Financial Markets
+Transformation of Financial Markets
 
 Market Transformation
 
@@ -165,9 +87,7 @@ Boston Consulting Group estimates the tokenized asset market could expand from a
 
 Access
 
-Structured for Participation and Growth in
-
-24/7 Global Digital Markets
+Structured for Participation and Growth in 24/7 Global Digital Markets
 
 Access to the Ecosystem
 
@@ -175,7 +95,7 @@ CPX Token
 
 Ecosystem Utility
 
-The CPX Token is the utility mechanism of the Ciphex Ecosystem, providing access to incentives, premium product features and services, network benefits, and selected participation opportunities as the ecosystem expands across digital capital markets.
+The Ciphex Token (CPX) represents the next evolution of modern utility tokens, connecting users to expanding ecosystem benefits, intelligent digital capital markets, and real world opportunities and experiences.
 
 CPX — Learn More →
 
@@ -209,11 +129,9 @@ Ciphex Alpha
 
 Your Capital, Working 24/7
 
-Target:
+Target: Limited access Q3–Q4 2026 · Full launch Q2 2027
 
-Limited access Q3–Q4 2026 · Full launch Q2 2027
-
-Ciphex Alpha delivers institutional-grade execution and portfolio management through an automated, self-directed interface built on disciplined investment architecture, statistical validation, and real-world market experience.
+Ciphex Alpha delivers institutional-grade execution and portfolio management through an automated, self-directed interface built on disciplined investment architecture, statistical validation, and real world market experience.
 
 EMS
 
@@ -229,45 +147,27 @@ Asset Management System
 
 Ciphex Alpha — Learn More →
 
-Validation Accuracy
+Validation Accuracy Live
 
-Live
-
-95.6
-
-%
+95.6%
 
 5,800 validations / day
 
 Target EQ AUM · 12 MO
 
-$200
-
-M
-
-12-MONTH RAMP
-
-Target
-
-Q3 '26
-
-Q4 '26
-
-Q1 '27
-
 $200M
+
+12-MONTH RAMPTarget
+
+Q3 '26Q4 '26Q1 '27$200M
 
 EMS · Execution
 
 AMS · Allocation
 
-Asset Coverage
+Asset Coverage AMS
 
-AMS
-
-5,000
-
-+
+5,000+
 
 Crypto
 
@@ -277,17 +177,11 @@ Indices
 
 +5,136 secondary assets
 
-System Uptime
+System Uptime 24/7
 
-24/7
+99.5%
 
-99.5
-
-%
-
-90 days ago
-
-Operational
+90 days ago Operational
 
 Pillar · RWA
 
@@ -297,67 +191,43 @@ Exclusively available RWA opportunities.
 
 Screenings Q2 2026 · Listings Q2 2027
 
-Atlas brings real-world businesses into the digital economy through opportunities rigorously vetted, structured, and compliance-configured by experienced industry professionals. Select opportunities are distributed exclusively through Ciphex Alpha and are only accessible to CPX holders.
+Atlas brings real world businesses into the digital economy through opportunities rigorously vetted, structured, and compliance-configured by experienced industry professionals. Select opportunities are distributed exclusively through Ciphex Alpha and are only accessible to CPX holders.
 
 Atlas — Learn More →
 
-RWA Target · 12 MO
+RWA Target · 12 MO↗ 12 mo
 
-↗ 12 mo
+$500M
 
-$500
-
-M
-
-Real-world assets actively in review
+Real world assets actively in review
 
 Asset classes
 
-6
+6 types
 
-types
+Resources3.25%
 
-Resources
+REIT5.20%
 
-3.25%
+Manufacturing2.60%
 
-REIT
+Agricultural3.15%
 
-5.20%
+Gold1g/tkn
 
-Manufacturing
-
-2.60%
-
-Agricultural
-
-3.15%
-
-Gold
-
-1g/tkn
-
-Index
-
-1.20%
+Index1.20%
 
 Compliance
 
 Reg D · Reg S · MiCA
 
-Configurable per chain · KYC + identity + transfer
-
-restrictions
+Configurable per chain · KYC + identity + transfer restrictions
 
 Execution roadmap
 
-The Path from Development to
+The Path from Development to Commercial Deployment
 
-Commercial Deployment
-
-Phase I
-
-Completed
+Phase I Completed
 
 Foundation
 
@@ -373,9 +243,7 @@ Y2025
 
 Abacus I EMS / AMS Development
 
-Phase II
-
-Completed
+Phase II Completed
 
 Infrastructure
 
@@ -391,9 +259,7 @@ EY2026
 
 Atlas RWA Services Formation
 
-Phase III
-
-Underway
+Phase III Underway
 
 Commercial Deployment
 
@@ -409,13 +275,9 @@ EY2026
 
 Atlas RWA Services Live Optimization
 
-Ciphex is Built on Decades of Real-World
+Ciphex is Built on Decades of Real World Capital Markets and Technology Expertise
 
-Capital Markets and Technology Expertise
-
-100
-
-+
+100+
 
 More than 100 years of combined professional expertise.
 
@@ -453,180 +315,4 @@ Meet the Leadership Team →
 
 Ciphex Updates
 
-Latest Ecosystem
-
-Publications and Insights
-
-Ciphex Capital Ecosystem — 2026 Tokenomics Overview
-
-·
-
-May 25, 2026
-
-CPX Token Framework, Network Utility, and Economic Participation
-
-Tokenomics Overview of the Ciphex Capital Ecosystem
-
-Read Publication →
-
-One Capital Ecosystem Shaping the Future of
-
-Intelligent Digital Capital Markets
-
-Stay connected
-
-Ecosystem updates
-
-as they happen.
-
-Feature Updates
-
-System Publications
-
-Announcements
-
-Email
-
-Subscribe →
-
-No spam · Unsubscribe anytime
-
-You’re subscribed — intelligence, not noise.
-
-Contribute to the Growth of our
-
-Ecosystem.
-
-Contribute
-
-→
-
-Disclosures
-
-General Disclosure
-
-Communications
-
-CPX Tokens & Utility
-
-Financing Activities
-
-Significant Risks
-
-Ecosystem
-
-Ciphex Alpha
-
-Atlas RWA Services
-
-Insights & Publications
-
-Internal Updates
-
-Leadership Team
-
-Resources
-
-CertiK Skynet Audit
-
-GitHub Repository
-
-Token Claim Center
-
-Contact Ciphex
-
-Follow Us
-
-X (Twitter)
-
-Telegram
-
-Important Notice to Site Visitors
-
-Any information presented on this website, including without
-
-limitation commercial or technical descriptions, illustrations,
-
-publications, or other materials relating to the products, services,
-
-or ecosystem of the Ciphex Capital Ecosystem (or
-
-“Ciphex”), is provided solely for informational purposes
-
-and is protected by applicable copyright and intellectual property
-
-laws (or collectively, the “Ciphex Content”). The Ciphex
-
-Content should not be relied upon for decision-making purposes or
-
-construed as an offer to sell, a solicitation to buy, or a
-
-recommendation, endorsement, or invitation to participate in any
-
-digital assets, tokens, financial instruments, ecosystem
-
-initiatives, community engagement activities, token utility
-
-features, or tokenized real-world assets associated with Ciphex, its
-
-products, or its services in any jurisdiction where such
-
-participation is restricted or prohibited under applicable law.
-
-Subject to applicable law and regulations, Ciphex reserves the right
-
-to modify, update, remove, or discontinue any Ciphex Content without
-
-notification. Viewers are solely responsible for conducting their
-
-own independent due diligence and consulting their own professional
-
-advisers regarding any contemplated participation.
-
-Ciphex Content may include forward-looking statements identified by
-
-words such as “anticipate,” “expect,”
-
-“intend,” “plan,” “foresee,”
-
-“foreseeable,” “seek,” “pursue,”
-
-or similar expressions indicating future events. These statements
-
-are subject to significant risks and uncertainties that may cause
-
-actual results to differ materially from those expressed or implied
-
-and are not guarantees of future performance, outcomes, or
-
-availability. Ciphex undertakes no obligation to update, revise,
-
-supplement, or otherwise clarify any forward-looking statements. Any
-
-statements, representations, or materials not issued directly by
-
-Ciphex, Cipherion Capital SA, or their authorized representatives
-
-are unauthorized and expressly disclaimed. References to third-party
-
-market research, data, platforms, or services are based on publicly
-
-available information and are included solely for contextual
-
-reference. No third party has reviewed, approved, endorsed, or
-
-assumed responsibility for the Ciphex Content. Past performance
-
-should not be interpreted as an expectation of, or guarantee of,
-
-future results.
-
-Copyright © 2026 Ciphex Capital Ecosystem
-
-Terms of Use
-
-Privacy Policy
-
-Contact Ciphex
-
-Powered by Cipherion
+Latest Ecosystem Publications and Insights

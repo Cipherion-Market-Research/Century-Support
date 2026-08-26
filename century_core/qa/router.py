@@ -32,6 +32,16 @@ from century_core.qa.offtopic import is_offtopic_question, offtopic_response
 from century_core.qa.price import is_buy_question, is_listing_question, is_price_question
 from century_core.qa.supply import answer_supply_question, is_supply_question
 
+# ═══════ BEGIN pages-corpus hook (Sprint 3, branch qa-sprint3-pages-corpus) ═══════
+# See century_core/qa/pages_retrieval.py (retrieval over the separate pages
+# RAG corpus) and century_core/qa/pages_roster.py (deterministic
+# leadership-team person-question routing). Isolated imports so a merge
+# only has to reconcile this block, not interleave with the rest of the
+# import list.
+from century_core.qa.pages_retrieval import search_pages
+from century_core.qa.pages_roster import answer_person_question, is_person_question
+# ═══════ END pages-corpus hook imports ═══════
+
 # Corpus policy backstop (2026-08-18): no citation link may ever point at
 # the excluded Insights & Publications section, however it got into
 # rag_hits. Two shapes: the page itself, or one of its PDF assets under
@@ -111,11 +121,15 @@ def _fact_context_line(key: str, fact) -> str:
     return line
 
 
-def build_context(fact_hits, rag_hits, *, linkable_fact_keys=None, query=""):
+def build_context(fact_hits, rag_hits, page_hits=(), *, linkable_fact_keys=None, query=""):
     """Compose the LLM context string, the facts_used list, and the
-    deduped citation link list from fact/RAG hits. Split out from
+    deduped citation link list from fact/RAG/pages hits. Split out from
     answer_question for direct unit testing (era-framing regression) --
     see _fact_context_line above and the link-dedup note below.
+
+    page_hits defaults to () so existing callers built before the Sprint 3
+    pages corpus (era-framing tests calling build_context(fact_hits,
+    rag_hits) directly) keep working unchanged.
 
     `linkable_fact_keys`: optional set of fact keys allowed to produce a
     citation link (item 3 -- see _LINK_RELEVANCE_RATIO above); every
@@ -132,6 +146,9 @@ def build_context(fact_hits, rag_hits, *, linkable_fact_keys=None, query=""):
     facts_used = []
     fact_links = []
     rag_links = []
+    # ═══════ BEGIN pages-corpus hook (Sprint 3) ═══════
+    page_links = []
+    # ═══════ END pages-corpus hook ═══════
 
     query_tokens = set(_DISAMBIG_TOKEN_RE.findall(query.lower()))
     query_has_token_word = bool(query_tokens & _TOKEN_WORD_TOKENS)
@@ -164,16 +181,32 @@ def build_context(fact_hits, rag_hits, *, linkable_fact_keys=None, query=""):
             rag_links.append(LinkItem(label=hit.title, url=hit.source_url))
             seen_rag_urls.add(hit.source_url)
 
+    # ═══════ BEGIN pages-corpus hook (Sprint 3) ═══════
+    # Same shape as the RAG loop above, over the separate pages corpus
+    # (century_core/qa/pages_retrieval.py). Cites the PAGE url (allowlist
+    # already passes ciphex.io/*), not a PDF -- pages have no
+    # _is_excluded_rag_source-style backstop to apply since the pages
+    # corpus never ingests Insights & Publications content in the first
+    # place (see pubs_rag.config.Config.PAGE_CORPUS_EXCLUDED_SLUGS).
+    seen_page_urls = set()
+    for hit in page_hits:
+        context_parts.append(f"[page:{hit.slug}] {hit.content} (source {hit.page_url})")
+        if hit.page_url not in seen_page_urls:
+            page_links.append(LinkItem(label=hit.title, url=hit.page_url))
+            seen_page_urls.add(hit.page_url)
+    # ═══════ END pages-corpus hook ═══════
+
     # RAG links first: when rag_hits exist, answer_kind is "rag" (RAG is the
     # primary source) -- its citation must never be crowded out of the
-    # truncated link list by fact links appended after it. Deduped by URL
+    # truncated link list by fact links appended after it. Page links rank
+    # between rag links and fact links (Sprint 3 brief). Deduped by URL
     # across the COMBINED list (live tester feedback, 2026-08-26: the same
     # URL showed up twice -- e.g. a fact link and a RAG link both pointing
     # at the same page -- because each list was only deduped internally,
     # never against each other) before any truncation happens downstream.
     link_items = []
     seen_urls = set()
-    for item in rag_links + fact_links:
+    for item in rag_links + page_links + fact_links:
         if item.url not in seen_urls:
             link_items.append(item)
             seen_urls.add(item.url)
@@ -241,11 +274,28 @@ async def answer_question(question: str, stores) -> ResponseIR:
     if is_intro_question(question):
         return response_guard.enforce_response(await handle_ecosystem("", stores))
 
+    # ═══════ BEGIN pages-corpus hook (Sprint 3, branch qa-sprint3-pages-corpus) ═══════
+    # Team-member roster route (owner-flagged: direct name queries like
+    # "Who is Kevin?" were falling through to the graceful refusal even
+    # though the answer sits verbatim on ciphex.io/leadership-team).
+    # Deterministic, no LLM/DB required -- see qa/pages_roster.py. Checked
+    # after intro (so "what is Ciphex" keeps its existing route) and before
+    # the facts/RAG fallback below.
+    if is_person_question(question):
+        return response_guard.enforce_response(answer_person_question(question))
+    # ═══════ END pages-corpus hook ═══════
+
     scored_fact_hits = facts_search.search_facts_scored(stores.facts, question, limit=3)
     fact_hits = [(key, fact) for _, key, fact in scored_fact_hits]
     rag_hits = await _rag_search(stores, question)
+    # ═══════ BEGIN pages-corpus hook (Sprint 3) ═══════
+    # Pages corpus retrieval (top 3, min-score reuse RAG_MIN_SCORE -- see
+    # qa/pages_retrieval.py). A SEPARATE index from _rag_search's Internal
+    # Updates corpus; joined into context/citations by build_context.
+    page_hits = await search_pages(stores, question)
+    # ═══════ END pages-corpus hook ═══════
 
-    if not fact_hits and not rag_hits:
+    if not fact_hits and not rag_hits and not page_hits:
         return response_guard.safe_refusal()
 
     # Item 3 (link relevance): a fact_hit only earns a citation link if it
@@ -258,7 +308,7 @@ async def answer_question(question: str, stores) -> ResponseIR:
     }
 
     context, facts_used, link_items = build_context(
-        fact_hits, rag_hits, linkable_fact_keys=linkable_fact_keys, query=question
+        fact_hits, rag_hits, page_hits, linkable_fact_keys=linkable_fact_keys, query=question
     )
     # Everything the LLM is allowed to state a number about is whatever's
     # literally in the context handed to it -- not link labels (fact keys
@@ -298,8 +348,10 @@ async def answer_question(question: str, stores) -> ResponseIR:
 
     # "llm" (an ungrounded, context-free answer) is intentionally never
     # produced by this router -- every LLM call here is grounded in at
-    # least one fact or RAG hit, or the request is refused above.
-    answer_kind = "rag" if rag_hits else "faq"
+    # least one fact, RAG, or pages hit, or the request is refused above.
+    # ═══════ BEGIN pages-corpus hook (Sprint 3) ═══════
+    answer_kind = "rag" if (rag_hits or page_hits) else "faq"
+    # ═══════ END pages-corpus hook ═══════
 
     response = ResponseIR(
         blocks=blocks,

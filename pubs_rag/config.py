@@ -155,6 +155,19 @@ class Config:
     # start/redeploy, not live against an already-running process.
     SERVE_DOCS_SINCE = _env("PUBS_RAG_SERVE_DOCS_SINCE", "2026-05-01")
 
+    # --- Pages corpus (Sprint 3): ingest-time exclusion ---
+    # data/kb_source/inventory.json carries "page" entries outside
+    # scripts/harvest_pages.py's harvest scope too (404, unavailable --
+    # utility pages never worth ingesting; insights-and-publications --
+    # excluded from bot knowledge entirely per the 2026-08-18 Bot Parameter
+    # Requirements, same policy site_parser.py already enforces for its
+    # PDF listing). ingest.ingest_pages_inventory() skips any inventory
+    # "page" entry whose slug is in this set, belt-and-suspenders against
+    # ever ingesting them even if a future harvest run's scope formula
+    # changes. Not env-overridable on purpose -- corpus policy, not a
+    # per-deploy tunable.
+    PAGE_CORPUS_EXCLUDED_SLUGS = frozenset({"404", "unavailable", "insights-and-publications"})
+
     # --- Health / webhook server ---
     HEALTH_HOST = _env("PUBS_RAG_HEALTH_HOST", "0.0.0.0")
     HEALTH_PORT = _env_int("PORT", _env_int("PUBS_RAG_HEALTH_PORT", 8081))

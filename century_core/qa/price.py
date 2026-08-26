@@ -56,9 +56,15 @@ _STANDALONE_LISTING_TOKENS = {"listing", "listed"}
 _DEX_CEX_TOKENS = {"dex", "cex"}
 _EXCHANGE_TOKENS = {"exchange", "exchanges"}
 _TIMING_TOKENS = {
-    "when", "date", "start", "starts", "started", "starting", "will",
+    # "will" is deliberately NOT a timing token: it re-enabled the dex/cex
+    # hijack on capability questions ("Will CPX be able to provide
+    # autonomous portfolio management on DEX?" -- live tester regression,
+    # 2026-08-26). The "what CEX will carry CPX" phrasing routes via the
+    # carry/support/list listing-verbs below instead.
+    "when", "date", "start", "starts", "started", "starting",
     "launch", "launched", "launching", "live", "soon",
     "trade", "trading", "tradable", "buy", "sell",
+    "carry", "carries", "support", "supports", "list", "lists",
     # "available"/"availability" (live tester feedback, 2026-08-26: "where
     # will CPX be available?" and similar phrasings) -- deliberately added
     # as a *timing* token, paired below, not a standalone listing token:
@@ -70,11 +76,21 @@ _TIMING_TOKENS = {
 }
 
 
+_BRAND_TOKENS_FOR_AVAILABILITY = {"cpx", "ciphex", "token", "tokens"}
+_AVAILABILITY_TOKENS = {"available", "availability"}
+
+
 def is_listing_question(query: str) -> bool:
     tokens = set(_TOKEN_RE.findall(query.lower()))
     if tokens & _STANDALONE_LISTING_TOKENS:
         return True
     if (tokens & _DEX_CEX_TOKENS) and (tokens & _TIMING_TOKENS):
+        return True
+    # "where will CPX be available?" carries no listing-topic token at all
+    # (live tester P0, 2026-08-26) -- availability of the token itself IS
+    # listing intent. Requires a brand/token word so "is a demo available"
+    # or claim-portal availability never routes here.
+    if (tokens & _AVAILABILITY_TOKENS) and (tokens & _BRAND_TOKENS_FOR_AVAILABILITY):
         return True
     return bool(tokens & _EXCHANGE_TOKENS) and bool(tokens & _TIMING_TOKENS)
 

@@ -85,6 +85,27 @@ def stub_stores(facts, fake_redis, stub_llm):
     return Stores(facts=facts, kpi=KpiReader(fake_redis), llm=stub_llm, rag_conn=None, rag_provider=None)
 
 
+@pytest.fixture(autouse=True)
+def _default_empty_pages_retrieval(monkeypatch):
+    """Sprint 3: qa/router.py's answer_question() now calls
+    pages_retrieval.search_pages() -> pubs_rag.retrieval.retrieve_pages()
+    on every non-short-circuited question, in addition to the existing RAG
+    path. Pre-Sprint-3 tests that set stub_stores.rag_conn/rag_provider to
+    a non-None sentinel (e.g. `object()`) to exercise the RAG path via a
+    monkeypatched `pubs_rag.retrieval.retrieve` never anticipated a second
+    call hitting retrieve_pages too -- without this, that call falls
+    through to the real function and blows up calling `.embed()` on the
+    sentinel. Autouse default: no page hits, same as if rag_conn/
+    rag_provider were None. Tests that DO want to exercise page hits
+    monkeypatch `pubs_rag.retrieval.retrieve_pages` themselves afterward,
+    which simply overrides this default (last `monkeypatch.setattr` wins)."""
+
+    async def _empty_retrieve_pages(conn, provider, query, top_k=3, **kwargs):
+        return []
+
+    monkeypatch.setattr("pubs_rag.retrieval.retrieve_pages", _empty_retrieve_pages)
+
+
 class OverlayFactsStore:
     """Wraps a real FactsStore and overlays/masks specific keys, so tests
     can exercise a contract fact key's "present" or "absent" branch without
