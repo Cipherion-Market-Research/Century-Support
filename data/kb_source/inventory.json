@@ -14,26 +14,30 @@
   {
     "kind": "page",
     "slug": "atlas-rwa-services",
-    "title": "Atlas RWA Services | Capital Formation and Tokenization",
+    "title": "Atlas RWA Services | Enterprise Tokenization, Real World AssetsAtlas global distribution routing",
     "date": null,
     "source_url": "https://ciphex.io/atlas-rwa-services",
     "local_path": "data/kb_source/pages/atlas-rwa-services.md",
-    "sha256": "4841aba876f839f4a7fa237745a859c2806129db2bec8243db3a49cc31bbd761",
-    "bytes": 9537,
+    "sha256": "d2b83a0ed511d5960e653ba5cf2a76e36106db5975e7a29e3ad411d4a9c1fa15",
+    "bytes": 6115,
     "extraction": "ok",
-    "words": 1142
+    "words": 692,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
     "slug": "ciphex-alpha",
-    "title": "Ciphex Alpha | Systemized Execution & Portfolio Management",
+    "title": "Ciphex Alpha | Autonomous Market System & Portfolio Management",
     "date": null,
     "source_url": "https://ciphex.io/ciphex-alpha",
     "local_path": "data/kb_source/pages/ciphex-alpha.md",
-    "sha256": "a0f3419335fdc16db1a9fade0f6d69cc23d3903d2acb99ae600e2d49830eb5c3",
-    "bytes": 8149,
+    "sha256": "82880121af1e801f340c44db8e7b86c76ed4135b3e6c11d4ee3f2ef587c294dc",
+    "bytes": 4313,
     "extraction": "ok",
-    "words": 1006
+    "words": 509,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -42,10 +46,12 @@
     "date": null,
     "source_url": "https://ciphex.io/ciphex-token",
     "local_path": "data/kb_source/pages/ciphex-token.md",
-    "sha256": "a186263d6593c751f09aa4572a291ee06e54a311eeaef7575ccaa57c2841bb28",
-    "bytes": 6310,
+    "sha256": "c538993f5a9ca6444aaa3943eb96f1d4063fc6cde3e20206a6e79246fadcde86",
+    "bytes": 2082,
     "extraction": "ok",
-    "words": 791
+    "words": 255,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -54,22 +60,26 @@
     "date": null,
     "source_url": "https://ciphex.io/communications",
     "local_path": "data/kb_source/pages/communications.md",
-    "sha256": "a5757a5e379f4937089e8a39f7d1886353ac554b0ec6a7c1273d70056eadd32e",
-    "bytes": 9722,
+    "sha256": "a837051342f34bdd062e5b06b3d6d7b8a2c295019229e91db0d652be407f093c",
+    "bytes": 6000,
     "extraction": "ok",
-    "words": 1204
+    "words": 729,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
     "slug": "community",
-    "title": "Ciphex | Community",
+    "title": "Ciphex Community | Connect, Participate & Earn Rewards",
     "date": null,
     "source_url": "https://ciphex.io/community",
     "local_path": "data/kb_source/pages/community.md",
-    "sha256": "d25ef39bedead3e4d855f1ba835c280bf5417bd4bdeb747f650067cdfd31962f",
-    "bytes": 5373,
+    "sha256": "7b5cbaec3e96ce70003c862e61d3864be1e2b59223529b65aa8ea08df975f48a",
+    "bytes": 1536,
     "extraction": "ok",
-    "words": 667
+    "words": 166,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -78,10 +88,12 @@
     "date": null,
     "source_url": "https://ciphex.io/contact-ciphex",
     "local_path": "data/kb_source/pages/contact-ciphex.md",
-    "sha256": "7ee6b6c4744a6cabac5ef161d562662c3208d6d9ae722f306489bde15d50c69d",
-    "bytes": 6581,
+    "sha256": "32b1d3fbc0685452ebeddc0d72201c135fd59c5f6f1be7885af351d9f8029254",
+    "bytes": 2932,
     "extraction": "ok",
-    "words": 854
+    "words": 388,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -90,10 +102,12 @@
     "date": null,
     "source_url": "https://ciphex.io/contribute",
     "local_path": "data/kb_source/pages/contribute.md",
-    "sha256": "6bb2ada426b577549c351a5669dc85c4963f5971c21015f19aadf94814a28ad6",
-    "bytes": 32585,
+    "sha256": "f1e465330ac507ec65494e925c1668eed50c67b4fb3cfae31d9f5977f9e5d6c6",
+    "bytes": 29133,
     "extraction": "ok",
-    "words": 4294
+    "words": 3851,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -102,10 +116,12 @@
     "date": null,
     "source_url": "https://ciphex.io/cpx-token-utilities",
     "local_path": "data/kb_source/pages/cpx-token-utilities.md",
-    "sha256": "5ace91cc876025fe588ec5bf039edc8f37a6cf05cf36647a1edb61757a22108b",
-    "bytes": 14059,
+    "sha256": "531bea35e880eb4fce03479c8d9b56ab41fb7a11770167c394f5658a7463ad20",
+    "bytes": 10329,
     "extraction": "ok",
-    "words": 1730
+    "words": 1255,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -114,10 +130,12 @@
     "date": null,
     "source_url": "https://ciphex.io/financing-activities",
     "local_path": "data/kb_source/pages/financing-activities.md",
-    "sha256": "2fc7a853502680cbef6b5514bdc7593475b56d7992cf67ba220bd797445cd534",
-    "bytes": 18865,
+    "sha256": "59edc87f1c45fb80f1017099790e70d03e89749160ae6b990efe9852922d79df",
+    "bytes": 15124,
     "extraction": "ok",
-    "words": 2421
+    "words": 1945,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -126,22 +144,26 @@
     "date": null,
     "source_url": "https://ciphex.io/general-disclosure",
     "local_path": "data/kb_source/pages/general-disclosure.md",
-    "sha256": "3849ee28427e8004f23773bbf4648e400903271df95f172d9835b6c4030d372e",
-    "bytes": 15106,
+    "sha256": "95caed35bd567f7320286ad66068ee7bdb637ee0a119364cc85b000d5f2081db",
+    "bytes": 11355,
     "extraction": "ok",
-    "words": 1913
+    "words": 1431,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
     "slug": "index",
-    "title": "Ciphex | One Capital Ecosystem Shaping the Future of Intelligent Digital Capital Markets",
+    "title": "Ciphex | Shaping the Future of Intelligent Digital Capital Markets",
     "date": null,
     "source_url": "https://ciphex.io/",
     "local_path": "data/kb_source/pages/index.md",
-    "sha256": "64545f540e28f5cfd3689514c356bf3fad9e4ca23e5552f96f6f8dbf378df437",
-    "bytes": 10801,
+    "sha256": "75d9c8f81487166d10e86cb6c94a4256c03b70897919f4728a691212b972ce24",
+    "bytes": 6764,
     "extraction": "ok",
-    "words": 1375
+    "words": 851,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -158,14 +180,16 @@
   {
     "kind": "page",
     "slug": "internal-updates",
-    "title": "Ciphex | Internal Updates",
+    "title": "Ciphex | Internal Updates & Announcements",
     "date": null,
     "source_url": "https://ciphex.io/internal-updates",
     "local_path": "data/kb_source/pages/internal-updates.md",
-    "sha256": "02d7c2e9dc6ca02064287bd7771f2f27c77a2a8d3760dd708ebdcb3edcd72c73",
-    "bytes": 4528,
+    "sha256": "3a7a294a43f67452c4f5de7ef39ddcc0ea0815252be188036e76ded1231414f8",
+    "bytes": 896,
     "extraction": "ok",
-    "words": 564
+    "words": 94,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -174,10 +198,12 @@
     "date": null,
     "source_url": "https://ciphex.io/leadership-team",
     "local_path": "data/kb_source/pages/leadership-team.md",
-    "sha256": "021cdd2d422ee107f089a3c8ba4c1fb880161103386a4553b6e582a210dacc07",
-    "bytes": 6490,
+    "sha256": "c06de874a656e917a0708baade9616a50753eaeb48f74e2f681f46a3a89ee18e",
+    "bytes": 3228,
     "extraction": "ok",
-    "words": 803
+    "words": 402,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -186,10 +212,12 @@
     "date": null,
     "source_url": "https://ciphex.io/privacy-policy",
     "local_path": "data/kb_source/pages/privacy-policy.md",
-    "sha256": "094f1095137de767201e5e645da14ab1c0830db60409a18580a8050f19587823",
-    "bytes": 21240,
+    "sha256": "9e9e9038e786b94bb6eb31f2cd51844cea9d1241562788542443cf870960b0c0",
+    "bytes": 17571,
     "extraction": "ok",
-    "words": 2788
+    "words": 2318,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -198,10 +226,12 @@
     "date": null,
     "source_url": "https://ciphex.io/significant-risks",
     "local_path": "data/kb_source/pages/significant-risks.md",
-    "sha256": "5eba6c927113d3a65e97d3300b546a510672f75b51558b9b8e109bd3890de2b6",
-    "bytes": 38467,
+    "sha256": "7be9dcc785b554646664d649659d86af6f7da093e4979976d332271b6b775db4",
+    "bytes": 34705,
     "extraction": "ok",
-    "words": 4644
+    "words": 4169,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",
@@ -210,10 +240,12 @@
     "date": null,
     "source_url": "https://ciphex.io/terms-of-use",
     "local_path": "data/kb_source/pages/terms-of-use.md",
-    "sha256": "c5c7e436f4c32e8e6f8478ed97a7061c42fe6e0e95beef62e7fa4726b0677297",
-    "bytes": 24066,
+    "sha256": "fab76350b83359fa3df389e6c05bde713cedc1b80d3ce84be887b0e9d7cdf2b0",
+    "bytes": 20393,
     "extraction": "ok",
-    "words": 3301
+    "words": 2837,
+    "harvested_at": "2026-08-26",
+    "source_ref": "9ef9b2177bea9d7fa9212631a4e8f4c50190f647"
   },
   {
     "kind": "page",

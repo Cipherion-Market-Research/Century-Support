@@ -1,45 +1,11 @@
 <!--
 source_url: https://ciphex.io/communications
-fetched: 2026-07-29
+fetched: 2026-08-26
 page_title: Ciphex | Official Communications Disclosure
-kind: live page copy
+kind: site page copy (harvested via git show, scripts/harvest_pages.py)
 -->
 
 # Ciphex | Official Communications Disclosure
-
-Skip to main content
-
-Ecosystem
-
-Leadership Team
-
-Insights
-
-Community
-
-Connect
-
-Disconnect
-
-CPX
-
-Ecosystem token & liquidity coordination layer
-
-Ciphex Alpha
-
-Professional investing made simple
-
-Atlas
-
-Asset origination & global distribution
-
-Internal Updates
-
-Internal Updates & Announcements
-
-Insights & Publications
-
-Internal Systems, Product, Ecosystem and Contributor Publications.
 
 Disclosures · Ciphex Capital Ecosystem
 
@@ -49,206 +15,32 @@ Date: July 18, 2026
 
 II. Official Communications
 
-2.1 Official Communications
+2.1 Official Communications
 
 Only statements issued directly by Cipherion, Ciphex, or their authorized representatives should be regarded as official communications. Any statements, marketing materials, representations, forecasts, opinions, or other information originating from unauthorized third parties are not endorsed by Ciphex and are expressly disclaimed. Ciphex assumes no responsibility or liability for any reliance placed upon third-party communications, representations, or other information.
 
-2.2 Communication Services
+2.2 Communication Services
 
 Ciphex may engage third-party service providers to perform token launchpad services, marketing and communication campaigns, public relations activities, advertising, social engagement initiatives, or other similar services or activities (collectively, "Awareness Providers") to expand market awareness, improve Ecosystem accessibility, and increase participation in Ciphex products, services, utility initiatives, community engagement and broader Ecosystem activities. Awareness Providers may receive compensation in cash, CPX Tokens, or a combination thereof, together with additional contractual terms, conditions, and obligations specific to each provider.
 
-2.3 Service Compensation
+2.3 Service Compensation
 
 Any cash payment ("Cash Payment") provided as compensation for services constitutes consideration for bona fide services for hire and may be subject to payment schedules, milestone requirements for deliverables, holdbacks for incomplete deliverables, or other contractual obligations. Compensation paid in CPX Tokens or other digital assets ("Digital Payment") may be subject to contractual terms including lockup periods, vesting schedules, transfer restrictions, resale limitations, and other applicable legal, regulatory, or contractual requirements (collectively, "Service Compensation").
 
-2.4 Compensation Structure
+2.4 Compensation Structure
 
 Service Compensation provided to Awareness Providers or other third-party service providers is intended solely as consideration for bona fide services rendered. It is not structured as performance fees or transaction-based commissions, or any compensation arrangements that may be subject to applicable regulatory requirements. The engagement of Awareness Providers should not be interpreted as an endorsement of CPX Tokens, a service recommending their acquisition, promoting their disposition, facilitating transactions in CPX Tokens or other digital assets, or representation regarding the present or future value, performance, market activity, or commercial prospects of CPX Tokens, Ciphex, its products, services, or Ecosystem activities.
 
-2.5 Compensation Disclosure
+2.5 Compensation Disclosure
 
 Any compensated communication by Ciphex through its Awareness Providers, excluding independent affiliate participants and affiliate networks that participate solely through their respective independent networks, and other independent third-party service providers compensated under separate contractual arrangements, is intended to comply with applicable advertising, marketing, and compensation disclosure requirements, including the compensation disclosure principles reflected in Section 17(b) of the U.S. Securities Act of 1933 and comparable legal or regulatory requirements in other jurisdictions. Compensation paid to Awareness Providers for marketing, communications, public relations, community engagement, or similar services will be disclosed where required by applicable law.
 
-2.6 Communications Compliance
+2.6 Communications Compliance
 
 To the extent applicable, communications relating to Ciphex, CPX Tokens, or any current or planned products, services, or Ecosystem initiatives are intended solely to provide factual, balanced, and non-promotional information. Such communications are not intended to constitute investment advice, investment recommendations, research reports, financial promotions, solicitations, inducements, crypto-asset offering communications, or any other regulated activity under applicable law, including U.S. federal securities laws, the U.S. Investment Advisers Act of 1940, Regulation (EU) 2023/1114 on Markets in Crypto-Assets (MiCA), and comparable legal or regulatory frameworks in other jurisdictions.
 
 Any statements regarding Ciphex, CPX Tokens, current or planned products, services, or Ecosystem initiatives are intended to comply with applicable anti-fraud and disclosure standards, including the principles reflected in Rule 10b-5 under the U.S. Securities Exchange Act of 1934 and Section 17(b) of the U.S. Securities Act of 1933. No communication should be interpreted as a recommendation, endorsement, forecast, guarantee, or representation regarding the present or future value, price, performance, liquidity, or market activity of CPX Tokens. Unless expressly stated otherwise, no crypto-asset whitepaper, business plan, economic overview, offering document, or similar disclosure relating to Ciphex or CPX Tokens has been approved, authorized, endorsed, reviewed, or notified to any governmental authority, securities regulator, financial regulator, or other competent authority in any jurisdiction.
 
-2.7 No Expectation of Profit
+2.7 No Expectation of Profit
 
 Ciphex, CPX Tokens, and any current or planned products, services, utility features, or Ecosystem initiatives are not offered, marketed, promoted, or distributed as investments and should not be acquired with any expectation of, or entitlement to, profit sharing, appreciation, investment returns, dividends, or any other financial benefit. No representation or warranty is made that any person will realize any economic gain from using Ciphex products, services, or by acquiring, holding, using, or transferring CPX Tokens and applicable utility features.
-
-Disclosures
-
-General Disclosure
-
-Communications
-
-CPX Tokens & Utility
-
-Financing Activities
-
-Significant Risks
-
-One Capital Ecosystem Shaping the Future of
-
-Intelligent Digital Capital Markets
-
-Stay connected
-
-Ecosystem updates
-
-as they happen.
-
-Feature Updates
-
-System Publications
-
-Announcements
-
-Email
-
-Subscribe →
-
-No spam · Unsubscribe anytime
-
-You’re subscribed — intelligence, not noise.
-
-Contribute to the Growth of our
-
-Ecosystem.
-
-Contribute
-
-→
-
-Disclosures
-
-General Disclosure
-
-Communications
-
-CPX Tokens & Utility
-
-Financing Activities
-
-Significant Risks
-
-Ecosystem
-
-Ciphex Alpha
-
-Atlas RWA Services
-
-Insights & Publications
-
-Internal Updates
-
-Leadership Team
-
-Resources
-
-CertiK Skynet Audit
-
-GitHub Repository
-
-Token Claim Center
-
-Contact Ciphex
-
-Follow Us
-
-X (Twitter)
-
-Telegram
-
-Important Notice to Site Visitors
-
-Any information presented on this website, including without
-
-limitation commercial or technical descriptions, illustrations,
-
-publications, or other materials relating to the products, services,
-
-or ecosystem of the Ciphex Capital Ecosystem (or
-
-“Ciphex”), is provided solely for informational purposes
-
-and is protected by applicable copyright and intellectual property
-
-laws (or collectively, the “Ciphex Content”). The Ciphex
-
-Content should not be relied upon for decision-making purposes or
-
-construed as an offer to sell, a solicitation to buy, or a
-
-recommendation, endorsement, or invitation to participate in any
-
-digital assets, tokens, financial instruments, ecosystem
-
-initiatives, community engagement activities, token utility
-
-features, or tokenized real-world assets associated with Ciphex, its
-
-products, or its services in any jurisdiction where such
-
-participation is restricted or prohibited under applicable law.
-
-Subject to applicable law and regulations, Ciphex reserves the right
-
-to modify, update, remove, or discontinue any Ciphex Content without
-
-notification. Viewers are solely responsible for conducting their
-
-own independent due diligence and consulting their own professional
-
-advisers regarding any contemplated participation.
-
-Ciphex Content may include forward-looking statements identified by
-
-words such as “anticipate,” “expect,”
-
-“intend,” “plan,” “foresee,”
-
-“foreseeable,” “seek,” “pursue,”
-
-or similar expressions indicating future events. These statements
-
-are subject to significant risks and uncertainties that may cause
-
-actual results to differ materially from those expressed or implied
-
-and are not guarantees of future performance, outcomes, or
-
-availability. Ciphex undertakes no obligation to update, revise,
-
-supplement, or otherwise clarify any forward-looking statements. Any
-
-statements, representations, or materials not issued directly by
-
-Ciphex, Cipherion Capital SA, or their authorized representatives
-
-are unauthorized and expressly disclaimed. References to third-party
-
-market research, data, platforms, or services are based on publicly
-
-available information and are included solely for contextual
-
-reference. No third party has reviewed, approved, endorsed, or
-
-assumed responsibility for the Ciphex Content. Past performance
-
-should not be interpreted as an expectation of, or guarantee of,
-
-future results.
-
-Copyright © 2026 Ciphex Capital Ecosystem
-
-Terms of Use
-
-Privacy Policy
-
-Contact Ciphex
-
-Powered by Cipherion
